@@ -1,16 +1,89 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
 
-  <title><![CDATA[My Octopress Blog]]></title>
-  <link href="http://yoursite.com/atom.xml" rel="self"/>
-  <link href="http://yoursite.com/"/>
-  <updated>2013-06-29T20:49:24+05:30</updated>
-  <id>http://yoursite.com/</id>
+  <title><![CDATA[Freelance Projects]]></title>
+  <link href="http://uw-freelancer.github.io/atom.xml" rel="self"/>
+  <link href="http://uw-freelancer.github.io/"/>
+  <updated>2013-06-29T23:24:17+05:30</updated>
+  <id>http://uw-freelancer.github.io/</id>
   <author>
-    <name><![CDATA[Your Name]]></name>
+    <name><![CDATA[Upeksha Wisidagama]]></name>
     
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Two Website Customizations]]></title>
+    <link href="http://uw-freelancer.github.io/blog/two-website-customizations/"/>
+    <updated>2013-06-29T21:05:00+05:30</updated>
+    <id>http://uw-freelancer.github.io/blog/two-website-customizations</id>
+    <content type="html"><![CDATA[<p>Two websites had to be customized when I was contacted for this project. I was contacted by Mr. Brant about this improvement. A freelancer.com project was created to make payments and exchange feedback.</p>
+
+<p><img class='center' src="http://uw-freelancer.github.io/images/blog/website-customization-project-specification.jpg" title="Website Customization Project Description" alt="Website Customization Project Description" /></p>
+
+<p>First one of two projects was described on oDesk. A child theme (called &lsquo;Curb Appeal&rsquo;) based on popular Genesis Framework needed to be customized.</p>
+
+<p><img class='center' src="http://uw-freelancer.github.io/images/blog/genesis-framework-customization.jpg" title="Genesis Framework Customization" alt="Genesis Framework Customization" /></p>
+
+<p>In &lsquo;Curb Appeal&rsquo; theme there was only one section in home top area.</p>
+
+<figure class='code'><figcaption><span>&#8216;Initial Code - functions.php&#8217; </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='php'><span class='line'><span class="cp">&lt;?php</span>
+</span><span class='line'><span class="nx">genesis_register_sidebar</span><span class="p">(</span> <span class="k">array</span><span class="p">(</span>
+</span><span class='line'>    <span class="s1">&#39;id&#39;</span>          <span class="o">=&gt;</span> <span class="s1">&#39;home-top&#39;</span><span class="p">,</span>
+</span><span class='line'>    <span class="s1">&#39;name&#39;</span>            <span class="o">=&gt;</span> <span class="s1">&#39;Home Top&#39;</span><span class="p">,</span>
+</span><span class='line'>    <span class="s1">&#39;description&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;This is the Home Top section&#39;</span>
+</span><span class='line'><span class="p">)</span> <span class="p">);</span>
+</span><span class='line'><span class="cp">?&gt;</span><span class="x"></span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>I replace it with two sidebars as follows.</p>
+
+<figure class='code'><figcaption><span>&#8216;Code After Modification - functions.php&#8217; </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+</pre></td><td class='code'><pre><code class='php'><span class='line'><span class="cp">&lt;?php</span>
+</span><span class='line'><span class="nx">genesis_register_sidebar</span><span class="p">(</span> <span class="k">array</span><span class="p">(</span>
+</span><span class='line'>    <span class="s1">&#39;id&#39;</span>          <span class="o">=&gt;</span> <span class="s1">&#39;home-top-left&#39;</span><span class="p">,</span>
+</span><span class='line'>    <span class="s1">&#39;name&#39;</span>            <span class="o">=&gt;</span> <span class="s1">&#39;Home Top Left&#39;</span><span class="p">,</span>
+</span><span class='line'>    <span class="s1">&#39;description&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;This is the Home Top Left section&#39;</span>
+</span><span class='line'><span class="p">)</span> <span class="p">);</span>
+</span><span class='line'><span class="nx">genesis_register_sidebar</span><span class="p">(</span> <span class="k">array</span><span class="p">(</span>
+</span><span class='line'>    <span class="s1">&#39;id&#39;</span>          <span class="o">=&gt;</span> <span class="s1">&#39;home-top-right&#39;</span><span class="p">,</span>
+</span><span class='line'>    <span class="s1">&#39;name&#39;</span>            <span class="o">=&gt;</span> <span class="s1">&#39;Home Top Right&#39;</span><span class="p">,</span>
+</span><span class='line'>    <span class="s1">&#39;description&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;This is the Home Top Right section&#39;</span>
+</span><span class='line'><span class="p">)</span> <span class="p">);</span>
+</span><span class='line'><span class="cp">?&gt;</span><span class="x"></span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Next project was about adding a &lsquo;Banner&rsquo; for category archive pages. The following is the category banner uploader.</p>
+
+<p><img class='center' src="http://uw-freelancer.github.io/images/blog/wordpress-category-banner.jpg" title="Category Banner Uploader" alt="Category Banner Uploader" /></p>
+
+<p>I was able to successfully complete the project and earned $27USD.</p>
+
+<p><img class='center' src="http://uw-freelancer.github.io/images/blog/website-customization-feedback.jpg" title="Website Customization Feedback" alt="Website Customization Feedback" /></p>
+]]></content>
+  </entry>
   
 </feed>
