@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Finance | Freelance Projects]]></title>
+  <link href="http://uw-freelancer.github.io/blog/categories/finance/atom.xml" rel="self"/>
+  <link href="http://uw-freelancer.github.io/"/>
+  <updated>2013-06-30T11:18:21+05:30</updated>
+  <id>http://uw-freelancer.github.io/</id>
+  <author>
+    <name><![CDATA[Upeksha Wisidagama]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[I only need One Dollar]]></title>
+    <link href="http://uw-freelancer.github.io/blog/i-only-need-one-dollar/"/>
+    <updated>2013-06-30T09:13:00+05:30</updated>
+    <id>http://uw-freelancer.github.io/blog/i-only-need-one-dollar</id>
+    <content type="html"><![CDATA[<p>Today is the last day of this month (June, 2013). My account balance is &lsquo;29.19&rsquo;.</p>
+
+<p>In order to withdraw money from freelancer.com, My account balance should be at least 30 USD.</p>
+
+<p><img class='center' src="/images/blog/i-only-need-one-dollar.jpg" title="I only need one dollar" alt="I only need one dollar" /></p>
+
+<p>I recently completed a project for Mr. Brant (Two WordPress Customizations). I agreed with him to be paid 30 USD for the completion of this project. But freelancer.com charged me a fee of 5 USD. ( Freelancer.com service fee is fair compared to other service providers. But at this time the total went below 30 USD ).</p>
+
+<p><img class='center' src="/images/blog/wordpress-freelancer-cost.jpg" title="WordPress Freelancer Cost" alt="WordPress Freelancer Cost" /></p>
+
+<p>So I started bidding on projects, planing to earn the missing 1 USD. Today is the final day of the month. Still, I haven&rsquo;t had a chance to win a project. I started to lower my bids. Then people started to ask me why my bid is so low (they can&rsquo;t trust that the work could be that cheap). See the below conversation with one of my potential clients (Alias: MasterCook).</p>
+
+<p><blockquote><p>MasterCook: ok so 1. why you bid so low and how do i know your not wasting my time</p></p><p><p>Upeksha: I have been bidding for a couple of days without any work. I have $29 in my account and I need at least another $1 to withdraw money from freelancer.com.</p></p><p><p>Upeksha: I have done various WordPress related projects. I am confident I can do the customizations you need.</p></p><p><p>MasterCook: you price is good but I am worried about cheap labour</p></blockquote></p>
+
+<p>Usually, freelancer.com charges 10% of the total project price (for a 30USD project that should be 3USD). At this time they charged 5 USD. The reason is the lowest project commission is 5 USD. However now I can&rsquo;t withdraw funds to Skrill account without another dollar. I only need One Dollar.</p>
+
+<p><img class='center' src="/images/blog/cannot-withdraw-less-than-30-usd.jpg" title="Cannot withdraw less than 30 USD" alt="Cannot withdraw less than 30 USD" /></p>
+]]></content>
+  </entry>
+  
+</feed>
