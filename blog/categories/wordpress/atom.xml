@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: WordPress | Freelance Projects]]></title>
+  <link href="http://uw-freelancer.github.io/blog/categories/wordpress/atom.xml" rel="self"/>
+  <link href="http://uw-freelancer.github.io/"/>
+  <updated>2013-07-01T17:17:42+05:30</updated>
+  <id>http://uw-freelancer.github.io/</id>
+  <author>
+    <name><![CDATA[Upeksha Wisidagama]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[WordPress Toolbar Customization]]></title>
+    <link href="http://uw-freelancer.github.io/blog/wordpress-toolbar-customization/"/>
+    <updated>2013-04-15T20:55:00+05:30</updated>
+    <id>http://uw-freelancer.github.io/blog/wordpress-toolbar-customization</id>
+    <content type="html"><![CDATA[<p>The project poster (Mr. Cstoudt) wanted to add custom menu to their WordPress Admin Bar.</p>
+
+<p><blockquote><p>The correct term is ToolBar (not Admin Bar). The Toolbar was added in Version 3.1 as Admin Bar and in Version 3.3 it was replaced by the Toolbar.</p></blockquote></p>
+
+<p>The following is an screenshot of the project description posted on freelancer.com.</p>
+
+<p><img class='center' src="/images/blog/wordpress-toolbar-customization-description.jpg" title="WordPress Toolbar Customization Description" alt="WordPress Toolbar Customization Description" /></p>
+
+<p>I decided to implement administration functions of the menu with WordPress native menu editor. E.g. One can add/edit menu items as though it is an ordinary WordPress menu. But this menu will be displayed on WordPress Toolbar.</p>
+
+<h2>A Hidden Challenge</h2>
+
+
+<p>A challenge was hidden in this project. Menu items were dependent of the membership level being visited. i.e. different menu needs to be displayed for different membership levels. Membership management was done by another plugin. I was able to successfully satisfy these requirements too.</p>
+
+<p>I was able to hook into the proper point of WordPress execution and inject the new menu to WordPress Toolbar. I was able to complete the project successfully.</p>
+
+<p>The following is the review by cstoudt for the correct interpretation and implementation of his needs for this project.</p>
+
+<p><img class='center' src="/images/blog/wp-toolbar-customization-feedback.jpg" title="WordPress Toolbar Customization Feedback" alt="WordPress Toolbar Customization Feedback" /></p>
+]]></content>
+  </entry>
+  
+</feed>

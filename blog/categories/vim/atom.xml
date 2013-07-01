@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Vim | Freelance Projects]]></title>
+  <link href="http://uw-freelancer.github.io/blog/categories/vim/atom.xml" rel="self"/>
+  <link href="http://uw-freelancer.github.io/"/>
+  <updated>2013-07-01T17:17:42+05:30</updated>
+  <id>http://uw-freelancer.github.io/</id>
+  <author>
+    <name><![CDATA[Upeksha Wisidagama]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Vim PowerLine]]></title>
+    <link href="http://uw-freelancer.github.io/blog/vim-powerline/"/>
+    <updated>2013-07-01T15:05:00+05:30</updated>
+    <id>http://uw-freelancer.github.io/blog/vim-powerline</id>
+    <content type="html"><![CDATA[<p>Vim is the editor I use for my day to day text editing tasks.</p>
+
+<h2>Powerline Mode Indicator</h2>
+
+
+<p>Vim Powerline plugin can show the &lsquo;mode information&rsquo; on the powerline.</p>
+
+<p>Normal Mode</p>
+
+<p><img class='center' src="/images/blog/vim/powerline-normal.png" title="Vim Powerline Normal" alt="Vim Powerline Normal" /></p>
+
+<p>Insert Mode</p>
+
+<p><img class='center' src="/images/blog/vim/powerline-insert.png" title="Vim Powerline Insert" alt="Vim Powerline Insert" /></p>
+
+<p>Visual Line Mode</p>
+
+<p><img class='center' src="/images/blog/vim/powerline-vline.png" title="Vim Powerline Visual Line" alt="Vim Powerline Visual Line" /></p>
+
+<p>Visual Block Mode</p>
+
+<p><img class='center' src="/images/blog/vim/powerline-vbox.png" title="Vim Powerline Visual Block" alt="Vim Powerline Visual Block" /></p>
+
+<h2>Powerline Git Branch Indicator</h2>
+
+
+<p>The above screens show we are working on the &lsquo;Master&rsquo; branch. Let&rsquo;s create and new branch called &lsquo;Upeksha&rsquo; and checkout it.</p>
+
+<p><img class='center' src="/images/blog/vim/powerline-git-branch.png" title="Powerline Create Branch" alt="Powerline Create Branch" /></p>
+
+<p>Now the Git Branch Indicator shows the &lsquo;Upeksha&rsquo; branch.</p>
+
+<p><img class='center' src="/images/blog/vim/powerline-upeksha-branch.png" title="Powerline Upeksha Branch" alt="Powerline Upeksha Branch" /></p>
+
+<h2>How to install Powerline</h2>
+
+
+<ol>
+<li>First, Install the Powerline plugin.</li>
+</ol>
+
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>&lsquo;Installing Powerline Plugin&rsquo; </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nb">cd</span> ~/.vim/bundle
+</span><span class='line'>git clone &lt;a <span class="nv">href</span><span class="o">=</span><span class="s2">&quot;https://github.com/Lokaltog/vim-powerline.git&quot;</span>&gt;https://github.com/Lokaltog/vim-powerline.git&lt;/a&gt;
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<ol>
+<li>Next, install the Powerline fonts.</li>
+</ol>
+
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>&lsquo;Installing Powerline Fonts&rsquo; </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>mkdir ~/.fonts
+</span><span class='line'><span class="nb">cd</span> ~/.fonts/
+</span><span class='line'>git clone &lt;a <span class="nv">href</span><span class="o">=</span><span class="s2">&quot;https://github.com/scotu/ubuntu-mono-powerline.git&quot;</span>&gt;https://github.com/scotu/ubuntu-mono-powerline.git&lt;/a&gt;
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<ol>
+<li>Finally, configure your Vim instance.</li>
+</ol>
+
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>&lsquo;Powerline Vim Configuration &ndash; .vimrc&rsquo; </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>&lt;/p&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;p&gt;&amp;ldquo; Vim Powerline
+</span><span class='line'><span class="nb">let </span>g:Powerline_symbols <span class="o">=</span> &amp;lsquo;fancy&amp;rsquo;&lt;/p&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;p&gt;&amp;ldquo; Automatically delete buffers when browsing git <span class="nb">history</span>/objects.
+</span><span class='line'>au BufReadPost fugitive://* <span class="nb">set </span><span class="nv">bufhidden</span><span class="o">=</span>delete&lt;/p&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;p&gt;&amp;ldquo; Optional Setting
+</span><span class='line'><span class="nb">set </span><span class="nv">t_Co</span><span class="o">=</span>256
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+]]></content>
+  </entry>
+  
+</feed>
