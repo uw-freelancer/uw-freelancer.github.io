@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Vim | Freelance Projects]]></title>
   <link href="http://uw-freelancer.github.io/blog/categories/vim/atom.xml" rel="self"/>
   <link href="http://uw-freelancer.github.io/"/>
-  <updated>2013-07-01T17:57:50+05:30</updated>
+  <updated>2013-07-06T14:20:52+05:30</updated>
   <id>http://uw-freelancer.github.io/</id>
   <author>
     <name><![CDATA[Upeksha Wisidagama]]></name>
@@ -12,6 +12,103 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Vim Vedug]]></title>
+    <link href="http://uw-freelancer.github.io/blog/vim-vdebug/"/>
+    <updated>2013-07-06T15:13:00+05:30</updated>
+    <id>http://uw-freelancer.github.io/blog/vim-vdebug</id>
+    <content type="html"><![CDATA[<p>I&rsquo;ve been using various debuggers for Vim. But when tried Vdeug, I realized Vdebug has almost all the possible features for a Vim Debugger.</p>
+
+<p><img class='center' src="/images/blog/vim/vdebug-help.jpg" title="Vdebug Help" alt="Vdebug Help" /></p>
+
+<p>Vdebug, technically, said to support languages that have a debugging engine that uses the DBGP protocol. This plugin has been designed with four languages in mind, PHP, Python, Ruby and Perl.</p>
+
+<p><blockquote><p>Vdebug: A powerful, fast, multi-language debugger for Vim</p></blockquote></p>
+
+<h3>Vim Vdebug Debugger Stack</h3>
+
+
+<p><img class='center' src="/images/blog/vim/vdebug-debuggerstack.jpg" title="Vdebug Debugger Stack" alt="Vdebug Debugger Stack" /></p>
+
+<h3>Vim Vdebug Debugger Watch</h3>
+
+
+<p><img class='center' src="/images/blog/vim/vdebug-debuggerwatch.jpg" title="Vdebug Debugger Watch" alt="Vdebug Debugger Watch" /></p>
+
+<h3>Vim Vdebug Debugger Status</h3>
+
+
+<p><img class='center' src="/images/blog/vim/vdebug-debuggerstatus.jpg" title="Vdebug Debugger Status" alt="Vdebug Debugger Status" /></p>
+
+<h2>Installing Vdebug Plugin</h2>
+
+
+<p>Clone the Vdebug Github repository in your local bundle.</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>&lsquo;Installing Vdebug&rsquo; </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nb">cd</span> ~/.vim/bundle
+</span><span class='line'>git clone &lt;a <span class="nv">href</span><span class="o">=</span><span class="s2">&quot;https://github.com/joonty/vdebug.git&quot;</span>&gt;https://github.com/joonty/vdebug.git&lt;/a&gt;
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Insanely Faster Buffer Switching]]></title>
+    <link href="http://uw-freelancer.github.io/blog/insanely-faster-vim-buffer-switching/"/>
+    <updated>2013-07-03T23:05:00+05:30</updated>
+    <id>http://uw-freelancer.github.io/blog/insanely-faster-vim-buffer-switching</id>
+    <content type="html"><![CDATA[<p>Consider the following instance. You are debugging an app with Vim Vdebug. You have opened several other text buffers as well. Also note that we&rsquo;ve a couple of tabs as well.</p>
+
+<p><img class='center' src="/images/blog/insanely-faster-buffer-switching.png" title="Insanely Faster Buffer Switching in Vim" alt="Insanely Faster Buffer Switching in Vim" /></p>
+
+<p><a href="/images/blog/insanely-faster-buffer-switching.png" target="blank" >Larger Preview</a></p>
+
+<h2>{ s-h | s-j | s-k | s-l }</h2>
+
+
+<p>Still using &lt;C-W> commands to switch buffers? It&rsquo;s probably time to practise a more efficient way.</p>
+
+<p><blockquote><p>I&rsquo;ve put some text on my .vimrc which allows me to switch buffers 537ns before I think about switching buffers.<br/>* ns = nano seconds = 1x10<sup>-9</sup>s</p></blockquote></p>
+
+<p>I strongly encourage you to put these in your .vimrc and experience <b>The Ultimate Speed of Buffer Switching</b>.</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>&lsquo;Insanely Faster Buffer Switching &ndash; .vimrc&rsquo; </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>nmap sh &amp;lt;C-W&gt;h
+</span><span class='line'>nmap sj &amp;lt;C-W&gt;j
+</span><span class='line'>nmap sk &amp;lt;C-W&gt;k
+</span><span class='line'>nmap sl &amp;lt;C-W&gt;l
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<h2>Lightning Speed Tab Switching</h2>
+
+
+<p>I recommend the following settings for a faster and more intuitive tab swiching experience.</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>&lsquo;Lightning Fast Tab Switching &ndash; .vimrc&rsquo; </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>nnoremap sn :tabp&lt;cr&gt;
+</span><span class='line'>nnoremap sm :tabn&lt;cr&gt;
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<h2>Exercise</h2>
+
+
+<p>Don&rsquo;t look at the keyboard!
+Can you find the &rsquo;s' key without looking at the keyboard?</p>
+
+<p>Yes: Share this post.<br />
+No: Like this post.<br />
+I looked at the keybord: Do nothing.<br /></p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Vim PowerLine]]></title>
@@ -55,10 +152,7 @@
 <h2>How to install Powerline</h2>
 
 
-<ol>
-<li>First, Install the Powerline plugin.</li>
-</ol>
-
+<p>1 &ndash; First, Install the Powerline plugin.</p>
 
 <p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>&lsquo;Installing Powerline Plugin&rsquo; </span></figcaption>
  <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
@@ -67,10 +161,7 @@
 </span><span class='line'>git clone &lt;a <span class="nv">href</span><span class="o">=</span><span class="s2">&quot;https://github.com/Lokaltog/vim-powerline.git&quot;</span>&gt;https://github.com/Lokaltog/vim-powerline.git&lt;/a&gt;
 </span></code></pre></td></tr></table></div></figure></notextile></div></p>
 
-<ol>
-<li>Next, install the Powerline fonts.</li>
-</ol>
-
+<p>2 &ndash; Next, install the Powerline fonts.</p>
 
 <p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>&lsquo;Installing Powerline Fonts&rsquo; </span></figcaption>
  <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
@@ -81,10 +172,7 @@
 </span><span class='line'>git clone &lt;a <span class="nv">href</span><span class="o">=</span><span class="s2">&quot;https://github.com/scotu/ubuntu-mono-powerline.git&quot;</span>&gt;https://github.com/scotu/ubuntu-mono-powerline.git&lt;/a&gt;
 </span></code></pre></td></tr></table></div></figure></notextile></div></p>
 
-<ol>
-<li>Finally, configure your Vim instance.</li>
-</ol>
-
+<p>3 &ndash; Finally, configure your Vim instance.</p>
 
 <p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>&lsquo;Powerline Vim Configuration &ndash; .vimrc&rsquo; </span></figcaption>
  <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>

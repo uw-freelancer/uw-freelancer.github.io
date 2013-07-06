@@ -4,7 +4,7 @@
   <title><![CDATA[Freelance Projects]]></title>
   <link href="http://uw-freelancer.github.io/atom.xml" rel="self"/>
   <link href="http://uw-freelancer.github.io/"/>
-  <updated>2013-07-01T17:57:50+05:30</updated>
+  <updated>2013-07-06T14:20:52+05:30</updated>
   <id>http://uw-freelancer.github.io/</id>
   <author>
     <name><![CDATA[Upeksha Wisidagama]]></name>
@@ -12,6 +12,163 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Vim Vedug]]></title>
+    <link href="http://uw-freelancer.github.io/blog/vim-vdebug/"/>
+    <updated>2013-07-06T15:13:00+05:30</updated>
+    <id>http://uw-freelancer.github.io/blog/vim-vdebug</id>
+    <content type="html"><![CDATA[<p>I&rsquo;ve been using various debuggers for Vim. But when tried Vdeug, I realized Vdebug has almost all the possible features for a Vim Debugger.</p>
+
+<p><img class='center' src="http://uw-freelancer.github.io/images/blog/vim/vdebug-help.jpg" title="Vdebug Help" alt="Vdebug Help" /></p>
+
+<p>Vdebug, technically, said to support languages that have a debugging engine that uses the DBGP protocol. This plugin has been designed with four languages in mind, PHP, Python, Ruby and Perl.</p>
+
+<blockquote><p>Vdebug: A powerful, fast, multi-language debugger for Vim</p></blockquote>
+
+
+
+
+<h3>Vim Vdebug Debugger Stack</h3>
+
+
+<p><img class='center' src="http://uw-freelancer.github.io/images/blog/vim/vdebug-debuggerstack.jpg" title="Vdebug Debugger Stack" alt="Vdebug Debugger Stack" /></p>
+
+<h3>Vim Vdebug Debugger Watch</h3>
+
+
+<p><img class='center' src="http://uw-freelancer.github.io/images/blog/vim/vdebug-debuggerwatch.jpg" title="Vdebug Debugger Watch" alt="Vdebug Debugger Watch" /></p>
+
+<h3>Vim Vdebug Debugger Status</h3>
+
+
+<p><img class='center' src="http://uw-freelancer.github.io/images/blog/vim/vdebug-debuggerstatus.jpg" title="Vdebug Debugger Status" alt="Vdebug Debugger Status" /></p>
+
+<h2>Installing Vdebug Plugin</h2>
+
+
+<p>Clone the Vdebug Github repository in your local bundle.</p>
+
+<figure class='code'><figcaption><span>&#8216;Installing Vdebug&#8217; </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nb">cd</span> ~/.vim/bundle
+</span><span class='line'>git clone https://github.com/joonty/vdebug.git
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Thank You Mr. Nit3hawkz]]></title>
+    <link href="http://uw-freelancer.github.io/blog/thanks-nit3hawks/"/>
+    <updated>2013-07-06T05:00:00+05:30</updated>
+    <id>http://uw-freelancer.github.io/blog/thanks-nit3hawks</id>
+    <content type="html"><![CDATA[<p>It&rsquo;s been a year, completing my first project on freelancer.com and receiving a 5 star feedback.</p>
+
+<blockquote><p>In retrospect, it seems like it all happened so quickly.</p></blockquote>
+
+
+<p>Remember the first feedback I received, that positive feedback had a great impact on my freelancing career.</p>
+
+<p><img class='center' src="http://uw-freelancer.github.io/images/blog/thanks-nit3hawkz-review.jpg" title="Mr. Nit3hawkz Review" alt="Mr. Nit3hawkz Review" /></p>
+
+<p>After that I was able to complete a series of freelancing projects. At the same time I learned a great deal of new things about web design and development.</p>
+
+<blockquote><p>&#8220;How far that little candle throws his beams! So shines a good deed in a weary world.&#8221; - William Shakespeare</p></blockquote>
+
+
+<p><img class='center' src="http://uw-freelancer.github.io/images/blog/nit3hawkz-profile.jpg" title="Mr. Nit3hawkz Profile" alt="Mr. Nit3hawkz Profile" /></p>
+
+<p>Thank you Mr. Nit3hawkz for helping me to start my career in freelancing. I completed three projects for Mr. Nit3hawkz in the past year.</p>
+
+<p>First Project &ndash; <a href="http://uw-freelancer.github.io/blog/coming-soon-site/" >Exp Tennis Project</a><br />
+Second Project &ndash; <a href="http://uw-freelancer.github.io/blog/facebook-app-sweepstakes/" >Facebook App Project</a><br />
+Third Project &ndash; <a href="http://uw-freelancer.github.io/blog/language-parlor-project/" >Language Parlor Project</a><br /></p>
+
+<blockquote><p>&#8220;Unselfish and noble actions are the most radiant pages in the biography of souls.&#8221; - David Thomas</p></blockquote>
+
+
+
+
+<h2>Dear Other Employers,</h2>
+
+
+<p>I thank all of you.</p>
+
+<blockquote><p>I can&#8217;t win, I can&#8217;t reign<br/>I will never win this game<br/>Without you, without you<br/>I am lost, I am vain,<br/>I will never be the same<br/>Without you, without you</p></blockquote>
+
+
+<p><img class='center' src="http://uw-freelancer.github.io/images/blog/thank-you.jpg" title="Thank You All" alt="Thank You All" /></p>
+
+<blockquote><p>&#8220;I would maintain that thanks are the highest form of thought, and that gratitude is happiness doubled by wonder.&#8221; - G.K. Chesterton</p></blockquote>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Insanely Faster Buffer Switching]]></title>
+    <link href="http://uw-freelancer.github.io/blog/insanely-faster-vim-buffer-switching/"/>
+    <updated>2013-07-03T23:05:00+05:30</updated>
+    <id>http://uw-freelancer.github.io/blog/insanely-faster-vim-buffer-switching</id>
+    <content type="html"><![CDATA[<p>Consider the following instance. You are debugging an app with Vim Vdebug. You have opened several other text buffers as well. Also note that we&rsquo;ve a couple of tabs as well.</p>
+
+<p><img class='center' src="http://uw-freelancer.github.io/images/blog/insanely-faster-buffer-switching.png" title="Insanely Faster Buffer Switching in Vim" alt="Insanely Faster Buffer Switching in Vim" /></p>
+
+<p><a href="http://uw-freelancer.github.io/images/blog/insanely-faster-buffer-switching.png" target="blank" >Larger Preview</a></p>
+
+<h2>{ s-h | s-j | s-k | s-l }</h2>
+
+
+<p>Still using &lt;C-W> commands to switch buffers? It&rsquo;s probably time to practise a more efficient way.</p>
+
+<blockquote><p>I&#8217;ve put some text on my .vimrc which allows me to switch buffers 537ns before I think about switching buffers.<br/>* ns = nano seconds = 1x10^(-9)s</p></blockquote>
+
+
+<p>I strongly encourage you to put these in your .vimrc and experience <b>The Ultimate Speed of Buffer Switching</b>.</p>
+
+<figure class='code'><figcaption><span>&#8216;Insanely Faster Buffer Switching - .vimrc&#8217; </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>nmap sh &lt;C-W&gt;h
+</span><span class='line'>nmap sj &lt;C-W&gt;j
+</span><span class='line'>nmap sk &lt;C-W&gt;k
+</span><span class='line'>nmap sl &lt;C-W&gt;l
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<h2>Lightning Speed Tab Switching</h2>
+
+
+<p>I recommend the following settings for a faster and more intuitive tab swiching experience.</p>
+
+<figure class='code'><figcaption><span>&#8216;Lightning Fast Tab Switching - .vimrc&#8217; </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>nnoremap sn :tabp&lt;cr&gt;
+</span><span class='line'>nnoremap sm :tabn&lt;cr&gt;
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<h2>Exercise</h2>
+
+
+<p>Don&rsquo;t look at the keyboard!
+Can you find the &rsquo;s&#8217; key without looking at the keyboard?</p>
+
+<p>Yes: Share this post.<br />
+No: Like this post.<br />
+I looked at the keybord: Do nothing.<br /></p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Vim PowerLine]]></title>
@@ -55,10 +212,7 @@
 <h2>How to install Powerline</h2>
 
 
-<ol>
-<li>First, Install the Powerline plugin.</li>
-</ol>
-
+<p>1 &ndash; First, Install the Powerline plugin.</p>
 
 <figure class='code'><figcaption><span>&#8216;Installing Powerline Plugin&#8217; </span></figcaption>
  <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
@@ -68,10 +222,7 @@
 </span></code></pre></td></tr></table></div></figure>
 
 
-<ol>
-<li>Next, install the Powerline fonts.</li>
-</ol>
-
+<p>2 &ndash; Next, install the Powerline fonts.</p>
 
 <figure class='code'><figcaption><span>&#8216;Installing Powerline Fonts&#8217; </span></figcaption>
  <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
@@ -83,10 +234,7 @@
 </span></code></pre></td></tr></table></div></figure>
 
 
-<ol>
-<li>Finally, configure your Vim instance.</li>
-</ol>
-
+<p>3 &ndash; Finally, configure your Vim instance.</p>
 
 <figure class='code'><figcaption><span>&#8216;Powerline Vim Configuration - .vimrc&#8217; </span></figcaption>
  <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
@@ -273,6 +421,64 @@
 <p>The following is the review by cstoudt for the correct interpretation and implementation of his needs for this project.</p>
 
 <p><img class='center' src="http://uw-freelancer.github.io/images/blog/wp-toolbar-customization-feedback.jpg" title="WordPress Toolbar Customization Feedback" alt="WordPress Toolbar Customization Feedback" /></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Language Parlor Project]]></title>
+    <link href="http://uw-freelancer.github.io/blog/language-parlor-project/"/>
+    <updated>2013-01-03T21:35:00+05:30</updated>
+    <id>http://uw-freelancer.github.io/blog/language-parlor-project</id>
+    <content type="html"><![CDATA[<p>Language Parlor website allows you to learn new languages. It is designed to offer many language courses in many levels. This project is from nit3hawks.</p>
+
+<p><img class='center' src="http://uw-freelancer.github.io/images/blog/language-parlor-project-description.jpg" title="Language Parlor Project Description" alt="Language Parlor Project Description" /></p>
+
+<p>Paid subscribers are allowed to watch premium learning videos. Multiple logins using the same password was prevented. This website was based on a premium theme called &lsquo;clarity&rsquo;.</p>
+
+<p><img class='center' src="http://uw-freelancer.github.io/images/blog/language-parlor-project-banner.png" title="Language Parlor Project Banner" alt="Language Parlor Project Banner" /></p>
+
+<p>This website connects to PayPal to process the subscription. I used &lsquo;PayPal Framework&rsquo; plugin for this project. After successful completion I earned $330USD(including $30USD bonus).</p>
+
+<p><img class='center' src="http://uw-freelancer.github.io/images/blog/language-parlor-project-feedback.jpg" title="Language Parlor Project Feedback" alt="Language Parlor Project Feedback" /></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Facebook App Sweepstakes]]></title>
+    <link href="http://uw-freelancer.github.io/blog/facebook-app-sweepstakes/"/>
+    <updated>2012-07-25T18:35:00+05:30</updated>
+    <id>http://uw-freelancer.github.io/blog/facebook-app-sweepstakes</id>
+    <content type="html"><![CDATA[<p>A Facebook App needed to be built with a like gate. After liking the page or app fans are allowed enter their contact details via a form in the Facebook App. This qualifies those fans for a sweepstake program run by Exp Tennis Group.</p>
+
+<p><img class='center' src="http://uw-freelancer.github.io/images/blog/facebook-app-project-description.jpg" title="Facebook App Project Description" alt="Facebook App Project Description" /></p>
+
+<p>The facebook app was hosted at Heroku servers. Facebook apps can be freely hosted at Heroku. App connects to MailChimp email service via their API. I also created a custom admin panel within the <a href="http://uw-freelancer.github.io/blog/coming-soon-site/" >Coming Soon Site</a> to manage the sweepstakes campaign. I was able to successfully complete the project.</p>
+
+<p><img class='center' src="http://uw-freelancer.github.io/images/blog/facebook-app-feedback.jpg" title="Facebook App Feedback" alt="Facebook App Feedback" /></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Coming Soon Site Using WordPress CMS]]></title>
+    <link href="http://uw-freelancer.github.io/blog/coming-soon-site/"/>
+    <updated>2012-06-06T20:00:00+05:30</updated>
+    <id>http://uw-freelancer.github.io/blog/coming-soon-site</id>
+    <content type="html"><![CDATA[<p>A coming soon website was built for an &lsquo;Online Tennis Ladder Site&rsquo; called EXP Tennis. This was built using popular &lsquo;WordPress Content Management System&rsquo;. I developed the WordPress Theme from the HTML template given by the client. His name on freelancer.com was &lsquo;nit3hawkz&rsquo;.</p>
+
+<p><img class='center' src="http://uw-freelancer.github.io/images/blog/coming-soon-site-project-description.jpg" title="Coming Soon Site Project Description" alt="Coming Soon Site Project Description" /></p>
+
+<h2>First Project on Freelancer.com</h2>
+
+
+<p>This was my first project in Freelancer.com. There were a total of 31 freelancers bidding on this project and the average bid was $408USD. I was fortunate enough to win the bid and get selected as the winning bidder for this &lsquo;Coming Soon Site&rsquo;.</p>
+
+<p>Nit3hawkz was the project poster. He already had some other projects on freelancer.com. The main site related to this coming soon site, i.e. the actual coming soon site was already being developed, at the time I was awarded the project.</p>
+
+<p><img class='center' src="http://uw-freelancer.github.io/images/blog/coming-soon-site-screenshot.jpg" title="Coming Soon Site Screenshot" alt="Coming Soon Site Screenshot" /></p>
+
+<p>The project was completed successfully and I received a 5 star rating for the project.</p>
+
+<p><img class='center' src="http://uw-freelancer.github.io/images/blog/coming-soon-site-feedback.jpg" title="Coming Soon Site Feedback" alt="Coming Soon Site Feedback" /></p>
 ]]></content>
   </entry>
   
