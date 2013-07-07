@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
 
-  <title><![CDATA[Category: Server | Freelance Projects]]></title>
-  <link href="http://uw-freelancer.github.io/blog/categories/server/atom.xml" rel="self"/>
+  <title><![CDATA[Category: PHP | Freelance Projects]]></title>
+  <link href="http://uw-freelancer.github.io/blog/categories/php/atom.xml" rel="self"/>
   <link href="http://uw-freelancer.github.io/"/>
   <updated>2013-07-07T21:58:49+05:30</updated>
   <id>http://uw-freelancer.github.io/</id>
@@ -220,135 +220,6 @@
 <p>As of Apache 1.3, the code will relax the one-per-second rule. It will spawn one, wait a second, then spawn two, wait a second, then spawn four, and it will continue exponentially until it is spawning 32 children per second. It will stop whenever it satisfies the MinSpareServers setting. Read more about <a href="http://httpd.apache.org/docs/current/misc/perf-tuning.html" >Apache2 Performance Tuning</a>.</p>
 
 <p>Happy Apache2 Prefork Benchmarking with or without <code>mod_php</code>!</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Setting Up a Local Ubuntu Server]]></title>
-    <link href="http://uw-freelancer.github.io/blog/setup-local-ubuntu-server/"/>
-    <updated>2012-02-02T22:00:00+05:30</updated>
-    <id>http://uw-freelancer.github.io/blog/setup-local-ubuntu-server</id>
-    <content type="html"><![CDATA[<p>Let&rsquo;s setup an Ubuntu Server. Download the server image from ubuntu website and burn it into a CD or DVD. Install it on your machine. You will be asked about basic configuration options. Choose defaults. Important: Select &lsquo;OpenSSH&rsquo; and &lsquo;LAMP&rsquo; in the server selection dialog.</p>
-
-<p><img class='center' src="/images/server/ubuntu-server-login.jpg" title="Ubuntu Server Login" alt="Ubuntu Server Login" /></p>
-
-<p>Note the ip address of eth0. Next we plug in anther network card and setup an IP address for the new interface (probably be named as eth1).</p>
-
-<h2>Setting up the IP address</h2>
-
-
-<p>Shutdown the computer and plug in the new network card and boot the computer. Run <code>ifconfig</code> command. The new interface will not show up. You may guess the new ethernet interface. E.g. If you have eth0 listed, the new one wll be eth1. You can run &lsquo;ifconig -a&rsquo; and see yourself and verify.</p>
-
-<p><blockquote><p>If a single  -a  argument  is  given,  it  displays the status of all interfaces, even those that are down.</p></blockquote></p>
-
-<p>Another way is to run &lsquo;ifconfig eth1&rsquo; directly, assuming the new interface is eth1.</p>
-
-<p><img class='center' src="/images/server/where-is-eth1-interface.jpg" title="Where is eth1 interface" alt="Where is eth1 interface" /></p>
-
-<p>Now, you are certain that the new network interface is &lsquo;eth1&rsquo;. Let&rsquo;s assign a new static IP to this interface. We&rsquo;ll be SSHing into this server through the new interface soon.</p>
-
-<p>Open &lsquo;/etc/network/interfaces&rsquo; and assign <code>192.168.1.8</code> for <code>eth1</code>. We are adding our new machine to the &lsquo;UW Network&rsquo; (192.168.1.0).</p>
-
-<p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>&lsquo;Static IP Assignment for eth1 (/etc/network/interfaces)&rsquo; </span></figcaption>
- <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>&lt;/p&gt;
-</span><span class='line'>
-</span><span class='line'>&lt;h1&gt;The UW network interface&lt;/h1&gt;
-</span><span class='line'>
-</span><span class='line'>&lt;p&gt;auto eth1
-</span><span class='line'>iface eth1 inet static
-</span><span class='line'>address 192.168.1.8
-</span><span class='line'>netmask 255.255.255.0
-</span><span class='line'>network 192.168.1.0
-</span><span class='line'>broadcast 192.168.1.255
-</span></code></pre></td></tr></table></div></figure></notextile></div></p>
-
-<p>Restart the server to apply ip addresses.</p>
-
-<p><img class='center' src="/images/server/new-network-interface-configured.jpg" title="New Network Interface Configured" alt="New Network Interface Configured" /></p>
-
-<h2>Remote Login to the Server and Set up the HostName</h2>
-
-
-<p>Are you getting the &lsquo;apache2: Could not reliably determine the server&rsquo;s fully qualified domain name, using 127.0.1.1 for ServerName&rsquo; message every time you start, stop or restart the server?</p>
-
-<p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>&lsquo;apache2 warning&rsquo; </span></figcaption>
- <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>upeksha@uwlab:~<span class="nv">$ </span>sudo service apache2 start
-</span><span class='line'><span class="o">[</span>sudo<span class="o">]</span> password <span class="k">for </span>upeksha:
-</span><span class='line'> * Starting web server apache2
-</span><span class='line'> apache2: Could not reliably determine the server&amp;rsquo;s fully qualified domain name, using 127.0.1.1 <span class="k">for </span>ServerName
-</span></code></pre></td></tr></table></div></figure></notextile></div></p>
-
-<p>To fix the warning, login to the remote server by SSHing to 192.168.1.8.</p>
-
-<p><img class='center' src="/images/server/remote-login-to-server-change-servername.jpg" title="Change Server Name" alt="Change Server Name" /></p>
-
-<p>To specify a server name for our new server, open &lsquo;/etc/apache2/apache2.conf&rsquo; and enter <code>ServerName uwlab</code> at the bottom.</p>
-
-<p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>&lsquo;Server name assignment (/etc/apache2/apache2.conf)&rsquo; </span></figcaption>
- <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>ServerName uwlab
-</span></code></pre></td></tr></table></div></figure></notextile></div></p>
-
-<p>Restart the server again using <code>sudo service apache2 restart</code>. Now, there is no warning.</p>
-
-<h2>Using a Name instead of IP for SSH</h2>
-
-
-<p>In the previous section we sshed into the remote server using <code>ssh 192.168.1.8</code>. We can also configure our machine to use a name instead an ip address. Open &lsquo;/etc/hosts&rsquo; and enter the following.</p>
-
-<p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>&lsquo;SSH hostname (/etc/hosts)&rsquo; </span></figcaption>
- <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>192.168.1.8     uwlab
-</span></code></pre></td></tr></table></div></figure></notextile></div></p>
-
-<p>Now you can simply use <code>ssh uwlab</code> to SSH into the new server.</p>
-
-<h2>Auto Login to the Remote Server with SSH</h2>
-
-
-<p>Tired of typing the password everytime login to the server? Use ssh-copy-id to copy our identity onto the server. First, generate the key pair.</p>
-
-<p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>&lsquo;Generating Public and Private Keys&rsquo; </span></figcaption>
- <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>ssh-keygen -t rsa
-</span><span class='line'>Generating public/private rsa key pair.
-</span><span class='line'>Enter file in which to save the key <span class="o">(</span>/home/upeksha/.ssh/id_rsa<span class="o">)</span>:
-</span><span class='line'>Enter passphrase <span class="o">(</span>empty <span class="k">for </span>no passphrase<span class="o">)</span>:
-</span><span class='line'>Enter same passphrase again:
-</span><span class='line'>Your identification has been saved in /home/upeksha/.ssh/id_rsa
-</span><span class='line'>Your public key has been saved in /home/upeksha/.ssh/id_rsa.pub
-</span></code></pre></td></tr></table></div></figure></notextile></div></p>
-
-<p>Next copy the public key to the server using <code>ssh-copy-id</code>.</p>
-
-<p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>&lsquo;Setting up auto-login for ssh&rsquo; </span></figcaption>
- <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>ssh-copy-id uwlab
-</span></code></pre></td></tr></table></div></figure></notextile></div></p>
-
-<p>Now you can just type <code>ssh uwlab</code> at the command prompt and you are in the server.</p>
-
-<p>Be sure to use a simple PassPhrase. It is important to use a Very Strong Password and relatively weak and easy to type PassPhrase. This reduces the likelyhood of someone succeed in bruteforcing into the server. Of cource you can hide the SSH for even more security.</p>
 ]]></content>
   </entry>
   

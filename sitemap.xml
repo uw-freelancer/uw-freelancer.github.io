@@ -2,7 +2,13 @@
 <urlset xmlns='http://www.sitemaps.org/schemas/sitemap/0.9'>
     <url>
         <loc>http://uw-freelancer.github.io/blog/setup-local-ubuntu-server/</loc>
-        <lastmod>2013-07-07T17:39:50+05:30</lastmod>
+        <lastmod>2013-07-07T18:06:12+05:30</lastmod>
+    </url>
+    <url>
+        <loc>
+            http://uw-freelancer.github.io/blog/mundane-experiments-with-apache-mpm_prefork-and-mod_php/
+        </loc>
+        <lastmod>2013-07-07T21:58:48+05:30</lastmod>
     </url>
     <url>
         <loc>http://uw-freelancer.github.io/blog/coming-soon-site/</loc>
@@ -50,11 +56,11 @@
     </url>
     <url>
         <loc>http://uw-freelancer.github.io/blog/archives/</loc>
-        <lastmod>2013-07-07T17:39:50+05:30</lastmod>
+        <lastmod>2013-07-07T21:58:48+05:30</lastmod>
     </url>
     <url>
         <loc>http://uw-freelancer.github.io/</loc>
-        <lastmod>2013-07-07T17:39:50+05:30</lastmod>
+        <lastmod>2013-07-07T21:58:48+05:30</lastmod>
     </url>
     <url>
         <loc>http://uw-freelancer.github.io/robots.txt</loc>
