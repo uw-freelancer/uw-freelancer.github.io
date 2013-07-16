@@ -1,0 +1,604 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Building a Linux System From Scratch - Freelance Projects</title>
+  <meta name="author" content="Upeksha Wisidagama">
+
+  
+  <meta name="description" content="62 Tarballs were downloaded. Then compiled one-by-one. &#8216;Source Tarballs (/sources)&#8217; 1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21 &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://uw-freelancer.github.io/blog/building-a-linux-system-from-scratch">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Freelance Projects" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <link href="/stylesheets/data-table.css" media="screen, projection" rel="stylesheet" type="text/css" />
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-42123622-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Freelance Projects</a></h1>
+  
+    <h2>Upeksha Wisidagama</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:uw-freelancer.github.io" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Building a Linux System From Scratch</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-07-14T18:00:00+05:30" pubdate data-updated="true">Jul 14<span>th</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>62 Tarballs were downloaded. Then compiled one-by-one.</p>
+
+<figure class='code'><figcaption><span>&#8216;Source Tarballs (/sources)&#8217; </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+<span class='line-number'>52</span>
+<span class='line-number'>53</span>
+<span class='line-number'>54</span>
+<span class='line-number'>55</span>
+<span class='line-number'>56</span>
+<span class='line-number'>57</span>
+<span class='line-number'>58</span>
+<span class='line-number'>59</span>
+<span class='line-number'>60</span>
+<span class='line-number'>61</span>
+<span class='line-number'>62</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>-rw-r--r--  1 uw   uw    1214744 Apr 25  2012 autoconf-2.69.tar.xz
+</span><span class='line'>-rw-r--r--  1 uw   uw    1425080 Jan  1  2013 automake-1.13.1.tar.xz
+</span><span class='line'>-rw-r--r--  1 uw   uw    7009201 Feb 14  2011 bash-4.2.tar.gz
+</span><span class='line'>-rw-r--r--  1 uw   uw   21455321 Nov 13  2012 binutils-2.23.1.tar.bz2
+</span><span class='line'>-rw-r--r--  1 uw   uw    1776640 Dec 12  2012 bison-2.7.tar.xz
+</span><span class='line'>-rw-r--r--  1 uw   uw     782025 Sep 20  2010 bzip2-1.0.6.tar.gz
+</span><span class='line'>-rw-r--r--  1 uw   uw     602679 Oct 22  2012 check-0.9.9.tar.gz
+</span><span class='line'>-rw-r--r--  1 uw   uw    5357988 Feb 14 22:36 coreutils-8.21.tar.xz
+</span><span class='line'>-rw-r--r--  1 uw   uw     576269 Mar 11  2011 dejagnu-1.5.tar.gz
+</span><span class='line'>-rw-r--r--  1 uw   uw    2023539 Sep  2  2011 diffutils-3.2.tar.gz
+</span><span class='line'>-rw-r--r--  1 uw   uw    5981006 Jan 22 09:09 e2fsprogs-1.42.7.tar.gz
+</span><span class='line'>-rw-r--r--  1 uw   uw     628808 Nov 10  2010 expect5.45.tar.gz
+</span><span class='line'>-rw-r--r--  1 uw   uw     641632 Jul 11 10:50 file-5.13.tar.gz
+</span><span class='line'>-rw-r--r--  1 uw   uw    2149838 Jun  6  2009 findutils-4.4.2.tar.gz
+</span><span class='line'>-rw-r--r--  1 uw   uw    1303313 Aug  4  2012 flex-2.5.37.tar.bz2
+</span><span class='line'>-rw-r--r--  1 uw   uw    1626808 Dec 27  2012 gawk-4.0.2.tar.xz
+</span><span class='line'>-rw-r--r--  1 uw   uw   82884636 Sep 20  2012 gcc-4.7.2.tar.bz2
+</span><span class='line'>-rw-r--r--  1 uw   uw     655599 Nov 13  2011 gdbm-1.10.tar.gz
+</span><span class='line'>-rw-r--r--  1 uw   uw   15697875 Dec 25  2012 gettext-0.18.2.tar.gz
+</span><span class='line'>-rw-r--r--  1 uw   uw   10981956 Dec 26  2012 glibc-2.17.tar.xz
+</span><span class='line'>-rw-r--r--  1 uw   uw    1812988 Jul 11 20:52 gmp-5.1.1.tar.xz
+</span><span class='line'>-rw-r--r--  1 uw   uw    1195640 Aug 20  2012 grep-2.14.tar.xz
+</span><span class='line'>-rw-r--r--  1 uw   uw    4019913 Feb  7 17:50 groff-1.22.2.tar.gz
+</span><span class='line'>-rw-r--r--  1 uw   uw    5136412 Jun 28  2012 grub-2.00.tar.xz
+</span><span class='line'>-rw-r--r--  1 uw   uw     720956 Jun 18  2012 gzip-1.5.tar.xz
+</span><span class='line'>-rw-r--r--  1 uw   uw     205618 Mar  5  2008 iana-etc-2.30.tar.bz2
+</span><span class='line'>-rw-r--r--  1 uw   uw    1987928 Jan  6  2012 inetutils-1.9.1.tar.gz
+</span><span class='line'>-rw-r--r--  1 uw   uw     407608 Feb 21 22:14 iproute2-3.8.0.tar.xz
+</span><span class='line'>-rw-r--r--  1 uw   uw    1730719 Dec  6  2012 kbd-1.15.5.tar.gz
+</span><span class='line'>-rw-r--r--  1 uw   uw    1275028 Dec  5  2012 kmod-12.tar.xz
+</span><span class='line'>-rw-r--r--  1 uw   uw     310144 Jul 22  2012 less-451.tar.gz
+</span><span class='line'>-rw-r--r--  1 uw   uw      33692 Mar  4 21:17 lfs-bootscripts-20130123.tar.bz2
+</span><span class='line'>-rw-r--r--  1 uw   uw     750489 Sep 18  2012 libpipeline-1.2.2.tar.gz
+</span><span class='line'>-rw-r--r--  1 uw   uw    2632347 Oct 18  2011 libtool-2.4.2.tar.gz
+</span><span class='line'>-rw-r--r--  1 uw   uw   70981756 Feb 28 19:27 linux-3.8.1.tar.xz
+</span><span class='line'>-rw-r--r--  1 uw   uw    1258362 Mar  2  2011 m4-1.4.16.tar.bz2
+</span><span class='line'>-rw-r--r--  1 uw   uw    1242186 Jul 28  2010 make-3.82.tar.bz2
+</span><span class='line'>-rw-r--r--  1 uw   uw    1388944 Sep 18  2012 man-db-2.6.3.tar.xz
+</span><span class='line'>-rw-r--r--  1 uw   uw    1134180 Feb 12 09:26 man-pages-3.47.tar.xz
+</span><span class='line'>-rw-r--r--  1 uw   uw     624125 Sep  6  2012 mpc-1.0.1.tar.gz
+</span><span class='line'>-rw-r--r--  1 uw   uw    1071688 Jul  4  2012 mpfr-3.1.1.tar.xz
+</span><span class='line'>-rw-r--r--  1 uw   uw    2826473 Jul 11 11:11 ncurses-5.9.tar.gz
+</span><span class='line'>-rw-r--r--  1 uw   uw     675896 Sep 28  2012 patch-2.7.1.tar.xz
+</span><span class='line'>-rw-r--r--  1 uw   uw   13725101 Nov  1  2012 perl-5.16.2.tar.bz2
+</span><span class='line'>-rw-r--r--  1 uw   uw    1931203 Jan 24 19:17 pkg-config-0.28.tar.gz
+</span><span class='line'>-rw-r--r--  1 uw   uw     535796 Jan  8  2013 procps-ng-3.3.6.tar.xz
+</span><span class='line'>-rw-r--r--  1 uw   uw     432501 Sep 20  2012 psmisc-22.20.tar.gz
+</span><span class='line'>-rw-r--r--  1 uw   uw    2277926 Feb 14  2011 readline-6.2.tar.gz
+</span><span class='line'>-rw-r--r--  1 uw   uw    1059414 Dec 22  2012 sed-4.2.2.tar.bz2
+</span><span class='line'>-rw-r--r--  1 uw   uw    2193325 May 26  2012 shadow-4.1.5.1.tar.bz2
+</span><span class='line'>-rw-r--r--  1 uw   uw      86557 Jul 29  2007 sysklogd-1.5.tar.gz
+</span><span class='line'>-rw-r--r--  1 uw   uw    2054644 Jan  8  2013 systemd-197.tar.xz
+</span><span class='line'>-rw-r--r--  1 uw   uw     105551 Apr 14  2010 sysvinit-2.88dsf.tar.bz2
+</span><span class='line'>-rw-r--r--  1 uw   uw    2339773 Mar 12  2011 tar-1.26.tar.bz2
+</span><span class='line'>-rw-r--r--  1 uw   uw    8636908 Dec 20  2012 tcl8.6.0-src.tar.gz
+</span><span class='line'>-rw-r--r--  1 uw   uw    3782636 Feb 17 07:54 texinfo-5.0.tar.xz
+</span><span class='line'>-rw-r--r--  1 uw   uw     214075 Jan  5  2013 tzdata2012j.tar.gz
+</span><span class='line'>-rw-r--r--  1 uw   uw      17129 Jan 12 00:40 udev-lfs-197-2.tar.bz2
+</span><span class='line'>-rw-r--r--  1 uw   uw    3100832 Dec 13  2012 util-linux-2.22.2.tar.xz
+</span><span class='line'>-rw-r--r--  1 uw   uw    9080692 Jul 11 11:18 vim-7.3.tar.bz2
+</span><span class='line'>-rw-r--r--  1 uw   uw     915048 Jun 22  2012 xz-5.0.4.tar.xz
+</span><span class='line'>-rw-r--r--  1 uw   uw     505085 Jul 11 19:55 zlib-1.2.7.tar.bz2
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<h2>Building the ToolChain, Building the System Software and Compiling the Linux Kernel</h2>
+
+
+<p><a href="/blog/building-the-host-independant-toolchain/" >Building the ToolChain</a><br />
+<a href="/blog/building-the-system-software-from-scratch/" >Building the System Software</a><br />
+<a href="/blog/compiling-the-linux-kernel-from-source/" >Compiling the Linux Kernel</a><br /></p>
+
+<p>The above posts describe the steps needed to build a basic Linux system from source tarballs. This article is about booting and logging into the new system.</p>
+
+<h2>Booting the New Linux System</h2>
+
+
+<p>Remove the host hard disk. Boot with the hard disk with new system. Or you can change the hard drive order to allow booting from our new disk.</p>
+
+<p><img class='center' src="/images/lfs/lfs-grub-menu.png" title="Linux System Grub Menu" alt="Linux System Grub Menu" /></p>
+
+<p><img class='center' src="/images/lfs/login-to-lfs.png" title="Linux System Login" alt="Linux System Login" /></p>
+
+<h2>Linux System Hard Disk Usage</h2>
+
+
+<p>The entire disk is 10GB. The system files use only 552MB. &lsquo;usr&rsquo; alone uses 508MB. The Rest of the system uses 44MB.</p>
+
+<table>
+<thead>
+<tr>
+<th></th>
+<th> Directory     </th>
+<th> Size/KB      </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td></td>
+<td> tmp         </td>
+<td> 20</td>
+</tr>
+<tr>
+<td></td>
+<td> srv         </td>
+<td> 4</td>
+</tr>
+<tr>
+<td></td>
+<td> lib         </td>
+<td> 15360</td>
+</tr>
+<tr>
+<td></td>
+<td> media       </td>
+<td> 12</td>
+</tr>
+<tr>
+<td></td>
+<td> boot        </td>
+<td> 12288</td>
+</tr>
+<tr>
+<td></td>
+<td> opt  </td>
+<td> 4</td>
+</tr>
+<tr>
+<td></td>
+<td> home </td>
+<td> 12</td>
+</tr>
+<tr>
+<td></td>
+<td> run  </td>
+<td> 224</td>
+</tr>
+<tr>
+<td></td>
+<td> mnt  </td>
+<td> 4</td>
+</tr>
+<tr>
+<td></td>
+<td> etc  </td>
+<td> 6.5</td>
+</tr>
+<tr>
+<td></td>
+<td> var  </td>
+<td> 920</td>
+</tr>
+<tr>
+<td></td>
+<td> root </td>
+<td> 32</td>
+</tr>
+<tr>
+<td></td>
+<td> sbin </td>
+<td> 4812</td>
+</tr>
+<tr>
+<td></td>
+<td> bin  </td>
+<td> 4915</td>
+</tr>
+<tr>
+<td></td>
+<td> usr  </td>
+<td> 508M</td>
+</tr>
+</tbody>
+</table>
+
+
+<br />See the output of the &#8220;du&#8220; command.<br /><br />
+
+
+<p><img class='center' src="/images/lfs/lfs-disk-usage.png" title="Linux System Disk Usage" alt="Linux System Disk Usage" /></p>
+
+<h2>Linux System Random Access Memory Usage</h2>
+
+
+<p>The system has 1GB RAM. But only 31.5MB is used.</p>
+
+<p><img class='center' src="/images/lfs/lfs-resource-usage.png" title="Linux System Resource Usage" alt="Linux System Resource Usage" /></p>
+
+<p>Many wonder why they should go through the hassle of building a Linux system from scratch when they could just download an existing Linux distribution. However, there are several benefits of building Linux from sources.</p>
+
+<blockquote><p>Building LFS teaches you about all that makes Linux tick, how things work together and depend on each other. And most importantly, how to customize it to your own tastes and needs.</p></blockquote>
+
+
+<p>If you are wondering why you would want a highly secured system, just read any number of articles dealing with hackers and script kiddies breaking into systems and destroying them or stealing from them. Now, you can know the security hole, inspect the patches and fix it yourself immediately.</p>
+
+<blockquote><p>You don&#8217;t have to wait for someone else to provide a new binary package that (hopefully) fixes a security hole. Often, you never truly know whether a security hole is fixed or not unless you do it yourself.</p></blockquote>
+
+
+<p>Thank you, Project Leader: Gerard Beekmans, Project Co-leader: Matthew Burgess and Project Co-leader: Bruce Dubbs of &lsquo;Linux From Scratch&rsquo;.</p>
+
+<p>Visit &lsquo;Linux From Scratch&rsquo; today and experience the freedom and power. Don&rsquo;t forget to run the gcc tests using <code>make -k check</code> &ndash; <b>Approximate build time: 53.5 SBU !</b></p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by 
+    <span class="fn"><a href="https://plus.google.com/115164496041018691013?rel=author">Upeksha Wisidagama</a></span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-07-14T18:00:00+05:30" pubdate data-updated="true">Jul 14<span>th</span>, 2013</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/lfs/'>LFS</a>, <a class='category' href='/blog/categories/linux/'>Linux</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://uw-freelancer.github.io/blog/building-a-linux-system-from-scratch/" data-via="" data-counturl="http://uw-freelancer.github.io/blog/building-a-linux-system-from-scratch/" >Tweet</a>
+  
+  
+  
+    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/writing-php-extensions/" title="Previous Post: Writing PHP Extensions">&laquo; Writing PHP Extensions</a>
+      
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <img class='center uw-logo' src="/images/uw-freelancer-logo.png" title="UW Freelancer Logo" alt="UW Freelancer Logo" />
+<section class="odd" >
+<h1>GNU Linux Systems</h2><br />
+<img class='center uw-logo' src="/images/gnu-logo.png" title="GNU is Not Unix" alt="GNU is Not Unix" /><br />
+<a href="/blog/building-a-linux-system-from-scratch/" >Building a GNU Linux System from Tarballs</a><br />
+<a href="/blog/compiling-the-linux-kernel-from-source/" >Compiling a Linux Kernel From Source</a><br />
+<a href="/blog/building-the-system-software-from-scratch/" >Building the System Software from Scratch</a><br />
+<a href="/blog/building-the-host-independant-toolchain/" >Building the Host Independant ToolChain</a><br />
+</section>
+
+<section class="odd" >
+<h1>The Vim Editor</h2><br />
+<img class='center uw-logo' src="/images/vim_logo.png" title="The Editor" alt="The Editor" /><br />
+<a href="/blog/insanely-faster-vim-buffer-switching/" >Insanely Faster Vim Buffer Switching</a><br />
+<a href="/blog/vim-powerline/" >Vim PowerLine</a><br />
+<a href="/blog/vim-vdebug/" >Vim Vdebug</a><br /><br />
+</section>
+
+<section class="odd" >
+<h1>Apache HTTP Server</h2><br />
+<img class='center uw-logo' src="/images/apache_logo.png" title="Apache" alt="Apache" /><br />
+<a href="/blog/fastcgi-suexec-apc-per-user/" >Apache2 FastCGI and suEXEC Implementing APC Per User With PHP5-CGI</a><br />
+<a href="/blog/wordpress-performance-with-apc-via-fastcgi-php5/" >WordPress Performance Benchmarking With APC via FastCGI PHP5-CGI</a><br />
+<a href="/blog/mundane-experiments-with-apache-mpm_prefork-and-mod_php/" >Mundane Experiments With Apache Prefork MPM and Mod_PHP</a><br />
+<a href="/blog/setup-local-ubuntu-server/" >Setting Up a Local Ubuntu Server</a><br /><br />
+</section>
+
+<section class="odd" >
+<h1>PHP</h2><br />
+<img class='center uw-logo' src="/images/php_logo.png" title="PHP" alt="PHP" /><br />
+<a href="/blog/writing-php-extensions/" >Writing PHP Extensions</a><br />
+<a href="/blog/mysql-innodb-disk-space-usage/" >MySQL InnoDB Disk Space Consumption</a><br />
+<a href="/blog/wordpress-toolbar-customization/" >WordPress Toolbar Customization</a><br />
+<a href="/blog/two-website-customizations/" >Two Website Customizations</a><br /><br />
+</section>
+<section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/building-a-linux-system-from-scratch/">Building a Linux System From Scratch</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/writing-php-extensions/">Writing PHP Extensions</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/compiling-the-linux-kernel-from-source/">Compiling a Linux Kernel From Source Tarball</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/wordpress-performance-with-apc-via-fastcgi-php5/">WordPress Performance Benchmarking With APC via FastCGI PHP5-CGI</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/vim-vdebug/">Vim Vedug</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/thanks-nit3hawks/">Thank You Mr. Nit3hawkz</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/insanely-faster-vim-buffer-switching/">Insanely Faster Buffer Switching</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/building-the-system-software-from-scratch/">Building the System Software From Scratch</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/vim-powerline/">Vim PowerLine</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/how-i-earned-one-usd/">How I Earned a Dollar</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/i-only-need-one-dollar/">I Only Need One Dollar</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/two-website-customizations/">Two Website Customizations</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/building-the-host-independant-toolchain/">Building the Host Independant Toolchain</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/fastcgi-suexec-apc-per-user/">Apache2 FastCGI and suEXEC Implementing APC Per User With PHP5-CGI</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/gnuplot-basics-2d-plots/">Gnuplot Basics - 2D Plots</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2013 - Upeksha Wisidagama -
+    <a href="https://plus.google.com/115164496041018691013" rel="publisher">UW Freelancer Google+</a>
+</p>
+
+</footer>
+  
+
+
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id; js.async = true;
+  js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

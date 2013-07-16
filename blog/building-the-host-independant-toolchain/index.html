@@ -1,0 +1,473 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Building the Host Independant Toolchain - Freelance Projects</title>
+  <meta name="author" content="Upeksha Wisidagama">
+
+  
+  <meta name="description" content="We are going to build a Linux Kernel based System with GNU Components by configuring, compiling and installing source tarballs. Mount a new ext3 disk &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://uw-freelancer.github.io/blog/building-the-host-independant-toolchain">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Freelance Projects" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <link href="/stylesheets/data-table.css" media="screen, projection" rel="stylesheet" type="text/css" />
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-42123622-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Freelance Projects</a></h1>
+  
+    <h2>Upeksha Wisidagama</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:uw-freelancer.github.io" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Building the Host Independant Toolchain</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-06-14T12:00:00+05:30" pubdate data-updated="true">Jun 14<span>th</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>We are going to build a Linux Kernel based System with GNU Components by configuring, compiling and installing source tarballs. Mount a new ext3 disk on <code>/mnt/lfs</code> without partitioning. Create <code>sources</code> directory.</p>
+
+<p>Most of these steps are described in &lsquo;Linux From Scratch 7.3&rsquo; book. But I will describe you how I build this system on an Ubuntu host with further explanations where applicable.</p>
+
+<h2>Finding the New Disk, Formatting and Mouting</h2>
+
+
+<p>Run <code>sudo lshw</code>. Find your disk logical name. e.g. I found my disk at &lsquo;core&rsquo; > &lsquo;pci&rsquo; > &lsquo;storage&rsquo; > &lsquo;disk2&rsquo;.
+<code>logical name: /dev/sdc</code></p>
+
+<figure class='code'><figcaption><span>&#8216;Static IP Assignment for eth1 (/etc/network/interfaces)&#8217; </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>sudo su
+</span><span class='line'>mke2fs -jv /dev/sdc
+</span><span class='line'>mount -v -t ext3 /dev/sdc /mnt/lfs
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p><img class='center' src="/images/kernel/mounting-the-new-disk.png" title="Mounting the New Disk" alt="Mounting the New Disk" /></p>
+
+<h2>GNU BinUtils 2.23.1 Installation</h2>
+
+
+<p>The GNU Binutils are a collection of binary tools. The main ones are:</p>
+
+<p>ld &ndash; the GNU linker.<br /><br />
+as &ndash; the GNU assembler.</p>
+
+<p><a href="http://www.gnu.org/software/binutils/">http://www.gnu.org/software/binutils/</a></p>
+
+<p>Download the &lsquo;GNU BinUtils&rsquo; (21.5MB) using <code>wget</code> into <code>/mnt/lfs/sources</code>.
+Untar using <code>tar -jxvf binutils-2.23.1.tar.bz2</code>. j option is for bzip2 archives. (154MB)</p>
+
+<p>run the <code>configure</code> command with the relevant arguments. Now <code>make</code>.</p>
+
+<p>The time to compile BinUtils is called 1SBU. For me 1SBU ~ 2.5min.</p>
+
+<p>&lsquo;binutils-build&rsquo; ~ 85MB.</p>
+
+<p>Time to install. <code>make install</code>. This will install the BinUtils in &lsquo;tools&rsquo; directory.</p>
+
+<h2>GNU Compiler Collection 4.7.2 Installation</h2>
+
+
+<p>The GNU Compiler Collection includes front ends for C, C++, Objective-C, Fortran, Java, Ada, and Go, as well as libraries for these languages (libstdc++, libgcj,&hellip;). GCC was originally written as the compiler for the GNU operating system.</p>
+
+<p><a href="http://gcc.gnu.org/">http://gcc.gnu.org/</a></p>
+
+<h3>The GNU Multi Precision Library (MPC) 5.1.1</h3>
+
+
+<p><a href="http://gmplib.org/">http://gmplib.org/</a></p>
+
+<p>Arithmetic without limitations &ndash; The GNU Multiple Precision Arithmetic Library</p>
+
+<p>GMP is a free library for arbitrary precision arithmetic, operating on signed integers, rational numbers, and floating point numbers. There is no practical limit to the precision except the ones implied by the available memory in the machine GMP runs on. GMP has a rich set of functions, and the functions have a regular interface.</p>
+
+<p><a href="ftp://ftp.gmplib.org/pub/gmp-5.1.1/gmp-5.1.1.tar.xz">ftp://ftp.gmplib.org/pub/gmp-5.1.1/gmp-5.1.1.tar.xz</a></p>
+
+<h3>The GNU MPFR Library 3.1.1</h3>
+
+
+<p><a href="http://www.mpfr.org/">http://www.mpfr.org/</a></p>
+
+<p>MPFR is based on the GMP multiple-precision library (MPC).</p>
+
+<p>The MPFR library is a C library for multiple-precision floating-point computations with correct rounding. The main goal of MPFR is to provide a library for multiple-precision floating-point computation which is both efficient and has a well-defined semantics. It copies the good ideas from the ANSI/IEEE-754 standard for double-precision floating-point arithmetic (53-bit significand).</p>
+
+<p><a href="http://www.mpfr.org/mpfr-3.1.1/mpfr-3.1.1.tar.xz">http://www.mpfr.org/mpfr-3.1.1/mpfr-3.1.1.tar.xz</a></p>
+
+<h3>GNU MPC 1.0.1</h3>
+
+
+<p><a href="http://www.multiprecision.org/">http://www.multiprecision.org/</a></p>
+
+<p>Gnu Mpc is a C library for the arithmetic of complex numbers with arbitrarily high precision and correct rounding of the result. It extends the principles of the IEEE-754 standard for fixed precision real floating point numbers to complex numbers, providing well-defined semantics for every operation. At the same time, speed of operation at high precision is a major design goal.</p>
+
+<p><a href="http://www.multiprecision.org/mpc/download/mpc-1.0.1.tar.gz">http://www.multiprecision.org/mpc/download/mpc-1.0.1.tar.gz</a></p>
+
+<h3>IEEE 754</h3>
+
+
+<p>IEEE Standard for Floating-Point Arithmetic (IEEE 754).</p>
+
+<p><img class='center' src="/images/kernel/ieee-logo.png" title="IEEE 754" alt="IEEE 754" /></p>
+
+<p>The IEEE Standard for Floating-Point Arithmetic (IEEE 754) is a technical standard for floating-point computation established in 1985 by the Institute of Electrical and Electronics Engineers (IEEE). Many hardware floating point units use the IEEE 754 standard. The current version, IEEE 754-2008 published in August 2008, includes nearly all of the original IEEE 754-1985 standard and the IEEE Standard for Radix-Independent Floating-Point Arithmetic (IEEE 854-1987). The international standard ISO/IEC/IEEE 60559:2011 (with identical content to IEEE 754) has been approved for adoption through JTC1/SC 25 under the ISO/IEEE PSDO Agreement and published.</p>
+
+<p>GNU MPC and GNU MPFR are base on IEEE 754 Standard.</p>
+
+<p><a href="https://en.wikipedia.org/wiki/IEEE_floating_point">https://en.wikipedia.org/wiki/IEEE_floating_point</a></p>
+
+<h3>Linux Kernel 3.8.1</h3>
+
+
+<p><a href="https://www.kernel.org/">https://www.kernel.org/</a></p>
+
+<p>The Linux API Headers expose the kernel&rsquo;s API for use by Glibc.</p>
+
+<p><img class='center' src="/images/kernel/linux-logo.png" title="Linux Kernel" alt="Linux Kernel" /></p>
+
+<p>The Linux kernel needs to expose an Application Programming Interface (API) for the system&rsquo;s C library (Glibc in LFS) to use. This is done by way of sanitizing various C header files that are shipped in the Linux kernel source tarball.</p>
+
+<p><a href="http://www.kernel.org/pub/linux/kernel/v3.x/linux-3.8.1.tar.xz">http://www.kernel.org/pub/linux/kernel/v3.x/linux-3.8.1.tar.xz</a></p>
+
+<h3>The GNU C Library 2.17</h3>
+
+
+<p><a href="http://www.gnu.org/software/libc/">http://www.gnu.org/software/libc/</a></p>
+
+<p>Any Unix-like operating system needs a C library: the library which defines the &ldquo;system calls&rdquo; and other basic facilities such as open, malloc, printf, exit&hellip;</p>
+
+<p>The GNU C Library is used as the C library in the GNU systems and most systems with the Linux kernel.</p>
+
+<p>The GNU C Library is primarily designed to be a portable and high performance C library. It follows all relevant standards including ISO C11 and POSIX.1-2008. It is also internationalized and has one of the most complete internationalization interfaces known.</p>
+
+<p><a href="http://ftp.gnu.org/gnu/glibc/glibc-2.17.tar.xz">http://ftp.gnu.org/gnu/glibc/glibc-2.17.tar.xz</a></p>
+
+<h3>Second Pass - BinUtils and GCC</h3>
+
+
+<p>After installing above programs, BinUtils and GCC needs another pass. Recompile and Reinstall both.</p>
+
+<h3>Toolchain Remaining Tools</h3>
+
+
+<p>Install the rest of the tools required to actually build the System From Source Tarballs.</p>
+
+<p>Tcl 8.6.0<br />
+Expect 5.45<br />
+DejaGNU 1.5<br />
+Check 0.9.9<br />
+Ncurses 5.9<br />
+Bash 4.2<br />
+Bzip2 1.0.6<br />
+Coreutils 8.21<br />
+Diffutils 3.2<br />
+File 5.13<br />
+Findutils 4.4.2<br />
+Gawk 4.0.2<br />
+Gettext 0.18.2<br />
+Grep 2.14<br />
+Gzip 1.5<br />
+M4 1.4.16<br />
+Make 3.82<br />
+Patch 2.7.1<br />
+Perl 5.16.2<br />
+Sed 4.2.2<br />
+Tar 1.26<br />
+Texinfo 5.0<br />
+Xz 5.0.4<br /><br /></p>
+
+<p>Next Read the post about <a href="/blog/building-the-system-software-from-scratch/" >Building the System Software From Scratch</a>.<br /></p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by 
+    <span class="fn"><a href="https://plus.google.com/115164496041018691013?rel=author">Upeksha Wisidagama</a></span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-06-14T12:00:00+05:30" pubdate data-updated="true">Jun 14<span>th</span>, 2013</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/linux/'>Linux</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://uw-freelancer.github.io/blog/building-the-host-independant-toolchain/" data-via="" data-counturl="http://uw-freelancer.github.io/blog/building-the-host-independant-toolchain/" >Tweet</a>
+  
+  
+  
+    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/fastcgi-suexec-apc-per-user/" title="Previous Post: Apache2 FastCGI and suEXEC implementing APC per user with PHP5-CGI">&laquo; Apache2 FastCGI and suEXEC implementing APC per user with PHP5-CGI</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/two-website-customizations/" title="Next Post: Two Website Customizations">Two Website Customizations &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <img class='center uw-logo' src="/images/uw-freelancer-logo.png" title="UW Freelancer Logo" alt="UW Freelancer Logo" />
+<section class="odd" >
+<h1>GNU Linux Systems</h2><br />
+<img class='center uw-logo' src="/images/gnu-logo.png" title="GNU is Not Unix" alt="GNU is Not Unix" /><br />
+<a href="/blog/building-a-linux-system-from-scratch/" >Building a GNU Linux System from Tarballs</a><br />
+<a href="/blog/compiling-the-linux-kernel-from-source/" >Compiling a Linux Kernel From Source</a><br />
+<a href="/blog/building-the-system-software-from-scratch/" >Building the System Software from Scratch</a><br />
+<a href="/blog/building-the-host-independant-toolchain/" >Building the Host Independant ToolChain</a><br />
+</section>
+
+<section class="odd" >
+<h1>The Vim Editor</h2><br />
+<img class='center uw-logo' src="/images/vim_logo.png" title="The Editor" alt="The Editor" /><br />
+<a href="/blog/insanely-faster-vim-buffer-switching/" >Insanely Faster Vim Buffer Switching</a><br />
+<a href="/blog/vim-powerline/" >Vim PowerLine</a><br />
+<a href="/blog/vim-vdebug/" >Vim Vdebug</a><br /><br />
+</section>
+
+<section class="odd" >
+<h1>Apache HTTP Server</h2><br />
+<img class='center uw-logo' src="/images/apache_logo.png" title="Apache" alt="Apache" /><br />
+<a href="/blog/fastcgi-suexec-apc-per-user/" >Apache2 FastCGI and suEXEC Implementing APC Per User With PHP5-CGI</a><br />
+<a href="/blog/wordpress-performance-with-apc-via-fastcgi-php5/" >WordPress Performance Benchmarking With APC via FastCGI PHP5-CGI</a><br />
+<a href="/blog/mundane-experiments-with-apache-mpm_prefork-and-mod_php/" >Mundane Experiments With Apache Prefork MPM and Mod_PHP</a><br />
+<a href="/blog/setup-local-ubuntu-server/" >Setting Up a Local Ubuntu Server</a><br /><br />
+</section>
+
+<section class="odd" >
+<h1>PHP</h2><br />
+<img class='center uw-logo' src="/images/php_logo.png" title="PHP" alt="PHP" /><br />
+<a href="/blog/writing-php-extensions/" >Writing PHP Extensions</a><br />
+<a href="/blog/mysql-innodb-disk-space-usage/" >MySQL InnoDB Disk Space Consumption</a><br />
+<a href="/blog/wordpress-toolbar-customization/" >WordPress Toolbar Customization</a><br />
+<a href="/blog/two-website-customizations/" >Two Website Customizations</a><br /><br />
+</section>
+<section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/building-a-linux-system-from-scratch/">Building a Linux System From Scratch</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/writing-php-extensions/">Writing PHP Extensions</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/compiling-the-linux-kernel-from-source/">Compiling a Linux Kernel From Source Tarball</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/wordpress-performance-with-apc-via-fastcgi-php5/">WordPress Performance Benchmarking With APC via FastCGI PHP5-CGI</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/vim-vdebug/">Vim Vedug</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/thanks-nit3hawks/">Thank You Mr. Nit3hawkz</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/insanely-faster-vim-buffer-switching/">Insanely Faster Buffer Switching</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/building-the-system-software-from-scratch/">Building the System Software From Scratch</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/vim-powerline/">Vim PowerLine</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/how-i-earned-one-usd/">How I Earned a Dollar</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/i-only-need-one-dollar/">I Only Need One Dollar</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/two-website-customizations/">Two Website Customizations</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/building-the-host-independant-toolchain/">Building the Host Independant Toolchain</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/fastcgi-suexec-apc-per-user/">Apache2 FastCGI and suEXEC Implementing APC Per User With PHP5-CGI</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/gnuplot-basics-2d-plots/">Gnuplot Basics - 2D Plots</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2013 - Upeksha Wisidagama -
+    <a href="https://plus.google.com/115164496041018691013" rel="publisher">UW Freelancer Google+</a>
+</p>
+
+</footer>
+  
+
+
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id; js.async = true;
+  js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

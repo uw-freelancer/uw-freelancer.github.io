@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Apache2 | Freelance Projects]]></title>
   <link href="http://uw-freelancer.github.io/blog/categories/apache2/atom.xml" rel="self"/>
   <link href="http://uw-freelancer.github.io/"/>
-  <updated>2013-07-08T17:41:30+05:30</updated>
+  <updated>2013-07-16T09:52:07+05:30</updated>
   <id>http://uw-freelancer.github.io/</id>
   <author>
     <name><![CDATA[Upeksha Wisidagama]]></name>
@@ -352,7 +352,7 @@ Set <code>apc.enabled=0</code> in &lsquo;/etc/php5/cgi/conf.d/apc.ini&rsquo;.</p
 
 <p>Gnuplot config file</p>
 
-<p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>&lsquo;APC Info Interface Installation (APC-benchmarking.p&rsquo; </span></figcaption>
+<p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>&lsquo;APC Info Interface Installation (APC-benchmarking.p)&rsquo; </span></figcaption>
  <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
@@ -427,7 +427,7 @@ Set <code>apc.enabled=0</code> in &lsquo;/etc/php5/cgi/conf.d/apc.ini&rsquo;.</p
 
 <p><img class='center' src="/images/server/wordpress-performance-gain-with-apc.png" title="WordPress Performance Gain with APC" alt="WordPress Performance Gain with APC" /></p>
 
-<h2>WordPress Performance Gain when many PHP5-CGI Children share the same APC under One User with High Concurrency</h2>
+<h2>WordPress Performance Gain While Many PHP5-CGI Children share the same APC under One User with High Concurrency</h2>
 
 
 <p>Next, increase the PHP-CGI children from 2 to 6 (<code>PHP_FCGI_CHILDREN=6</code> in FastCGI wrapper script). Increase the concurrency to 60 <code>-c 60</code>. Benchmark again.</p>

@@ -1,0 +1,490 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Writing PHP Extensions - Freelance Projects</title>
+  <meta name="author" content="Upeksha Wisidagama">
+
+  
+  <meta name="description" content="If you’re reading this tutorial, you probably have some interest in writing an extension for the PHP language. If not… well perhaps when we’re done &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://uw-freelancer.github.io/blog/writing-php-extensions">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Freelance Projects" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <link href="/stylesheets/data-table.css" media="screen, projection" rel="stylesheet" type="text/css" />
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-42123622-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Freelance Projects</a></h1>
+  
+    <h2>Upeksha Wisidagama</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:uw-freelancer.github.io" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Writing PHP Extensions</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-07-13T23:00:00+05:30" pubdate data-updated="true">Jul 13<span>th</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><blockquote><p>If you’re reading this tutorial, you probably have some interest in writing an extension for the PHP language. If not… well perhaps when we’re done you’ll have discovered an interest you didn’t know existed! - devzone.zend.com</p></blockquote>
+
+
+<p>If you have your PHP installed in a custom location, you need to add the <code>bin</code> directory to your <code>PATH</code> environment variable to avoid typing the full path. e.g. I have the bleeding edge PHP (PHP version 5.5.0) installed in <code>/usr/local/php5/</code>. To add the binaries to the $PATH,</p>
+
+<p><code>export PATH=$PATH:/usr/local/php5/bin/</code></p>
+
+<h3>Preparing to Build the PHP Extension</h3>
+
+
+<p>Create a new directory for the new extension under <code>source/ext</code>. You need to create the following three files for a simple extension.</p>
+
+<p>Create the <code>config.m4</code> file.</p>
+
+<figure class='code'><figcaption><span>&#8216;config.m4&#8217; </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="n">PHP_ARG_ENABLE</span><span class="p">(</span><span class="n">upeksha_extension</span><span class="p">,</span> <span class="n">whether</span> <span class="n">to</span> <span class="n">enable</span> <span class="n">upeksha</span> <span class="n">extension</span><span class="p">,</span>
+</span><span class='line'><span class="p">[</span> <span class="o">--</span><span class="n">enable</span><span class="o">-</span><span class="n">upeksha</span><span class="o">-</span><span class="n">extension</span>   <span class="n">Enable</span> <span class="n">Upeksha</span> <span class="n">extension</span><span class="p">])</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">if</span> <span class="n">test</span> <span class="s">&quot;$PHP_UPEKSHA_EXTENSION&quot;</span> <span class="o">=</span> <span class="s">&quot;yes&quot;</span><span class="p">;</span> <span class="n">then</span>
+</span><span class='line'>  <span class="n">AC_DEFINE</span><span class="p">(</span><span class="n">HAVE_UPEKSHA_EXTENSION</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="p">[</span><span class="n">Whether</span> <span class="n">you</span> <span class="n">have</span> <span class="n">Upeksha</span> <span class="n">extension</span><span class="p">])</span>
+</span><span class='line'>  <span class="n">PHP_NEW_EXTENSION</span><span class="p">(</span><span class="n">upeksha_extension</span><span class="p">,</span> <span class="n">upeksha_extension</span><span class="p">.</span><span class="n">c</span><span class="p">,</span> <span class="err">$</span><span class="n">ext_shared</span><span class="p">)</span>
+</span><span class='line'><span class="n">fi</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Create the <code>upeksha.h</code> file.</p>
+
+<figure class='code'><figcaption><span>&#8216;upeksha.h&#8217; </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="cp">#ifndef PHP_UPEKSHA_H</span>
+</span><span class='line'>
+</span><span class='line'><span class="cp">#define PHP_UPEKSHA_H 1</span>
+</span><span class='line'>
+</span><span class='line'><span class="cp">#define PHP_UPEKSHA_VERSION &quot;0.1&quot;</span>
+</span><span class='line'><span class="cp">#define PHP_UPEKSHA_EXTNAME &quot;upeksha_extension&quot;</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">PHP_FUNCTION</span><span class="p">(</span><span class="n">say_name</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">extern</span> <span class="n">zend_module_entry</span> <span class="n">upeksha_module_entry</span><span class="p">;</span>
+</span><span class='line'><span class="cp">#define phpext_upeksha_ptr &amp;upeksha_module_entry</span>
+</span><span class='line'>
+</span><span class='line'><span class="cp">#endif</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Create the <code>upeksha_extension.c</code> file.</p>
+
+<figure class='code'><figcaption><span>&#8216;upeksha_extension&#8217; </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="cp">#ifdef HAVE_CONFIG_H</span>
+</span><span class='line'><span class="cp">#include &quot;config.h&quot;</span>
+</span><span class='line'><span class="cp">#endif</span>
+</span><span class='line'>
+</span><span class='line'><span class="cp">#include &quot;php.h&quot;</span>
+</span><span class='line'><span class="cp">#include &quot;upeksha.h&quot;</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">// list of custom PHP functions provided by this extension</span>
+</span><span class='line'><span class="c1">// set {NULL, NULL, NULL} as the last record to mark the end of list</span>
+</span><span class='line'><span class="k">static</span> <span class="n">zend_function_entry</span> <span class="n">upeksha_functions</span><span class="p">[]</span> <span class="o">=</span> <span class="p">{</span>
+</span><span class='line'>    <span class="n">PHP_FE</span><span class="p">(</span><span class="n">say_name</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">)</span>
+</span><span class='line'>    <span class="p">{</span><span class="nb">NULL</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">}</span>
+</span><span class='line'><span class="p">};</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">// the following code creates an entry for the module and registers it with Zend.</span>
+</span><span class='line'><span class="n">zend_module_entry</span> <span class="n">upeksha_extension_module_entry</span> <span class="o">=</span> <span class="p">{</span>
+</span><span class='line'>    <span class="n">STANDARD_MODULE_HEADER</span><span class="p">,</span>
+</span><span class='line'>    <span class="n">PHP_UPEKSHA_EXTNAME</span><span class="p">,</span>
+</span><span class='line'>    <span class="n">upeksha_functions</span><span class="p">,</span>
+</span><span class='line'>    <span class="nb">NULL</span><span class="p">,</span> <span class="c1">// name of the MINIT function or NULL if not applicable</span>
+</span><span class='line'>    <span class="nb">NULL</span><span class="p">,</span> <span class="c1">// name of the MSHUTDOWN function or NULL if not applicable</span>
+</span><span class='line'>    <span class="nb">NULL</span><span class="p">,</span> <span class="c1">// name of the RINIT function or NULL if not applicable</span>
+</span><span class='line'>    <span class="nb">NULL</span><span class="p">,</span> <span class="c1">// name of the RSHUTDOWN function or NULL if not applicable</span>
+</span><span class='line'>    <span class="nb">NULL</span><span class="p">,</span> <span class="c1">// name of the MINFO function or NULL if not applicable</span>
+</span><span class='line'>    <span class="n">PHP_UPEKSHA_VERSION</span><span class="p">,</span>
+</span><span class='line'>    <span class="n">STANDARD_MODULE_PROPERTIES</span>
+</span><span class='line'><span class="p">};</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">ZEND_GET_MODULE</span><span class="p">(</span><span class="n">upeksha_extension</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">// implementation of a custom say_name()</span>
+</span><span class='line'><span class="n">PHP_FUNCTION</span><span class="p">(</span><span class="n">say_name</span><span class="p">)</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>    <span class="n">RETURN_STRING</span><span class="p">(</span><span class="s">&quot;Upeksha Wisidagama&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">);</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Next run <code>phpize</code> in the same directory.</p>
+
+<p><img class='center' src="/images/php-extension/configuring-the-php-extension.png" title="Configuring the PHP Extension" alt="Configuring the PHP Extension" /></p>
+
+<h3>Making and Installing the Upeksha PHP Extension</h3>
+
+
+<p>run <code>make</code>. You&rsquo;ll get a message, &lsquo;Libraries have been installed in: /home/uw/Downloads/php-5.5.0/ext/uw/modules&rsquo;.</p>
+
+<p>Load the extension by adding the following line to the <code>php.ini</code> file.</p>
+
+<p><code>extension=/home/uw/Downloads/php-5.5.0/ext/uw/modules/upeksha_extension.so</code></p>
+
+<p>Restart the Web Server.</p>
+
+<p>Now, create the following php file with the function from the new extension.</p>
+
+<figure class='code'><figcaption><span>&#8216;hello.php&#8217; </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='php'><span class='line'><span class="cp">&lt;?php</span>
+</span><span class='line'><span class="k">echo</span> <span class="nx">say_name</span><span class="p">();</span>
+</span><span class='line'><span class="cp">?&gt;</span><span class="x"></span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p><img class='center' src="/images/php-extension/upeksha-php-extension.png" title="Upeksha PHP Extension" alt="Upeksha PHP Extension" /></p>
+
+<p>See the new extension listed in <code>phpinfo()</code>.</p>
+
+<p><img class='center' src="/images/php-extension/upeksha-extension-in-phpinfo.png" title="Upeksha PHP Extension in phpinfo()" alt="Upeksha PHP Extension in phpinfo()" /></p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by 
+    <span class="fn"><a href="https://plus.google.com/115164496041018691013?rel=author">Upeksha Wisidagama</a></span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-07-13T23:00:00+05:30" pubdate data-updated="true">Jul 13<span>th</span>, 2013</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/c/'>C</a>, <a class='category' href='/blog/categories/php/'>PHP</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://uw-freelancer.github.io/blog/writing-php-extensions/" data-via="" data-counturl="http://uw-freelancer.github.io/blog/writing-php-extensions/" >Tweet</a>
+  
+  
+  
+    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/compiling-the-linux-kernel-from-source/" title="Previous Post: Compiling a Linux Kernel from Source Tarball">&laquo; Compiling a Linux Kernel from Source Tarball</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/building-a-linux-system-from-scratch/" title="Next Post: Building a Linux System From Scratch">Building a Linux System From Scratch &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <img class='center uw-logo' src="/images/uw-freelancer-logo.png" title="UW Freelancer Logo" alt="UW Freelancer Logo" />
+<section class="odd" >
+<h1>GNU Linux Systems</h2><br />
+<img class='center uw-logo' src="/images/gnu-logo.png" title="GNU is Not Unix" alt="GNU is Not Unix" /><br />
+<a href="/blog/building-a-linux-system-from-scratch/" >Building a GNU Linux System from Tarballs</a><br />
+<a href="/blog/compiling-the-linux-kernel-from-source/" >Compiling a Linux Kernel From Source</a><br />
+<a href="/blog/building-the-system-software-from-scratch/" >Building the System Software from Scratch</a><br />
+<a href="/blog/building-the-host-independant-toolchain/" >Building the Host Independant ToolChain</a><br />
+</section>
+
+<section class="odd" >
+<h1>The Vim Editor</h2><br />
+<img class='center uw-logo' src="/images/vim_logo.png" title="The Editor" alt="The Editor" /><br />
+<a href="/blog/insanely-faster-vim-buffer-switching/" >Insanely Faster Vim Buffer Switching</a><br />
+<a href="/blog/vim-powerline/" >Vim PowerLine</a><br />
+<a href="/blog/vim-vdebug/" >Vim Vdebug</a><br /><br />
+</section>
+
+<section class="odd" >
+<h1>Apache HTTP Server</h2><br />
+<img class='center uw-logo' src="/images/apache_logo.png" title="Apache" alt="Apache" /><br />
+<a href="/blog/fastcgi-suexec-apc-per-user/" >Apache2 FastCGI and suEXEC Implementing APC Per User With PHP5-CGI</a><br />
+<a href="/blog/wordpress-performance-with-apc-via-fastcgi-php5/" >WordPress Performance Benchmarking With APC via FastCGI PHP5-CGI</a><br />
+<a href="/blog/mundane-experiments-with-apache-mpm_prefork-and-mod_php/" >Mundane Experiments With Apache Prefork MPM and Mod_PHP</a><br />
+<a href="/blog/setup-local-ubuntu-server/" >Setting Up a Local Ubuntu Server</a><br /><br />
+</section>
+
+<section class="odd" >
+<h1>PHP</h2><br />
+<img class='center uw-logo' src="/images/php_logo.png" title="PHP" alt="PHP" /><br />
+<a href="/blog/writing-php-extensions/" >Writing PHP Extensions</a><br />
+<a href="/blog/mysql-innodb-disk-space-usage/" >MySQL InnoDB Disk Space Consumption</a><br />
+<a href="/blog/wordpress-toolbar-customization/" >WordPress Toolbar Customization</a><br />
+<a href="/blog/two-website-customizations/" >Two Website Customizations</a><br /><br />
+</section>
+<section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/building-a-linux-system-from-scratch/">Building a Linux System From Scratch</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/writing-php-extensions/">Writing PHP Extensions</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/compiling-the-linux-kernel-from-source/">Compiling a Linux Kernel From Source Tarball</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/wordpress-performance-with-apc-via-fastcgi-php5/">WordPress Performance Benchmarking With APC via FastCGI PHP5-CGI</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/vim-vdebug/">Vim Vedug</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/thanks-nit3hawks/">Thank You Mr. Nit3hawkz</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/insanely-faster-vim-buffer-switching/">Insanely Faster Buffer Switching</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/building-the-system-software-from-scratch/">Building the System Software From Scratch</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/vim-powerline/">Vim PowerLine</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/how-i-earned-one-usd/">How I Earned a Dollar</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/i-only-need-one-dollar/">I Only Need One Dollar</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/two-website-customizations/">Two Website Customizations</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/building-the-host-independant-toolchain/">Building the Host Independant Toolchain</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/fastcgi-suexec-apc-per-user/">Apache2 FastCGI and suEXEC Implementing APC Per User With PHP5-CGI</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/gnuplot-basics-2d-plots/">Gnuplot Basics - 2D Plots</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2013 - Upeksha Wisidagama -
+    <a href="https://plus.google.com/115164496041018691013" rel="publisher">UW Freelancer Google+</a>
+</p>
+
+</footer>
+  
+
+
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id; js.async = true;
+  js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

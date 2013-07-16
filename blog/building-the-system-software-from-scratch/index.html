@@ -1,0 +1,503 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Building the System Software From Scratch - Freelance Projects</title>
+  <meta name="author" content="Upeksha Wisidagama">
+
+  
+  <meta name="description" content="Various file systems exported by the kernel are used to communicate to and from the kernel itself. These file systems are virtual in that no disk &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://uw-freelancer.github.io/blog/building-the-system-software-from-scratch">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Freelance Projects" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <link href="/stylesheets/data-table.css" media="screen, projection" rel="stylesheet" type="text/css" />
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-42123622-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Freelance Projects</a></h1>
+  
+    <h2>Upeksha Wisidagama</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:uw-freelancer.github.io" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Building the System Software From Scratch</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-07-01T17:00:00+05:30" pubdate data-updated="true">Jul 1<span>st</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>Various file systems exported by the kernel are used to communicate to and from the kernel itself. These file systems are virtual in that no disk space is used for them. The content of the file systems resides in memory. Begin by creating directories onto which the file systems will be mounted.</p>
+
+<figure class='code'><figcaption><span>&#8216;Virtual Kernel FileSystems&#8217; </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>mkdir -v <span class="nv">$LFS</span>/<span class="o">{</span>dev,proc,sys<span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'>mount -vt devpts devpts <span class="nv">$LFS</span>/dev/pts
+</span><span class='line'>mount -vt proc proc <span class="nv">$LFS</span>/proc
+</span><span class='line'>mount -vt sysfs sysfs <span class="nv">$LFS</span>/sys
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<h3>Dev File System</h3>
+
+
+
+
+<figure class='code'><figcaption><span>&#8216;Virtual Kernel FileSystems&#8217; </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>mknod -m 600 <span class="nv">$LFS</span>/dev/console c 5 1
+</span><span class='line'>mknod -m 666 <span class="nv">$LFS</span>/dev/null c 1 3
+</span><span class='line'>
+</span><span class='line'>mount -v --bind /dev <span class="nv">$LFS</span>/dev
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<h2>Chroot into the System</h2>
+
+
+
+
+<figure class='code'><figcaption><span>&#8216;Chrooting to the System&#8217; </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>chroot <span class="s2">&quot;$LFS&quot;</span> /tools/bin/env -i <span class="se">\</span>
+</span><span class='line'>    <span class="nv">HOME</span><span class="o">=</span>/root <span class="se">\</span>
+</span><span class='line'>    <span class="nv">TERM</span><span class="o">=</span><span class="s2">&quot;$TERM&quot;</span> <span class="se">\</span>
+</span><span class='line'>    <span class="nv">PS1</span><span class="o">=</span><span class="s1">&#39;\u:\w\$ &#39;</span> <span class="se">\</span>
+</span><span class='line'>    <span class="nv">PATH</span><span class="o">=</span>/bin:/usr/bin:/sbin:/usr/sbin:/tools/bin <span class="se">\</span>
+</span><span class='line'>    /tools/bin/bash --login +h
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p><code>-i</code> option will clear all environment variables of the chroot environment. Then &lsquo;HOME&rsquo;, &lsquo;TERM&rsquo;, &lsquo;PS1&rsquo; and &lsquo;PATH&rsquo; variables are set again.</p>
+
+<blockquote><p>Notice that &#8216;/tools/bin&#8217; comes last in the PATH. This means that a temporary tool will no longer be used once its final version is installed. This occurs when the shell does not “remember” the locations of executed binaries—for this reason, hashing is switched off by passing the &#8216;+h&#8217; option to bash.</p></blockquote>
+
+
+
+
+<h2>Install the System Software from Source</h2>
+
+
+<p>The following list of programs needs to be installed.</p>
+
+<figure class='code'><figcaption><span>&#8216;System Software List&#8217; </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+<span class='line-number'>52</span>
+<span class='line-number'>53</span>
+<span class='line-number'>54</span>
+<span class='line-number'>55</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>Linux-3.8.1 API Headers
+</span><span class='line'>Man-pages-3.47
+</span><span class='line'>Glibc-2.17
+</span><span class='line'>Zlib-1.2.7
+</span><span class='line'>File-5.13
+</span><span class='line'>Binutils-2.23.1
+</span><span class='line'>GMP-5.1.1
+</span><span class='line'>MPFR-3.1.1
+</span><span class='line'>MPC-1.0.1
+</span><span class='line'>GCC-4.7.2
+</span><span class='line'>Sed-4.2.2
+</span><span class='line'>Bzip2-1.0.6
+</span><span class='line'>Pkg-config-0.28
+</span><span class='line'>Ncurses-5.9
+</span><span class='line'>Util-linux-2.22.2
+</span><span class='line'>Psmisc-22.20
+</span><span class='line'>Procps-ng-3.3.6
+</span><span class='line'>E2fsprogs-1.42.7
+</span><span class='line'>Shadow-4.1.5.1
+</span><span class='line'>Coreutils-8.21
+</span><span class='line'>Iana-Etc-2.30
+</span><span class='line'>M4-1.4.16
+</span><span class='line'>Bison-2.7
+</span><span class='line'>Grep-2.14
+</span><span class='line'>Readline-6.2
+</span><span class='line'>Bash-4.2
+</span><span class='line'>Libtool-2.4.2
+</span><span class='line'>GDBM-1.10
+</span><span class='line'>Inetutils-1.9.1
+</span><span class='line'>Perl-5.16.2
+</span><span class='line'>Autoconf-2.69
+</span><span class='line'>Automake-1.13.1
+</span><span class='line'>Diffutils-3.2
+</span><span class='line'>Gawk-4.0.2
+</span><span class='line'>Findutils-4.4.2
+</span><span class='line'>Flex-2.5.37
+</span><span class='line'>Gettext-0.18.2
+</span><span class='line'>Groff-1.22.2
+</span><span class='line'>Xz-5.0.4
+</span><span class='line'>GRUB-2.00
+</span><span class='line'>Less-451
+</span><span class='line'>Gzip-1.5
+</span><span class='line'>IPRoute2-3.8.0
+</span><span class='line'>Kbd-1.15.5
+</span><span class='line'>Kmod-12
+</span><span class='line'>Libpipeline-1.2.2
+</span><span class='line'>Make-3.82
+</span><span class='line'>Man-DB-2.6.3
+</span><span class='line'>Patch-2.7.1
+</span><span class='line'>Sysklogd-1.5
+</span><span class='line'>Sysvinit-2.88dsf
+</span><span class='line'>Tar-1.26
+</span><span class='line'>Texinfo-5.0
+</span><span class='line'>Udev-197
+</span><span class='line'>Vim-7.3
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Now we have all System Software installed. Next we should compile the kernel. See <a href="/blog/compiling-the-linux-kernel-from-source/" >Compiling a Linux Kernel From Source</a> post.</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by 
+    <span class="fn"><a href="https://plus.google.com/115164496041018691013?rel=author">Upeksha Wisidagama</a></span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-07-01T17:00:00+05:30" pubdate data-updated="true">Jul 1<span>st</span>, 2013</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/gnu/'>GNU</a>, <a class='category' href='/blog/categories/linux/'>Linux</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://uw-freelancer.github.io/blog/building-the-system-software-from-scratch/" data-via="" data-counturl="http://uw-freelancer.github.io/blog/building-the-system-software-from-scratch/" >Tweet</a>
+  
+  
+  
+    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/vim-powerline/" title="Previous Post: Vim PowerLine">&laquo; Vim PowerLine</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/insanely-faster-vim-buffer-switching/" title="Next Post: Insanely Faster Buffer Switching">Insanely Faster Buffer Switching &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <img class='center uw-logo' src="/images/uw-freelancer-logo.png" title="UW Freelancer Logo" alt="UW Freelancer Logo" />
+<section class="odd" >
+<h1>GNU Linux Systems</h2><br />
+<img class='center uw-logo' src="/images/gnu-logo.png" title="GNU is Not Unix" alt="GNU is Not Unix" /><br />
+<a href="/blog/building-a-linux-system-from-scratch/" >Building a GNU Linux System from Tarballs</a><br />
+<a href="/blog/compiling-the-linux-kernel-from-source/" >Compiling a Linux Kernel From Source</a><br />
+<a href="/blog/building-the-system-software-from-scratch/" >Building the System Software from Scratch</a><br />
+<a href="/blog/building-the-host-independant-toolchain/" >Building the Host Independant ToolChain</a><br />
+</section>
+
+<section class="odd" >
+<h1>The Vim Editor</h2><br />
+<img class='center uw-logo' src="/images/vim_logo.png" title="The Editor" alt="The Editor" /><br />
+<a href="/blog/insanely-faster-vim-buffer-switching/" >Insanely Faster Vim Buffer Switching</a><br />
+<a href="/blog/vim-powerline/" >Vim PowerLine</a><br />
+<a href="/blog/vim-vdebug/" >Vim Vdebug</a><br /><br />
+</section>
+
+<section class="odd" >
+<h1>Apache HTTP Server</h2><br />
+<img class='center uw-logo' src="/images/apache_logo.png" title="Apache" alt="Apache" /><br />
+<a href="/blog/fastcgi-suexec-apc-per-user/" >Apache2 FastCGI and suEXEC Implementing APC Per User With PHP5-CGI</a><br />
+<a href="/blog/wordpress-performance-with-apc-via-fastcgi-php5/" >WordPress Performance Benchmarking With APC via FastCGI PHP5-CGI</a><br />
+<a href="/blog/mundane-experiments-with-apache-mpm_prefork-and-mod_php/" >Mundane Experiments With Apache Prefork MPM and Mod_PHP</a><br />
+<a href="/blog/setup-local-ubuntu-server/" >Setting Up a Local Ubuntu Server</a><br /><br />
+</section>
+
+<section class="odd" >
+<h1>PHP</h2><br />
+<img class='center uw-logo' src="/images/php_logo.png" title="PHP" alt="PHP" /><br />
+<a href="/blog/writing-php-extensions/" >Writing PHP Extensions</a><br />
+<a href="/blog/mysql-innodb-disk-space-usage/" >MySQL InnoDB Disk Space Consumption</a><br />
+<a href="/blog/wordpress-toolbar-customization/" >WordPress Toolbar Customization</a><br />
+<a href="/blog/two-website-customizations/" >Two Website Customizations</a><br /><br />
+</section>
+<section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/building-a-linux-system-from-scratch/">Building a Linux System From Scratch</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/writing-php-extensions/">Writing PHP Extensions</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/compiling-the-linux-kernel-from-source/">Compiling a Linux Kernel From Source Tarball</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/wordpress-performance-with-apc-via-fastcgi-php5/">WordPress Performance Benchmarking With APC via FastCGI PHP5-CGI</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/vim-vdebug/">Vim Vedug</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/thanks-nit3hawks/">Thank You Mr. Nit3hawkz</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/insanely-faster-vim-buffer-switching/">Insanely Faster Buffer Switching</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/building-the-system-software-from-scratch/">Building the System Software From Scratch</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/vim-powerline/">Vim PowerLine</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/how-i-earned-one-usd/">How I Earned a Dollar</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/i-only-need-one-dollar/">I Only Need One Dollar</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/two-website-customizations/">Two Website Customizations</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/building-the-host-independant-toolchain/">Building the Host Independant Toolchain</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/fastcgi-suexec-apc-per-user/">Apache2 FastCGI and suEXEC Implementing APC Per User With PHP5-CGI</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/gnuplot-basics-2d-plots/">Gnuplot Basics - 2D Plots</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2013 - Upeksha Wisidagama -
+    <a href="https://plus.google.com/115164496041018691013" rel="publisher">UW Freelancer Google+</a>
+</p>
+
+</footer>
+  
+
+
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id; js.async = true;
+  js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

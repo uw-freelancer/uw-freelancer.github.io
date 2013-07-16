@@ -9,7 +9,19 @@
   <meta name="author" content="Upeksha Wisidagama">
 
   
-  <meta name="description" content="Let&rsquo;s setup an Ubuntu Server. Download the server image from ubuntu website and burn it into a CD or DVD. Install it on your machine. You will &hellip;">
+  <meta name="description" content="Let&rsquo;s start with a basic two dimensional plot. Create the data file (uw.dat). &#8216;Data File (uw.dat)&#8217; 1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+1, 5
+2, 4
+3 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -26,6 +38,7 @@
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
   <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
   <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <link href="/stylesheets/data-table.css" media="screen, projection" rel="stylesheet" type="text/css" />
   <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
 <link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 <link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
@@ -83,7 +96,7 @@
       
   <header>
     
-      <h1 class="entry-title"><a href="/blog/setup-local-ubuntu-server/">Setting Up a Local Ubuntu Server</a></h1>
+      <h1 class="entry-title"><a href="/blog/gnuplot-basics-2d-plots/">Gnuplot Basics - 2D Plots</a></h1>
     
     
       <p class="meta">
@@ -99,36 +112,16 @@
   
 
 
-<time datetime="2012-02-02T22:00:00+05:30" pubdate data-updated="true">Feb 2<span>nd</span>, 2012</time>
+<time datetime="2013-05-13T22:00:00+05:30" pubdate data-updated="true">May 13<span>th</span>, 2013</time>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content"><p>Let&rsquo;s setup an Ubuntu Server. Download the server image from ubuntu website and burn it into a CD or DVD. Install it on your machine. You will be asked about basic configuration options. Choose defaults. Important: Select &lsquo;OpenSSH&rsquo; and &lsquo;LAMP&rsquo; in the server selection dialog.</p>
+  <div class="entry-content"><p>Let&rsquo;s start with a basic two dimensional plot. Create the data file (uw.dat).</p>
 
-<p><img class='center' src="/images/server/ubuntu-server-login.jpg" title="Ubuntu Server Login" alt="Ubuntu Server Login" /></p>
-
-<p>Note the ip address of eth0. Next we plug in anther network card and setup an IP address for the new interface (probably be named as eth1).</p>
-
-<h2>Setting up the IP address</h2>
-
-
-<p>Shutdown the computer and plug in the new network card and boot the computer. Run <code>ifconfig</code> command. The new interface will not show up. You may guess the new ethernet interface. E.g. If you have eth0 listed, the new one wll be eth1. You can run &lsquo;ifconig -a&rsquo; and see yourself and verify.</p>
-
-<blockquote><p>If a single  -a  argument  is  given,  it  displays the status of all interfaces, even those that are down.</p></blockquote>
-
-
-<p>Another way is to run &lsquo;ifconfig eth1&rsquo; directly, assuming the new interface is eth1.</p>
-
-<p><img class='center' src="/images/server/where-is-eth1-interface.jpg" title="Where is eth1 interface" alt="Where is eth1 interface" /></p>
-
-<p>Now, you are certain that the new network interface is &lsquo;eth1&rsquo;. Let&rsquo;s assign a new static IP to this interface. We&rsquo;ll be SSHing into this server through the new interface soon.</p>
-
-<p>Open &lsquo;/etc/network/interfaces&rsquo; and assign <code>192.168.1.8</code> for <code>eth1</code>. We are adding our new machine to the &lsquo;UW Network&rsquo; (192.168.1.0).</p>
-
-<figure class='code'><figcaption><span>&#8216;Static IP Assignment for eth1 (/etc/network/interfaces)&#8217; </span></figcaption>
+<figure class='code'><figcaption><span>&#8216;Data File (uw.dat)&#8217; </span></figcaption>
  <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
@@ -136,70 +129,49 @@
 <span class='line-number'>5</span>
 <span class='line-number'>6</span>
 <span class='line-number'>7</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="c"># The UW network interface</span>
-</span><span class='line'>auto eth1
-</span><span class='line'>iface eth1 inet static
-</span><span class='line'>address 192.168.1.8
-</span><span class='line'>netmask 255.255.255.0
-</span><span class='line'>network 192.168.1.0
-</span><span class='line'>broadcast 192.168.1.255
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>1,  5
+</span><span class='line'>2,  4
+</span><span class='line'>3,  6
+</span><span class='line'>4, 10
+</span><span class='line'>5,  2
+</span><span class='line'>6,  1
+</span><span class='line'>7,  0
+</span><span class='line'>8,  5
+</span><span class='line'>9,  7
+</span><span class='line'>10, 9
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>Restart the server to apply ip addresses.</p>
+<p>Create the plot configuration file (uw.config).</p>
 
-<p><img class='center' src="/images/server/new-network-interface-configured.jpg" title="New Network Interface Configured" alt="New Network Interface Configured" /></p>
-
-<h2>Remote Login to the Server and Set up the HostName</h2>
-
-
-<p>Are you getting the &lsquo;apache2: Could not reliably determine the server&rsquo;s fully qualified domain name, using 127.0.1.1 for ServerName&rsquo; message every time you start, stop or restart the server?</p>
-
-<figure class='code'><figcaption><span>&#8216;apache2 warning&#8217; </span></figcaption>
+<figure class='code'><figcaption><span>&#8216;Configuration File (uw.config)&#8217; </span></figcaption>
  <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
-<span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>upeksha@uwlab:~<span class="nv">$ </span>sudo service apache2 start
-</span><span class='line'><span class="o">[</span>sudo<span class="o">]</span> password <span class="k">for </span>upeksha:
-</span><span class='line'> * Starting web server apache2
-</span><span class='line'> apache2: Could not reliably determine the server<span class="err">&#39;</span>s fully qualified domain name, using 127.0.1.1 <span class="k">for </span>ServerName
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nb">set </span>term png size 600, 400
+</span><span class='line'><span class="nb">set </span>output <span class="s2">&quot;uw.png&quot;</span>
+</span><span class='line'>plot <span class="s2">&quot;uw.dat&quot;</span> with lines
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>To fix the warning, login to the remote server by SSHing to 192.168.1.8.</p>
+<p>Now, plot using <code>gnuplot uw.config</code>.</p>
 
-<p><img class='center' src="/images/server/remote-login-to-server-change-servername.jpg" title="Change Server Name" alt="Change Server Name" /></p>
+<p><img class='center' src="/images/gnuplot/gnuplot-basics-2d-plot.png" title="Ubuntu Server Login" alt="Ubuntu Server Login" /></p>
 
-<p>To specify a server name for our new server, open &lsquo;/etc/apache2/apache2.conf&rsquo; and enter <code>ServerName uwlab</code> at the bottom.</p>
-
-<figure class='code'><figcaption><span>&#8216;Server name assignment (/etc/apache2/apache2.conf)&#8217; </span></figcaption>
- <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>ServerName uwlab
-</span></code></pre></td></tr></table></div></figure>
+<h3>Draw an Arrow</h3>
 
 
-<p>Restart the server again using <code>sudo service apache2 restart</code>. Now, there is no warning.</p>
+<p>To draw and arrow from (3,2) to (6,8), use <code>set arrow from 3,2 to 6,8</code>. To specify end coordinate relative to the starting use <code>rto</code> instead <code>to</code>. e.g. <code>set arrow from 3,2 rto 1,1</code>.</p>
 
-<h2>Using a Name instead of IP for SSH</h2>
-
-
-<p>In the previous section we sshed into the remote server using <code>ssh 192.168.1.8</code>. We can also configure our machine to use a name instead an ip address. Open &lsquo;/etc/hosts&rsquo; and enter the following.</p>
-
-<figure class='code'><figcaption><span>&#8216;SSH hostname (/etc/hosts)&#8217; </span></figcaption>
- <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>192.168.1.8     uwlab
-</span></code></pre></td></tr></table></div></figure>
+<h2>Plotting the Exam Results of My Friends</h2>
 
 
-<p>Now you can simply use <code>ssh uwlab</code> to SSH into the new server.</p>
+<p>These are the marks taken by each of the friends. Format: Name, Marks.</p>
 
-<h2>Auto Login to the Remote Server with SSH</h2>
-
-
-<p>Tired of typing the password everytime login to the server? Use ssh-copy-id to copy our identity onto the server. First, generate the key pair.</p>
-
-<figure class='code'><figcaption><span>&#8216;Generating Public and Private Keys&#8217; </span></figcaption>
+<figure class='code'><figcaption><span>&#8216;Exam Results (marks.dat)&#8217; </span></figcaption>
  <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
@@ -207,27 +179,111 @@
 <span class='line-number'>5</span>
 <span class='line-number'>6</span>
 <span class='line-number'>7</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>ssh-keygen -t rsa
-</span><span class='line'>Generating public/private rsa key pair.
-</span><span class='line'>Enter file in which to save the key <span class="o">(</span>/home/upeksha/.ssh/id_rsa<span class="o">)</span>:
-</span><span class='line'>Enter passphrase <span class="o">(</span>empty <span class="k">for </span>no passphrase<span class="o">)</span>:
-</span><span class='line'>Enter same passphrase again:
-</span><span class='line'>Your identification has been saved in /home/upeksha/.ssh/id_rsa
-</span><span class='line'>Your public key has been saved in /home/upeksha/.ssh/id_rsa.pub
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>Alice 20
+</span><span class='line'>Bob 63
+</span><span class='line'>Charlie 56
+</span><span class='line'>Chuck 42
+</span><span class='line'>Craig 36
+</span><span class='line'>Dave 86
+</span><span class='line'>Erin 45
+</span><span class='line'>Frank 87
+</span><span class='line'>Eve 78
+</span><span class='line'>Mallory 2
+</span><span class='line'>Oscary 44
+</span><span class='line'>Peggy 12
+</span><span class='line'>Trent 56
+</span><span class='line'>Walter 55
+</span><span class='line'>Arthur 42
+</span><span class='line'>Paul 45
+</span><span class='line'>Upeksha 55
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>Next copy the public key to the server using <code>ssh-copy-id</code>.</p>
 
-<figure class='code'><figcaption><span>&#8216;Setting up auto-login for ssh&#8217; </span></figcaption>
+
+<h3>A brief description of each of the friends</h3>
+
+
+<p>Alice and Bob. Generally, Alice wants to send a message to Bob.
+Carol, Carlos or Charlie, as a third participant in communications.</p>
+
+<p>Chuck, as a third participant usually of malicious intent.</p>
+
+<p>Craig, the password cracker (usually encountered in situations with stored hashed/salted passwords).</p>
+
+<p>Dan or Dave, a fourth participant.
+Erin, a fifth participant. (It&rsquo;s rare to see Erin; E is usually reserved for Eve.)
+Frank, a sixth participant (and so on alphabetically).</p>
+
+<p>Eve, an eavesdropper, is usually a passive attacker. While she can listen in on messages between Alice and Bob, she cannot modify them. In quantum cryptography, Eve may also represent the environment.</p>
+
+<p>Mallet or Mallory, a malicious attacker (less commonly called Trudy, an intruder.); unlike the passive Eve, this one is the active man-in-the-middle attacker who can modify messages, substitute his/her own messages, replay old messages, and so on. The difficulty of securing a system against Mallet/Mallory is much greater than against Eve.</p>
+
+<p>Oscar, an opponent, similar to Mallet/Mallory but not necessarily malicious. Could be white-hat but still wants to crack, modify, substitute, or replay messages.
+Peggy, a prover, and Victor, a verifier, often must interact in some way to show that the intended transaction has actually taken place. They are often found in zero-knowledge proofs.
+Trent, a trusted arbitrator, is some kind of neutral third party, whose exact role varies with the protocol under discussion.</p>
+
+<p>Walter, a warden, may be needed to guard Alice and Bob in some respect, depending on the protocol being discussed.
+Arthur and Merlin: In interactive proof systems, the prover has unbounded computational ability and is hence associated with Merlin, the powerful wizard. He claims the truth of a statement, and Arthur, the wise king, questions him to verify the claim.</p>
+
+<p>Paul and Carole. The characters were introduced in the solution of the Twenty Questions problem</p>
+
+<p>Source: This list is drawn mostly from the book Applied Cryptography by Bruce Schneier. Alice and Bob are archetypes in cryptography; Eve is also common. Names further down the alphabet are less common. <a href="http://en.wikipedia.org/wiki/Alice_and_Bob" >Read More</a></p>
+
+<p>Now you know most of my friends, Let&rsquo;s create the plot config file.</p>
+
+<figure class='code'><figcaption><span>&#8216;Exam Results Plot Config (marks.config)&#8217; </span></figcaption>
  <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>ssh-copy-id uwlab
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nb">set </span>term png truecolor size 750, 400
+</span><span class='line'><span class="nb">set </span>output <span class="s2">&quot;marks.png&quot;</span>
+</span><span class='line'>
+</span><span class='line'><span class="nb">set </span>grid
+</span><span class='line'><span class="nb">set </span>boxwidth 0.8 relative
+</span><span class='line'><span class="nb">set </span>style fill transparent solid 0.5 noborder
+</span><span class='line'><span class="nb">set </span>object 1 rectangle from screen 0,0 to screen 1,1 fillcolor rgb<span class="s2">&quot;#ccffff&quot;</span> behind
+</span><span class='line'>
+</span><span class='line'><span class="nb">set </span>xlabel <span class="s2">&quot;Names of Friends&quot;</span>
+</span><span class='line'><span class="nb">set </span>ylabel <span class="s2">&quot;Marks&quot;</span>
+</span><span class='line'><span class="nb">set </span>title <span class="s2">&quot;Marks of the Friends of Upeksha&quot;</span>
+</span><span class='line'><span class="nb">set </span>yrange <span class="o">[</span>0:100<span class="o">]</span>
+</span><span class='line'><span class="nb">set </span>ytics 0,10
+</span><span class='line'>
+</span><span class='line'><span class="nb">set </span>xtics rotate
+</span><span class='line'>plot <span class="s1">&#39;marks.dat&#39;</span> using 2:xticlabels<span class="o">(</span>1<span class="o">)</span> with boxes notitle
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>Now you can just type <code>ssh uwlab</code> at the command prompt and you are in the server.</p>
+<p>Run <code>gnuplot marks.config</code>.</p>
 
-<p>Be sure to use a simple PassPhrase. It is important to use a Very Strong Password and relatively weak and easy to type PassPhrase. This reduces the likelyhood of someone succeed in bruteforcing into the server. Of cource you can hide the SSH for even more security.</p>
+<p><img class='center' src="/images/gnuplot/marks-of-friends-of-upeksha.png" title="Marks of Friends of Upeksha" alt="Marks of Friends of Upeksha" /></p>
+
+<blockquote><p>Despite gnuplot&#8217;s name, it is not part of or related to the GNU Project, nor does it use the GNU General Public License. You should always use simple &#8216;g&#8217;: &#8216;gnuplot&#8217;.</p></blockquote>
+
 </div>
   
   
@@ -236,6 +292,8 @@
     </article>
   
   <div class="pagination">
+    
+      <a class="prev" href="/blog/page/16/">&larr; Older</a>
     
     <a href="/blog/archives">Blog Archives</a>
     
@@ -246,9 +304,55 @@
 <aside class="sidebar">
   
     <img class='center uw-logo' src="/images/uw-freelancer-logo.png" title="UW Freelancer Logo" alt="UW Freelancer Logo" />
+<section class="odd" >
+<h1>GNU Linux Systems</h2><br />
+<img class='center uw-logo' src="/images/gnu-logo.png" title="GNU is Not Unix" alt="GNU is Not Unix" /><br />
+<a href="/blog/building-a-linux-system-from-scratch/" >Building a GNU Linux System from Tarballs</a><br />
+<a href="/blog/compiling-the-linux-kernel-from-source/" >Compiling a Linux Kernel From Source</a><br />
+<a href="/blog/building-the-system-software-from-scratch/" >Building the System Software from Scratch</a><br />
+<a href="/blog/building-the-host-independant-toolchain/" >Building the Host Independant ToolChain</a><br />
+</section>
+
+<section class="odd" >
+<h1>The Vim Editor</h2><br />
+<img class='center uw-logo' src="/images/vim_logo.png" title="The Editor" alt="The Editor" /><br />
+<a href="/blog/insanely-faster-vim-buffer-switching/" >Insanely Faster Vim Buffer Switching</a><br />
+<a href="/blog/vim-powerline/" >Vim PowerLine</a><br />
+<a href="/blog/vim-vdebug/" >Vim Vdebug</a><br /><br />
+</section>
+
+<section class="odd" >
+<h1>Apache HTTP Server</h2><br />
+<img class='center uw-logo' src="/images/apache_logo.png" title="Apache" alt="Apache" /><br />
+<a href="/blog/fastcgi-suexec-apc-per-user/" >Apache2 FastCGI and suEXEC Implementing APC Per User With PHP5-CGI</a><br />
+<a href="/blog/wordpress-performance-with-apc-via-fastcgi-php5/" >WordPress Performance Benchmarking With APC via FastCGI PHP5-CGI</a><br />
+<a href="/blog/mundane-experiments-with-apache-mpm_prefork-and-mod_php/" >Mundane Experiments With Apache Prefork MPM and Mod_PHP</a><br />
+<a href="/blog/setup-local-ubuntu-server/" >Setting Up a Local Ubuntu Server</a><br /><br />
+</section>
+
+<section class="odd" >
+<h1>PHP</h2><br />
+<img class='center uw-logo' src="/images/php_logo.png" title="PHP" alt="PHP" /><br />
+<a href="/blog/writing-php-extensions/" >Writing PHP Extensions</a><br />
+<a href="/blog/mysql-innodb-disk-space-usage/" >MySQL InnoDB Disk Space Consumption</a><br />
+<a href="/blog/wordpress-toolbar-customization/" >WordPress Toolbar Customization</a><br />
+<a href="/blog/two-website-customizations/" >Two Website Customizations</a><br /><br />
+</section>
 <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/building-a-linux-system-from-scratch/">Building a Linux System From Scratch</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/writing-php-extensions/">Writing PHP Extensions</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/compiling-the-linux-kernel-from-source/">Compiling a Linux Kernel From Source Tarball</a>
+      </li>
     
       <li class="post">
         <a href="/blog/wordpress-performance-with-apc-via-fastcgi-php5/">WordPress Performance Benchmarking With APC via FastCGI PHP5-CGI</a>
@@ -264,6 +368,10 @@
     
       <li class="post">
         <a href="/blog/insanely-faster-vim-buffer-switching/">Insanely Faster Buffer Switching</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/building-the-system-software-from-scratch/">Building the System Software From Scratch</a>
       </li>
     
       <li class="post">
@@ -283,46 +391,21 @@
       </li>
     
       <li class="post">
+        <a href="/blog/building-the-host-independant-toolchain/">Building the Host Independant Toolchain</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/fastcgi-suexec-apc-per-user/">Apache2 FastCGI and suEXEC Implementing APC Per User With PHP5-CGI</a>
       </li>
     
       <li class="post">
-        <a href="/blog/wordpress-toolbar-customization/">WordPress Toolbar Customization</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/language-parlor-project/">Language Parlor Project</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/facebook-app-sweepstakes/">Facebook App Sweepstakes</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/coming-soon-site/">Coming Soon Site Using WordPress CMS</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/mundane-experiments-with-apache-mpm_prefork-and-mod_php/">Mundane Experiments With Apache Prefork MPM and Mod_PHP</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/setup-local-ubuntu-server/">Setting Up a Local Ubuntu Server</a>
+        <a href="/blog/gnuplot-basics-2d-plots/">Gnuplot Basics - 2D Plots</a>
       </li>
     
   </ul>
 </section>
 
 
-
-<section class="googleplus">
-  <h1>
-    <a href="https://plus.google.com/115164496041018691013?rel=author">
-      <img src="http://www.google.com/images/icons/ui/gprofile_button-32.png" width="32" height="32">
-      Google+
-    </a>
-  </h1>
-</section>
 
 
 
@@ -333,7 +416,7 @@
   </div>
   <footer role="contentinfo"><p>
   Copyright &copy; 2013 - Upeksha Wisidagama -
-  <span class="credit">Hire me on <a href="http://www.freelancer.com/u/upekshawisidaga.html">Freelancer.com</a></span>
+    <a href="https://plus.google.com/115164496041018691013" rel="publisher">UW Freelancer Google+</a>
 </p>
 
 </footer>
@@ -351,14 +434,6 @@
 }(document, 'script', 'facebook-jssdk'));</script>
 
 
-
-  <script type="text/javascript">
-    (function() {
-      var script = document.createElement('script'); script.type = 'text/javascript'; script.async = true;
-      script.src = 'https://apis.google.com/js/plusone.js';
-      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(script, s);
-    })();
-  </script>
 
 
 

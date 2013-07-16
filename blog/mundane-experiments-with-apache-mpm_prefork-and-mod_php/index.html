@@ -26,6 +26,7 @@
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
   <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
   <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <link href="/stylesheets/data-table.css" media="screen, projection" rel="stylesheet" type="text/css" />
   <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
 <link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 <link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
@@ -118,9 +119,9 @@
 
 <p>PHP is loaded as Module by default. Log into your fresh server (described in the above linked article), and run the <code>top</code> command.</p>
 
-<p>Next enable highlighting by pressing <code>z</code>. Then enable column highlighting by pressing <code>x</code>. You can change the sorting of the rows by columns. Just press <code>&lt;</code> and <code>&gt;</code> until you get the required column highlighted. The above figure shows the rows as ordered by &lsquo;Resident Memory (RE)&rsquo; they consume. The most Resident Memory consuming process is the <code>mysqld</code>. This is the MySQL deamon, accounting for 33Mbs out of total 1GB RAM.</p>
+<p>Next enable highlighting by pressing <code>z</code>. Then enable column highlighting by pressing <code>x</code>. You can change the sorting of the rows by columns. Just press <code>&lt;</code> and <code>&gt;</code> until you get the required column highlighted. The above figure shows the rows as ordered by &lsquo;Resident Memory (RE)&rsquo; they consume. The most Resident Memory consuming process is the <code>mysqld</code>. This is the MySQL daemon, accounting for 33Mbs out of total 1GB RAM.</p>
 
-<blockquote><p>PID: 1668 is the Apache2 parent process owned by root. It consumes 7Mbs of RAM. Each of the children of Apache2 parent process consumes ~ 4.4Mb RAM. But 1MB of RAM is being shared.</p></blockquote>
+<blockquote><p>PID: 1668 is the Apache2 parent process owned by root. It consumes 7Mbs of RAM. Each of the children of Apache2 parent process consumes ~ 4.4Mbs of RAM. But 1MB of RAM is being shared.</p></blockquote>
 
 
 <p>How the server decided to spawn 9 children? Let&rsquo;s see the apache2 configuration files stored in &lsquo;/etc/apache2/&rsquo;.</p>
@@ -269,7 +270,8 @@
       
   
 
-<span class="byline author vcard">Posted by <span class="fn">Upeksha Wisidagama</span></span>
+<span class="byline author vcard">Posted by 
+    <span class="fn"><a href="https://plus.google.com/115164496041018691013?rel=author">Upeksha Wisidagama</a></span></span>
 
       
 
@@ -300,8 +302,6 @@
   <a href="//twitter.com/share" class="twitter-share-button" data-url="http://uw-freelancer.github.io/blog/mundane-experiments-with-apache-mpm_prefork-and-mod_php/" data-via="" data-counturl="http://uw-freelancer.github.io/blog/mundane-experiments-with-apache-mpm_prefork-and-mod_php/" >Tweet</a>
   
   
-  <div class="g-plusone" data-size="medium"></div>
-  
   
     <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
   
@@ -324,9 +324,55 @@
 <aside class="sidebar">
   
     <img class='center uw-logo' src="/images/uw-freelancer-logo.png" title="UW Freelancer Logo" alt="UW Freelancer Logo" />
+<section class="odd" >
+<h1>GNU Linux Systems</h2><br />
+<img class='center uw-logo' src="/images/gnu-logo.png" title="GNU is Not Unix" alt="GNU is Not Unix" /><br />
+<a href="/blog/building-a-linux-system-from-scratch/" >Building a GNU Linux System from Tarballs</a><br />
+<a href="/blog/compiling-the-linux-kernel-from-source/" >Compiling a Linux Kernel From Source</a><br />
+<a href="/blog/building-the-system-software-from-scratch/" >Building the System Software from Scratch</a><br />
+<a href="/blog/building-the-host-independant-toolchain/" >Building the Host Independant ToolChain</a><br />
+</section>
+
+<section class="odd" >
+<h1>The Vim Editor</h2><br />
+<img class='center uw-logo' src="/images/vim_logo.png" title="The Editor" alt="The Editor" /><br />
+<a href="/blog/insanely-faster-vim-buffer-switching/" >Insanely Faster Vim Buffer Switching</a><br />
+<a href="/blog/vim-powerline/" >Vim PowerLine</a><br />
+<a href="/blog/vim-vdebug/" >Vim Vdebug</a><br /><br />
+</section>
+
+<section class="odd" >
+<h1>Apache HTTP Server</h2><br />
+<img class='center uw-logo' src="/images/apache_logo.png" title="Apache" alt="Apache" /><br />
+<a href="/blog/fastcgi-suexec-apc-per-user/" >Apache2 FastCGI and suEXEC Implementing APC Per User With PHP5-CGI</a><br />
+<a href="/blog/wordpress-performance-with-apc-via-fastcgi-php5/" >WordPress Performance Benchmarking With APC via FastCGI PHP5-CGI</a><br />
+<a href="/blog/mundane-experiments-with-apache-mpm_prefork-and-mod_php/" >Mundane Experiments With Apache Prefork MPM and Mod_PHP</a><br />
+<a href="/blog/setup-local-ubuntu-server/" >Setting Up a Local Ubuntu Server</a><br /><br />
+</section>
+
+<section class="odd" >
+<h1>PHP</h2><br />
+<img class='center uw-logo' src="/images/php_logo.png" title="PHP" alt="PHP" /><br />
+<a href="/blog/writing-php-extensions/" >Writing PHP Extensions</a><br />
+<a href="/blog/mysql-innodb-disk-space-usage/" >MySQL InnoDB Disk Space Consumption</a><br />
+<a href="/blog/wordpress-toolbar-customization/" >WordPress Toolbar Customization</a><br />
+<a href="/blog/two-website-customizations/" >Two Website Customizations</a><br /><br />
+</section>
 <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/building-a-linux-system-from-scratch/">Building a Linux System From Scratch</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/writing-php-extensions/">Writing PHP Extensions</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/compiling-the-linux-kernel-from-source/">Compiling a Linux Kernel From Source Tarball</a>
+      </li>
     
       <li class="post">
         <a href="/blog/wordpress-performance-with-apc-via-fastcgi-php5/">WordPress Performance Benchmarking With APC via FastCGI PHP5-CGI</a>
@@ -342,6 +388,10 @@
     
       <li class="post">
         <a href="/blog/insanely-faster-vim-buffer-switching/">Insanely Faster Buffer Switching</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/building-the-system-software-from-scratch/">Building the System Software From Scratch</a>
       </li>
     
       <li class="post">
@@ -361,46 +411,21 @@
       </li>
     
       <li class="post">
+        <a href="/blog/building-the-host-independant-toolchain/">Building the Host Independant Toolchain</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/fastcgi-suexec-apc-per-user/">Apache2 FastCGI and suEXEC Implementing APC Per User With PHP5-CGI</a>
       </li>
     
       <li class="post">
-        <a href="/blog/wordpress-toolbar-customization/">WordPress Toolbar Customization</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/language-parlor-project/">Language Parlor Project</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/facebook-app-sweepstakes/">Facebook App Sweepstakes</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/coming-soon-site/">Coming Soon Site Using WordPress CMS</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/mundane-experiments-with-apache-mpm_prefork-and-mod_php/">Mundane Experiments With Apache Prefork MPM and Mod_PHP</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/setup-local-ubuntu-server/">Setting Up a Local Ubuntu Server</a>
+        <a href="/blog/gnuplot-basics-2d-plots/">Gnuplot Basics - 2D Plots</a>
       </li>
     
   </ul>
 </section>
 
 
-
-<section class="googleplus">
-  <h1>
-    <a href="https://plus.google.com/115164496041018691013?rel=author">
-      <img src="http://www.google.com/images/icons/ui/gprofile_button-32.png" width="32" height="32">
-      Google+
-    </a>
-  </h1>
-</section>
 
 
 
@@ -412,7 +437,7 @@
   </div>
   <footer role="contentinfo"><p>
   Copyright &copy; 2013 - Upeksha Wisidagama -
-  <span class="credit">Hire me on <a href="http://www.freelancer.com/u/upekshawisidaga.html">Freelancer.com</a></span>
+    <a href="https://plus.google.com/115164496041018691013" rel="publisher">UW Freelancer Google+</a>
 </p>
 
 </footer>
@@ -430,14 +455,6 @@
 }(document, 'script', 'facebook-jssdk'));</script>
 
 
-
-  <script type="text/javascript">
-    (function() {
-      var script = document.createElement('script'); script.type = 'text/javascript'; script.async = true;
-      script.src = 'https://apis.google.com/js/plusone.js';
-      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(script, s);
-    })();
-  </script>
 
 
 

@@ -9,7 +9,7 @@
   <meta name="author" content="Upeksha Wisidagama">
 
   
-  <meta name="description" content="Today is the last day of this month (June, 2013). My account balance is &lsquo;29.19&rsquo;. In order to withdraw money from freelancer.com, My &hellip;">
+  <meta name="description" content="Consider the following instance. You are debugging an app with Vim Vdebug. You have opened several other text buffers as well. Also note that we& &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -26,6 +26,7 @@
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
   <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
   <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <link href="/stylesheets/data-table.css" media="screen, projection" rel="stylesheet" type="text/css" />
   <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
 <link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 <link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
@@ -83,7 +84,7 @@
       
   <header>
     
-      <h1 class="entry-title"><a href="/blog/i-only-need-one-dollar/">I Only Need One Dollar</a></h1>
+      <h1 class="entry-title"><a href="/blog/insanely-faster-vim-buffer-switching/">Insanely Faster Buffer Switching</a></h1>
     
     
       <p class="meta">
@@ -99,36 +100,67 @@
   
 
 
-<time datetime="2013-06-30T09:13:00+05:30" pubdate data-updated="true">Jun 30<span>th</span>, 2013</time>
+<time datetime="2013-07-03T23:05:00+05:30" pubdate data-updated="true">Jul 3<span>rd</span>, 2013</time>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content"><p>Today is the last day of this month (June, 2013). My account balance is &lsquo;29.19&rsquo;.</p>
+  <div class="entry-content"><p>Consider the following instance. You are debugging an app with Vim Vdebug. You have opened several other text buffers as well. Also note that we&rsquo;ve a couple of tabs as well.</p>
 
-<p>In order to withdraw money from freelancer.com, My account balance should be at least 30 USD.</p>
+<p><img class='center' src="/images/blog/insanely-faster-buffer-switching.png" title="Insanely Faster Buffer Switching in Vim" alt="Insanely Faster Buffer Switching in Vim" /></p>
 
-<p><img class='center' src="/images/blog/i-only-need-one-dollar.jpg" title="I only need one dollar" alt="I only need one dollar" /></p>
+<p><a href="/images/blog/insanely-faster-buffer-switching.png" target="blank" >Larger Preview</a></p>
 
-<p>I recently completed a project for Mr. Brant (Two WordPress Customizations). I agreed with him to be paid 30 USD for the completion of this project. But freelancer.com charged me a fee of 5 USD. ( Freelancer.com service fee is fair compared to other service providers. But at this time the total went below 30 USD ).</p>
-
-<p><img class='center' src="/images/blog/wordpress-freelancer-cost.jpg" title="WordPress Freelancer Cost" alt="WordPress Freelancer Cost" /></p>
-
-<p>So I started bidding on projects, planing to earn the missing 1 USD. Today is the final day of the month. Still, I haven&rsquo;t had a chance to win a project. I started to lower my bids. Then people started to ask me why my bid is so low (they can&rsquo;t trust that the work could be that cheap). See the below conversation with one of my potential clients (Alias: MasterCook).</p>
-
-<blockquote><p>MasterCook: ok so 1. why you bid so low and how do i know your not wasting my time</p><p>Upeksha: I have been bidding for a couple of days without any work. I have $29 in my account and I need at least another $1 to withdraw money from freelancer.com.</p><p>Upeksha: I have done various WordPress related projects. I am confident I can do the customizations you need.</p><p>MasterCook: you price is good but I am worried about cheap labour</p></blockquote>
+<h2>{ s-h | s-j | s-k | s-l }</h2>
 
 
-<p>Usually, freelancer.com charges 10% of the total project price (for a 30USD project that should be 3USD). At this time they charged 5 USD. The reason is the lowest project commission is 5 USD. However now I can&rsquo;t withdraw funds to Skrill account without another dollar. I only need One Dollar.</p>
+<p>Still using &lt;C-W> commands to switch buffers? It&rsquo;s probably time to practise a more efficient way.</p>
 
-<p><img class='center' src="/images/blog/cannot-withdraw-less-than-30-usd.jpg" title="Cannot withdraw less than 30 USD" alt="Cannot withdraw less than 30 USD" /></p>
-
-<h2>Update 2013-07-01</h2>
+<blockquote><p>I&#8217;ve put some text on my .vimrc which allows me to switch buffers 537ns before I think about switching buffers.<br/>* ns = nano seconds = 1x10^(-9)s</p></blockquote>
 
 
-<p>I was able to receive the missing dollar. Read <a href="/blog/how-i-earned-one-usd/" >how I found a dollar</a>.</p>
+<p>I strongly encourage you to put these in your .vimrc and experience <b>The Ultimate Speed of Buffer Switching</b>.</p>
+
+<figure class='code'><figcaption><span>&#8216;Insanely Faster Buffer Switching - .vimrc&#8217; </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>nmap sh &lt;C-W&gt;h
+</span><span class='line'>nmap sj &lt;C-W&gt;j
+</span><span class='line'>nmap sk &lt;C-W&gt;k
+</span><span class='line'>nmap sl &lt;C-W&gt;l
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<h2>Lightning Speed Tab Switching</h2>
+
+
+<p>I recommend the following settings for a faster and more intuitive tab swiching experience.</p>
+
+<figure class='code'><figcaption><span>&#8216;Lightning Fast Tab Switching - .vimrc&#8217; </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>nnoremap sn :tabp&lt;cr&gt;
+</span><span class='line'>nnoremap sm :tabn&lt;cr&gt;
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<h2>Exercise</h2>
+
+
+<p>Don&rsquo;t look at the keyboard!
+Can you find the &rsquo;s&#8217; key without looking at the keyboard?</p>
+
+<p>Yes: Share this post.<br />
+No: Like this post.<br />
+I looked at the keybord: Do nothing.<br /></p>
 </div>
   
   
@@ -149,9 +181,55 @@
 <aside class="sidebar">
   
     <img class='center uw-logo' src="/images/uw-freelancer-logo.png" title="UW Freelancer Logo" alt="UW Freelancer Logo" />
+<section class="odd" >
+<h1>GNU Linux Systems</h2><br />
+<img class='center uw-logo' src="/images/gnu-logo.png" title="GNU is Not Unix" alt="GNU is Not Unix" /><br />
+<a href="/blog/building-a-linux-system-from-scratch/" >Building a GNU Linux System from Tarballs</a><br />
+<a href="/blog/compiling-the-linux-kernel-from-source/" >Compiling a Linux Kernel From Source</a><br />
+<a href="/blog/building-the-system-software-from-scratch/" >Building the System Software from Scratch</a><br />
+<a href="/blog/building-the-host-independant-toolchain/" >Building the Host Independant ToolChain</a><br />
+</section>
+
+<section class="odd" >
+<h1>The Vim Editor</h2><br />
+<img class='center uw-logo' src="/images/vim_logo.png" title="The Editor" alt="The Editor" /><br />
+<a href="/blog/insanely-faster-vim-buffer-switching/" >Insanely Faster Vim Buffer Switching</a><br />
+<a href="/blog/vim-powerline/" >Vim PowerLine</a><br />
+<a href="/blog/vim-vdebug/" >Vim Vdebug</a><br /><br />
+</section>
+
+<section class="odd" >
+<h1>Apache HTTP Server</h2><br />
+<img class='center uw-logo' src="/images/apache_logo.png" title="Apache" alt="Apache" /><br />
+<a href="/blog/fastcgi-suexec-apc-per-user/" >Apache2 FastCGI and suEXEC Implementing APC Per User With PHP5-CGI</a><br />
+<a href="/blog/wordpress-performance-with-apc-via-fastcgi-php5/" >WordPress Performance Benchmarking With APC via FastCGI PHP5-CGI</a><br />
+<a href="/blog/mundane-experiments-with-apache-mpm_prefork-and-mod_php/" >Mundane Experiments With Apache Prefork MPM and Mod_PHP</a><br />
+<a href="/blog/setup-local-ubuntu-server/" >Setting Up a Local Ubuntu Server</a><br /><br />
+</section>
+
+<section class="odd" >
+<h1>PHP</h2><br />
+<img class='center uw-logo' src="/images/php_logo.png" title="PHP" alt="PHP" /><br />
+<a href="/blog/writing-php-extensions/" >Writing PHP Extensions</a><br />
+<a href="/blog/mysql-innodb-disk-space-usage/" >MySQL InnoDB Disk Space Consumption</a><br />
+<a href="/blog/wordpress-toolbar-customization/" >WordPress Toolbar Customization</a><br />
+<a href="/blog/two-website-customizations/" >Two Website Customizations</a><br /><br />
+</section>
 <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/building-a-linux-system-from-scratch/">Building a Linux System From Scratch</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/writing-php-extensions/">Writing PHP Extensions</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/compiling-the-linux-kernel-from-source/">Compiling a Linux Kernel From Source Tarball</a>
+      </li>
     
       <li class="post">
         <a href="/blog/wordpress-performance-with-apc-via-fastcgi-php5/">WordPress Performance Benchmarking With APC via FastCGI PHP5-CGI</a>
@@ -167,6 +245,10 @@
     
       <li class="post">
         <a href="/blog/insanely-faster-vim-buffer-switching/">Insanely Faster Buffer Switching</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/building-the-system-software-from-scratch/">Building the System Software From Scratch</a>
       </li>
     
       <li class="post">
@@ -186,46 +268,21 @@
       </li>
     
       <li class="post">
+        <a href="/blog/building-the-host-independant-toolchain/">Building the Host Independant Toolchain</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/fastcgi-suexec-apc-per-user/">Apache2 FastCGI and suEXEC Implementing APC Per User With PHP5-CGI</a>
       </li>
     
       <li class="post">
-        <a href="/blog/wordpress-toolbar-customization/">WordPress Toolbar Customization</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/language-parlor-project/">Language Parlor Project</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/facebook-app-sweepstakes/">Facebook App Sweepstakes</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/coming-soon-site/">Coming Soon Site Using WordPress CMS</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/mundane-experiments-with-apache-mpm_prefork-and-mod_php/">Mundane Experiments With Apache Prefork MPM and Mod_PHP</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/setup-local-ubuntu-server/">Setting Up a Local Ubuntu Server</a>
+        <a href="/blog/gnuplot-basics-2d-plots/">Gnuplot Basics - 2D Plots</a>
       </li>
     
   </ul>
 </section>
 
 
-
-<section class="googleplus">
-  <h1>
-    <a href="https://plus.google.com/115164496041018691013?rel=author">
-      <img src="http://www.google.com/images/icons/ui/gprofile_button-32.png" width="32" height="32">
-      Google+
-    </a>
-  </h1>
-</section>
 
 
 
@@ -236,7 +293,7 @@
   </div>
   <footer role="contentinfo"><p>
   Copyright &copy; 2013 - Upeksha Wisidagama -
-  <span class="credit">Hire me on <a href="http://www.freelancer.com/u/upekshawisidaga.html">Freelancer.com</a></span>
+    <a href="https://plus.google.com/115164496041018691013" rel="publisher">UW Freelancer Google+</a>
 </p>
 
 </footer>
@@ -254,14 +311,6 @@
 }(document, 'script', 'facebook-jssdk'));</script>
 
 
-
-  <script type="text/javascript">
-    (function() {
-      var script = document.createElement('script'); script.type = 'text/javascript'; script.async = true;
-      script.src = 'https://apis.google.com/js/plusone.js';
-      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(script, s);
-    })();
-  </script>
 
 
 

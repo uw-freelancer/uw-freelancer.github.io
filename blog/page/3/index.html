@@ -9,7 +9,7 @@
   <meta name="author" content="Upeksha Wisidagama">
 
   
-  <meta name="description" content="It&rsquo;s been a year, completing my first project on freelancer.com and receiving a 5 star feedback. In retrospect, it seems like it all happened &hellip;">
+  <meta name="description" content="This is the third post about building a linux system from source files. If you have rebooted your host after completing the steps described in the &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -26,6 +26,7 @@
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
   <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
   <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <link href="/stylesheets/data-table.css" media="screen, projection" rel="stylesheet" type="text/css" />
   <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
 <link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 <link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
@@ -83,7 +84,7 @@
       
   <header>
     
-      <h1 class="entry-title"><a href="/blog/thanks-nit3hawks/">Thank You Mr. Nit3hawkz</a></h1>
+      <h1 class="entry-title"><a href="/blog/compiling-the-linux-kernel-from-source/">Compiling a Linux Kernel From Source Tarball</a></h1>
     
     
       <p class="meta">
@@ -99,52 +100,103 @@
   
 
 
-<time datetime="2013-07-06T05:00:00+05:30" pubdate data-updated="true">Jul 6<span>th</span>, 2013</time>
+<time datetime="2013-07-12T20:20:00+05:30" pubdate data-updated="true">Jul 12<span>th</span>, 2013</time>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content"><p>It&rsquo;s been a year, completing my first project on freelancer.com and receiving a 5 star feedback.</p>
+  <div class="entry-content"><p>This is the third post about building a linux system from source files.</p>
 
-<blockquote><p>In retrospect, it seems like it all happened so quickly.</p></blockquote>
+<p>If you have rebooted your host after completing the steps described in the second post, first, mount the new system partition.</p>
+
+<p>Our new system is on sdb disk.</p>
+
+<figure class='code'><figcaption><span>&#8216;Mounting the new system&#8217; </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>sudo su
+</span><span class='line'><span class="nb">export </span><span class="nv">LFS</span><span class="o">=</span>/mnt/lfs
+</span><span class='line'>mount -v -t ext3 /dev/sdb <span class="nv">$LFS</span>
+</span></code></pre></td></tr></table></div></figure>
 
 
-<p>Remember the first feedback I received, that positive feedback had a great impact on my freelancing career.</p>
+<p><img class='center' src="/images/lfs/mounting-the-system.png" title="Mounting the system filesystem" alt="Mounting the system filesystem" /></p>
 
-<p><img class='center' src="/images/blog/thanks-nit3hawkz-review.jpg" title="Mr. Nit3hawkz Review" alt="Mr. Nit3hawkz Review" /></p>
-
-<p>After that I was able to complete a series of freelancing projects. At the same time I learned a great deal of new things about web design and development.</p>
-
-<blockquote><p>&#8220;How far that little candle throws his beams! So shines a good deed in a weary world.&#8221; - William Shakespeare</p></blockquote>
-
-
-<p><img class='center' src="/images/blog/nit3hawkz-profile.jpg" title="Mr. Nit3hawkz Profile" alt="Mr. Nit3hawkz Profile" /></p>
-
-<p>Thank you Mr. Nit3hawkz for helping me to start my career in freelancing. I completed three projects for Mr. Nit3hawkz in the past year.</p>
-
-<p>First Project &ndash; <a href="/blog/coming-soon-site/" >Exp Tennis Project</a><br />
-Second Project &ndash; <a href="/blog/facebook-app-sweepstakes/" >Facebook App Project</a><br />
-Third Project &ndash; <a href="/blog/language-parlor-project/" >Language Parlor Project</a><br /></p>
-
-<blockquote><p>&#8220;Unselfish and noble actions are the most radiant pages in the biography of souls.&#8221; - David Thomas</p></blockquote>
+<h2>Mounting and Populating Device (Virtual) Filesystem</h2>
 
 
 
 
-<h2>Dear Other Employers,</h2>
+<figure class='code'><figcaption><span>&#8216;Mounting Dev Filesystem&#8217; </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>mount -v --bind /dev <span class="nv">$LFS</span>/dev
+</span></code></pre></td></tr></table></div></figure>
 
 
-<p>I thank all of you.</p>
-
-<blockquote><p>I can&#8217;t win, I can&#8217;t reign<br/>I will never win this game<br/>Without you, without you<br/>I am lost, I am vain,<br/>I will never be the same<br/>Without you, without you</p></blockquote>
 
 
-<p><img class='center' src="/images/blog/thank-you.jpg" title="Thank You All" alt="Thank You All" /></p>
+<h2>Mounting Virtual Kernel Filesystems</h2>
 
-<blockquote><p>&#8220;I would maintain that thanks are the highest form of thought, and that gratitude is happiness doubled by wonder.&#8221; - G.K. Chesterton</p></blockquote>
 
+
+
+<figure class='code'><figcaption><span>&#8216;Mounting Virtual Kernel Filesystems&#8217; </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>mount -vt devpts devpts <span class="nv">$LFS</span>/dev/pts
+</span><span class='line'>mount -vt proc proc <span class="nv">$LFS</span>/proc
+</span><span class='line'>mount -vt sysfs sysfs <span class="nv">$LFS</span>/sys
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p><img class='center' src="/images/lfs/mounting-virtual-kernel-filesystems.png" title="Mounting Virtual Kernel Filesystems" alt="Mounting Virtual Kernel Filesystems" /></p>
+
+<h2>Chroot to New System and Compile the Kernel</h2>
+
+
+
+
+<figure class='code'><figcaption><span>&#8216;Chrooting into new System&#8217; </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>chroot <span class="s2">&quot;$LFS&quot;</span> /usr/bin/env -i <span class="se">\</span>
+</span><span class='line'>    <span class="nv">HOME</span><span class="o">=</span>/root <span class="nv">TERM</span><span class="o">=</span><span class="s2">&quot;$TERM&quot;</span> <span class="nv">PS1</span><span class="o">=</span><span class="s1">&#39;\u:\w\$ &#39;</span> <span class="se">\</span>
+</span><span class='line'>    <span class="nv">PATH</span><span class="o">=</span>/bin:/usr/bin:/sbin:/usr/sbin <span class="se">\</span>
+</span><span class='line'>    /bin/bash --login
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<blockquote><p>&#8216;Make MrProper&#8217; ensures that the kernel tree is absolutely clean. The kernel team recommends that this command be issued prior to each kernel compilation. Do not rely on the source tree being clean after un-tarring.</p></blockquote>
+
+
+<p>Now run &lsquo;make LANG=en_US LC_ALL= menuconfig&rsquo; after &lsquo;make mrproper&rsquo;.</p>
+
+<p><img class='center' src="/images/lfs/linux-kernel-configuration.png" title="Linux Kernel Configuration" alt="Linux Kernel Configuration" /></p>
+
+<h2>Install the Fresh Linux Kernel in the Boot Directory</h2>
+
+
+<p>Finally run the following command to install the Linux Kernel in the Boot directory.</p>
+
+<figure class='code'><figcaption><span>&#8216;Install Kernel in Boot Directory&#8217; </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>make
+</span><span class='line'>cp -v arch/x86/boot/bzImage /boot/vmlinuz-3.8.1-upeksha-7.3
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Now configure the Grub Bootloader and boot into the New Linux System.</p>
+
+<p><a href="/blog/building-a-linux-system-from-scratch/" >Next: Booting and Logging into the New Linux System</a><br /></p>
 </div>
   
   
@@ -165,9 +217,55 @@ Third Project &ndash; <a href="/blog/language-parlor-project/" >Language Parlor 
 <aside class="sidebar">
   
     <img class='center uw-logo' src="/images/uw-freelancer-logo.png" title="UW Freelancer Logo" alt="UW Freelancer Logo" />
+<section class="odd" >
+<h1>GNU Linux Systems</h2><br />
+<img class='center uw-logo' src="/images/gnu-logo.png" title="GNU is Not Unix" alt="GNU is Not Unix" /><br />
+<a href="/blog/building-a-linux-system-from-scratch/" >Building a GNU Linux System from Tarballs</a><br />
+<a href="/blog/compiling-the-linux-kernel-from-source/" >Compiling a Linux Kernel From Source</a><br />
+<a href="/blog/building-the-system-software-from-scratch/" >Building the System Software from Scratch</a><br />
+<a href="/blog/building-the-host-independant-toolchain/" >Building the Host Independant ToolChain</a><br />
+</section>
+
+<section class="odd" >
+<h1>The Vim Editor</h2><br />
+<img class='center uw-logo' src="/images/vim_logo.png" title="The Editor" alt="The Editor" /><br />
+<a href="/blog/insanely-faster-vim-buffer-switching/" >Insanely Faster Vim Buffer Switching</a><br />
+<a href="/blog/vim-powerline/" >Vim PowerLine</a><br />
+<a href="/blog/vim-vdebug/" >Vim Vdebug</a><br /><br />
+</section>
+
+<section class="odd" >
+<h1>Apache HTTP Server</h2><br />
+<img class='center uw-logo' src="/images/apache_logo.png" title="Apache" alt="Apache" /><br />
+<a href="/blog/fastcgi-suexec-apc-per-user/" >Apache2 FastCGI and suEXEC Implementing APC Per User With PHP5-CGI</a><br />
+<a href="/blog/wordpress-performance-with-apc-via-fastcgi-php5/" >WordPress Performance Benchmarking With APC via FastCGI PHP5-CGI</a><br />
+<a href="/blog/mundane-experiments-with-apache-mpm_prefork-and-mod_php/" >Mundane Experiments With Apache Prefork MPM and Mod_PHP</a><br />
+<a href="/blog/setup-local-ubuntu-server/" >Setting Up a Local Ubuntu Server</a><br /><br />
+</section>
+
+<section class="odd" >
+<h1>PHP</h2><br />
+<img class='center uw-logo' src="/images/php_logo.png" title="PHP" alt="PHP" /><br />
+<a href="/blog/writing-php-extensions/" >Writing PHP Extensions</a><br />
+<a href="/blog/mysql-innodb-disk-space-usage/" >MySQL InnoDB Disk Space Consumption</a><br />
+<a href="/blog/wordpress-toolbar-customization/" >WordPress Toolbar Customization</a><br />
+<a href="/blog/two-website-customizations/" >Two Website Customizations</a><br /><br />
+</section>
 <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/building-a-linux-system-from-scratch/">Building a Linux System From Scratch</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/writing-php-extensions/">Writing PHP Extensions</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/compiling-the-linux-kernel-from-source/">Compiling a Linux Kernel From Source Tarball</a>
+      </li>
     
       <li class="post">
         <a href="/blog/wordpress-performance-with-apc-via-fastcgi-php5/">WordPress Performance Benchmarking With APC via FastCGI PHP5-CGI</a>
@@ -183,6 +281,10 @@ Third Project &ndash; <a href="/blog/language-parlor-project/" >Language Parlor 
     
       <li class="post">
         <a href="/blog/insanely-faster-vim-buffer-switching/">Insanely Faster Buffer Switching</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/building-the-system-software-from-scratch/">Building the System Software From Scratch</a>
       </li>
     
       <li class="post">
@@ -202,46 +304,21 @@ Third Project &ndash; <a href="/blog/language-parlor-project/" >Language Parlor 
       </li>
     
       <li class="post">
+        <a href="/blog/building-the-host-independant-toolchain/">Building the Host Independant Toolchain</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/fastcgi-suexec-apc-per-user/">Apache2 FastCGI and suEXEC Implementing APC Per User With PHP5-CGI</a>
       </li>
     
       <li class="post">
-        <a href="/blog/wordpress-toolbar-customization/">WordPress Toolbar Customization</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/language-parlor-project/">Language Parlor Project</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/facebook-app-sweepstakes/">Facebook App Sweepstakes</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/coming-soon-site/">Coming Soon Site Using WordPress CMS</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/mundane-experiments-with-apache-mpm_prefork-and-mod_php/">Mundane Experiments With Apache Prefork MPM and Mod_PHP</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/setup-local-ubuntu-server/">Setting Up a Local Ubuntu Server</a>
+        <a href="/blog/gnuplot-basics-2d-plots/">Gnuplot Basics - 2D Plots</a>
       </li>
     
   </ul>
 </section>
 
 
-
-<section class="googleplus">
-  <h1>
-    <a href="https://plus.google.com/115164496041018691013?rel=author">
-      <img src="http://www.google.com/images/icons/ui/gprofile_button-32.png" width="32" height="32">
-      Google+
-    </a>
-  </h1>
-</section>
 
 
 
@@ -252,7 +329,7 @@ Third Project &ndash; <a href="/blog/language-parlor-project/" >Language Parlor 
   </div>
   <footer role="contentinfo"><p>
   Copyright &copy; 2013 - Upeksha Wisidagama -
-  <span class="credit">Hire me on <a href="http://www.freelancer.com/u/upekshawisidaga.html">Freelancer.com</a></span>
+    <a href="https://plus.google.com/115164496041018691013" rel="publisher">UW Freelancer Google+</a>
 </p>
 
 </footer>
@@ -270,14 +347,6 @@ Third Project &ndash; <a href="/blog/language-parlor-project/" >Language Parlor 
 }(document, 'script', 'facebook-jssdk'));</script>
 
 
-
-  <script type="text/javascript">
-    (function() {
-      var script = document.createElement('script'); script.type = 'text/javascript'; script.async = true;
-      script.src = 'https://apis.google.com/js/plusone.js';
-      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(script, s);
-    })();
-  </script>
 
 
 

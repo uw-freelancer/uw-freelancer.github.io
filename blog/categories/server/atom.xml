@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Server | Freelance Projects]]></title>
   <link href="http://uw-freelancer.github.io/blog/categories/server/atom.xml" rel="self"/>
   <link href="http://uw-freelancer.github.io/"/>
-  <updated>2013-07-08T17:41:30+05:30</updated>
+  <updated>2013-07-16T09:52:07+05:30</updated>
   <id>http://uw-freelancer.github.io/</id>
   <author>
     <name><![CDATA[Upeksha Wisidagama]]></name>
@@ -352,7 +352,7 @@ Set <code>apc.enabled=0</code> in &lsquo;/etc/php5/cgi/conf.d/apc.ini&rsquo;.</p
 
 <p>Gnuplot config file</p>
 
-<p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>&lsquo;APC Info Interface Installation (APC-benchmarking.p&rsquo; </span></figcaption>
+<p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>&lsquo;APC Info Interface Installation (APC-benchmarking.p)&rsquo; </span></figcaption>
  <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
@@ -427,7 +427,7 @@ Set <code>apc.enabled=0</code> in &lsquo;/etc/php5/cgi/conf.d/apc.ini&rsquo;.</p
 
 <p><img class='center' src="/images/server/wordpress-performance-gain-with-apc.png" title="WordPress Performance Gain with APC" alt="WordPress Performance Gain with APC" /></p>
 
-<h2>WordPress Performance Gain when many PHP5-CGI Children share the same APC under One User with High Concurrency</h2>
+<h2>WordPress Performance Gain While Many PHP5-CGI Children share the same APC under One User with High Concurrency</h2>
 
 
 <p>Next, increase the PHP-CGI children from 2 to 6 (<code>PHP_FCGI_CHILDREN=6</code> in FastCGI wrapper script). Increase the concurrency to 60 <code>-c 60</code>. Benchmark again.</p>
@@ -786,9 +786,9 @@ Set <code>apc.enabled=0</code> in &lsquo;/etc/php5/cgi/conf.d/apc.ini&rsquo;.</p
 
 <p>PHP is loaded as Module by default. Log into your fresh server (described in the above linked article), and run the <code>top</code> command.</p>
 
-<p>Next enable highlighting by pressing <code>z</code>. Then enable column highlighting by pressing <code>x</code>. You can change the sorting of the rows by columns. Just press <code>&lt;</code> and <code>&gt;</code> until you get the required column highlighted. The above figure shows the rows as ordered by &lsquo;Resident Memory (RE)&rsquo; they consume. The most Resident Memory consuming process is the <code>mysqld</code>. This is the MySQL deamon, accounting for 33Mbs out of total 1GB RAM.</p>
+<p>Next enable highlighting by pressing <code>z</code>. Then enable column highlighting by pressing <code>x</code>. You can change the sorting of the rows by columns. Just press <code>&lt;</code> and <code>&gt;</code> until you get the required column highlighted. The above figure shows the rows as ordered by &lsquo;Resident Memory (RE)&rsquo; they consume. The most Resident Memory consuming process is the <code>mysqld</code>. This is the MySQL daemon, accounting for 33Mbs out of total 1GB RAM.</p>
 
-<p><blockquote><p>PID: 1668 is the Apache2 parent process owned by root. It consumes 7Mbs of RAM. Each of the children of Apache2 parent process consumes ~ 4.4Mb RAM. But 1MB of RAM is being shared.</p></blockquote></p>
+<p><blockquote><p>PID: 1668 is the Apache2 parent process owned by root. It consumes 7Mbs of RAM. Each of the children of Apache2 parent process consumes ~ 4.4Mbs of RAM. But 1MB of RAM is being shared.</p></blockquote></p>
 
 <p>How the server decided to spawn 9 children? Let&rsquo;s see the apache2 configuration files stored in &lsquo;/etc/apache2/&rsquo;.</p>
 

@@ -9,7 +9,7 @@
   <meta name="author" content="Upeksha Wisidagama">
 
   
-  <meta name="description" content="A Facebook App needed to be built with a like gate. After liking the page or app fans are allowed enter their contact details via a form in the &hellip;">
+  <meta name="description" content="Two websites had to be customized when I was contacted for this project. I was contacted by Mr. Brant about this improvement. A freelancer.com &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -26,6 +26,7 @@
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
   <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
   <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <link href="/stylesheets/data-table.css" media="screen, projection" rel="stylesheet" type="text/css" />
   <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
 <link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 <link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
@@ -83,7 +84,7 @@
       
   <header>
     
-      <h1 class="entry-title"><a href="/blog/facebook-app-sweepstakes/">Facebook App Sweepstakes</a></h1>
+      <h1 class="entry-title"><a href="/blog/two-website-customizations/">Two Website Customizations</a></h1>
     
     
       <p class="meta">
@@ -99,20 +100,78 @@
   
 
 
-<time datetime="2012-07-25T18:35:00+05:30" pubdate data-updated="true">Jul 25<span>th</span>, 2012</time>
+<time datetime="2013-06-29T21:05:00+05:30" pubdate data-updated="true">Jun 29<span>th</span>, 2013</time>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content"><p>A Facebook App needed to be built with a like gate. After liking the page or app fans are allowed enter their contact details via a form in the Facebook App. This qualifies those fans for a sweepstake program run by Exp Tennis Group.</p>
+  <div class="entry-content"><p>Two websites had to be customized when I was contacted for this project. I was contacted by Mr. Brant about this improvement. A freelancer.com project was created to make payments and exchange feedback.</p>
 
-<p><img class='center' src="/images/blog/facebook-app-project-description.jpg" title="Facebook App Project Description" alt="Facebook App Project Description" /></p>
+<p><img class='center' src="/images/blog/website-customization-project-specification.jpg" title="Website Customization Project Description" alt="Website Customization Project Description" /></p>
 
-<p>The facebook app was hosted at Heroku servers. Facebook apps can be freely hosted at Heroku. App connects to MailChimp email service via their API. I also created a custom admin panel within the <a href="/blog/coming-soon-site/" >Coming Soon Site</a> to manage the sweepstakes campaign. I was able to successfully complete the project.</p>
+<p>First one of two projects was described on oDesk. A child theme (called &lsquo;Curb Appeal&rsquo;) based on popular Genesis Framework needed to be customized.</p>
 
-<p><img class='center' src="/images/blog/facebook-app-feedback.jpg" title="Facebook App Feedback" alt="Facebook App Feedback" /></p>
+<p><img class='center' src="/images/blog/genesis-framework-customization.jpg" title="Genesis Framework Customization" alt="Genesis Framework Customization" /></p>
+
+<p>In &lsquo;Curb Appeal&rsquo; theme there was only one section in home top area.</p>
+
+<figure class='code'><figcaption><span>&#8216;Initial Code - functions.php&#8217; </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='php'><span class='line'><span class="cp">&lt;?php</span>
+</span><span class='line'><span class="nx">genesis_register_sidebar</span><span class="p">(</span> <span class="k">array</span><span class="p">(</span>
+</span><span class='line'>    <span class="s1">&#39;id&#39;</span>          <span class="o">=&gt;</span> <span class="s1">&#39;home-top&#39;</span><span class="p">,</span>
+</span><span class='line'>    <span class="s1">&#39;name&#39;</span>            <span class="o">=&gt;</span> <span class="s1">&#39;Home Top&#39;</span><span class="p">,</span>
+</span><span class='line'>    <span class="s1">&#39;description&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;This is the Home Top section&#39;</span>
+</span><span class='line'><span class="p">)</span> <span class="p">);</span>
+</span><span class='line'><span class="cp">?&gt;</span><span class="x"></span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>I replaced it with two sidebars as follows.</p>
+
+<figure class='code'><figcaption><span>&#8216;Code After Modification - functions.php&#8217; </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+</pre></td><td class='code'><pre><code class='php'><span class='line'><span class="cp">&lt;?php</span>
+</span><span class='line'><span class="nx">genesis_register_sidebar</span><span class="p">(</span> <span class="k">array</span><span class="p">(</span>
+</span><span class='line'>    <span class="s1">&#39;id&#39;</span>          <span class="o">=&gt;</span> <span class="s1">&#39;home-top-left&#39;</span><span class="p">,</span>
+</span><span class='line'>    <span class="s1">&#39;name&#39;</span>            <span class="o">=&gt;</span> <span class="s1">&#39;Home Top Left&#39;</span><span class="p">,</span>
+</span><span class='line'>    <span class="s1">&#39;description&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;This is the Home Top Left section&#39;</span>
+</span><span class='line'><span class="p">)</span> <span class="p">);</span>
+</span><span class='line'><span class="nx">genesis_register_sidebar</span><span class="p">(</span> <span class="k">array</span><span class="p">(</span>
+</span><span class='line'>    <span class="s1">&#39;id&#39;</span>          <span class="o">=&gt;</span> <span class="s1">&#39;home-top-right&#39;</span><span class="p">,</span>
+</span><span class='line'>    <span class="s1">&#39;name&#39;</span>            <span class="o">=&gt;</span> <span class="s1">&#39;Home Top Right&#39;</span><span class="p">,</span>
+</span><span class='line'>    <span class="s1">&#39;description&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;This is the Home Top Right section&#39;</span>
+</span><span class='line'><span class="p">)</span> <span class="p">);</span>
+</span><span class='line'><span class="cp">?&gt;</span><span class="x"></span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Next project was about adding a &lsquo;Banner&rsquo; for category archive pages. The following is the category banner uploader I developed.</p>
+
+<p><img class='center' src="/images/blog/wordpress-category-banner.jpg" title="Category Banner Uploader" alt="Category Banner Uploader" /></p>
+
+<p>I was able to successfully complete the project and earned $25USD (freelancer.com charges only 10% of the total amount. But the lowest possible is $5USD).</p>
+
+<p><img class='center' src="/images/blog/website-customization-feedback.jpg" title="Website Customization Feedback" alt="Website Customization Feedback" /></p>
 </div>
   
   
@@ -133,9 +192,55 @@
 <aside class="sidebar">
   
     <img class='center uw-logo' src="/images/uw-freelancer-logo.png" title="UW Freelancer Logo" alt="UW Freelancer Logo" />
+<section class="odd" >
+<h1>GNU Linux Systems</h2><br />
+<img class='center uw-logo' src="/images/gnu-logo.png" title="GNU is Not Unix" alt="GNU is Not Unix" /><br />
+<a href="/blog/building-a-linux-system-from-scratch/" >Building a GNU Linux System from Tarballs</a><br />
+<a href="/blog/compiling-the-linux-kernel-from-source/" >Compiling a Linux Kernel From Source</a><br />
+<a href="/blog/building-the-system-software-from-scratch/" >Building the System Software from Scratch</a><br />
+<a href="/blog/building-the-host-independant-toolchain/" >Building the Host Independant ToolChain</a><br />
+</section>
+
+<section class="odd" >
+<h1>The Vim Editor</h2><br />
+<img class='center uw-logo' src="/images/vim_logo.png" title="The Editor" alt="The Editor" /><br />
+<a href="/blog/insanely-faster-vim-buffer-switching/" >Insanely Faster Vim Buffer Switching</a><br />
+<a href="/blog/vim-powerline/" >Vim PowerLine</a><br />
+<a href="/blog/vim-vdebug/" >Vim Vdebug</a><br /><br />
+</section>
+
+<section class="odd" >
+<h1>Apache HTTP Server</h2><br />
+<img class='center uw-logo' src="/images/apache_logo.png" title="Apache" alt="Apache" /><br />
+<a href="/blog/fastcgi-suexec-apc-per-user/" >Apache2 FastCGI and suEXEC Implementing APC Per User With PHP5-CGI</a><br />
+<a href="/blog/wordpress-performance-with-apc-via-fastcgi-php5/" >WordPress Performance Benchmarking With APC via FastCGI PHP5-CGI</a><br />
+<a href="/blog/mundane-experiments-with-apache-mpm_prefork-and-mod_php/" >Mundane Experiments With Apache Prefork MPM and Mod_PHP</a><br />
+<a href="/blog/setup-local-ubuntu-server/" >Setting Up a Local Ubuntu Server</a><br /><br />
+</section>
+
+<section class="odd" >
+<h1>PHP</h2><br />
+<img class='center uw-logo' src="/images/php_logo.png" title="PHP" alt="PHP" /><br />
+<a href="/blog/writing-php-extensions/" >Writing PHP Extensions</a><br />
+<a href="/blog/mysql-innodb-disk-space-usage/" >MySQL InnoDB Disk Space Consumption</a><br />
+<a href="/blog/wordpress-toolbar-customization/" >WordPress Toolbar Customization</a><br />
+<a href="/blog/two-website-customizations/" >Two Website Customizations</a><br /><br />
+</section>
 <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/building-a-linux-system-from-scratch/">Building a Linux System From Scratch</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/writing-php-extensions/">Writing PHP Extensions</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/compiling-the-linux-kernel-from-source/">Compiling a Linux Kernel From Source Tarball</a>
+      </li>
     
       <li class="post">
         <a href="/blog/wordpress-performance-with-apc-via-fastcgi-php5/">WordPress Performance Benchmarking With APC via FastCGI PHP5-CGI</a>
@@ -151,6 +256,10 @@
     
       <li class="post">
         <a href="/blog/insanely-faster-vim-buffer-switching/">Insanely Faster Buffer Switching</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/building-the-system-software-from-scratch/">Building the System Software From Scratch</a>
       </li>
     
       <li class="post">
@@ -170,46 +279,21 @@
       </li>
     
       <li class="post">
+        <a href="/blog/building-the-host-independant-toolchain/">Building the Host Independant Toolchain</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/fastcgi-suexec-apc-per-user/">Apache2 FastCGI and suEXEC Implementing APC Per User With PHP5-CGI</a>
       </li>
     
       <li class="post">
-        <a href="/blog/wordpress-toolbar-customization/">WordPress Toolbar Customization</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/language-parlor-project/">Language Parlor Project</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/facebook-app-sweepstakes/">Facebook App Sweepstakes</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/coming-soon-site/">Coming Soon Site Using WordPress CMS</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/mundane-experiments-with-apache-mpm_prefork-and-mod_php/">Mundane Experiments With Apache Prefork MPM and Mod_PHP</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/setup-local-ubuntu-server/">Setting Up a Local Ubuntu Server</a>
+        <a href="/blog/gnuplot-basics-2d-plots/">Gnuplot Basics - 2D Plots</a>
       </li>
     
   </ul>
 </section>
 
 
-
-<section class="googleplus">
-  <h1>
-    <a href="https://plus.google.com/115164496041018691013?rel=author">
-      <img src="http://www.google.com/images/icons/ui/gprofile_button-32.png" width="32" height="32">
-      Google+
-    </a>
-  </h1>
-</section>
 
 
 
@@ -220,7 +304,7 @@
   </div>
   <footer role="contentinfo"><p>
   Copyright &copy; 2013 - Upeksha Wisidagama -
-  <span class="credit">Hire me on <a href="http://www.freelancer.com/u/upekshawisidaga.html">Freelancer.com</a></span>
+    <a href="https://plus.google.com/115164496041018691013" rel="publisher">UW Freelancer Google+</a>
 </p>
 
 </footer>
@@ -238,14 +322,6 @@
 }(document, 'script', 'facebook-jssdk'));</script>
 
 
-
-  <script type="text/javascript">
-    (function() {
-      var script = document.createElement('script'); script.type = 'text/javascript'; script.async = true;
-      script.src = 'https://apis.google.com/js/plusone.js';
-      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(script, s);
-    })();
-  </script>
 
 
 

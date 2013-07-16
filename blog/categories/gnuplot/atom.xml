@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Gnuplot | Freelance Projects]]></title>
+  <link href="http://uw-freelancer.github.io/blog/categories/gnuplot/atom.xml" rel="self"/>
+  <link href="http://uw-freelancer.github.io/"/>
+  <updated>2013-07-16T09:52:07+05:30</updated>
+  <id>http://uw-freelancer.github.io/</id>
+  <author>
+    <name><![CDATA[Upeksha Wisidagama]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[gnuplot Basics - 2D plots]]></title>
+    <link href="http://uw-freelancer.github.io/blog/gnuplot-basics-2d-plots/"/>
+    <updated>2013-05-13T22:00:00+05:30</updated>
+    <id>http://uw-freelancer.github.io/blog/gnuplot-basics-2d-plots</id>
+    <content type="html"><![CDATA[<p>Let&rsquo;s start with a basic two dimensional plot. Create the data file (uw.dat).</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>&lsquo;Data File (uw.dat)&rsquo; </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>1,  5
+</span><span class='line'>2,  4
+</span><span class='line'>3,  6
+</span><span class='line'>4, 10
+</span><span class='line'>5,  2
+</span><span class='line'>6,  1
+</span><span class='line'>7,  0
+</span><span class='line'>8,  5
+</span><span class='line'>9,  7
+</span><span class='line'>10, 9
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>Create the plot configuration file (uw.config).</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>&lsquo;Configuration File (uw.config)&rsquo; </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nb">set </span>term png size 600, 400
+</span><span class='line'><span class="nb">set </span>output &amp;ldquo;uw.png&amp;rdquo;
+</span><span class='line'>plot &amp;ldquo;uw.dat&amp;rdquo; with lines
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>Now, plot using <code>gnuplot uw.config</code>.</p>
+
+<p><img class='center' src="/images/gnuplot/gnuplot-basics-2d-plot.png" title="Ubuntu Server Login" alt="Ubuntu Server Login" /></p>
+
+<h3>Draw an Arrow</h3>
+
+
+<p>To draw and arrow from (3,2) to (6,8), use <code>set arrow from 3,2 to 6,8</code>. To specify end coordinate relative to the starting use <code>rto</code> instead <code>to</code>. e.g. <code>set arrow from 3,2 rto 1,1</code>.</p>
+
+<h2>Plotting the Exam Results of My Friends</h2>
+
+
+<p>These are the marks taken by each of the friends. Format: Name, Marks.</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>&lsquo;Exam Results (marks.dat)&rsquo; </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>Alice 20
+</span><span class='line'>Bob 63
+</span><span class='line'>Charlie 56
+</span><span class='line'>Chuck 42
+</span><span class='line'>Craig 36
+</span><span class='line'>Dave 86
+</span><span class='line'>Erin 45
+</span><span class='line'>Frank 87
+</span><span class='line'>Eve 78
+</span><span class='line'>Mallory 2
+</span><span class='line'>Oscary 44
+</span><span class='line'>Peggy 12
+</span><span class='line'>Trent 56
+</span><span class='line'>Walter 55
+</span><span class='line'>Arthur 42
+</span><span class='line'>Paul 45
+</span><span class='line'>Upeksha 55
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<h3>A brief description of each of the friends</h3>
+
+
+<p>Alice and Bob. Generally, Alice wants to send a message to Bob.
+Carol, Carlos or Charlie, as a third participant in communications.</p>
+
+<p>Chuck, as a third participant usually of malicious intent.</p>
+
+<p>Craig, the password cracker (usually encountered in situations with stored hashed/salted passwords).</p>
+
+<p>Dan or Dave, a fourth participant.
+Erin, a fifth participant. (It&rsquo;s rare to see Erin; E is usually reserved for Eve.)
+Frank, a sixth participant (and so on alphabetically).</p>
+
+<p>Eve, an eavesdropper, is usually a passive attacker. While she can listen in on messages between Alice and Bob, she cannot modify them. In quantum cryptography, Eve may also represent the environment.</p>
+
+<p>Mallet or Mallory, a malicious attacker (less commonly called Trudy, an intruder.); unlike the passive Eve, this one is the active man-in-the-middle attacker who can modify messages, substitute his/her own messages, replay old messages, and so on. The difficulty of securing a system against Mallet/Mallory is much greater than against Eve.</p>
+
+<p>Oscar, an opponent, similar to Mallet/Mallory but not necessarily malicious. Could be white-hat but still wants to crack, modify, substitute, or replay messages.
+Peggy, a prover, and Victor, a verifier, often must interact in some way to show that the intended transaction has actually taken place. They are often found in zero-knowledge proofs.
+Trent, a trusted arbitrator, is some kind of neutral third party, whose exact role varies with the protocol under discussion.</p>
+
+<p>Walter, a warden, may be needed to guard Alice and Bob in some respect, depending on the protocol being discussed.
+Arthur and Merlin: In interactive proof systems, the prover has unbounded computational ability and is hence associated with Merlin, the powerful wizard. He claims the truth of a statement, and Arthur, the wise king, questions him to verify the claim.</p>
+
+<p>Paul and Carole. The characters were introduced in the solution of the Twenty Questions problem</p>
+
+<p>Source: This list is drawn mostly from the book Applied Cryptography by Bruce Schneier. Alice and Bob are archetypes in cryptography; Eve is also common. Names further down the alphabet are less common. <a href="http://en.wikipedia.org/wiki/Alice_and_Bob" >Read More</a></p>
+
+<p>Now you know most of my friends, Let&rsquo;s create the plot config file.</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>&lsquo;Exam Results Plot Config (marks.config)&rsquo; </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nb">set </span>term png truecolor size 750, 400
+</span><span class='line'><span class="nb">set </span>output &amp;ldquo;marks.png&amp;rdquo;&lt;/p&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;p&gt;set grid
+</span><span class='line'><span class="nb">set </span>boxwidth 0.8 relative
+</span><span class='line'><span class="nb">set </span>style fill transparent solid 0.5 noborder
+</span><span class='line'><span class="nb">set </span>object 1 rectangle from screen 0,0 to screen 1,1 fillcolor rgb<span class="s2">&quot;#ccffff&quot;</span> behind&lt;/p&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;p&gt;set xlabel &amp;ldquo;Names of Friends&amp;rdquo;
+</span><span class='line'><span class="nb">set </span>ylabel &amp;ldquo;Marks&amp;rdquo;
+</span><span class='line'><span class="nb">set </span>title &amp;ldquo;Marks of the Friends of Upeksha&amp;rdquo;
+</span><span class='line'><span class="nb">set </span>yrange <span class="o">[</span>0:100<span class="o">]</span>
+</span><span class='line'><span class="nb">set </span>ytics 0,10&lt;/p&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;p&gt;set xtics rotate
+</span><span class='line'>plot &amp;lsquo;marks.dat&amp;rsquo; using 2:xticlabels<span class="o">(</span>1<span class="o">)</span> with boxes notitle
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>Run <code>gnuplot marks.config</code>.</p>
+
+<p><img class='center' src="/images/gnuplot/marks-of-friends-of-upeksha.png" title="Marks of Friends of Upeksha" alt="Marks of Friends of Upeksha" /></p>
+
+<p><blockquote><p>Despite gnuplot&rsquo;s name, it is not part of or related to the GNU Project, nor does it use the GNU General Public License. You should always use simple &lsquo;g&rsquo;: &lsquo;gnuplot&rsquo;.</p></blockquote></p>
+]]></content>
+  </entry>
+  
+</feed>

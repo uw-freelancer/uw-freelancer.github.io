@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Kernel | Freelance Projects]]></title>
+  <link href="http://uw-freelancer.github.io/blog/categories/kernel/atom.xml" rel="self"/>
+  <link href="http://uw-freelancer.github.io/"/>
+  <updated>2013-07-16T09:52:07+05:30</updated>
+  <id>http://uw-freelancer.github.io/</id>
+  <author>
+    <name><![CDATA[Upeksha Wisidagama]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Compiling a Linux Kernel from Source Tarball]]></title>
+    <link href="http://uw-freelancer.github.io/blog/compiling-the-linux-kernel-from-source/"/>
+    <updated>2013-07-12T20:20:00+05:30</updated>
+    <id>http://uw-freelancer.github.io/blog/compiling-the-linux-kernel-from-source</id>
+    <content type="html"><![CDATA[<p>This is the third post about building a linux system from source files.</p>
+
+<p>If you have rebooted your host after completing the steps described in the second post, first, mount the new system partition.</p>
+
+<p>Our new system is on sdb disk.</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>&lsquo;Mounting the new system&rsquo; </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>sudo su
+</span><span class='line'><span class="nb">export </span><span class="nv">LFS</span><span class="o">=</span>/mnt/lfs
+</span><span class='line'>mount -v -t ext3 /dev/sdb <span class="nv">$LFS</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p><img class='center' src="/images/lfs/mounting-the-system.png" title="Mounting the system filesystem" alt="Mounting the system filesystem" /></p>
+
+<h2>Mounting and Populating Device (Virtual) Filesystem</h2>
+
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>&lsquo;Mounting Dev Filesystem&rsquo; </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>mount -v &amp;mdash;bind /dev <span class="nv">$LFS</span>/dev
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<h2>Mounting Virtual Kernel Filesystems</h2>
+
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>&lsquo;Mounting Virtual Kernel Filesystems&rsquo; </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>mount -vt devpts devpts <span class="nv">$LFS</span>/dev/pts
+</span><span class='line'>mount -vt proc proc <span class="nv">$LFS</span>/proc
+</span><span class='line'>mount -vt sysfs sysfs <span class="nv">$LFS</span>/sys
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p><img class='center' src="/images/lfs/mounting-virtual-kernel-filesystems.png" title="Mounting Virtual Kernel Filesystems" alt="Mounting Virtual Kernel Filesystems" /></p>
+
+<h2>Chroot to New System and Compile the Kernel</h2>
+
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>&lsquo;Chrooting into new System&rsquo; </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>chroot &amp;ldquo;<span class="nv">$LFS</span>&amp;rdquo; /usr/bin/env -i <span class="se">\&lt;</span>/p&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;pre&gt;&lt;code&gt;HOME<span class="o">=</span>/root <span class="nv">TERM</span><span class="o">=</span><span class="s2">&quot;$TERM&quot;</span> <span class="nv">PS1</span><span class="o">=</span><span class="s1">&#39;\u:\w\$ &#39;</span> <span class="se">\</span>
+</span><span class='line'><span class="nv">PATH</span><span class="o">=</span>/bin:/usr/bin:/sbin:/usr/sbin <span class="se">\</span>
+</span><span class='line'>/bin/bash --login
+</span><span class='line'>&lt;/code&gt;&lt;/pre&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;p&gt;
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p><blockquote><p>&lsquo;Make MrProper&rsquo; ensures that the kernel tree is absolutely clean. The kernel team recommends that this command be issued prior to each kernel compilation. Do not rely on the source tree being clean after un-tarring.</p></blockquote></p>
+
+<p>Now run &lsquo;make LANG=en_US LC_ALL= menuconfig&rsquo; after &lsquo;make mrproper&rsquo;.</p>
+
+<p><img class='center' src="/images/lfs/linux-kernel-configuration.png" title="Linux Kernel Configuration" alt="Linux Kernel Configuration" /></p>
+
+<h2>Install the Fresh Linux Kernel in the Boot Directory</h2>
+
+
+<p>Finally run the following command to install the Linux Kernel in the Boot directory.</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>&lsquo;Install Kernel in Boot Directory&rsquo; </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>make
+</span><span class='line'>cp -v arch/x86/boot/bzImage /boot/vmlinuz-3.8.1-upeksha-7.3
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>Now configure the Grub Bootloader and boot into the New Linux System.</p>
+
+<p><a href="/blog/building-a-linux-system-from-scratch/" >Next: Booting and Logging into the New Linux System</a><br /></p>
+]]></content>
+  </entry>
+  
+</feed>

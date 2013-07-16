@@ -9,7 +9,7 @@
   <meta name="author" content="Upeksha Wisidagama">
 
   
-  <meta name="description" content="Consider the following instance. You are debugging an app with Vim Vdebug. You have opened several other text buffers as well. Also note that we& &hellip;">
+  <meta name="description" content="Setup: Apache 2.2 Prefork MPM. FastCGI with suEXEC. PHP5-CGI. APC per user. For detailed explanations on setting up a system summerized above, please &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -26,6 +26,7 @@
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
   <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
   <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <link href="/stylesheets/data-table.css" media="screen, projection" rel="stylesheet" type="text/css" />
   <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
 <link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 <link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
@@ -83,7 +84,7 @@
       
   <header>
     
-      <h1 class="entry-title"><a href="/blog/insanely-faster-vim-buffer-switching/">Insanely Faster Buffer Switching</a></h1>
+      <h1 class="entry-title"><a href="/blog/wordpress-performance-with-apc-via-fastcgi-php5/">WordPress Performance Benchmarking With APC via FastCGI PHP5-CGI</a></h1>
     
     
       <p class="meta">
@@ -99,67 +100,413 @@
   
 
 
-<time datetime="2013-07-03T23:05:00+05:30" pubdate data-updated="true">Jul 3<span>rd</span>, 2013</time>
+<time datetime="2013-07-08T23:00:00+05:30" pubdate data-updated="true">Jul 8<span>th</span>, 2013</time>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content"><p>Consider the following instance. You are debugging an app with Vim Vdebug. You have opened several other text buffers as well. Also note that we&rsquo;ve a couple of tabs as well.</p>
+  <div class="entry-content"><p>Setup: Apache 2.2 Prefork MPM. FastCGI with suEXEC. PHP5-CGI. APC per user.</p>
 
-<p><img class='center' src="/images/blog/insanely-faster-buffer-switching.png" title="Insanely Faster Buffer Switching in Vim" alt="Insanely Faster Buffer Switching in Vim" /></p>
-
-<p><a href="/images/blog/insanely-faster-buffer-switching.png" target="blank" >Larger Preview</a></p>
-
-<h2>{ s-h | s-j | s-k | s-l }</h2>
+<blockquote><p>For detailed explanations on setting up a system summerized above, please read <a href="/blog/fastcgi-suexec-apc-per-user/" >Apache2 FastCGI and suEXEC Implementing APC Per User With PHP5-CGI</a>. Most of the unexplained steps are explained in that post.</p></blockquote>
 
 
-<p>Still using &lt;C-W> commands to switch buffers? It&rsquo;s probably time to practise a more efficient way.</p>
-
-<blockquote><p>I&#8217;ve put some text on my .vimrc which allows me to switch buffers 537ns before I think about switching buffers.<br/>* ns = nano seconds = 1x10^(-9)s</p></blockquote>
 
 
-<p>I strongly encourage you to put these in your .vimrc and experience <b>The Ultimate Speed of Buffer Switching</b>.</p>
+<h2>Create a new user and install WordPress</h2>
 
-<figure class='code'><figcaption><span>&#8216;Insanely Faster Buffer Switching - .vimrc&#8217; </span></figcaption>
+
+<p>1) Login to the server via SSH</p>
+
+<figure class='code'><figcaption><span>&#8216;Login via SSH&#8217; </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>upeksha@uw:~<span class="nv">$ </span>ssh uwlab
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>2) Add a new user called &lsquo;uwapc&rsquo;</p>
+
+<figure class='code'><figcaption><span>&#8216;Add new user&#8217; </span></figcaption>
  <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>nmap sh &lt;C-W&gt;h
-</span><span class='line'>nmap sj &lt;C-W&gt;j
-</span><span class='line'>nmap sk &lt;C-W&gt;k
-</span><span class='line'>nmap sl &lt;C-W&gt;l
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>upeksha@uwlab:~<span class="nv">$ </span>sudo adduser uwapc
+</span><span class='line'>Adding user <span class="sb">`</span>uwapc<span class="s1">&#39; ...</span>
+</span><span class='line'><span class="s1">Adding new group `uwapc&#39;</span> <span class="o">(</span>1002<span class="o">)</span> ...
+</span><span class='line'>Adding new user <span class="sb">`</span>uwapc<span class="s1">&#39; (1002) with group `uwapc&#39;</span> ...
+</span><span class='line'>Creating home directory <span class="sb">`</span>/home/uwapc<span class="s1">&#39; ...</span>
+</span><span class='line'><span class="s1">Copying files from `/etc/skel&#39;</span> ...
+</span><span class='line'>Enter new UNIX password:
+</span><span class='line'>Retype new UNIX password:
+</span><span class='line'>passwd: password updated successfully
+</span><span class='line'>Changing the user information <span class="k">for </span>uwapc
+</span><span class='line'>Enter the new value, or press ENTER <span class="k">for </span>the default
+</span><span class='line'>  Full Name <span class="o">[]</span>: UW APC Testing
+</span><span class='line'>  Room Number <span class="o">[]</span>: 123
+</span><span class='line'>  Work Phone <span class="o">[]</span>: +94 011 7776665
+</span><span class='line'>  Home Phone <span class="o">[]</span>: +94 011 1122334
+</span><span class='line'>  Other <span class="o">[]</span>: +94 077 1234567
+</span><span class='line'>Is the information correct? <span class="o">[</span>Y/n<span class="o">]</span> Y
 </span></code></pre></td></tr></table></div></figure>
 
 
+<p>3) Setup a Virtual Host</p>
 
-
-<h2>Lightning Speed Tab Switching</h2>
-
-
-<p>I recommend the following settings for a faster and more intuitive tab swiching experience.</p>
-
-<figure class='code'><figcaption><span>&#8216;Lightning Fast Tab Switching - .vimrc&#8217; </span></figcaption>
+<figure class='code'><figcaption><span>&#8216;Setup the Virtual Host&#8217; </span></figcaption>
  <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>nnoremap sn :tabp&lt;cr&gt;
-</span><span class='line'>nnoremap sm :tabn&lt;cr&gt;
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>upeksha@uwlab:/home<span class="nv">$ </span><span class="nb">cd</span> /etc/apache2/sites-available/
+</span><span class='line'>upeksha@uwlab:/etc/apache2/sites-available<span class="nv">$ </span>ls
+</span><span class='line'>default  default-ssl  wisidagama.dev
+</span><span class='line'>upeksha@uwlab:/etc/apache2/sites-available<span class="nv">$ </span>sudo cp wisidagama.dev uwapc.dev
+</span><span class='line'>upeksha@uwlab:/etc/apache2/sites-available<span class="nv">$ </span>sudo vi uwapc.dev
 </span></code></pre></td></tr></table></div></figure>
 
 
+<p><code>:%s/wisidagama/uwapc/g</code></p>
+
+<figure class='code'><figcaption><span>&#8216;New Virtual Host (uwapc.dev)&#8217; </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>&lt;VirtualHost *:80&gt;
+</span><span class='line'>        ServerName www.uwapc.dev
+</span><span class='line'>        ServerAdmin webmaster@uwapc.dev
+</span><span class='line'>
+</span><span class='line'>        DocumentRoot /home/uwapc/public_html/
+</span><span class='line'>        &lt;Directory /home/uwapc/public_html/&gt;
+</span><span class='line'>                Options Indexes FollowSymLinks MultiViews
+</span><span class='line'>                AllowOverride None
+</span><span class='line'>                Order allow,deny
+</span><span class='line'>                allow from all
+</span><span class='line'>        &lt;/Directory&gt;
+</span><span class='line'>
+</span><span class='line'>        &lt;IfModule mod_fastcgi.c&gt;
+</span><span class='line'>        SuexecUserGroup uwapc uwapc
+</span><span class='line'>        Alias /cgi-bin/ /var/www/bin/uwapc/
+</span><span class='line'>    &lt;/IfModule&gt;
+</span><span class='line'>
+</span><span class='line'>        ErrorLog /home/uwapc/error.log
+</span><span class='line'>
+</span><span class='line'>        <span class="c"># Possible values include: debug, info, notice, warn, error, crit,</span>
+</span><span class='line'>        <span class="c"># alert, emerg.</span>
+</span><span class='line'>        LogLevel warn
+</span><span class='line'>
+</span><span class='line'>        CustomLog /home/uwapc/access.log combined
+</span><span class='line'>&lt;/VirtualHost&gt;
+</span></code></pre></td></tr></table></div></figure>
 
 
-<h2>Exercise</h2>
+<p>4) Setup a suEXEC compatible FastCGI Wrapper</p>
+
+<figure class='code'><figcaption><span>&#8216;FastCGI wrappers&#8217; </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>upeksha@uwlab:/etc/apache2/sites-available<span class="nv">$ </span><span class="nb">cd</span> /var/www/bin/
+</span><span class='line'>upeksha@uwlab:/var/www/bin<span class="nv">$ </span>ls
+</span><span class='line'>wisidagama
+</span><span class='line'>
+</span><span class='line'>upeksha@uwlab:/var/www/bin<span class="nv">$ </span>sudo cp -r wisidagama uwapc
+</span><span class='line'>upeksha@uwlab:/var/www/bin<span class="nv">$ </span>ls
+</span><span class='line'>uwapc  wisidagama
+</span><span class='line'>
+</span><span class='line'>upeksha@uwlab:/var/www/bin<span class="nv">$ </span>sudo chown -R uwapc:uwapc uwapc
+</span><span class='line'>upeksha@uwlab:/var/www/bin<span class="nv">$ </span>ls -al
+</span><span class='line'>total 16
+</span><span class='line'>drwxr-xr-x 4 root       root       4096 Jul  8 15:20 .
+</span><span class='line'>drwxr-xr-x 3 root       root       4096 Jul  8 07:23 ..
+</span><span class='line'>drwxr-xr-x 2 uwapc      uwapc      4096 Jul  8 15:21 uwapc
+</span><span class='line'>drwxr-xr-x 2 wisidagama wisidagama 4096 Jul  8 07:39 wisidagama
+</span><span class='line'>upeksha@uwlab:/var/www/bin<span class="err">$</span>
+</span></code></pre></td></tr></table></div></figure>
 
 
-<p>Don&rsquo;t look at the keyboard!
-Can you find the &rsquo;s&#8217; key without looking at the keyboard?</p>
+<p>Change the APC size to 100MB in the wrapper script. Please refer to the post linked at the top of this post on how to change the APC size per user.</p>
 
-<p>Yes: Share this post.<br />
-No: Like this post.<br />
-I looked at the keybord: Do nothing.<br /></p>
+<p>3) Setup MySQL database</p>
+
+<figure class='code'><figcaption><span>&#8216;WordPress Database Setup&#8217; </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>uwapc@uwlab:~<span class="nv">$ </span>mysql -u root -p
+</span><span class='line'>Enter password:
+</span><span class='line'>
+</span><span class='line'>mysql&gt; create database uwapc;
+</span><span class='line'>Query OK, 1 row affected <span class="o">(</span>0.00 sec<span class="o">)</span>
+</span><span class='line'>
+</span><span class='line'>mysql&gt; grant usage on *.* to uwapc@localhost identified by <span class="s1">&#39;s9sd%sd@1DS!A(6,sld69s%sHEaRWad9#@)X~sd7ZzdffzzzZZZdd9df%^&#39;</span>;
+</span><span class='line'>Query OK, 0 rows affected <span class="o">(</span>0.00 sec<span class="o">)</span>
+</span><span class='line'>
+</span><span class='line'>mysql&gt; grant all privileges on uwapc.* to uwapc@localhost;
+</span><span class='line'>Query OK, 0 rows affected <span class="o">(</span>0.00 sec<span class="o">)</span>
+</span><span class='line'>
+</span><span class='line'>mysql&gt; <span class="nb">exit</span>
+</span><span class='line'>Bye
+</span><span class='line'>upeksha@uwlab:/var/www/bin<span class="nv">$ </span>mysql -u uwapc -p
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>4) Become &lsquo;uwapc&rsquo; and setup WordPress</p>
+
+<figure class='code'><figcaption><span>&#8216;Download WordPress&#8217; </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>upeksha@uwlab:/var/www/bin<span class="nv">$ </span>su uwapc
+</span><span class='line'>Password:
+</span><span class='line'>uwapc@uwlab:/var/www/bin<span class="nv">$ </span><span class="nb">cd</span>
+</span><span class='line'>uwapc@uwlab:~<span class="nv">$ </span>wget http://wordpress.org/latest.tar.gz
+</span><span class='line'>--2013-07-08 15:28:15--  http://wordpress.org/latest.tar.gz
+</span><span class='line'>Resolving wordpress.org <span class="o">(</span>wordpress.org<span class="o">)</span>... 66.155.40.250, 66.155.40.249
+</span><span class='line'>Connecting to wordpress.org <span class="o">(</span>wordpress.org<span class="o">)</span>|66.155.40.250|:80... connected.
+</span><span class='line'>HTTP request sent, awaiting response... 200 OK
+</span><span class='line'>Length: 4988077 <span class="o">(</span>4.8M<span class="o">)</span> <span class="o">[</span>application/x-gzip<span class="o">]</span>
+</span><span class='line'>Saving to: <span class="sb">`</span>latest.tar.gz<span class="s1">&#39;</span>
+</span><span class='line'>
+</span><span class='line'><span class="s1">100%[======================================&gt;] 4,988,077   25.9K/s   in 3m 22s</span>
+</span><span class='line'>
+</span><span class='line'><span class="s1">2013-07-08 15:31:40 (24.1 KB/s) - `latest.tar.gz&#39;</span> saved <span class="o">[</span>4988077/4988077<span class="o">]</span>
+</span><span class='line'>uwapc@uwlab:~<span class="nv">$ </span>tar -xzvf latest.tar.gz
+</span><span class='line'>uwapc@uwlab:~<span class="nv">$ </span>mv wordpress public_html
+</span><span class='line'>uwapc@uwlab:~<span class="nv">$ </span>ls
+</span><span class='line'>latest.tar.gz  public_html
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>5) Install WordPress via web interface.</p>
+
+<p>Enable the new site and restart.</p>
+
+<figure class='code'><figcaption><span>&#8216;Enable new site&#8217; </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>upeksha@uwlab:/var/www/bin<span class="nv">$ </span>sudo a2ensite uwapc.dev
+</span><span class='line'><span class="o">[</span>sudo<span class="o">]</span> password <span class="k">for </span>upeksha:
+</span><span class='line'>Enabling site uwapc.dev.
+</span><span class='line'>To activate the new configuration, you need to run:
+</span><span class='line'>  service apache2 reload
+</span><span class='line'>upeksha@uwlab:/var/www/bin<span class="nv">$ </span>sudo service apache2 restart
+</span><span class='line'> * Restarting web server apache2                                                 ... waiting
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>We are not running a DNS server. Map the new site address to the host ip via <code>/etc/hosts</code> file.</p>
+
+<p><img class='center' src="/images/server/apc-benchmarking-server-wordpress.png" title="WordPress APC Benchmarking Server" alt="WordPress APC Benchmarking Server" /></p>
+
+<h2>Install APC Info Interface</h2>
+
+
+
+
+<figure class='code'><figcaption><span>&#8216;APC Info Interface Installation&#8217; </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>uwapc@uwlab:~<span class="nv">$ </span>wget http://pecl.php.net/get/APC
+</span><span class='line'>--2013-07-08 16:12:48--  http://pecl.php.net/get/APC
+</span><span class='line'>Resolving pecl.php.net <span class="o">(</span>pecl.php.net<span class="o">)</span>... 76.75.200.106
+</span><span class='line'>Connecting to pecl.php.net <span class="o">(</span>pecl.php.net<span class="o">)</span>|76.75.200.106|:80... connected.
+</span><span class='line'>HTTP request sent, awaiting response... 200 OK
+</span><span class='line'>Length: 171591 <span class="o">(</span>168K<span class="o">)</span> <span class="o">[</span>application/octet-stream<span class="o">]</span>
+</span><span class='line'>Saving to: <span class="sb">`</span>APC<span class="s1">&#39;</span>
+</span><span class='line'>
+</span><span class='line'><span class="s1">100%[======================================&gt;] 171,591      121K/s   in 1.4s</span>
+</span><span class='line'>
+</span><span class='line'><span class="s1">2013-07-08 16:12:55 (121 KB/s) - `APC&#39;</span> saved <span class="o">[</span>171591/171591<span class="o">]</span>
+</span><span class='line'>
+</span><span class='line'>uwapc@uwlab:~<span class="nv">$ </span>tar -zxf APC
+</span><span class='line'>uwapc@uwlab:~<span class="nv">$ </span>mv APC-3.1.13 public_html/apc
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Visit APC Info Interface to see the APC status.</p>
+
+<p><img class='center' src="/images/server/wordpress-apc-info-interface.png" title="WordPress APC Information" alt="WordPress APC Information" /></p>
+
+<h2>Benchmarking WordPress Response Time with APC</h2>
+
+
+<p>Disable APC.
+Set <code>apc.enabled=0</code> in &lsquo;/etc/php5/cgi/conf.d/apc.ini&rsquo;.</p>
+
+<p>Restart the server.
+<code>sudo service apache2 restart</code>.</p>
+
+<p>Run Apache Benchmarking tool to collect performance data.</p>
+
+<p><code>ab -n 1000 -c 30 -g without-apc.dat http://www.uwapc.dev/</code></p>
+
+<p>Enable APC. Restart the server. Again, run ab tool.</p>
+
+<p><code>ab -n 1000 -c 30 -g with-apc.dat http://www.uwapc.dev/</code></p>
+
+<p>Plot data using Gnuplot. ( Details on plotting can also be found here: <a href="/blog/fastcgi-suexec-apc-per-user/" >Apache2 FastCGI and suEXEC Implementing APC Per User With PHP5-CGI</a> )</p>
+
+<p>Gnuplot config file</p>
+
+<figure class='code'><figcaption><span>&#8216;APC Info Interface Installation (APC-benchmarking.p)&#8217; </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="c"># output as png image</span>
+</span><span class='line'><span class="nb">set </span>terminal png
+</span><span class='line'>
+</span><span class='line'><span class="c"># save file to &quot;apc-benchmarking.png&quot;</span>
+</span><span class='line'><span class="nb">set </span>output <span class="s2">&quot;apc-benchmarking.png&quot;</span>
+</span><span class='line'>
+</span><span class='line'><span class="c"># graph title</span>
+</span><span class='line'><span class="nb">set </span>title <span class="s2">&quot;WordPress Benchmarking with APC&quot;</span>
+</span><span class='line'>
+</span><span class='line'><span class="c"># nicer aspect ratio for image size</span>
+</span><span class='line'><span class="nb">set </span>size 1,0.7
+</span><span class='line'>
+</span><span class='line'><span class="c"># y-axis grid</span>
+</span><span class='line'><span class="nb">set </span>grid y
+</span><span class='line'>
+</span><span class='line'><span class="c"># x-axis label</span>
+</span><span class='line'><span class="nb">set </span>xlabel <span class="s2">&quot;request&quot;</span>
+</span><span class='line'>
+</span><span class='line'><span class="c"># y-axis label</span>
+</span><span class='line'><span class="nb">set </span>ylabel <span class="s2">&quot;response time (ms)&quot;</span>
+</span><span class='line'>
+</span><span class='line'><span class="c">#plot data from data files</span>
+</span><span class='line'>plot <span class="s2">&quot;without-apc.dat&quot;</span> using 9 smooth sbezier with lines title <span class="s2">&quot;Without APC&quot;</span>, <span class="se">\</span>
+</span><span class='line'><span class="s2">&quot;with-apc.dat&quot;</span> using 9 smooth sbezier with lines title <span class="s2">&quot;With APC&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p><code>gnuplot APC-benchmarking.p</code></p>
+
+<p><img class='center' src="/images/server/wordpress-performance-gain-with-apc.png" title="WordPress Performance Gain with APC" alt="WordPress Performance Gain with APC" /></p>
+
+<h2>WordPress Performance Gain While Many PHP5-CGI Children share the same APC under One User with High Concurrency</h2>
+
+
+<p>Next, increase the PHP-CGI children from 2 to 6 (<code>PHP_FCGI_CHILDREN=6</code> in FastCGI wrapper script). Increase the concurrency to 60 <code>-c 60</code>. Benchmark again.</p>
+
+<p><img class='center' src="/images/server/wordpress-performance-gain-with-apc-with-many-children.png" title="WordPress Performance Gain with APC with many children" alt="WordPress Performance Gain with APC with many children" /></p>
+
+<p>The above plots clearly show the Performance Gain in Response Time when using APC to cache the PHP Opcodes.</p>
 </div>
   
   
@@ -180,9 +527,55 @@ I looked at the keybord: Do nothing.<br /></p>
 <aside class="sidebar">
   
     <img class='center uw-logo' src="/images/uw-freelancer-logo.png" title="UW Freelancer Logo" alt="UW Freelancer Logo" />
+<section class="odd" >
+<h1>GNU Linux Systems</h2><br />
+<img class='center uw-logo' src="/images/gnu-logo.png" title="GNU is Not Unix" alt="GNU is Not Unix" /><br />
+<a href="/blog/building-a-linux-system-from-scratch/" >Building a GNU Linux System from Tarballs</a><br />
+<a href="/blog/compiling-the-linux-kernel-from-source/" >Compiling a Linux Kernel From Source</a><br />
+<a href="/blog/building-the-system-software-from-scratch/" >Building the System Software from Scratch</a><br />
+<a href="/blog/building-the-host-independant-toolchain/" >Building the Host Independant ToolChain</a><br />
+</section>
+
+<section class="odd" >
+<h1>The Vim Editor</h2><br />
+<img class='center uw-logo' src="/images/vim_logo.png" title="The Editor" alt="The Editor" /><br />
+<a href="/blog/insanely-faster-vim-buffer-switching/" >Insanely Faster Vim Buffer Switching</a><br />
+<a href="/blog/vim-powerline/" >Vim PowerLine</a><br />
+<a href="/blog/vim-vdebug/" >Vim Vdebug</a><br /><br />
+</section>
+
+<section class="odd" >
+<h1>Apache HTTP Server</h2><br />
+<img class='center uw-logo' src="/images/apache_logo.png" title="Apache" alt="Apache" /><br />
+<a href="/blog/fastcgi-suexec-apc-per-user/" >Apache2 FastCGI and suEXEC Implementing APC Per User With PHP5-CGI</a><br />
+<a href="/blog/wordpress-performance-with-apc-via-fastcgi-php5/" >WordPress Performance Benchmarking With APC via FastCGI PHP5-CGI</a><br />
+<a href="/blog/mundane-experiments-with-apache-mpm_prefork-and-mod_php/" >Mundane Experiments With Apache Prefork MPM and Mod_PHP</a><br />
+<a href="/blog/setup-local-ubuntu-server/" >Setting Up a Local Ubuntu Server</a><br /><br />
+</section>
+
+<section class="odd" >
+<h1>PHP</h2><br />
+<img class='center uw-logo' src="/images/php_logo.png" title="PHP" alt="PHP" /><br />
+<a href="/blog/writing-php-extensions/" >Writing PHP Extensions</a><br />
+<a href="/blog/mysql-innodb-disk-space-usage/" >MySQL InnoDB Disk Space Consumption</a><br />
+<a href="/blog/wordpress-toolbar-customization/" >WordPress Toolbar Customization</a><br />
+<a href="/blog/two-website-customizations/" >Two Website Customizations</a><br /><br />
+</section>
 <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/building-a-linux-system-from-scratch/">Building a Linux System From Scratch</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/writing-php-extensions/">Writing PHP Extensions</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/compiling-the-linux-kernel-from-source/">Compiling a Linux Kernel From Source Tarball</a>
+      </li>
     
       <li class="post">
         <a href="/blog/wordpress-performance-with-apc-via-fastcgi-php5/">WordPress Performance Benchmarking With APC via FastCGI PHP5-CGI</a>
@@ -198,6 +591,10 @@ I looked at the keybord: Do nothing.<br /></p>
     
       <li class="post">
         <a href="/blog/insanely-faster-vim-buffer-switching/">Insanely Faster Buffer Switching</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/building-the-system-software-from-scratch/">Building the System Software From Scratch</a>
       </li>
     
       <li class="post">
@@ -217,46 +614,21 @@ I looked at the keybord: Do nothing.<br /></p>
       </li>
     
       <li class="post">
+        <a href="/blog/building-the-host-independant-toolchain/">Building the Host Independant Toolchain</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/fastcgi-suexec-apc-per-user/">Apache2 FastCGI and suEXEC Implementing APC Per User With PHP5-CGI</a>
       </li>
     
       <li class="post">
-        <a href="/blog/wordpress-toolbar-customization/">WordPress Toolbar Customization</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/language-parlor-project/">Language Parlor Project</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/facebook-app-sweepstakes/">Facebook App Sweepstakes</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/coming-soon-site/">Coming Soon Site Using WordPress CMS</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/mundane-experiments-with-apache-mpm_prefork-and-mod_php/">Mundane Experiments With Apache Prefork MPM and Mod_PHP</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/setup-local-ubuntu-server/">Setting Up a Local Ubuntu Server</a>
+        <a href="/blog/gnuplot-basics-2d-plots/">Gnuplot Basics - 2D Plots</a>
       </li>
     
   </ul>
 </section>
 
 
-
-<section class="googleplus">
-  <h1>
-    <a href="https://plus.google.com/115164496041018691013?rel=author">
-      <img src="http://www.google.com/images/icons/ui/gprofile_button-32.png" width="32" height="32">
-      Google+
-    </a>
-  </h1>
-</section>
 
 
 
@@ -267,7 +639,7 @@ I looked at the keybord: Do nothing.<br /></p>
   </div>
   <footer role="contentinfo"><p>
   Copyright &copy; 2013 - Upeksha Wisidagama -
-  <span class="credit">Hire me on <a href="http://www.freelancer.com/u/upekshawisidaga.html">Freelancer.com</a></span>
+    <a href="https://plus.google.com/115164496041018691013" rel="publisher">UW Freelancer Google+</a>
 </p>
 
 </footer>
@@ -285,14 +657,6 @@ I looked at the keybord: Do nothing.<br /></p>
 }(document, 'script', 'facebook-jssdk'));</script>
 
 
-
-  <script type="text/javascript">
-    (function() {
-      var script = document.createElement('script'); script.type = 'text/javascript'; script.async = true;
-      script.src = 'https://apis.google.com/js/plusone.js';
-      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(script, s);
-    })();
-  </script>
 
 
 
