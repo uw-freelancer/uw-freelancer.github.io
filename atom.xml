@@ -4,7 +4,7 @@
   <title><![CDATA[Freelance Projects]]></title>
   <link href="http://uw-freelancer.github.io/atom.xml" rel="self"/>
   <link href="http://uw-freelancer.github.io/"/>
-  <updated>2013-07-16T09:52:07+05:30</updated>
+  <updated>2013-07-16T17:14:48+05:30</updated>
   <id>http://uw-freelancer.github.io/</id>
   <author>
     <name><![CDATA[Upeksha Wisidagama]]></name>
@@ -2340,41 +2340,164 @@ Arthur and Merlin: In interactive proof systems, the prover has unbounded comput
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[Facebook App Sweepstakes]]></title>
-    <link href="http://uw-freelancer.github.io/blog/facebook-app-sweepstakes/"/>
-    <updated>2012-07-25T18:35:00+05:30</updated>
-    <id>http://uw-freelancer.github.io/blog/facebook-app-sweepstakes</id>
-    <content type="html"><![CDATA[<p>A Facebook App needed to be built with a like gate. After liking the page or app fans are allowed enter their contact details via a form in the Facebook App. This qualifies those fans for a sweepstake program run by Exp Tennis Group.</p>
+    <title type="html"><![CDATA[Spiritual Life - The Ultimate Teacher]]></title>
+    <link href="http://uw-freelancer.github.io/blog/the-great-teacher/"/>
+    <updated>2012-12-12T22:00:00+05:30</updated>
+    <id>http://uw-freelancer.github.io/blog/the-great-teacher</id>
+    <content type="html"><![CDATA[<p><img class='center' src="http://uw-freelancer.github.io/images/buddhism/lord-buddha-gal-viharaya.jpg" title="Lord Buddha - Gal Viharaya" alt="Lord Buddha - Gal Viharaya" /></p>
 
-<p><img class='center' src="http://uw-freelancer.github.io/images/blog/facebook-app-project-description.jpg" title="Facebook App Project Description" alt="Facebook App Project Description" /></p>
+<p>Teachers help us to learn. Of course we can learn from books, internet, etc. But behind them, there are people. They too belong to the teachers set. You can become a teacher too. There are special set of teachers who teach the most advanced lessons of life. Their teachings are timeless. Most of major religious leaders belong to this set. I myself consider &lsquo;Lord Buddha&rsquo; as the ultimate teacher. I respect all other religious leaders too.</p>
 
-<p>The facebook app was hosted at Heroku servers. Facebook apps can be freely hosted at Heroku. App connects to MailChimp email service via their API. I also created a custom admin panel within the <a href="http://uw-freelancer.github.io/blog/coming-soon-site/" >Coming Soon Site</a> to manage the sweepstakes campaign. I was able to successfully complete the project.</p>
+<p>I can write the names of other religions and terms related to them, but honestly I haven&rsquo;t had enough time to study them. By writing them in the wrong order or in the wrong context, I will not do any justice to them. I believe, most of them must be great, but within my knowledge and experience, I accept &lsquo;Lord Buddha&rsquo; is the greatest teacher in our world.</p>
 
-<p><img class='center' src="http://uw-freelancer.github.io/images/blog/facebook-app-feedback.jpg" title="Facebook App Feedback" alt="Facebook App Feedback" /></p>
+<h2>Mental Health</h2>
+
+
+<p>Mental health is an important aspect of an individual. One must be mentally healty in order to function well in this world. The following are some of the personality disorders.</p>
+
+<blockquote><p>Obsessive–compulsive personality disorder (OCPD) is a personality disorder characterized by a pervasive pattern of preoccupation with orderliness, perfectionism, mental and interpersonal control at the expense of flexibility, openness, and efficiency.</p></blockquote>
+
+
+<p>Source: <a href="http://en.wikipedia.org/wiki/Obsessive%E2%80%93compulsive_personality_disorder" >OCPD</a></p>
+
+<blockquote><p>Borderline personality disorder (BPD) is a personality disorder whose essential features are a pattern of marked impulsivity and instability of affects, interpersonal relationships, and self image.</p></blockquote>
+
+
+<p>Source: <a href="http://en.wikipedia.org/wiki/Borderline_personality_disorder" >BPD</a></p>
+
+<p>The above two conditions are meant to remind you of various disorders that can make you mentally unhealthy.</p>
+
+<h2>Insanity</h2>
+
+
+<p>Insanity, craziness or madness is a spectrum of behaviors characterized by certain abnormal mental or behavioral patterns. Insanity may manifest as violations of societal norms, including a person becoming a danger to themselves or others. (Source: <a href="http://en.wikipedia.org/wiki/Insanity" >Insanity</a>).</p>
+
+<p><img class='center' src="http://uw-freelancer.github.io/images/buddhism/insane-asylum-brentwood.jpg" title="Insane Asylum Brentwood" alt="Insane Asylum Brentwood" /></p>
+
+<p>Meaning of Life, After Life, etc. are the areas of curiosity that you can&rsquo;t completely understand. If you think more about them without understanding what you are doing it can lead to undesirable mental effects.</p>
+
+<p>Don&rsquo;t make your decisions based on purely natural scientific knowledge and methodologies. Social science has their own body of knowledge making our world a better place. Despite of being true, some concepts are meant to remain in the society. (not all of us are intellectuals or philosophers)</p>
+
+<p>I have met some people, who faced a major setback in their life. They were unable to recover to their normal lives. They ended up in mental hospitals.</p>
+
+<h2>Causes</h2>
+
+
+<p>You need to identity your unhealty thinking patterns in order to reduce the risk of being caught in a mental disorder. If you regularly feel some unease you should consult a psychiatrist.</p>
+
+<h2>Active Externalization</h2>
+
+
+<p>You can write your views on a paper or publish it online. Then you no longer need to carry them in your head.</p>
+
+<p>This technique is called &lsquo;Active Externalization&rsquo;. Source: <a href="http://en.wikipedia.org/wiki/Externalization" >Externalization</a></p>
+
+<h2>Open Source</h2>
+
+
+<p>By publishing your views where others can read, you make the source open. Others can critize your views. You can rethink about your own views according to others advices.</p>
+
+<p>This enables you to analyze your own thoughts against others views. You can even exercise &lsquo;Double Dissociation&rsquo;. Source: <a href="http://en.wikipedia.org/wiki/Dissociation_(psychology)" >Dissociation</a></p>
+
+<h2>Uncertainity</h2>
+
+
+<p>People talk about &lsquo;Living in an uncertain world&rsquo; and about &lsquo;suspending the judgement&rsquo;. Read about them. Try to understand them. So you can make an informed decision on what you are going to believe and how you are going to live in this world.</p>
+
+<p><img class='center' src="http://uw-freelancer.github.io/images/buddhism/bertrand-russell.jpg" title="Burtrand Russell" alt="Burtrand Russell" /></p>
+
+<h2>Immanuel Kant on Enlightenment</h2>
+
+
+
+
+<blockquote><p>Enlightenment is man’s emergence from his self-imposed nonage. Nonage is the inability to use one’s own understanding without another’s guidance. This nonage is self-imposed if its cause lies not in lack of understanding but in indecision and lack of courage to use one’s own mind without another’s guidance. - Immanuel Kant</p></blockquote>
+
+
+<p>I like this essay. Source: <a href="http://uw-freelancer.github.io/blog/what-is-enlightenment/" >What is Enlightenment</a>.</p>
+
+<h2>Buddhist Philosophy</h2>
+
+
+<p>Personally, I believe in an afterlife. I run a process inside my brain which loads Buddist Concepts into my mind so that I can use them easily to perceive the world in a Buddhist way. I believe in &lsquo;Karma&rsquo; too. What we have now is the result of what we did in the past. (Actully these concepts are not as simple as the previous sentence)</p>
+
+<p>Source: <a href="https://en.wikipedia.org/wiki/Ethics" >Ethics</a></p>
+
+<h2>Four Noble Truths</h2>
+
+
+
+
+<blockquote><p>Normally we think our happiness is contingent upon external circumstances and situations, rather than upon our own inner attitude toward things, or toward life in general. The Buddha was saying that dissatisfaction is part of life, even if we are seeking happiness and even if we manage to find temporary happiness. The very fact that it is temporary means that sooner or later the happiness is going to pass. So the Buddha said that unless we understand this and see how pervasive dissatisfaction or duhkha is, it is impossible for us to start looking for real happiness. - Traleg Kyabgon Rinpoche</p></blockquote>
+
+
+<p><a href="http://en.wikipedia.org/wiki/Four_Noble_Truths">http://en.wikipedia.org/wiki/Four_Noble_Truths</a></p>
+
+<h2>Money</h2>
+
+
+<p>We need to earn money to live a successfull life. You need to face the competition. You have to have sufficient amount of money to live a noble and spirital life. Without money, one will be working hard just for food.</p>
+
+<p><img class='center' src="http://uw-freelancer.github.io/images/buddhism/5000-rupees.jpg" title="5000 Rupees" alt="5000 Rupees" /></p>
+
+<p>Lord Buddha teaches us how to balance our mundane and spiritual lives for a greater life. Lord Buddha is the ultimate teacher of life.</p>
+
+<h2>Further Reading</h2>
+
+
+<p>Lord Buddha is the greatest teacher. Read more about <a href="http://en.wikipedia.org/wiki/Gautama_Buddha" >Lord Buddha</a>.</p>
+
+<p><img class='center' src="http://uw-freelancer.github.io/images/buddhism/sandakada-pahana.jpg" title="Sandakada Pahana" alt="Sandakada Pahana" /></p>
 ]]></content>
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[Coming Soon Site Using WordPress CMS]]></title>
-    <link href="http://uw-freelancer.github.io/blog/coming-soon-site/"/>
-    <updated>2012-06-06T20:00:00+05:30</updated>
-    <id>http://uw-freelancer.github.io/blog/coming-soon-site</id>
-    <content type="html"><![CDATA[<p>A coming soon website was built for an &lsquo;Online Tennis Ladder Site&rsquo; called EXP Tennis. This was built using popular &lsquo;WordPress Content Management System&rsquo;. I developed the WordPress Theme from the HTML template given by the client. His name on freelancer.com was &lsquo;nit3hawkz&rsquo;.</p>
-
-<p><img class='center' src="http://uw-freelancer.github.io/images/blog/coming-soon-site-project-description.jpg" title="Coming Soon Site Project Description" alt="Coming Soon Site Project Description" /></p>
-
-<h2>First Project on Freelancer.com</h2>
+    <title type="html"><![CDATA[What is Enlightenment]]></title>
+    <link href="http://uw-freelancer.github.io/blog/what-is-enlightenment/"/>
+    <updated>2012-12-10T22:00:00+05:30</updated>
+    <id>http://uw-freelancer.github.io/blog/what-is-enlightenment</id>
+    <content type="html"><![CDATA[<blockquote><p>Copied from the below url:<br/>http://www.columbia.edu/acis/ets/CCREAD/etscc/kant.html</p></blockquote>
 
 
-<p>This was my first project in Freelancer.com. There were a total of 31 freelancers bidding on this project and the average bid was $408USD. I was fortunate enough to win the bid and get selected as the winning bidder for this &lsquo;Coming Soon Site&rsquo;.</p>
 
-<p>Nit3hawkz was the project poster. He already had some other projects on freelancer.com. The main site related to this coming soon site, i.e. the actual coming soon site was already being developed, at the time I was awarded the project.</p>
 
-<p><img class='center' src="http://uw-freelancer.github.io/images/blog/coming-soon-site-screenshot.jpg" title="Coming Soon Site Screenshot" alt="Coming Soon Site Screenshot" /></p>
+<h2>What is Enlightenment</h2>
 
-<p>The project was completed successfully and I received a 5 star rating for the project.</p>
 
-<p><img class='center' src="http://uw-freelancer.github.io/images/blog/coming-soon-site-feedback.jpg" title="Coming Soon Site Feedback" alt="Coming Soon Site Feedback" /></p>
+<p>Immanuel Kant</p>
+
+<p><img class='center' src="http://uw-freelancer.github.io/images/buddhism/immanuel-kant.jpg" title="Immanuel Kant" alt="Immanuel Kant" /></p>
+
+<p>Enlightenment is man&rsquo;s emergence from his self-imposed nonage. Nonage is the inability to use one&rsquo;s own understanding without another&rsquo;s guidance. This nonage is self-imposed if its cause lies not in lack of understanding but in indecision and lack of courage to use one&rsquo;s own mind without another&rsquo;s guidance. Dare to know! (Sapere aude.) &ldquo;Have the courage to use your own understanding,&rdquo; is therefore the motto of the enlightenment.</p>
+
+<p>Laziness and cowardice are the reasons why such a large part of mankind gladly remain minors all their lives, long after nature has freed them from external guidance. They are the reasons why it is so easy for others to set themselves up as guardians. It is so comfortable to be a minor. If I have a book that thinks for me, a pastor who acts as my conscience, a physician who prescribes my diet, and so on&mdash;then I have no need to exert myself. I have no need to think, if only I can pay; others will take care of that disagreeable business for me. Those guardians who have kindly taken supervision upon themselves see to it that the overwhelming majority of mankind&mdash;among them the entire fair sex&mdash;should consider the step to maturity, not only as hard, but as extremely dangerous. First, these guardians make their domestic cattle stupid and carefully prevent the docile creatures from taking a single step without the leading-strings to which they have fastened them. Then they show them the danger that would threaten them if they should try to walk by themselves. Now this danger is really not very great; after stumbling a few times they would, at last, learn to walk. However, examples of such failures intimidate and generally discourage all further attempts.</p>
+
+<p>Thus it is very difficult for the individual to work himself out of the nonage which has become almost second nature to him. He has even grown to like it, and is at first really incapable of using his own understanding because he has never been permitted to try it. Dogmas and formulas, these mechanical tools designed for reasonable use&mdash;or rather abuse&mdash;of his natural gifts, are the fetters of an everlasting nonage. The man who casts them off would make an uncertain leap over the narrowest ditch, because he is not used to such free movement. That is why there are only a few men who walk firmly, and who have emerged from nonage by cultivating their own minds.</p>
+
+<p>It is more nearly possible, however, for the public to enlighten itself; indeed, if it is only given freedom, enlightenment is almost inevitable. There will always be a few independent thinkers, even among the self-appointed guardians of the multitude. Once such men have thrown off the yoke of nonage, they will spread about them the spirit of a reasonable appreciation of man&rsquo;s value and of his duty to think for himself. It is especially to be noted that the public which was earlier brought under the yoke by these men afterwards forces these very guardians to remain in submission, if it is so incited by some of its guardians who are themselves incapable of any enlightenment. That shows how pernicious it is to implant prejudices: they will eventually revenge themselves upon their authors or their authors&#8217; descendants. Therefore, a public can achieve enlightenment only slowly. A revolution may bring about the end of a personal despotism or of avaricious tyrannical oppression, but never a true reform of modes of thought. New prejudices will serve, in place of the old, as guide lines for the unthinking multitude.</p>
+
+<p>This enlightenment requires nothing but freedom&mdash;and the most innocent of all that may be called &ldquo;freedom&rdquo;: freedom to make public use of one&rsquo;s reason in all matters. Now I hear the cry from all sides: &ldquo;Do not argue!&rdquo; The officer says: &ldquo;Do not argue&mdash;drill!&rdquo; The tax collector: &ldquo;Do not argue&mdash;pay!&rdquo; The pastor: &ldquo;Do not argue&mdash;believe!&rdquo; Only one ruler in the world says: &ldquo;Argue as much as you please, but obey!&rdquo; We find restrictions on freedom everywhere. But which restriction is harmful to enlightenment? Which restriction is innocent, and which advances enlightenment? I reply: the public use of one&rsquo;s reason must be free at all times, and this alone can bring enlightenment to mankind.</p>
+
+<p>On the other hand, the private use of reason may frequently be narrowly restricted without especially hindering the progress of enlightenment. By &ldquo;public use of one&rsquo;s reason&rdquo; I mean that use which a man, as scholar, makes of it before the reading public. I call &ldquo;private use&rdquo; that use which a man makes of his reason in a civic post that has been entrusted to him. In some affairs affecting the interest of the community a certain [governmental] mechanism is necessary in which some members of the community remain passive. This creates an artificial unanimity which will serve the fulfillment of public objectives, or at least keep these objectives from being destroyed. Here arguing is not permitted: one must obey. Insofar as a part of this machine considers himself at the same time a member of a universal community&mdash;a world society of citizens&mdash;(let us say that he thinks of himself as a scholar rationally addressing his public through his writings) he may indeed argue, and the affairs with which he is associated in part as a passive member will not suffer. Thus it would be very unfortunate if an officer on duty and under orders from his superiors should want to criticize the appropriateness or utility of his orders. He must obey. But as a scholar he could not rightfully be prevented from taking notice of the mistakes in the military service and from submitting his views to his public for its judgment. The citizen cannot refuse to pay the taxes levied upon him; indeed, impertinent censure of such taxes could be punished as a scandal that might cause general disobedience. Nevertheless, this man does not violate the duties of a citizen if, as a scholar, he publicly expresses his objections to the impropriety or possible injustice of such levies. A pastor, too, is bound to preach to his congregation in accord with the doctrines of the church which he serves, for he was ordained on that condition. But as a scholar he has full freedom, indeed the obligation, to communicate to his public all his carefully examined and constructive thoughts concerning errors in that doctrine and his proposals concerning improvement of religious dogma and church institutions. This is nothing that could burden his conscience. For what he teaches in pursuance of his office as representative of the church, he represents as something which he is not free to teach as he sees it. He speaks as one who is employed to speak in the name and under the orders of another. He will say: &ldquo;Our church teaches this or that; these are the proofs which it employs.&rdquo; Thus he will benefit his congregation as much as possible by presenting doctrines to which he may not subscribe with full conviction. He can commit himself to teach them because it is not completely impossible that they may contain hidden truth. In any event, he has found nothing in the doctrines that contradicts the heart of religion. For if he believed that such contradictions existed he would not be able to administer his office with a clear conscience. He would have to resign it. Therefore the use which a scholar makes of his reason before the congregation that employs him is only a private use, for no matter how sizable, this is only a domestic audience. In view of this he, as preacher, is not free and ought not to be free, since he is carrying out the orders of others. On the other hand, as the scholar who speaks to his own public (the world) through his writings, the minister in the public use of his reason enjoys unlimited freedom to use his own reason and to speak for himself. That the spiritual guardians of the people should themselves be treated as minors is an absurdity which would result in perpetuating absurdities.</p>
+
+<p>But should a society of ministers, say a Church Council, &hellip; have the right to commit itself by oath to a certain unalterable doctrine, in order to secure perpetual guardianship over all its members and through them over the people? I say that this is quite impossible. Such a contract, concluded to keep all further enlightenment from humanity, is simply null and void even if it should be confirmed by the sovereign power, by parliaments, and the most solemn treaties. An epoch cannot conclude a pact that will commit succeeding ages, prevent them from increasing their significant insights, purging themselves of errors, and generally progressing in enlightenment. That would be a crime against human nature whose proper destiny lies precisely in such progress. Therefore, succeeding ages are fully entitled to repudiate such decisions as unauthorized and outrageous. The touchstone of all those decisions that may be made into law for a people lies in this question: Could a people impose such a law upon itself? Now it might be possible to introduce a certain order for a definite short period of time in expectation of better order. But, while this provisional order continues, each citizen (above all, each pastor acting as a scholar) should be left free to publish his criticisms of the faults of existing institutions. This should continue until public understanding of these matters has gone so far that, by uniting the voices of many (although not necessarily all) scholars, reform proposals could be brought before the sovereign to protect those congregations which had decided according to their best lights upon an altered religious order, without, however, hindering those who want to remain true to the old institutions. But to agree to a perpetual religious constitution which is not publicly questioned by anyone would be, as it were, to annihilate a period of time in the progress of man&rsquo;s improvement. This must be absolutely forbidden.</p>
+
+<p>A man may postpone his own enlightenment, but only for a limited period of time. And to give up enlightenment altogether, either for oneself or one&rsquo;s descendants, is to violate and to trample upon the sacred rights of man. What a people may not decide for itself may even less be decided for it by a monarch, for his reputation as a ruler consists precisely in the way in which he unites the will of the whole people within his own. If he only sees to it that all true or supposed [religious] improvement remains in step with the civic order, he can for the rest leave his subjects alone to do what they find necessary for the salvation of their souls. Salvation is none of his business; it is his business to prevent one man from forcibly keeping another from determining and promoting his salvation to the best of his ability. Indeed, it would be prejudicial to his majesty if he meddled in these matters and supervised the writings in which his subjects seek to bring their [religious] views into the open, even when he does this from his own highest insight, because then he exposes himself to the reproach: Caesar non est supra grammaticos. 2    It is worse when he debases his sovereign power so far as to support the spiritual despotism of a few tyrants in his state over the rest of his subjects.</p>
+
+<p>When we ask, Are we now living in an enlightened age? the answer is, No, but we live in an age of enlightenment. As matters now stand it is still far from true that men are already capable of using their own reason in religious matters confidently and correctly without external guidance. Still, we have some obvious indications that the field of working toward the goal [of religious truth] is now opened. What is more, the hindrances against general enlightenment or the emergence from self-imposed nonage are gradually diminishing. In this respect this is the age of the enlightenment and the century of Frederick [the Great].</p>
+
+<p>A prince ought not to deem it beneath his dignity to state that he considers it his duty not to dictate anything to his subjects in religious matters, but to leave them complete freedom. If he repudiates the arrogant word &ldquo;tolerant&rdquo;, he is himself enlightened; he deserves to be praised by a grateful world and posterity as that man who was the first to liberate mankind from dependence, at least on the government, and let everybody use his own reason in matters of conscience. Under his reign, honorable pastors, acting as scholars and regardless of the duties of their office, can freely and openly publish their ideas to the world for inspection, although they deviate here and there from accepted doctrine. This is even more true of every person not restrained by any oath of office. This spirit of freedom is spreading beyond the boundaries [of Prussia] even where it has to struggle against the external hindrances established by a government that fails to grasp its true interest. [Frederick&rsquo;s Prussia] is a shining example that freedom need not cause the least worry concerning public order or the unity of the community. When one does not deliberately attempt to keep men in barbarism, they will gradually work out of that condition by themselves.</p>
+
+<p>I have emphasized the main point of the enlightenment&mdash;man&rsquo;s emergence from his self-imposed nonage&mdash;primarily in religious matters, because our rulers have no interest in playing the guardian to their subjects in the arts and sciences. Above all, nonage in religion is not only the most harmful but the most dishonorable. But the disposition of a sovereign ruler who favors freedom in the arts and sciences goes even further: he knows that there is no danger in permitting his subjects to make public use of their reason and to publish their ideas concerning a better constitution, as well as candid criticism of existing basic laws. We already have a striking example [of such freedom], and no monarch can match the one whom we venerate.</p>
+
+<p>But only the man who is himself enlightened, who is not afraid of shadows, and who commands at the same time a well disciplined and numerous army as guarantor of public peace&mdash;only he can say what [the sovereign of] a free state cannot dare to say: &ldquo;Argue as much as you like, and about what you like, but obey!&rdquo; Thus we observe here as elsewhere in human affairs, in which almost everything is paradoxical, a surprising and unexpected course of events: a large degree of civic freedom appears to be of advantage to the intellectual freedom of the people, yet at the same time it establishes insurmountable barriers. A lesser degree of civic freedom, however, creates room to let that free spirit expand to the limits of its capacity. Nature, then, has carefully cultivated the seed within the hard core&mdash;namely the urge for and the vocation of free thought. And this free thought gradually reacts back on the modes of thought of the people, and men become more and more capable of acting in freedom. At last free thought acts even on the fundamentals of government and the state finds it agreeable to treat man, who is now more than a machine, in accord with his dignity.</p>
+
+<p>Notes</p>
+
+<ol>
+<li>Translated by Mary C. Smith.</li>
+</ol>
+
 ]]></content>
   </entry>
   
