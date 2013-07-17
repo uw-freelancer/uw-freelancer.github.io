@@ -5,11 +5,11 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>MySQL InnoDB Disk Space Consumption - Freelance Projects</title>
+  <title>Javascript Coding Standards - Vim, Syntastic and JSHint - Freelance Projects</title>
   <meta name="author" content="Upeksha Wisidagama">
 
   
-  <meta name="description" content="InnoDB Folders and .frm Files MySQL stores its data dictionary information for tables in .frm files in database directories. Every InnoDB table also &hellip;">
+  <meta name="description" content="Install Syntastic Vim Syntax Checker Syntastic is a syntax checking plugin that runs files through external syntax checkers. This can be done on &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -18,7 +18,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://uw-freelancer.github.io/blog/mysql-innodb-disk-space-usage">
+  <link rel="canonical" href="http://uw-freelancer.github.io/blog/Vim-Syntastic-JSHint">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="/atom.xml" rel="alternate" title="Freelance Projects" type="application/atom+xml">
@@ -81,7 +81,7 @@
   
   <header>
     
-      <h1 class="entry-title">MySQL InnoDB Disk Space Consumption</h1>
+      <h1 class="entry-title">Javascript Coding Standards - Vim, Syntastic and JSHint</h1>
     
     
       <p class="meta">
@@ -97,95 +97,139 @@
   
 
 
-<time datetime="2013-05-05T12:00:00+05:30" pubdate data-updated="true">May 5<span>th</span>, 2013</time>
+<time datetime="2013-07-18T06:00:00+05:30" pubdate data-updated="true">Jul 18<span>th</span>, 2013</time>
         
       </p>
     
   </header>
 
 
-<div class="entry-content"><h2>InnoDB Folders and .frm Files</h2>
+<div class="entry-content"><h2>Install Syntastic Vim Syntax Checker</h2>
 
 
-<p>MySQL stores its data dictionary information for tables in .frm files in database directories.</p>
+<p><img class='center' src="/images/blog/vim/zomg-its-syntastic.png" title="ZOMG It's Syntastic" alt="ZOMG It's Syntastic" /></p>
 
-<p>Every InnoDB table also has its own entry in the InnoDB internal data dictionary inside the tablespace. When MySQL drops a table or a database, it has to delete one or more .frm files as well as the corresponding entries inside the InnoDB data dictionary.</p>
-
-<p><a href="http://dev.mysql.com/doc/refman/5.5/en/innodb-table-and-index.html">http://dev.mysql.com/doc/refman/5.5/en/innodb-table-and-index.html</a></p>
-
-<h2>Employees Database Installation</h2>
+<blockquote><p>Syntastic is a syntax checking plugin that runs files through external syntax checkers. This can be done on demand, or automatically as files are saved and opened.</p></blockquote>
 
 
-<p>We need a test database for testing. I decided to use the &lsquo;employees&rsquo; database.</p>
+<p>Intall Syntastic via Bundle.</p>
 
-<p><a href="http://dev.mysql.com/doc/employee/en/index.html">http://dev.mysql.com/doc/employee/en/index.html</a></p>
-
-<blockquote><p>The database contains about 300,000 employee records with 2.8 million salary entries. The export data is 167 MB, which is not huge, but heavy enough to be non-trivial for testing.</p></blockquote>
-
-
-<p>Login to remote host using <code>ssh uwlab</code>. Become root. Download the &lsquo;employees&rsquo; test database. Inspect current disk usage of MySQL.</p>
-
-<p><img class='center' src="/images/mysql/mysql-innodb-disk-usage.png" title="MySQL InnoDB Disk Usage" alt="MySQL InnoDB Disk Usage" /></p>
-
-<p>Employee Database tarball is of size 26M. MySQL main tablespace is about 18M (see ibdata1 file). Extract the database from tarball with <code>tar -jxvf employees_db-full-1.0.6.tar.bz2</code>.</p>
-
-<p>The uncompressed database size is about 161M (use <code>du -h -d 1</code>)</p>
-
-<p>Load the database dump into MySQL using <code>mysql -u root -p -t &lt; employees.sql</code>.</p>
-
-<p>Measue the MySQL data file size again.</p>
-
-<p><img class='center' src="/images/mysql/tablespace-file-size-increase.png" title="Tablespace File Size Increase" alt="Tablespace File Size Increase" /></p>
-
-<blockquote><p>After installing &#8216;employees&#8217; test database, &#8216;ibdata1&#8217; size increased from 18M to 218M. /var/lib/mysql/employees is only 80K.</p></blockquote>
-
-
-
-
-<h2>InnoDB Per-Table .ibd Files</h2>
-
-
-<p>By default, all InnoDB tables and indexes are stored in the system tablespace. As an alternative, you can store each InnoDB table and its indexes in its own file.</p>
-
-<p>First drop the &lsquo;employee&rsquo; database using <code>mysql -u root -p -e "drop database employees;"</code>. Add the following in your mysql configuration file.</p>
-
-<figure class='code'><figcaption><span>&#8217; (/etc/mysql/my.cnf)&#8217; </span></figcaption>
+<figure class='code'><figcaption><span>&#8216;Vim Sytastic Installation&#8217; </span></figcaption>
  <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="o">[</span>mysqld<span class="o">]</span>
-</span><span class='line'><span class="nv">innodb_file_per_table</span> <span class="o">=</span> 1
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nb">cd</span> ~/.vim/bundle
+</span><span class='line'>git clone https://github.com/scrooloose/syntastic.git
+</span><span class='line'>:Helptags
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>Restart the mysql server. You can verify the configuration using <code>mysqld --help --verbose</code>.</p>
-
-<p>Now add the &lsquo;employees&rsquo; database again using the above instructions. Now we have an &lsquo;ibd&rsquo; file per table.</p>
-
-<p><img class='center' src="/images/mysql/innodb-ibd-per-table.png" title="InnoDB IBD Per Table" alt="InnoDB IBD Per Table" /></p>
-
-<p>Be sure to do a full sql dump before experimenting with the server using, <code>mysqldump -u root -p --all-databases &gt; /home/upeksha/full-dump.sql</code>.</p>
-
-<p>Note how the file size is changed. Now &lsquo;ibdata1&rsquo; is only 18M. But the employees directory is 232M.</p>
-
-<p><img class='center' src="/images/mysql/innodb-disk-space-distribution.png" title="InnoDB Disk Space Distribution" alt="InnoDB Disk Space Distribution" /></p>
-
-<h2>MySQL Query Cache Size</h2>
 
 
-<p>The amount of memory allocated for caching query results. The default value is 0, which disables the query cache. Note that query_cache_size bytes of memory are allocated even if query_cache_type is set to 0.</p>
-
-<p><a href="http://dev.mysql.com/doc/refman/5.5/en/server-system-variables.html#sysvar_query_cache_size">http://dev.mysql.com/doc/refman/5.5/en/server-system-variables.html#sysvar_query_cache_size</a></p>
-
-<p><img class='center' src="/images/mysql/demonstrating-mysql-query-cache-effects.png" title="MySQL Query Cache Effects" alt="MySQL Query Cache Effects" /></p>
-
-<p>Note, the first query took 939ms. But the identical subsequent queries took only 22ms and 19ms respectively.</p>
-
-<h2>More InnoDB Optimization</h2>
+<h2>Install NodeJS and NPM</h2>
 
 
-<p>For tips on optimization, visit the following page,</p>
 
-<p><a href="http://dev.mysql.com/doc/refman/5.5/en/optimizing-innodb.html">http://dev.mysql.com/doc/refman/5.5/en/optimizing-innodb.html</a></p>
+
+<figure class='code'><figcaption><span>&#8216;NodeJS Installation&#8217; </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>sudo apt-get update
+</span><span class='line'>sudo apt-get install python-software-properties python g++ make
+</span><span class='line'>sudo add-apt-repository ppa:chris-lea/node.js
+</span><span class='line'>sudo apt-get update
+</span><span class='line'>sudo apt-get install nodejs
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Source: <a href="https://github.com/joyent/node/wiki/Installing-Node.js-via-package-manager#ubuntu-mint">https://github.com/joyent/node/wiki/Installing-Node.js-via-package-manager#ubuntu-mint</a></p>
+
+<p>Install The Node Package Manager</p>
+
+<figure class='code'><figcaption><span>&#8216;Node Package Manager Installation&#8217; </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>curl https://npmjs.org/install.sh | sh
+</span><span class='line'>
+</span><span class='line'>Written by John Gilmore and Jay Fenlason.
+</span><span class='line'>install npm@latest
+</span><span class='line'>fetching: http://registry.npmjs.org/npm/-/npm-1.3.4.tgz
+</span><span class='line'>
+</span><span class='line'>uw@uw:~/.vim/bundle<span class="nv">$ </span>node --version
+</span><span class='line'>v0.10.13
+</span><span class='line'>uw@uw:~/.vim/bundle<span class="nv">$ </span>npm --version
+</span><span class='line'>1.3.4
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<h2>Install JSHint</h2>
+
+
+
+
+<figure class='code'><figcaption><span>&#8216;JSHint Installation&#8217; </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>uw@uw:~/.vim/bundle<span class="nv">$ </span>sudo npm install jshint -g
+</span><span class='line'>jshint@2.1.4 /usr/lib/node_modules/jshint
+</span><span class='line'>├── console-browserify@0.1.6
+</span><span class='line'>├── underscore@1.4.4
+</span><span class='line'>├── shelljs@0.1.4
+</span><span class='line'>├── minimatch@0.2.12 <span class="o">(</span>sigmund@1.0.0, lru-cache@2.3.0<span class="o">)</span>
+</span><span class='line'>└── cli@0.4.4-2 <span class="o">(</span>glob@3.2.3<span class="o">)</span>
+</span><span class='line'>uw@uw:~/.vim/bundle<span class="err">$</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Create a <code>.jshintrc</code> file in your home directory.</p>
+
+<p>Source: <a href="https://github.com/jshint/jshint/blob/master/examples/.jshintrc">https://github.com/jshint/jshint/blob/master/examples/.jshintrc</a></p>
+
+<p>Option Reference: <a href="http://www.jshint.com/docs/">http://www.jshint.com/docs/</a></p>
+
+<h2>Javascript Coding Standard - Run the JSHint</h2>
+
+
+<p>Run <code>:SyntasticCheck</code> on a Javascript file. Fix Errors and Warnings.</p>
+
+<p>You can also check your code on <a href="http://www.jslint.com">http://www.jslint.com</a> and <a href="http://www.jshint.com">http://www.jshint.com</a></p>
+
+<h2>Sample .jshintrc Files</h2>
+
+
+<p><a href="https://github.com/jquery/jquery/blob/master/.jshintrc">https://github.com/jquery/jquery/blob/master/.jshintrc</a>
+<a href="https://github.com/jquery/jquery/blob/master/.jshintrc">https://github.com/jquery/jquery/blob/master/.jshintrc</a>
+<a href="https://github.com/jquery/jquery/blob/master/.jshintrc">https://github.com/jquery/jquery/blob/master/.jshintrc</a>
+<a href="https://github.com/mozilla/browserid/blob/dev/.jshintrc">https://github.com/mozilla/browserid/blob/dev/.jshintrc</a></p>
+
+<h2>Install UglifyJS2</h2>
+
+
+<p><code>npm install uglify-js@1</code>
+<a href="https://github.com/mishoo/UglifyJS">https://github.com/mishoo/UglifyJS</a></p>
+
+<p>Now uglify, <code>uglify filename.js &gt; filename.min.js</code>.</p>
+
+<p>Now you know the basics of how to write clean jQuery code and compress them to save bandwidth and improve page load time !</p>
 </div>
 
 
@@ -209,12 +253,12 @@
   
 
 
-<time datetime="2013-05-05T12:00:00+05:30" pubdate data-updated="true">May 5<span>th</span>, 2013</time>
+<time datetime="2013-07-18T06:00:00+05:30" pubdate data-updated="true">Jul 18<span>th</span>, 2013</time>
       
 
 <span class="categories">
   
-    <a class='category' href='/blog/categories/innodb/'>InnoDB</a>, <a class='category' href='/blog/categories/mysql/'>MySQL</a>
+    <a class='category' href='/blog/categories/vim/'>Vim</a>, <a class='category' href='/blog/categories/jquery/'>jQuery</a>
   
 </span>
 
@@ -223,7 +267,7 @@
     
       <div class="sharing">
   
-  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://uw-freelancer.github.io/blog/mysql-innodb-disk-space-usage/" data-via="" data-counturl="http://uw-freelancer.github.io/blog/mysql-innodb-disk-space-usage/" >Tweet</a>
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://uw-freelancer.github.io/blog/Vim-Syntastic-JSHint/" data-via="" data-counturl="http://uw-freelancer.github.io/blog/Vim-Syntastic-JSHint/" >Tweet</a>
   
   
   
@@ -234,10 +278,8 @@
     
     <p class="meta">
       
-        <a class="basic-alignment left" href="/blog/wordpress-toolbar-customization/" title="Previous Post: WordPress Toolbar Customization">&laquo; WordPress Toolbar Customization</a>
+        <a class="basic-alignment left" href="/blog/mapping-control-key-to-caps-lock-in-ubuntu/" title="Previous Post: Map Control Key to Caps Lock Key in Ubuntu X Server">&laquo; Map Control Key to Caps Lock Key in Ubuntu X Server</a>
       
-      
-        <a class="basic-alignment right" href="/blog/gnuplot-basics-2d-plots/" title="Next Post: gnuplot Basics - 2D plots">gnuplot Basics - 2D plots &raquo;</a>
       
     </p>
   </footer>
