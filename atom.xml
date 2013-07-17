@@ -4,7 +4,7 @@
   <title><![CDATA[Freelance Projects]]></title>
   <link href="http://uw-freelancer.github.io/atom.xml" rel="self"/>
   <link href="http://uw-freelancer.github.io/"/>
-  <updated>2013-07-17T23:24:16+05:30</updated>
+  <updated>2013-07-17T23:26:39+05:30</updated>
   <id>http://uw-freelancer.github.io/</id>
   <author>
     <name><![CDATA[Upeksha Wisidagama]]></name>
@@ -59,9 +59,12 @@
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>Source: <a href="https://github.com/joyent/node/wiki/Installing-Node.js-via-package-manager#ubuntu-mint">https://github.com/joyent/node/wiki/Installing-Node.js-via-package-manager#ubuntu-mint</a></p>
+<p>Source: <a href="https://github.com/joyent/node/wiki/Installing-Node.js-via-package-manager">https://github.com/joyent/node/wiki/Installing-Node.js-via-package-manager</a></p>
 
-<p>Install The Node Package Manager</p>
+<h2>Install The Node Package Manager</h2>
+
+
+
 
 <figure class='code'><figcaption><span>&#8216;Node Package Manager Installation&#8217; </span></figcaption>
  <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
@@ -138,8 +141,9 @@
 <h2>Install UglifyJS2</h2>
 
 
-<p><code>npm install uglify-js@1</code>
-<a href="https://github.com/mishoo/UglifyJS">https://github.com/mishoo/UglifyJS</a></p>
+<p><code>npm install uglify-js@1</code></p>
+
+<p><a href="https://github.com/mishoo/UglifyJS">https://github.com/mishoo/UglifyJS</a></p>
 
 <p>Now uglify, <code>uglify filename.js &gt; filename.min.js</code>.</p>
 
