@@ -4,7 +4,7 @@
   <title><![CDATA[Freelance Projects]]></title>
   <link href="http://uw-freelancer.github.io/atom.xml" rel="self"/>
   <link href="http://uw-freelancer.github.io/"/>
-  <updated>2013-07-16T17:14:48+05:30</updated>
+  <updated>2013-07-17T18:06:03+05:30</updated>
   <id>http://uw-freelancer.github.io/</id>
   <author>
     <name><![CDATA[Upeksha Wisidagama]]></name>
@@ -12,6 +12,629 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Map Control Key to Caps Lock Key in Ubuntu X Server]]></title>
+    <link href="http://uw-freelancer.github.io/blog/mapping-control-key-to-caps-lock-in-ubuntu/"/>
+    <updated>2013-07-17T15:00:00+05:30</updated>
+    <id>http://uw-freelancer.github.io/blog/mapping-control-key-to-caps-lock-in-ubuntu</id>
+    <content type="html"><![CDATA[<p>Create a file named <code>.Xmodmap</code> in your home directory with the following code. Of course you can create this file anywhere with any name, but in order to be parsed by Xmodmap upon starting X-server you need to place this in your home directory in a file named <code>.Xmodemap</code>.</p>
+
+<figure class='code'><figcaption><span>&#8216;Control Key to Caps Lock (~/.Xmodmap)&#8217; </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>remove <span class="nv">Lock</span> <span class="o">=</span> Caps_Lock
+</span><span class='line'>remove <span class="nv">Control</span> <span class="o">=</span> Control_L
+</span><span class='line'>keysym <span class="nv">Control_L</span> <span class="o">=</span> Caps_Lock
+</span><span class='line'>keysym <span class="nv">Caps_Lock</span> <span class="o">=</span> Control_L
+</span><span class='line'>add <span class="nv">Lock</span> <span class="o">=</span> Caps_Lock
+</span><span class='line'>add <span class="nv">Control</span> <span class="o">=</span> Control_L
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Run <code>xmodmap ~/.Xmodmap</code> to load the new configuration.</p>
+
+<p>The above code and steps will swap left control key and caps lock keys.</p>
+
+<h2>xmodmap</h2>
+
+
+
+
+<blockquote><p>The xmodmap program is used to edit and display the keyboard modifier map and keymap table that are used by client applications to convert event keycodes into keysyms. It is usually run from the user&#8217;s session startup script to configure the keyboard according to personal tastes. - man xmodmap</p></blockquote>
+
+
+
+
+<h2>Xmodmap KeyCodes and KeySyms</h2>
+
+
+<p>There are 8 KeySyms per KeyCode; KeyCodes range from 8 to 255. Run <code>xmodmap -pk</code> to see them.</p>
+
+<blockquote><p>Up to eight keysyms may be attached to a key, however the last four are not used in any major X server implementation.</p></blockquote>
+
+
+
+
+<figure class='code'><figcaption><span>&#8216;KeyCodes and KeySyms&#8217; </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+<span class='line-number'>52</span>
+<span class='line-number'>53</span>
+<span class='line-number'>54</span>
+<span class='line-number'>55</span>
+<span class='line-number'>56</span>
+<span class='line-number'>57</span>
+<span class='line-number'>58</span>
+<span class='line-number'>59</span>
+<span class='line-number'>60</span>
+<span class='line-number'>61</span>
+<span class='line-number'>62</span>
+<span class='line-number'>63</span>
+<span class='line-number'>64</span>
+<span class='line-number'>65</span>
+<span class='line-number'>66</span>
+<span class='line-number'>67</span>
+<span class='line-number'>68</span>
+<span class='line-number'>69</span>
+<span class='line-number'>70</span>
+<span class='line-number'>71</span>
+<span class='line-number'>72</span>
+<span class='line-number'>73</span>
+<span class='line-number'>74</span>
+<span class='line-number'>75</span>
+<span class='line-number'>76</span>
+<span class='line-number'>77</span>
+<span class='line-number'>78</span>
+<span class='line-number'>79</span>
+<span class='line-number'>80</span>
+<span class='line-number'>81</span>
+<span class='line-number'>82</span>
+<span class='line-number'>83</span>
+<span class='line-number'>84</span>
+<span class='line-number'>85</span>
+<span class='line-number'>86</span>
+<span class='line-number'>87</span>
+<span class='line-number'>88</span>
+<span class='line-number'>89</span>
+<span class='line-number'>90</span>
+<span class='line-number'>91</span>
+<span class='line-number'>92</span>
+<span class='line-number'>93</span>
+<span class='line-number'>94</span>
+<span class='line-number'>95</span>
+<span class='line-number'>96</span>
+<span class='line-number'>97</span>
+<span class='line-number'>98</span>
+<span class='line-number'>99</span>
+<span class='line-number'>100</span>
+<span class='line-number'>101</span>
+<span class='line-number'>102</span>
+<span class='line-number'>103</span>
+<span class='line-number'>104</span>
+<span class='line-number'>105</span>
+<span class='line-number'>106</span>
+<span class='line-number'>107</span>
+<span class='line-number'>108</span>
+<span class='line-number'>109</span>
+<span class='line-number'>110</span>
+<span class='line-number'>111</span>
+<span class='line-number'>112</span>
+<span class='line-number'>113</span>
+<span class='line-number'>114</span>
+<span class='line-number'>115</span>
+<span class='line-number'>116</span>
+<span class='line-number'>117</span>
+<span class='line-number'>118</span>
+<span class='line-number'>119</span>
+<span class='line-number'>120</span>
+<span class='line-number'>121</span>
+<span class='line-number'>122</span>
+<span class='line-number'>123</span>
+<span class='line-number'>124</span>
+<span class='line-number'>125</span>
+<span class='line-number'>126</span>
+<span class='line-number'>127</span>
+<span class='line-number'>128</span>
+<span class='line-number'>129</span>
+<span class='line-number'>130</span>
+<span class='line-number'>131</span>
+<span class='line-number'>132</span>
+<span class='line-number'>133</span>
+<span class='line-number'>134</span>
+<span class='line-number'>135</span>
+<span class='line-number'>136</span>
+<span class='line-number'>137</span>
+<span class='line-number'>138</span>
+<span class='line-number'>139</span>
+<span class='line-number'>140</span>
+<span class='line-number'>141</span>
+<span class='line-number'>142</span>
+<span class='line-number'>143</span>
+<span class='line-number'>144</span>
+<span class='line-number'>145</span>
+<span class='line-number'>146</span>
+<span class='line-number'>147</span>
+<span class='line-number'>148</span>
+<span class='line-number'>149</span>
+<span class='line-number'>150</span>
+<span class='line-number'>151</span>
+<span class='line-number'>152</span>
+<span class='line-number'>153</span>
+<span class='line-number'>154</span>
+<span class='line-number'>155</span>
+<span class='line-number'>156</span>
+<span class='line-number'>157</span>
+<span class='line-number'>158</span>
+<span class='line-number'>159</span>
+<span class='line-number'>160</span>
+<span class='line-number'>161</span>
+<span class='line-number'>162</span>
+<span class='line-number'>163</span>
+<span class='line-number'>164</span>
+<span class='line-number'>165</span>
+<span class='line-number'>166</span>
+<span class='line-number'>167</span>
+<span class='line-number'>168</span>
+<span class='line-number'>169</span>
+<span class='line-number'>170</span>
+<span class='line-number'>171</span>
+<span class='line-number'>172</span>
+<span class='line-number'>173</span>
+<span class='line-number'>174</span>
+<span class='line-number'>175</span>
+<span class='line-number'>176</span>
+<span class='line-number'>177</span>
+<span class='line-number'>178</span>
+<span class='line-number'>179</span>
+<span class='line-number'>180</span>
+<span class='line-number'>181</span>
+<span class='line-number'>182</span>
+<span class='line-number'>183</span>
+<span class='line-number'>184</span>
+<span class='line-number'>185</span>
+<span class='line-number'>186</span>
+<span class='line-number'>187</span>
+<span class='line-number'>188</span>
+<span class='line-number'>189</span>
+<span class='line-number'>190</span>
+<span class='line-number'>191</span>
+<span class='line-number'>192</span>
+<span class='line-number'>193</span>
+<span class='line-number'>194</span>
+<span class='line-number'>195</span>
+<span class='line-number'>196</span>
+<span class='line-number'>197</span>
+<span class='line-number'>198</span>
+<span class='line-number'>199</span>
+<span class='line-number'>200</span>
+<span class='line-number'>201</span>
+<span class='line-number'>202</span>
+<span class='line-number'>203</span>
+<span class='line-number'>204</span>
+<span class='line-number'>205</span>
+<span class='line-number'>206</span>
+<span class='line-number'>207</span>
+<span class='line-number'>208</span>
+<span class='line-number'>209</span>
+<span class='line-number'>210</span>
+<span class='line-number'>211</span>
+<span class='line-number'>212</span>
+<span class='line-number'>213</span>
+<span class='line-number'>214</span>
+<span class='line-number'>215</span>
+<span class='line-number'>216</span>
+<span class='line-number'>217</span>
+<span class='line-number'>218</span>
+<span class='line-number'>219</span>
+<span class='line-number'>220</span>
+<span class='line-number'>221</span>
+<span class='line-number'>222</span>
+<span class='line-number'>223</span>
+<span class='line-number'>224</span>
+<span class='line-number'>225</span>
+<span class='line-number'>226</span>
+<span class='line-number'>227</span>
+<span class='line-number'>228</span>
+<span class='line-number'>229</span>
+<span class='line-number'>230</span>
+<span class='line-number'>231</span>
+<span class='line-number'>232</span>
+<span class='line-number'>233</span>
+<span class='line-number'>234</span>
+<span class='line-number'>235</span>
+<span class='line-number'>236</span>
+<span class='line-number'>237</span>
+<span class='line-number'>238</span>
+<span class='line-number'>239</span>
+<span class='line-number'>240</span>
+<span class='line-number'>241</span>
+<span class='line-number'>242</span>
+<span class='line-number'>243</span>
+<span class='line-number'>244</span>
+<span class='line-number'>245</span>
+<span class='line-number'>246</span>
+<span class='line-number'>247</span>
+<span class='line-number'>248</span>
+<span class='line-number'>249</span>
+<span class='line-number'>250</span>
+<span class='line-number'>251</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>    KeyCode  Keysym <span class="o">(</span>Keysym<span class="o">)</span>   ...
+</span><span class='line'>    Value     Value   <span class="o">(</span>Name<span class="o">)</span>    ...
+</span><span class='line'>
+</span><span class='line'>      8
+</span><span class='line'>      9       0xff1b <span class="o">(</span>Escape<span class="o">)</span>   0x0000 <span class="o">(</span>NoSymbol<span class="o">)</span> 0xff1b <span class="o">(</span>Escape<span class="o">)</span>
+</span><span class='line'>     10       0x0031 <span class="o">(</span>1<span class="o">)</span>    0x0021 <span class="o">(</span>exclam<span class="o">)</span>   0x0031 <span class="o">(</span>1<span class="o">)</span>    0x0021 <span class="o">(</span>exclam<span class="o">)</span>
+</span><span class='line'>     11       0x0032 <span class="o">(</span>2<span class="o">)</span>    0x0040 <span class="o">(</span>at<span class="o">)</span>   0x0032 <span class="o">(</span>2<span class="o">)</span>    0x0040 <span class="o">(</span>at<span class="o">)</span>
+</span><span class='line'>     12       0x0033 <span class="o">(</span>3<span class="o">)</span>    0x0023 <span class="o">(</span>numbersign<span class="o">)</span>   0x0033 <span class="o">(</span>3<span class="o">)</span>    0x0023 <span class="o">(</span>numbersign<span class="o">)</span>
+</span><span class='line'>     13       0x0034 <span class="o">(</span>4<span class="o">)</span>    0x0024 <span class="o">(</span>dollar<span class="o">)</span>   0x0034 <span class="o">(</span>4<span class="o">)</span>    0x0024 <span class="o">(</span>dollar<span class="o">)</span>
+</span><span class='line'>     14       0x0035 <span class="o">(</span>5<span class="o">)</span>    0x0025 <span class="o">(</span>percent<span class="o">)</span>  0x0035 <span class="o">(</span>5<span class="o">)</span>    0x0025 <span class="o">(</span>percent<span class="o">)</span>
+</span><span class='line'>     15       0x0036 <span class="o">(</span>6<span class="o">)</span>    0x005e <span class="o">(</span>asciicircum<span class="o">)</span>  0x0036 <span class="o">(</span>6<span class="o">)</span>    0x005e <span class="o">(</span>asciicircum<span class="o">)</span>
+</span><span class='line'>     16       0x0037 <span class="o">(</span>7<span class="o">)</span>    0x0026 <span class="o">(</span>ampersand<span class="o">)</span>    0x0037 <span class="o">(</span>7<span class="o">)</span>    0x0026 <span class="o">(</span>ampersand<span class="o">)</span>
+</span><span class='line'>     17       0x0038 <span class="o">(</span>8<span class="o">)</span>    0x002a <span class="o">(</span>asterisk<span class="o">)</span> 0x0038 <span class="o">(</span>8<span class="o">)</span>    0x002a <span class="o">(</span>asterisk<span class="o">)</span>
+</span><span class='line'>     18       0x0039 <span class="o">(</span>9<span class="o">)</span>    0x0028 <span class="o">(</span>parenleft<span class="o">)</span>    0x0039 <span class="o">(</span>9<span class="o">)</span>    0x0028 <span class="o">(</span>parenleft<span class="o">)</span>
+</span><span class='line'>     19       0x0030 <span class="o">(</span>0<span class="o">)</span>    0x0029 <span class="o">(</span>parenright<span class="o">)</span>   0x0030 <span class="o">(</span>0<span class="o">)</span>    0x0029 <span class="o">(</span>parenright<span class="o">)</span>
+</span><span class='line'>     20       0x002d <span class="o">(</span>minus<span class="o">)</span>    0x005f <span class="o">(</span>underscore<span class="o">)</span>   0x002d <span class="o">(</span>minus<span class="o">)</span>    0x005f <span class="o">(</span>underscore<span class="o">)</span>
+</span><span class='line'>     21       0x003d <span class="o">(</span>equal<span class="o">)</span>    0x002b <span class="o">(</span>plus<span class="o">)</span> 0x003d <span class="o">(</span>equal<span class="o">)</span>    0x002b <span class="o">(</span>plus<span class="o">)</span>
+</span><span class='line'>     22       0xff08 <span class="o">(</span>BackSpace<span class="o">)</span>    0xff08 <span class="o">(</span>BackSpace<span class="o">)</span>    0xff08 <span class="o">(</span>BackSpace<span class="o">)</span>    0xff08 <span class="o">(</span>BackSpace<span class="o">)</span>
+</span><span class='line'>     23       0xff09 <span class="o">(</span>Tab<span class="o">)</span>  0xfe20 <span class="o">(</span>ISO_Left_Tab<span class="o">)</span> 0xff09 <span class="o">(</span>Tab<span class="o">)</span>  0xfe20 <span class="o">(</span>ISO_Left_Tab<span class="o">)</span>
+</span><span class='line'>     24       0x0071 <span class="o">(</span>q<span class="o">)</span>    0x0051 <span class="o">(</span>Q<span class="o">)</span>    0x0071 <span class="o">(</span>q<span class="o">)</span>    0x0051 <span class="o">(</span>Q<span class="o">)</span>
+</span><span class='line'>     25       0x0077 <span class="o">(</span>w<span class="o">)</span>    0x0057 <span class="o">(</span>W<span class="o">)</span>    0x0077 <span class="o">(</span>w<span class="o">)</span>    0x0057 <span class="o">(</span>W<span class="o">)</span>
+</span><span class='line'>     26       0x0065 <span class="o">(</span>e<span class="o">)</span>    0x0045 <span class="o">(</span>E<span class="o">)</span>    0x0065 <span class="o">(</span>e<span class="o">)</span>    0x0045 <span class="o">(</span>E<span class="o">)</span>
+</span><span class='line'>     27       0x0072 <span class="o">(</span>r<span class="o">)</span>    0x0052 <span class="o">(</span>R<span class="o">)</span>    0x0072 <span class="o">(</span>r<span class="o">)</span>    0x0052 <span class="o">(</span>R<span class="o">)</span>
+</span><span class='line'>     28       0x0074 <span class="o">(</span>t<span class="o">)</span>    0x0054 <span class="o">(</span>T<span class="o">)</span>    0x0074 <span class="o">(</span>t<span class="o">)</span>    0x0054 <span class="o">(</span>T<span class="o">)</span>
+</span><span class='line'>     29       0x0079 <span class="o">(</span>y<span class="o">)</span>    0x0059 <span class="o">(</span>Y<span class="o">)</span>    0x0079 <span class="o">(</span>y<span class="o">)</span>    0x0059 <span class="o">(</span>Y<span class="o">)</span>
+</span><span class='line'>     30       0x0075 <span class="o">(</span>u<span class="o">)</span>    0x0055 <span class="o">(</span>U<span class="o">)</span>    0x0075 <span class="o">(</span>u<span class="o">)</span>    0x0055 <span class="o">(</span>U<span class="o">)</span>
+</span><span class='line'>     31       0x0069 <span class="o">(</span>i<span class="o">)</span>    0x0049 <span class="o">(</span>I<span class="o">)</span>    0x0069 <span class="o">(</span>i<span class="o">)</span>    0x0049 <span class="o">(</span>I<span class="o">)</span>
+</span><span class='line'>     32       0x006f <span class="o">(</span>o<span class="o">)</span>    0x004f <span class="o">(</span>O<span class="o">)</span>    0x006f <span class="o">(</span>o<span class="o">)</span>    0x004f <span class="o">(</span>O<span class="o">)</span>
+</span><span class='line'>     33       0x0070 <span class="o">(</span>p<span class="o">)</span>    0x0050 <span class="o">(</span>P<span class="o">)</span>    0x0070 <span class="o">(</span>p<span class="o">)</span>    0x0050 <span class="o">(</span>P<span class="o">)</span>
+</span><span class='line'>     34       0x005b <span class="o">(</span>bracketleft<span class="o">)</span>  0x007b <span class="o">(</span>braceleft<span class="o">)</span>    0x005b <span class="o">(</span>bracketleft<span class="o">)</span>  0x007b <span class="o">(</span>braceleft<span class="o">)</span>
+</span><span class='line'>     35       0x005d <span class="o">(</span>bracketright<span class="o">)</span> 0x007d <span class="o">(</span>braceright<span class="o">)</span>   0x005d <span class="o">(</span>bracketright<span class="o">)</span> 0x007d <span class="o">(</span>braceright<span class="o">)</span>
+</span><span class='line'>     36       0xff0d <span class="o">(</span>Return<span class="o">)</span>   0x0000 <span class="o">(</span>NoSymbol<span class="o">)</span> 0xff0d <span class="o">(</span>Return<span class="o">)</span>
+</span><span class='line'>     37       0xffe5 <span class="o">(</span>Caps_Lock<span class="o">)</span>    0x0000 <span class="o">(</span>NoSymbol<span class="o">)</span> 0xffe5 <span class="o">(</span>Caps_Lock<span class="o">)</span>
+</span><span class='line'>     38       0x0061 <span class="o">(</span>a<span class="o">)</span>    0x0041 <span class="o">(</span>A<span class="o">)</span>    0x0061 <span class="o">(</span>a<span class="o">)</span>    0x0041 <span class="o">(</span>A<span class="o">)</span>
+</span><span class='line'>     39       0x0073 <span class="o">(</span>s<span class="o">)</span>    0x0053 <span class="o">(</span>S<span class="o">)</span>    0x0073 <span class="o">(</span>s<span class="o">)</span>    0x0053 <span class="o">(</span>S<span class="o">)</span>
+</span><span class='line'>     40       0x0064 <span class="o">(</span>d<span class="o">)</span>    0x0044 <span class="o">(</span>D<span class="o">)</span>    0x0064 <span class="o">(</span>d<span class="o">)</span>    0x0044 <span class="o">(</span>D<span class="o">)</span>
+</span><span class='line'>     41       0x0066 <span class="o">(</span>f<span class="o">)</span>    0x0046 <span class="o">(</span>F<span class="o">)</span>    0x0066 <span class="o">(</span>f<span class="o">)</span>    0x0046 <span class="o">(</span>F<span class="o">)</span>
+</span><span class='line'>     42       0x0067 <span class="o">(</span>g<span class="o">)</span>    0x0047 <span class="o">(</span>G<span class="o">)</span>    0x0067 <span class="o">(</span>g<span class="o">)</span>    0x0047 <span class="o">(</span>G<span class="o">)</span>
+</span><span class='line'>     43       0x0068 <span class="o">(</span>h<span class="o">)</span>    0x0048 <span class="o">(</span>H<span class="o">)</span>    0x0068 <span class="o">(</span>h<span class="o">)</span>    0x0048 <span class="o">(</span>H<span class="o">)</span>
+</span><span class='line'>     44       0x006a <span class="o">(</span>j<span class="o">)</span>    0x004a <span class="o">(</span>J<span class="o">)</span>    0x006a <span class="o">(</span>j<span class="o">)</span>    0x004a <span class="o">(</span>J<span class="o">)</span>
+</span><span class='line'>     45       0x006b <span class="o">(</span>k<span class="o">)</span>    0x004b <span class="o">(</span>K<span class="o">)</span>    0x006b <span class="o">(</span>k<span class="o">)</span>    0x004b <span class="o">(</span>K<span class="o">)</span>
+</span><span class='line'>     46       0x006c <span class="o">(</span>l<span class="o">)</span>    0x004c <span class="o">(</span>L<span class="o">)</span>    0x006c <span class="o">(</span>l<span class="o">)</span>    0x004c <span class="o">(</span>L<span class="o">)</span>
+</span><span class='line'>     47       0x003b <span class="o">(</span>semicolon<span class="o">)</span>    0x003a <span class="o">(</span>colon<span class="o">)</span>    0x003b <span class="o">(</span>semicolon<span class="o">)</span>    0x003a <span class="o">(</span>colon<span class="o">)</span>
+</span><span class='line'>     48       0x0027 <span class="o">(</span>apostrophe<span class="o">)</span>   0x0022 <span class="o">(</span>quotedbl<span class="o">)</span> 0x0027 <span class="o">(</span>apostrophe<span class="o">)</span>   0x0022 <span class="o">(</span>quotedbl<span class="o">)</span>
+</span><span class='line'>     49       0x0060 <span class="o">(</span>grave<span class="o">)</span>    0x007e <span class="o">(</span>asciitilde<span class="o">)</span>   0x0060 <span class="o">(</span>grave<span class="o">)</span>    0x007e <span class="o">(</span>asciitilde<span class="o">)</span>
+</span><span class='line'>     50       0xffe1 <span class="o">(</span>Shift_L<span class="o">)</span>  0x0000 <span class="o">(</span>NoSymbol<span class="o">)</span> 0xffe1 <span class="o">(</span>Shift_L<span class="o">)</span>
+</span><span class='line'>     51       0x005c <span class="o">(</span>backslash<span class="o">)</span>    0x007c <span class="o">(</span>bar<span class="o">)</span>  0x005c <span class="o">(</span>backslash<span class="o">)</span>    0x007c <span class="o">(</span>bar<span class="o">)</span>
+</span><span class='line'>     52       0x007a <span class="o">(</span>z<span class="o">)</span>    0x005a <span class="o">(</span>Z<span class="o">)</span>    0x007a <span class="o">(</span>z<span class="o">)</span>    0x005a <span class="o">(</span>Z<span class="o">)</span>
+</span><span class='line'>     53       0x0078 <span class="o">(</span>x<span class="o">)</span>    0x0058 <span class="o">(</span>X<span class="o">)</span>    0x0078 <span class="o">(</span>x<span class="o">)</span>    0x0058 <span class="o">(</span>X<span class="o">)</span>
+</span><span class='line'>     54       0x0063 <span class="o">(</span>c<span class="o">)</span>    0x0043 <span class="o">(</span>C<span class="o">)</span>    0x0063 <span class="o">(</span>c<span class="o">)</span>    0x0043 <span class="o">(</span>C<span class="o">)</span>
+</span><span class='line'>     55       0x0076 <span class="o">(</span>v<span class="o">)</span>    0x0056 <span class="o">(</span>V<span class="o">)</span>    0x0076 <span class="o">(</span>v<span class="o">)</span>    0x0056 <span class="o">(</span>V<span class="o">)</span>
+</span><span class='line'>     56       0x0062 <span class="o">(</span>b<span class="o">)</span>    0x0042 <span class="o">(</span>B<span class="o">)</span>    0x0062 <span class="o">(</span>b<span class="o">)</span>    0x0042 <span class="o">(</span>B<span class="o">)</span>
+</span><span class='line'>     57       0x006e <span class="o">(</span>n<span class="o">)</span>    0x004e <span class="o">(</span>N<span class="o">)</span>    0x006e <span class="o">(</span>n<span class="o">)</span>    0x004e <span class="o">(</span>N<span class="o">)</span>
+</span><span class='line'>     58       0x006d <span class="o">(</span>m<span class="o">)</span>    0x004d <span class="o">(</span>M<span class="o">)</span>    0x006d <span class="o">(</span>m<span class="o">)</span>    0x004d <span class="o">(</span>M<span class="o">)</span>
+</span><span class='line'>     59       0x002c <span class="o">(</span>comma<span class="o">)</span>    0x003c <span class="o">(</span>less<span class="o">)</span> 0x002c <span class="o">(</span>comma<span class="o">)</span>    0x003c <span class="o">(</span>less<span class="o">)</span>
+</span><span class='line'>     60       0x002e <span class="o">(</span>period<span class="o">)</span>   0x003e <span class="o">(</span>greater<span class="o">)</span>  0x002e <span class="o">(</span>period<span class="o">)</span>   0x003e <span class="o">(</span>greater<span class="o">)</span>
+</span><span class='line'>     61       0x002f <span class="o">(</span>slash<span class="o">)</span>    0x003f <span class="o">(</span>question<span class="o">)</span> 0x002f <span class="o">(</span>slash<span class="o">)</span>    0x003f <span class="o">(</span>question<span class="o">)</span>
+</span><span class='line'>     62       0xffe2 <span class="o">(</span>Shift_R<span class="o">)</span>  0x0000 <span class="o">(</span>NoSymbol<span class="o">)</span> 0xffe2 <span class="o">(</span>Shift_R<span class="o">)</span>
+</span><span class='line'>     63       0xffaa <span class="o">(</span>KP_Multiply<span class="o">)</span>  0xffaa <span class="o">(</span>KP_Multiply<span class="o">)</span>  0xffaa <span class="o">(</span>KP_Multiply<span class="o">)</span>  0xffaa <span class="o">(</span>KP_Multiply<span class="o">)</span>  0xffaa <span class="o">(</span>KP_Multiply<span class="o">)</span>  0xffaa <span class="o">(</span>KP_Multiply<span class="o">)</span>  0x1008fe21 <span class="o">(</span>XF86ClearGrab<span class="o">)</span>
+</span><span class='line'>     64       0xffe9 <span class="o">(</span>Alt_L<span class="o">)</span>    0xffe7 <span class="o">(</span>Meta_L<span class="o">)</span>   0xffe9 <span class="o">(</span>Alt_L<span class="o">)</span>    0xffe7 <span class="o">(</span>Meta_L<span class="o">)</span>
+</span><span class='line'>     65       0x0020 <span class="o">(</span>space<span class="o">)</span>    0x0000 <span class="o">(</span>NoSymbol<span class="o">)</span> 0x0020 <span class="o">(</span>space<span class="o">)</span>
+</span><span class='line'>     66       0xffe3 <span class="o">(</span>Control_L<span class="o">)</span>    0x0000 <span class="o">(</span>NoSymbol<span class="o">)</span> 0xffe3 <span class="o">(</span>Control_L<span class="o">)</span>
+</span><span class='line'>     67       0xffbe <span class="o">(</span>F1<span class="o">)</span>   0xffbe <span class="o">(</span>F1<span class="o">)</span>   0xffbe <span class="o">(</span>F1<span class="o">)</span>   0xffbe <span class="o">(</span>F1<span class="o">)</span>   0xffbe <span class="o">(</span>F1<span class="o">)</span>   0xffbe <span class="o">(</span>F1<span class="o">)</span>   0x1008fe01 <span class="o">(</span>XF86Switch_VT_1<span class="o">)</span>
+</span><span class='line'>     68       0xffbf <span class="o">(</span>F2<span class="o">)</span>   0xffbf <span class="o">(</span>F2<span class="o">)</span>   0xffbf <span class="o">(</span>F2<span class="o">)</span>   0xffbf <span class="o">(</span>F2<span class="o">)</span>   0xffbf <span class="o">(</span>F2<span class="o">)</span>   0xffbf <span class="o">(</span>F2<span class="o">)</span>   0x1008fe02 <span class="o">(</span>XF86Switch_VT_2<span class="o">)</span>
+</span><span class='line'>     69       0xffc0 <span class="o">(</span>F3<span class="o">)</span>   0xffc0 <span class="o">(</span>F3<span class="o">)</span>   0xffc0 <span class="o">(</span>F3<span class="o">)</span>   0xffc0 <span class="o">(</span>F3<span class="o">)</span>   0xffc0 <span class="o">(</span>F3<span class="o">)</span>   0xffc0 <span class="o">(</span>F3<span class="o">)</span>   0x1008fe03 <span class="o">(</span>XF86Switch_VT_3<span class="o">)</span>
+</span><span class='line'>     70       0xffc1 <span class="o">(</span>F4<span class="o">)</span>   0xffc1 <span class="o">(</span>F4<span class="o">)</span>   0xffc1 <span class="o">(</span>F4<span class="o">)</span>   0xffc1 <span class="o">(</span>F4<span class="o">)</span>   0xffc1 <span class="o">(</span>F4<span class="o">)</span>   0xffc1 <span class="o">(</span>F4<span class="o">)</span>   0x1008fe04 <span class="o">(</span>XF86Switch_VT_4<span class="o">)</span>
+</span><span class='line'>     71       0xffc2 <span class="o">(</span>F5<span class="o">)</span>   0xffc2 <span class="o">(</span>F5<span class="o">)</span>   0xffc2 <span class="o">(</span>F5<span class="o">)</span>   0xffc2 <span class="o">(</span>F5<span class="o">)</span>   0xffc2 <span class="o">(</span>F5<span class="o">)</span>   0xffc2 <span class="o">(</span>F5<span class="o">)</span>   0x1008fe05 <span class="o">(</span>XF86Switch_VT_5<span class="o">)</span>
+</span><span class='line'>     72       0xffc3 <span class="o">(</span>F6<span class="o">)</span>   0xffc3 <span class="o">(</span>F6<span class="o">)</span>   0xffc3 <span class="o">(</span>F6<span class="o">)</span>   0xffc3 <span class="o">(</span>F6<span class="o">)</span>   0xffc3 <span class="o">(</span>F6<span class="o">)</span>   0xffc3 <span class="o">(</span>F6<span class="o">)</span>   0x1008fe06 <span class="o">(</span>XF86Switch_VT_6<span class="o">)</span>
+</span><span class='line'>     73       0xffc4 <span class="o">(</span>F7<span class="o">)</span>   0xffc4 <span class="o">(</span>F7<span class="o">)</span>   0xffc4 <span class="o">(</span>F7<span class="o">)</span>   0xffc4 <span class="o">(</span>F7<span class="o">)</span>   0xffc4 <span class="o">(</span>F7<span class="o">)</span>   0xffc4 <span class="o">(</span>F7<span class="o">)</span>   0x1008fe07 <span class="o">(</span>XF86Switch_VT_7<span class="o">)</span>
+</span><span class='line'>     74       0xffc5 <span class="o">(</span>F8<span class="o">)</span>   0xffc5 <span class="o">(</span>F8<span class="o">)</span>   0xffc5 <span class="o">(</span>F8<span class="o">)</span>   0xffc5 <span class="o">(</span>F8<span class="o">)</span>   0xffc5 <span class="o">(</span>F8<span class="o">)</span>   0xffc5 <span class="o">(</span>F8<span class="o">)</span>   0x1008fe08 <span class="o">(</span>XF86Switch_VT_8<span class="o">)</span>
+</span><span class='line'>     75       0xffc6 <span class="o">(</span>F9<span class="o">)</span>   0xffc6 <span class="o">(</span>F9<span class="o">)</span>   0xffc6 <span class="o">(</span>F9<span class="o">)</span>   0xffc6 <span class="o">(</span>F9<span class="o">)</span>   0xffc6 <span class="o">(</span>F9<span class="o">)</span>   0xffc6 <span class="o">(</span>F9<span class="o">)</span>   0x1008fe09 <span class="o">(</span>XF86Switch_VT_9<span class="o">)</span>
+</span><span class='line'>     76       0xffc7 <span class="o">(</span>F10<span class="o">)</span>  0xffc7 <span class="o">(</span>F10<span class="o">)</span>  0xffc7 <span class="o">(</span>F10<span class="o">)</span>  0xffc7 <span class="o">(</span>F10<span class="o">)</span>  0xffc7 <span class="o">(</span>F10<span class="o">)</span>  0xffc7 <span class="o">(</span>F10<span class="o">)</span>  0x1008fe0a <span class="o">(</span>XF86Switch_VT_10<span class="o">)</span>
+</span><span class='line'>     77       0xff7f <span class="o">(</span>Num_Lock<span class="o">)</span> 0x0000 <span class="o">(</span>NoSymbol<span class="o">)</span> 0xff7f <span class="o">(</span>Num_Lock<span class="o">)</span>
+</span><span class='line'>     78       0xff14 <span class="o">(</span>Scroll_Lock<span class="o">)</span>  0x0000 <span class="o">(</span>NoSymbol<span class="o">)</span> 0xff14 <span class="o">(</span>Scroll_Lock<span class="o">)</span>
+</span><span class='line'>     79       0xff95 <span class="o">(</span>KP_Home<span class="o">)</span>  0xffb7 <span class="o">(</span>KP_7<span class="o">)</span> 0xff95 <span class="o">(</span>KP_Home<span class="o">)</span>  0xffb7 <span class="o">(</span>KP_7<span class="o">)</span>
+</span><span class='line'>     80       0xff97 <span class="o">(</span>KP_Up<span class="o">)</span>    0xffb8 <span class="o">(</span>KP_8<span class="o">)</span> 0xff97 <span class="o">(</span>KP_Up<span class="o">)</span>    0xffb8 <span class="o">(</span>KP_8<span class="o">)</span>
+</span><span class='line'>     81       0xff9a <span class="o">(</span>KP_Prior<span class="o">)</span> 0xffb9 <span class="o">(</span>KP_9<span class="o">)</span> 0xff9a <span class="o">(</span>KP_Prior<span class="o">)</span> 0xffb9 <span class="o">(</span>KP_9<span class="o">)</span>
+</span><span class='line'>     82       0xffad <span class="o">(</span>KP_Subtract<span class="o">)</span>  0xffad <span class="o">(</span>KP_Subtract<span class="o">)</span>  0xffad <span class="o">(</span>KP_Subtract<span class="o">)</span>  0xffad <span class="o">(</span>KP_Subtract<span class="o">)</span>  0xffad <span class="o">(</span>KP_Subtract<span class="o">)</span>  0xffad <span class="o">(</span>KP_Subtract<span class="o">)</span>  0x1008fe23 <span class="o">(</span>XF86Prev_VMode<span class="o">)</span>
+</span><span class='line'>     83       0xff96 <span class="o">(</span>KP_Left<span class="o">)</span>  0xffb4 <span class="o">(</span>KP_4<span class="o">)</span> 0xff96 <span class="o">(</span>KP_Left<span class="o">)</span>  0xffb4 <span class="o">(</span>KP_4<span class="o">)</span>
+</span><span class='line'>     84       0xff9d <span class="o">(</span>KP_Begin<span class="o">)</span> 0xffb5 <span class="o">(</span>KP_5<span class="o">)</span> 0xff9d <span class="o">(</span>KP_Begin<span class="o">)</span> 0xffb5 <span class="o">(</span>KP_5<span class="o">)</span>
+</span><span class='line'>     85       0xff98 <span class="o">(</span>KP_Right<span class="o">)</span> 0xffb6 <span class="o">(</span>KP_6<span class="o">)</span> 0xff98 <span class="o">(</span>KP_Right<span class="o">)</span> 0xffb6 <span class="o">(</span>KP_6<span class="o">)</span>
+</span><span class='line'>     86       0xffab <span class="o">(</span>KP_Add<span class="o">)</span>   0xffab <span class="o">(</span>KP_Add<span class="o">)</span>   0xffab <span class="o">(</span>KP_Add<span class="o">)</span>   0xffab <span class="o">(</span>KP_Add<span class="o">)</span>   0xffab <span class="o">(</span>KP_Add<span class="o">)</span>   0xffab <span class="o">(</span>KP_Add<span class="o">)</span>   0x1008fe22 <span class="o">(</span>XF86Next_VMode<span class="o">)</span>
+</span><span class='line'>     87       0xff9c <span class="o">(</span>KP_End<span class="o">)</span>   0xffb1 <span class="o">(</span>KP_1<span class="o">)</span> 0xff9c <span class="o">(</span>KP_End<span class="o">)</span>   0xffb1 <span class="o">(</span>KP_1<span class="o">)</span>
+</span><span class='line'>     88       0xff99 <span class="o">(</span>KP_Down<span class="o">)</span>  0xffb2 <span class="o">(</span>KP_2<span class="o">)</span> 0xff99 <span class="o">(</span>KP_Down<span class="o">)</span>  0xffb2 <span class="o">(</span>KP_2<span class="o">)</span>
+</span><span class='line'>     89       0xff9b <span class="o">(</span>KP_Next<span class="o">)</span>  0xffb3 <span class="o">(</span>KP_3<span class="o">)</span> 0xff9b <span class="o">(</span>KP_Next<span class="o">)</span>  0xffb3 <span class="o">(</span>KP_3<span class="o">)</span>
+</span><span class='line'>     90       0xff9e <span class="o">(</span>KP_Insert<span class="o">)</span>    0xffb0 <span class="o">(</span>KP_0<span class="o">)</span> 0xff9e <span class="o">(</span>KP_Insert<span class="o">)</span>    0xffb0 <span class="o">(</span>KP_0<span class="o">)</span>
+</span><span class='line'>     91       0xff9f <span class="o">(</span>KP_Delete<span class="o">)</span>    0xffae <span class="o">(</span>KP_Decimal<span class="o">)</span>   0xff9f <span class="o">(</span>KP_Delete<span class="o">)</span>    0xffae <span class="o">(</span>KP_Decimal<span class="o">)</span>
+</span><span class='line'>     92       0xfe03 <span class="o">(</span>ISO_Level3_Shift<span class="o">)</span> 0x0000 <span class="o">(</span>NoSymbol<span class="o">)</span> 0xfe03 <span class="o">(</span>ISO_Level3_Shift<span class="o">)</span>
+</span><span class='line'>     93
+</span><span class='line'>     94       0x003c <span class="o">(</span>less<span class="o">)</span> 0x003e <span class="o">(</span>greater<span class="o">)</span>  0x003c <span class="o">(</span>less<span class="o">)</span> 0x003e <span class="o">(</span>greater<span class="o">)</span>  0x007c <span class="o">(</span>bar<span class="o">)</span>  0x00a6 <span class="o">(</span>brokenbar<span class="o">)</span>    0x007c <span class="o">(</span>bar<span class="o">)</span>
+</span><span class='line'>     95       0xffc8 <span class="o">(</span>F11<span class="o">)</span>  0xffc8 <span class="o">(</span>F11<span class="o">)</span>  0xffc8 <span class="o">(</span>F11<span class="o">)</span>  0xffc8 <span class="o">(</span>F11<span class="o">)</span>  0xffc8 <span class="o">(</span>F11<span class="o">)</span>  0xffc8 <span class="o">(</span>F11<span class="o">)</span>  0x1008fe0b <span class="o">(</span>XF86Switch_VT_11<span class="o">)</span>
+</span><span class='line'>     96       0xffc9 <span class="o">(</span>F12<span class="o">)</span>  0xffc9 <span class="o">(</span>F12<span class="o">)</span>  0xffc9 <span class="o">(</span>F12<span class="o">)</span>  0xffc9 <span class="o">(</span>F12<span class="o">)</span>  0xffc9 <span class="o">(</span>F12<span class="o">)</span>  0xffc9 <span class="o">(</span>F12<span class="o">)</span>  0x1008fe0c <span class="o">(</span>XF86Switch_VT_12<span class="o">)</span>
+</span><span class='line'>     97
+</span><span class='line'>     98       0xff26 <span class="o">(</span>Katakana<span class="o">)</span> 0x0000 <span class="o">(</span>NoSymbol<span class="o">)</span> 0xff26 <span class="o">(</span>Katakana<span class="o">)</span>
+</span><span class='line'>     99       0xff25 <span class="o">(</span>Hiragana<span class="o">)</span> 0x0000 <span class="o">(</span>NoSymbol<span class="o">)</span> 0xff25 <span class="o">(</span>Hiragana<span class="o">)</span>
+</span><span class='line'>    100       0xff23 <span class="o">(</span>Henkan_Mode<span class="o">)</span>  0x0000 <span class="o">(</span>NoSymbol<span class="o">)</span> 0xff23 <span class="o">(</span>Henkan_Mode<span class="o">)</span>
+</span><span class='line'>    101       0xff27 <span class="o">(</span>Hiragana_Katakana<span class="o">)</span>    0x0000 <span class="o">(</span>NoSymbol<span class="o">)</span> 0xff27 <span class="o">(</span>Hiragana_Katakana<span class="o">)</span>
+</span><span class='line'>    102       0xff22 <span class="o">(</span>Muhenkan<span class="o">)</span> 0x0000 <span class="o">(</span>NoSymbol<span class="o">)</span> 0xff22 <span class="o">(</span>Muhenkan<span class="o">)</span>
+</span><span class='line'>    103
+</span><span class='line'>    104       0xff8d <span class="o">(</span>KP_Enter<span class="o">)</span> 0x0000 <span class="o">(</span>NoSymbol<span class="o">)</span> 0xff8d <span class="o">(</span>KP_Enter<span class="o">)</span>
+</span><span class='line'>    105       0xffe4 <span class="o">(</span>Control_R<span class="o">)</span>    0x0000 <span class="o">(</span>NoSymbol<span class="o">)</span> 0xffe4 <span class="o">(</span>Control_R<span class="o">)</span>
+</span><span class='line'>    106       0xffaf <span class="o">(</span>KP_Divide<span class="o">)</span>    0xffaf <span class="o">(</span>KP_Divide<span class="o">)</span>    0xffaf <span class="o">(</span>KP_Divide<span class="o">)</span>    0xffaf <span class="o">(</span>KP_Divide<span class="o">)</span>    0xffaf <span class="o">(</span>KP_Divide<span class="o">)</span>    0xffaf <span class="o">(</span>KP_Divide<span class="o">)</span>    0x1008fe20 <span class="o">(</span>XF86Ungrab<span class="o">)</span>
+</span><span class='line'>    107       0xff61 <span class="o">(</span>Print<span class="o">)</span>    0xff15 <span class="o">(</span>Sys_Req<span class="o">)</span>  0xff61 <span class="o">(</span>Print<span class="o">)</span>    0xff15 <span class="o">(</span>Sys_Req<span class="o">)</span>
+</span><span class='line'>    108       0xffea <span class="o">(</span>Alt_R<span class="o">)</span>    0xffe8 <span class="o">(</span>Meta_R<span class="o">)</span>   0xffea <span class="o">(</span>Alt_R<span class="o">)</span>    0xffe8 <span class="o">(</span>Meta_R<span class="o">)</span>
+</span><span class='line'>    109       0xff0a <span class="o">(</span>Linefeed<span class="o">)</span> 0x0000 <span class="o">(</span>NoSymbol<span class="o">)</span> 0xff0a <span class="o">(</span>Linefeed<span class="o">)</span>
+</span><span class='line'>    110       0xff50 <span class="o">(</span>Home<span class="o">)</span> 0x0000 <span class="o">(</span>NoSymbol<span class="o">)</span> 0xff50 <span class="o">(</span>Home<span class="o">)</span>
+</span><span class='line'>    111       0xff52 <span class="o">(</span>Up<span class="o">)</span>   0x0000 <span class="o">(</span>NoSymbol<span class="o">)</span> 0xff52 <span class="o">(</span>Up<span class="o">)</span>
+</span><span class='line'>    112       0xff55 <span class="o">(</span>Prior<span class="o">)</span>    0x0000 <span class="o">(</span>NoSymbol<span class="o">)</span> 0xff55 <span class="o">(</span>Prior<span class="o">)</span>
+</span><span class='line'>    113       0xff51 <span class="o">(</span>Left<span class="o">)</span> 0x0000 <span class="o">(</span>NoSymbol<span class="o">)</span> 0xff51 <span class="o">(</span>Left<span class="o">)</span>
+</span><span class='line'>    114       0xff53 <span class="o">(</span>Right<span class="o">)</span>    0x0000 <span class="o">(</span>NoSymbol<span class="o">)</span> 0xff53 <span class="o">(</span>Right<span class="o">)</span>
+</span><span class='line'>    115       0xff57 <span class="o">(</span>End<span class="o">)</span>  0x0000 <span class="o">(</span>NoSymbol<span class="o">)</span> 0xff57 <span class="o">(</span>End<span class="o">)</span>
+</span><span class='line'>    116       0xff54 <span class="o">(</span>Down<span class="o">)</span> 0x0000 <span class="o">(</span>NoSymbol<span class="o">)</span> 0xff54 <span class="o">(</span>Down<span class="o">)</span>
+</span><span class='line'>    117       0xff56 <span class="o">(</span>Next<span class="o">)</span> 0x0000 <span class="o">(</span>NoSymbol<span class="o">)</span> 0xff56 <span class="o">(</span>Next<span class="o">)</span>
+</span><span class='line'>    118       0xff63 <span class="o">(</span>Insert<span class="o">)</span>   0x0000 <span class="o">(</span>NoSymbol<span class="o">)</span> 0xff63 <span class="o">(</span>Insert<span class="o">)</span>
+</span><span class='line'>    119       0xffff <span class="o">(</span>Delete<span class="o">)</span>   0x0000 <span class="o">(</span>NoSymbol<span class="o">)</span> 0xffff <span class="o">(</span>Delete<span class="o">)</span>
+</span><span class='line'>    120
+</span><span class='line'>    121       0x1008ff12 <span class="o">(</span>XF86AudioMute<span class="o">)</span>    0x0000 <span class="o">(</span>NoSymbol<span class="o">)</span> 0x1008ff12 <span class="o">(</span>XF86AudioMute<span class="o">)</span>
+</span><span class='line'>    122       0x1008ff11 <span class="o">(</span>XF86AudioLowerVolume<span class="o">)</span> 0x0000 <span class="o">(</span>NoSymbol<span class="o">)</span> 0x1008ff11 <span class="o">(</span>XF86AudioLowerVolume<span class="o">)</span>
+</span><span class='line'>    123       0x1008ff13 <span class="o">(</span>XF86AudioRaiseVolume<span class="o">)</span> 0x0000 <span class="o">(</span>NoSymbol<span class="o">)</span> 0x1008ff13 <span class="o">(</span>XF86AudioRaiseVolume<span class="o">)</span>
+</span><span class='line'>    124       0x1008ff2a <span class="o">(</span>XF86PowerOff<span class="o">)</span> 0x0000 <span class="o">(</span>NoSymbol<span class="o">)</span> 0x1008ff2a <span class="o">(</span>XF86PowerOff<span class="o">)</span>
+</span><span class='line'>    125       0xffbd <span class="o">(</span>KP_Equal<span class="o">)</span> 0x0000 <span class="o">(</span>NoSymbol<span class="o">)</span> 0xffbd <span class="o">(</span>KP_Equal<span class="o">)</span>
+</span><span class='line'>    126       0x00b1 <span class="o">(</span>plusminus<span class="o">)</span>    0x0000 <span class="o">(</span>NoSymbol<span class="o">)</span> 0x00b1 <span class="o">(</span>plusminus<span class="o">)</span>
+</span><span class='line'>    127       0xff13 <span class="o">(</span>Pause<span class="o">)</span>    0xff6b <span class="o">(</span>Break<span class="o">)</span>    0xff13 <span class="o">(</span>Pause<span class="o">)</span>    0xff6b <span class="o">(</span>Break<span class="o">)</span>
+</span><span class='line'>    128       0x1008ff4a <span class="o">(</span>XF86LaunchA<span class="o">)</span>  0x0000 <span class="o">(</span>NoSymbol<span class="o">)</span> 0x1008ff4a <span class="o">(</span>XF86LaunchA<span class="o">)</span>
+</span><span class='line'>    129       0xffae <span class="o">(</span>KP_Decimal<span class="o">)</span>   0xffae <span class="o">(</span>KP_Decimal<span class="o">)</span>   0xffae <span class="o">(</span>KP_Decimal<span class="o">)</span>   0xffae <span class="o">(</span>KP_Decimal<span class="o">)</span>
+</span><span class='line'>    130       0xff31 <span class="o">(</span>Hangul<span class="o">)</span>   0x0000 <span class="o">(</span>NoSymbol<span class="o">)</span> 0xff31 <span class="o">(</span>Hangul<span class="o">)</span>
+</span><span class='line'>    131       0xff34 <span class="o">(</span>Hangul_Hanja<span class="o">)</span> 0x0000 <span class="o">(</span>NoSymbol<span class="o">)</span> 0xff34 <span class="o">(</span>Hangul_Hanja<span class="o">)</span>
+</span><span class='line'>    132
+</span><span class='line'>    133       0xffeb <span class="o">(</span>Super_L<span class="o">)</span>  0x0000 <span class="o">(</span>NoSymbol<span class="o">)</span> 0xffeb <span class="o">(</span>Super_L<span class="o">)</span>
+</span><span class='line'>    134       0xffec <span class="o">(</span>Super_R<span class="o">)</span>  0x0000 <span class="o">(</span>NoSymbol<span class="o">)</span> 0xffec <span class="o">(</span>Super_R<span class="o">)</span>
+</span><span class='line'>    135       0xff67 <span class="o">(</span>Menu<span class="o">)</span> 0x0000 <span class="o">(</span>NoSymbol<span class="o">)</span> 0xff67 <span class="o">(</span>Menu<span class="o">)</span>
+</span><span class='line'>    136       0xff69 <span class="o">(</span>Cancel<span class="o">)</span>   0x0000 <span class="o">(</span>NoSymbol<span class="o">)</span> 0xff69 <span class="o">(</span>Cancel<span class="o">)</span>
+</span><span class='line'>    137       0xff66 <span class="o">(</span>Redo<span class="o">)</span> 0x0000 <span class="o">(</span>NoSymbol<span class="o">)</span> 0xff66 <span class="o">(</span>Redo<span class="o">)</span>
+</span><span class='line'>    138       0x1005ff70 <span class="o">(</span>SunProps<span class="o">)</span> 0x0000 <span class="o">(</span>NoSymbol<span class="o">)</span> 0x1005ff70 <span class="o">(</span>SunProps<span class="o">)</span>
+</span><span class='line'>    139       0xff65 <span class="o">(</span>Undo<span class="o">)</span> 0x0000 <span class="o">(</span>NoSymbol<span class="o">)</span> 0xff65 <span class="o">(</span>Undo<span class="o">)</span>
+</span><span class='line'>    140       0x1005ff71 <span class="o">(</span>SunFront<span class="o">)</span> 0x0000 <span class="o">(</span>NoSymbol<span class="o">)</span> 0x1005ff71 <span class="o">(</span>SunFront<span class="o">)</span>
+</span><span class='line'>    141       0x1008ff57 <span class="o">(</span>XF86Copy<span class="o">)</span> 0x0000 <span class="o">(</span>NoSymbol<span class="o">)</span> 0x1008ff57 <span class="o">(</span>XF86Copy<span class="o">)</span>
+</span><span class='line'>    142       0x1005ff73 <span class="o">(</span>SunOpen<span class="o">)</span>  0x0000 <span class="o">(</span>NoSymbol<span class="o">)</span> 0x1005ff73 <span class="o">(</span>SunOpen<span class="o">)</span>
+</span><span class='line'>    143       0x1008ff6d <span class="o">(</span>XF86Paste<span class="o">)</span>    0x0000 <span class="o">(</span>NoSymbol<span class="o">)</span> 0x1008ff6d <span class="o">(</span>XF86Paste<span class="o">)</span>
+</span><span class='line'>    144       0xff68 <span class="o">(</span>Find<span class="o">)</span> 0x0000 <span class="o">(</span>NoSymbol<span class="o">)</span> 0xff68 <span class="o">(</span>Find<span class="o">)</span>
+</span><span class='line'>    145       0x1008ff58 <span class="o">(</span>XF86Cut<span class="o">)</span>  0x0000 <span class="o">(</span>NoSymbol<span class="o">)</span> 0x1008ff58 <span class="o">(</span>XF86Cut<span class="o">)</span>
+</span><span class='line'>    146       0xff6a <span class="o">(</span>Help<span class="o">)</span> 0x0000 <span class="o">(</span>NoSymbol<span class="o">)</span> 0xff6a <span class="o">(</span>Help<span class="o">)</span>
+</span><span class='line'>    147       0x1008ff65 <span class="o">(</span>XF86MenuKB<span class="o">)</span>   0x0000 <span class="o">(</span>NoSymbol<span class="o">)</span> 0x1008ff65 <span class="o">(</span>XF86MenuKB<span class="o">)</span>
+</span><span class='line'>    148       0x1008ff1d <span class="o">(</span>XF86Calculator<span class="o">)</span>   0x0000 <span class="o">(</span>NoSymbol<span class="o">)</span> 0x1008ff1d <span class="o">(</span>XF86Calculator<span class="o">)</span>
+</span><span class='line'>    149
+</span><span class='line'>    150       0x1008ff2f <span class="o">(</span>XF86Sleep<span class="o">)</span>    0x0000 <span class="o">(</span>NoSymbol<span class="o">)</span> 0x1008ff2f <span class="o">(</span>XF86Sleep<span class="o">)</span>
+</span><span class='line'>    151       0x1008ff2b <span class="o">(</span>XF86WakeUp<span class="o">)</span>   0x0000 <span class="o">(</span>NoSymbol<span class="o">)</span> 0x1008ff2b <span class="o">(</span>XF86WakeUp<span class="o">)</span>
+</span><span class='line'>    152       0x1008ff5d <span class="o">(</span>XF86Explorer<span class="o">)</span> 0x0000 <span class="o">(</span>NoSymbol<span class="o">)</span> 0x1008ff5d <span class="o">(</span>XF86Explorer<span class="o">)</span>
+</span><span class='line'>    153       0x1008ff7b <span class="o">(</span>XF86Send<span class="o">)</span> 0x0000 <span class="o">(</span>NoSymbol<span class="o">)</span> 0x1008ff7b <span class="o">(</span>XF86Send<span class="o">)</span>
+</span><span class='line'>    154
+</span><span class='line'>    155       0x1008ff8a <span class="o">(</span>XF86Xfer<span class="o">)</span> 0x0000 <span class="o">(</span>NoSymbol<span class="o">)</span> 0x1008ff8a <span class="o">(</span>XF86Xfer<span class="o">)</span>
+</span><span class='line'>    156       0x1008ff41 <span class="o">(</span>XF86Launch1<span class="o">)</span>  0x0000 <span class="o">(</span>NoSymbol<span class="o">)</span> 0x1008ff41 <span class="o">(</span>XF86Launch1<span class="o">)</span>
+</span><span class='line'>    157       0x1008ff42 <span class="o">(</span>XF86Launch2<span class="o">)</span>  0x0000 <span class="o">(</span>NoSymbol<span class="o">)</span> 0x1008ff42 <span class="o">(</span>XF86Launch2<span class="o">)</span>
+</span><span class='line'>    158       0x1008ff2e <span class="o">(</span>XF86WWW<span class="o">)</span>  0x0000 <span class="o">(</span>NoSymbol<span class="o">)</span> 0x1008ff2e <span class="o">(</span>XF86WWW<span class="o">)</span>
+</span><span class='line'>    159       0x1008ff5a <span class="o">(</span>XF86DOS<span class="o">)</span>  0x0000 <span class="o">(</span>NoSymbol<span class="o">)</span> 0x1008ff5a <span class="o">(</span>XF86DOS<span class="o">)</span>
+</span><span class='line'>    160       0x1008ff2d <span class="o">(</span>XF86ScreenSaver<span class="o">)</span>  0x0000 <span class="o">(</span>NoSymbol<span class="o">)</span> 0x1008ff2d <span class="o">(</span>XF86ScreenSaver<span class="o">)</span>
+</span><span class='line'>    161
+</span><span class='line'>    162       0x1008ff74 <span class="o">(</span>XF86RotateWindows<span class="o">)</span>    0x0000 <span class="o">(</span>NoSymbol<span class="o">)</span> 0x1008ff74 <span class="o">(</span>XF86RotateWindows<span class="o">)</span>
+</span><span class='line'>    163       0x1008ff19 <span class="o">(</span>XF86Mail<span class="o">)</span> 0x0000 <span class="o">(</span>NoSymbol<span class="o">)</span> 0x1008ff19 <span class="o">(</span>XF86Mail<span class="o">)</span>
+</span><span class='line'>    164       0x1008ff30 <span class="o">(</span>XF86Favorites<span class="o">)</span>    0x0000 <span class="o">(</span>NoSymbol<span class="o">)</span> 0x1008ff30 <span class="o">(</span>XF86Favorites<span class="o">)</span>
+</span><span class='line'>    165       0x1008ff33 <span class="o">(</span>XF86MyComputer<span class="o">)</span>   0x0000 <span class="o">(</span>NoSymbol<span class="o">)</span> 0x1008ff33 <span class="o">(</span>XF86MyComputer<span class="o">)</span>
+</span><span class='line'>    166       0x1008ff26 <span class="o">(</span>XF86Back<span class="o">)</span> 0x0000 <span class="o">(</span>NoSymbol<span class="o">)</span> 0x1008ff26 <span class="o">(</span>XF86Back<span class="o">)</span>
+</span><span class='line'>    167       0x1008ff27 <span class="o">(</span>XF86Forward<span class="o">)</span>  0x0000 <span class="o">(</span>NoSymbol<span class="o">)</span> 0x1008ff27 <span class="o">(</span>XF86Forward<span class="o">)</span>
+</span><span class='line'>    168
+</span><span class='line'>    169       0x1008ff2c <span class="o">(</span>XF86Eject<span class="o">)</span>    0x0000 <span class="o">(</span>NoSymbol<span class="o">)</span> 0x1008ff2c <span class="o">(</span>XF86Eject<span class="o">)</span>
+</span><span class='line'>    170       0x1008ff2c <span class="o">(</span>XF86Eject<span class="o">)</span>    0x1008ff2c <span class="o">(</span>XF86Eject<span class="o">)</span>    0x1008ff2c <span class="o">(</span>XF86Eject<span class="o">)</span>    0x1008ff2c <span class="o">(</span>XF86Eject<span class="o">)</span>
+</span><span class='line'>    171       0x1008ff17 <span class="o">(</span>XF86AudioNext<span class="o">)</span>    0x0000 <span class="o">(</span>NoSymbol<span class="o">)</span> 0x1008ff17 <span class="o">(</span>XF86AudioNext<span class="o">)</span>
+</span><span class='line'>    172       0x1008ff14 <span class="o">(</span>XF86AudioPlay<span class="o">)</span>    0x1008ff31 <span class="o">(</span>XF86AudioPause<span class="o">)</span>   0x1008ff14 <span class="o">(</span>XF86AudioPlay<span class="o">)</span>    0x1008ff31 <span class="o">(</span>XF86AudioPause<span class="o">)</span>
+</span><span class='line'>    173       0x1008ff16 <span class="o">(</span>XF86AudioPrev<span class="o">)</span>    0x0000 <span class="o">(</span>NoSymbol<span class="o">)</span> 0x1008ff16 <span class="o">(</span>XF86AudioPrev<span class="o">)</span>
+</span><span class='line'>    174       0x1008ff15 <span class="o">(</span>XF86AudioStop<span class="o">)</span>    0x1008ff2c <span class="o">(</span>XF86Eject<span class="o">)</span>    0x1008ff15 <span class="o">(</span>XF86AudioStop<span class="o">)</span>    0x1008ff2c <span class="o">(</span>XF86Eject<span class="o">)</span>
+</span><span class='line'>    175       0x1008ff1c <span class="o">(</span>XF86AudioRecord<span class="o">)</span>  0x0000 <span class="o">(</span>NoSymbol<span class="o">)</span> 0x1008ff1c <span class="o">(</span>XF86AudioRecord<span class="o">)</span>
+</span><span class='line'>    176       0x1008ff3e <span class="o">(</span>XF86AudioRewind<span class="o">)</span>  0x0000 <span class="o">(</span>NoSymbol<span class="o">)</span> 0x1008ff3e <span class="o">(</span>XF86AudioRewind<span class="o">)</span>
+</span><span class='line'>    177       0x1008ff6e <span class="o">(</span>XF86Phone<span class="o">)</span>    0x0000 <span class="o">(</span>NoSymbol<span class="o">)</span> 0x1008ff6e <span class="o">(</span>XF86Phone<span class="o">)</span>
+</span><span class='line'>    178
+</span><span class='line'>    179       0x1008ff81 <span class="o">(</span>XF86Tools<span class="o">)</span>    0x0000 <span class="o">(</span>NoSymbol<span class="o">)</span> 0x1008ff81 <span class="o">(</span>XF86Tools<span class="o">)</span>
+</span><span class='line'>    180       0x1008ff18 <span class="o">(</span>XF86HomePage<span class="o">)</span> 0x0000 <span class="o">(</span>NoSymbol<span class="o">)</span> 0x1008ff18 <span class="o">(</span>XF86HomePage<span class="o">)</span>
+</span><span class='line'>    181       0x1008ff73 <span class="o">(</span>XF86Reload<span class="o">)</span>   0x0000 <span class="o">(</span>NoSymbol<span class="o">)</span> 0x1008ff73 <span class="o">(</span>XF86Reload<span class="o">)</span>
+</span><span class='line'>    182       0x1008ff56 <span class="o">(</span>XF86Close<span class="o">)</span>    0x0000 <span class="o">(</span>NoSymbol<span class="o">)</span> 0x1008ff56 <span class="o">(</span>XF86Close<span class="o">)</span>
+</span><span class='line'>    183
+</span><span class='line'>    184
+</span><span class='line'>    185       0x1008ff78 <span class="o">(</span>XF86ScrollUp<span class="o">)</span> 0x0000 <span class="o">(</span>NoSymbol<span class="o">)</span> 0x1008ff78 <span class="o">(</span>XF86ScrollUp<span class="o">)</span>
+</span><span class='line'>    186       0x1008ff79 <span class="o">(</span>XF86ScrollDown<span class="o">)</span>   0x0000 <span class="o">(</span>NoSymbol<span class="o">)</span> 0x1008ff79 <span class="o">(</span>XF86ScrollDown<span class="o">)</span>
+</span><span class='line'>    187       0x0028 <span class="o">(</span>parenleft<span class="o">)</span>    0x0000 <span class="o">(</span>NoSymbol<span class="o">)</span> 0x0028 <span class="o">(</span>parenleft<span class="o">)</span>
+</span><span class='line'>    188       0x0029 <span class="o">(</span>parenright<span class="o">)</span>   0x0000 <span class="o">(</span>NoSymbol<span class="o">)</span> 0x0029 <span class="o">(</span>parenright<span class="o">)</span>
+</span><span class='line'>    189       0x1008ff68 <span class="o">(</span>XF86New<span class="o">)</span>  0x0000 <span class="o">(</span>NoSymbol<span class="o">)</span> 0x1008ff68 <span class="o">(</span>XF86New<span class="o">)</span>
+</span><span class='line'>    190       0xff66 <span class="o">(</span>Redo<span class="o">)</span> 0x0000 <span class="o">(</span>NoSymbol<span class="o">)</span> 0xff66 <span class="o">(</span>Redo<span class="o">)</span>
+</span><span class='line'>    191       0x1008ff81 <span class="o">(</span>XF86Tools<span class="o">)</span>    0x0000 <span class="o">(</span>NoSymbol<span class="o">)</span> 0x1008ff81 <span class="o">(</span>XF86Tools<span class="o">)</span>
+</span><span class='line'>    192       0x1008ff45 <span class="o">(</span>XF86Launch5<span class="o">)</span>  0x0000 <span class="o">(</span>NoSymbol<span class="o">)</span> 0x1008ff45 <span class="o">(</span>XF86Launch5<span class="o">)</span>
+</span><span class='line'>    193       0x1008ff46 <span class="o">(</span>XF86Launch6<span class="o">)</span>  0x0000 <span class="o">(</span>NoSymbol<span class="o">)</span> 0x1008ff46 <span class="o">(</span>XF86Launch6<span class="o">)</span>
+</span><span class='line'>    194       0x1008ff47 <span class="o">(</span>XF86Launch7<span class="o">)</span>  0x0000 <span class="o">(</span>NoSymbol<span class="o">)</span> 0x1008ff47 <span class="o">(</span>XF86Launch7<span class="o">)</span>
+</span><span class='line'>    195       0x1008ff48 <span class="o">(</span>XF86Launch8<span class="o">)</span>  0x0000 <span class="o">(</span>NoSymbol<span class="o">)</span> 0x1008ff48 <span class="o">(</span>XF86Launch8<span class="o">)</span>
+</span><span class='line'>    196       0x1008ff49 <span class="o">(</span>XF86Launch9<span class="o">)</span>  0x0000 <span class="o">(</span>NoSymbol<span class="o">)</span> 0x1008ff49 <span class="o">(</span>XF86Launch9<span class="o">)</span>
+</span><span class='line'>    197
+</span><span class='line'>    198
+</span><span class='line'>    199       0x1008ffa9 <span class="o">(</span>XF86TouchpadToggle<span class="o">)</span>   0x0000 <span class="o">(</span>NoSymbol<span class="o">)</span> 0x1008ffa9 <span class="o">(</span>XF86TouchpadToggle<span class="o">)</span>
+</span><span class='line'>    200       0x1008ffb0 <span class="o">(</span>XF86TouchpadOn<span class="o">)</span>   0x0000 <span class="o">(</span>NoSymbol<span class="o">)</span> 0x1008ffb0 <span class="o">(</span>XF86TouchpadOn<span class="o">)</span>
+</span><span class='line'>    201       0x1008ffb1 <span class="o">(</span>XF86TouchpadOff<span class="o">)</span>  0x0000 <span class="o">(</span>NoSymbol<span class="o">)</span> 0x1008ffb1 <span class="o">(</span>XF86TouchpadOff<span class="o">)</span>
+</span><span class='line'>    202
+</span><span class='line'>    203       0xff7e <span class="o">(</span>Mode_switch<span class="o">)</span>  0x0000 <span class="o">(</span>NoSymbol<span class="o">)</span> 0xff7e <span class="o">(</span>Mode_switch<span class="o">)</span>
+</span><span class='line'>    204       0x0000 <span class="o">(</span>NoSymbol<span class="o">)</span> 0xffe9 <span class="o">(</span>Alt_L<span class="o">)</span>    0x0000 <span class="o">(</span>NoSymbol<span class="o">)</span> 0xffe9 <span class="o">(</span>Alt_L<span class="o">)</span>
+</span><span class='line'>    205       0x0000 <span class="o">(</span>NoSymbol<span class="o">)</span> 0xffe7 <span class="o">(</span>Meta_L<span class="o">)</span>   0x0000 <span class="o">(</span>NoSymbol<span class="o">)</span> 0xffe7 <span class="o">(</span>Meta_L<span class="o">)</span>
+</span><span class='line'>    206       0x0000 <span class="o">(</span>NoSymbol<span class="o">)</span> 0xffeb <span class="o">(</span>Super_L<span class="o">)</span>  0x0000 <span class="o">(</span>NoSymbol<span class="o">)</span> 0xffeb <span class="o">(</span>Super_L<span class="o">)</span>
+</span><span class='line'>    207       0x0000 <span class="o">(</span>NoSymbol<span class="o">)</span> 0xffed <span class="o">(</span>Hyper_L<span class="o">)</span>  0x0000 <span class="o">(</span>NoSymbol<span class="o">)</span> 0xffed <span class="o">(</span>Hyper_L<span class="o">)</span>
+</span><span class='line'>    208       0x1008ff14 <span class="o">(</span>XF86AudioPlay<span class="o">)</span>    0x0000 <span class="o">(</span>NoSymbol<span class="o">)</span> 0x1008ff14 <span class="o">(</span>XF86AudioPlay<span class="o">)</span>
+</span><span class='line'>    209       0x1008ff31 <span class="o">(</span>XF86AudioPause<span class="o">)</span>   0x0000 <span class="o">(</span>NoSymbol<span class="o">)</span> 0x1008ff31 <span class="o">(</span>XF86AudioPause<span class="o">)</span>
+</span><span class='line'>    210       0x1008ff43 <span class="o">(</span>XF86Launch3<span class="o">)</span>  0x0000 <span class="o">(</span>NoSymbol<span class="o">)</span> 0x1008ff43 <span class="o">(</span>XF86Launch3<span class="o">)</span>
+</span><span class='line'>    211       0x1008ff44 <span class="o">(</span>XF86Launch4<span class="o">)</span>  0x0000 <span class="o">(</span>NoSymbol<span class="o">)</span> 0x1008ff44 <span class="o">(</span>XF86Launch4<span class="o">)</span>
+</span><span class='line'>    212       0x1008ff4b <span class="o">(</span>XF86LaunchB<span class="o">)</span>  0x0000 <span class="o">(</span>NoSymbol<span class="o">)</span> 0x1008ff4b <span class="o">(</span>XF86LaunchB<span class="o">)</span>
+</span><span class='line'>    213       0x1008ffa7 <span class="o">(</span>XF86Suspend<span class="o">)</span>  0x0000 <span class="o">(</span>NoSymbol<span class="o">)</span> 0x1008ffa7 <span class="o">(</span>XF86Suspend<span class="o">)</span>
+</span><span class='line'>    214       0x1008ff56 <span class="o">(</span>XF86Close<span class="o">)</span>    0x0000 <span class="o">(</span>NoSymbol<span class="o">)</span> 0x1008ff56 <span class="o">(</span>XF86Close<span class="o">)</span>
+</span><span class='line'>    215       0x1008ff14 <span class="o">(</span>XF86AudioPlay<span class="o">)</span>    0x0000 <span class="o">(</span>NoSymbol<span class="o">)</span> 0x1008ff14 <span class="o">(</span>XF86AudioPlay<span class="o">)</span>
+</span><span class='line'>    216       0x1008ff97 <span class="o">(</span>XF86AudioForward<span class="o">)</span> 0x0000 <span class="o">(</span>NoSymbol<span class="o">)</span> 0x1008ff97 <span class="o">(</span>XF86AudioForward<span class="o">)</span>
+</span><span class='line'>    217
+</span><span class='line'>    218       0xff61 <span class="o">(</span>Print<span class="o">)</span>    0x0000 <span class="o">(</span>NoSymbol<span class="o">)</span> 0xff61 <span class="o">(</span>Print<span class="o">)</span>
+</span><span class='line'>    219
+</span><span class='line'>    220       0x1008ff8f <span class="o">(</span>XF86WebCam<span class="o">)</span>   0x0000 <span class="o">(</span>NoSymbol<span class="o">)</span> 0x1008ff8f <span class="o">(</span>XF86WebCam<span class="o">)</span>
+</span><span class='line'>    221
+</span><span class='line'>    222
+</span><span class='line'>    223       0x1008ff19 <span class="o">(</span>XF86Mail<span class="o">)</span> 0x0000 <span class="o">(</span>NoSymbol<span class="o">)</span> 0x1008ff19 <span class="o">(</span>XF86Mail<span class="o">)</span>
+</span><span class='line'>    224       0x1008ff8e <span class="o">(</span>XF86Messenger<span class="o">)</span>    0x0000 <span class="o">(</span>NoSymbol<span class="o">)</span> 0x1008ff8e <span class="o">(</span>XF86Messenger<span class="o">)</span>
+</span><span class='line'>    225       0x1008ff1b <span class="o">(</span>XF86Search<span class="o">)</span>   0x0000 <span class="o">(</span>NoSymbol<span class="o">)</span> 0x1008ff1b <span class="o">(</span>XF86Search<span class="o">)</span>
+</span><span class='line'>    226       0x1008ff5f <span class="o">(</span>XF86Go<span class="o">)</span>   0x0000 <span class="o">(</span>NoSymbol<span class="o">)</span> 0x1008ff5f <span class="o">(</span>XF86Go<span class="o">)</span>
+</span><span class='line'>    227       0x1008ff3c <span class="o">(</span>XF86Finance<span class="o">)</span>  0x0000 <span class="o">(</span>NoSymbol<span class="o">)</span> 0x1008ff3c <span class="o">(</span>XF86Finance<span class="o">)</span>
+</span><span class='line'>    228       0x1008ff5e <span class="o">(</span>XF86Game<span class="o">)</span> 0x0000 <span class="o">(</span>NoSymbol<span class="o">)</span> 0x1008ff5e <span class="o">(</span>XF86Game<span class="o">)</span>
+</span><span class='line'>    229       0x1008ff36 <span class="o">(</span>XF86Shop<span class="o">)</span> 0x0000 <span class="o">(</span>NoSymbol<span class="o">)</span> 0x1008ff36 <span class="o">(</span>XF86Shop<span class="o">)</span>
+</span><span class='line'>    230
+</span><span class='line'>    231       0xff69 <span class="o">(</span>Cancel<span class="o">)</span>   0x0000 <span class="o">(</span>NoSymbol<span class="o">)</span> 0xff69 <span class="o">(</span>Cancel<span class="o">)</span>
+</span><span class='line'>    232       0x1008ff03 <span class="o">(</span>XF86MonBrightnessDown<span class="o">)</span>    0x0000 <span class="o">(</span>NoSymbol<span class="o">)</span> 0x1008ff03 <span class="o">(</span>XF86MonBrightnessDown<span class="o">)</span>
+</span><span class='line'>    233       0x1008ff02 <span class="o">(</span>XF86MonBrightnessUp<span class="o">)</span>  0x0000 <span class="o">(</span>NoSymbol<span class="o">)</span> 0x1008ff02 <span class="o">(</span>XF86MonBrightnessUp<span class="o">)</span>
+</span><span class='line'>    234       0x1008ff32 <span class="o">(</span>XF86AudioMedia<span class="o">)</span>   0x0000 <span class="o">(</span>NoSymbol<span class="o">)</span> 0x1008ff32 <span class="o">(</span>XF86AudioMedia<span class="o">)</span>
+</span><span class='line'>    235       0x1008ff59 <span class="o">(</span>XF86Display<span class="o">)</span>  0x0000 <span class="o">(</span>NoSymbol<span class="o">)</span> 0x1008ff59 <span class="o">(</span>XF86Display<span class="o">)</span>
+</span><span class='line'>    236       0x1008ff04 <span class="o">(</span>XF86KbdLightOnOff<span class="o">)</span>    0x0000 <span class="o">(</span>NoSymbol<span class="o">)</span> 0x1008ff04 <span class="o">(</span>XF86KbdLightOnOff<span class="o">)</span>
+</span><span class='line'>    237       0x1008ff06 <span class="o">(</span>XF86KbdBrightnessDown<span class="o">)</span>    0x0000 <span class="o">(</span>NoSymbol<span class="o">)</span> 0x1008ff06 <span class="o">(</span>XF86KbdBrightnessDown<span class="o">)</span>
+</span><span class='line'>    238       0x1008ff05 <span class="o">(</span>XF86KbdBrightnessUp<span class="o">)</span>  0x0000 <span class="o">(</span>NoSymbol<span class="o">)</span> 0x1008ff05 <span class="o">(</span>XF86KbdBrightnessUp<span class="o">)</span>
+</span><span class='line'>    239       0x1008ff7b <span class="o">(</span>XF86Send<span class="o">)</span> 0x0000 <span class="o">(</span>NoSymbol<span class="o">)</span> 0x1008ff7b <span class="o">(</span>XF86Send<span class="o">)</span>
+</span><span class='line'>    240       0x1008ff72 <span class="o">(</span>XF86Reply<span class="o">)</span>    0x0000 <span class="o">(</span>NoSymbol<span class="o">)</span> 0x1008ff72 <span class="o">(</span>XF86Reply<span class="o">)</span>
+</span><span class='line'>    241       0x1008ff90 <span class="o">(</span>XF86MailForward<span class="o">)</span>  0x0000 <span class="o">(</span>NoSymbol<span class="o">)</span> 0x1008ff90 <span class="o">(</span>XF86MailForward<span class="o">)</span>
+</span><span class='line'>    242       0x1008ff77 <span class="o">(</span>XF86Save<span class="o">)</span> 0x0000 <span class="o">(</span>NoSymbol<span class="o">)</span> 0x1008ff77 <span class="o">(</span>XF86Save<span class="o">)</span>
+</span><span class='line'>    243       0x1008ff5b <span class="o">(</span>XF86Documents<span class="o">)</span>    0x0000 <span class="o">(</span>NoSymbol<span class="o">)</span> 0x1008ff5b <span class="o">(</span>XF86Documents<span class="o">)</span>
+</span><span class='line'>    244       0x1008ff93 <span class="o">(</span>XF86Battery<span class="o">)</span>  0x0000 <span class="o">(</span>NoSymbol<span class="o">)</span> 0x1008ff93 <span class="o">(</span>XF86Battery<span class="o">)</span>
+</span><span class='line'>    245       0x1008ff94 <span class="o">(</span>XF86Bluetooth<span class="o">)</span>    0x0000 <span class="o">(</span>NoSymbol<span class="o">)</span> 0x1008ff94 <span class="o">(</span>XF86Bluetooth<span class="o">)</span>
+</span><span class='line'>    246       0x1008ff95 <span class="o">(</span>XF86WLAN<span class="o">)</span> 0x0000 <span class="o">(</span>NoSymbol<span class="o">)</span> 0x1008ff95 <span class="o">(</span>XF86WLAN<span class="o">)</span>
+</span><span class='line'>    247
+</span><span class='line'>    248
+</span><span class='line'>    249
+</span><span class='line'>    250
+</span><span class='line'>    251
+</span><span class='line'>    252
+</span><span class='line'>    253
+</span><span class='line'>    254
+</span><span class='line'>    255
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<h2>Understanding X Keymapping</h2>
+
+
+<p>1 Key <br />
+2 Shift+Key <br />
+3 mode_switch+Key <br />
+4 mode_switch+Shift+Key <br />
+5 AltGr+Key <br />
+6 AltGr+Shift+Key <br /></p>
+
+<p>Consider the Key code &lsquo;26&rsquo;. See above table for reference.</p>
+
+<p>26 0x0065 (e)   0x0045 (E)  0x0065 (e)  0x0045 (E) <br /> <br />
+1 e <br />
+2 E <br />
+3 e <br />
+4 E <br />
+5 <br /></p>
+
+<p>Can you see the patten? You can create a custom map of your taste and fetch it using <code>xmodmap</code>.</p>
+
+<p><code>xmodmap ~/.Xmodmap</code></p>
+
+<h2>Examples</h2>
+
+
+<p>Add the followin to your .Xmodmap and source it using <code>xmodmap ~/.Xmodmap</code>.</p>
+
+<p>pointer = 1 2 3 5 4 7 6 8 9 10 11 12</p>
+
+<p>Note 5 and 4 are interchanged. Now scrolling direction is interchanged !</p>
+
+<p>You can replace a with e using the following expression.</p>
+
+<p>xmodmap -e &ldquo;keysym a = e E&rdquo;</p>
+
+<p>Read the xmodmap manaul page for further information.</p>
+
+<h2>Determining KeyCodes with Xev</h2>
+
+
+<p>How do you find a keycode for a key? Use <code>xev</code>. You can use your currently unused keys by xmodmapping.</p>
+
+<blockquote><p>Xev creates a window and then asks the X server to send it events whenever anything happens to the  window (such as it being moved, resized, typed in, clicked in, etc.). Prints contents of X events.</p></blockquote>
+
+
+
+
+<figure class='code'><figcaption><span>&#8216;Determining KeyCodes with Xev&#8217; </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>KeyPress event, serial 33, synthetic NO, window 0x4000001,
+</span><span class='line'>    root 0x138, subw 0x0, <span class="nb">time </span>442864, <span class="o">(</span>102,98<span class="o">)</span>, root:<span class="o">(</span>103,178<span class="o">)</span>,
+</span><span class='line'>    state 0x10, keycode 38 <span class="o">(</span>keysym 0x61, a<span class="o">)</span>, same_screen YES,
+</span><span class='line'>    XLookupString gives 1 bytes: <span class="o">(</span>61<span class="o">)</span> <span class="s2">&quot;a&quot;</span>
+</span><span class='line'>    XmbLookupString gives 1 bytes: <span class="o">(</span>61<span class="o">)</span> <span class="s2">&quot;a&quot;</span>
+</span><span class='line'>    XFilterEvent returns: False
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>You can see the keycodes, currently assigned keysyms with xev.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Building a Linux System From Scratch]]></title>
@@ -1020,6 +1643,48 @@ Set <code>apc.enabled=0</code> in &lsquo;/etc/php5/cgi/conf.d/apc.ini&rsquo;.</p
 
 
 
+
+<h2>PHP5-Xdebug Configuration</h2>
+
+
+<p>You also need to install Xdebug PHP extension using <code>sudo apt-get install php5-xdebug</code>.</p>
+
+<p>Now configure xdebug initialization.</p>
+
+<figure class='code'><figcaption><span>&#8216;Xdebug Initialization (/etc/php5/apache2/conf.d/xdebug.ini)&#8217; </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">zend_extension</span><span class="o">=</span>/usr/lib/php5/20090626+lfs/xdebug.so
+</span><span class='line'>
+</span><span class='line'>xdebug.remote_enable<span class="o">=</span>1
+</span><span class='line'>xdebug.remote_handler<span class="o">=</span>dbgp
+</span><span class='line'>xdebug.remote_mode<span class="o">=</span>req
+</span><span class='line'>xdebug.remote_host<span class="o">=</span>127.0.0.1
+</span><span class='line'>xdebug.remote_port<span class="o">=</span>9000
+</span><span class='line'>
+</span><span class='line'>xdebug.profiler_enable_trigger<span class="o">=</span>1
+</span><span class='line'>xdebug.profiler_output_dir<span class="o">=</span>/media/www/xdebugdata
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<h2>Xdebug Helper Google Chrome Extension</h2>
+
+
+<p>Installl Xdebug Helper Chrome extension to easily start a debugging session via browser.</p>
+
+<p><a href="https://chrome.google.com/webstore/detail/xdebug-helper/eadndfjplgieldjbigjakmdgkmoaaaoc">https://chrome.google.com/webstore/detail/xdebug-helper/eadndfjplgieldjbigjakmdgkmoaaaoc</a></p>
+
+<p><img class='center' src="http://uw-freelancer.github.io/images/blog/vim/xdebug-helper.png" title="Xdebug Helper" alt="Xdebug Helper" /></p>
 ]]></content>
   </entry>
   
@@ -2353,7 +3018,7 @@ Arthur and Merlin: In interactive proof systems, the prover has unbounded comput
 <h2>Mental Health</h2>
 
 
-<p>Mental health is an important aspect of an individual. One must be mentally healty in order to function well in this world. The following are some of the personality disorders.</p>
+<p>Mental health is an important aspect of an individual. One must be mentally healthy in order to function well in this world. The following are some of the personality disorders.</p>
 
 <blockquote><p>Obsessive–compulsive personality disorder (OCPD) is a personality disorder characterized by a pervasive pattern of preoccupation with orderliness, perfectionism, mental and interpersonal control at the expense of flexibility, openness, and efficiency.</p></blockquote>
 
@@ -2399,6 +3064,16 @@ Arthur and Merlin: In interactive proof systems, the prover has unbounded comput
 
 <p>This enables you to analyze your own thoughts against others views. You can even exercise &lsquo;Double Dissociation&rsquo;. Source: <a href="http://en.wikipedia.org/wiki/Dissociation_(psychology)" >Dissociation</a></p>
 
+<h2>Meaning of Life</h2>
+
+
+<p><img class='center' src="http://uw-freelancer.github.io/images/buddhism/where-do-we-come-from.jpg" title="Where Do We Come From" alt="Where Do We Come From" /></p>
+
+<blockquote><p>The three women with a child represent the beginning of life; the middle group symbolizes the daily existence of young adulthood; and in the final group, according to the artist, &#8220;an old woman approaching death appears reconciled and resigned to her thoughts&#8221;; at her feet, &#8220;a strange white bird&#8230;represents the futility of words.&#8221; The blue idol in the background apparently represents what Gauguin described as &#8220;the Beyond.&#8221; Of its entirety he said, &#8220;I believe that this canvas not only surpasses all my preceding ones, but that I shall never do anything better—or even like it.&#8221; In fact, after completing this painting, Gauguin felt so convinced that the rest of his life would be unsuccessful that he attempted suicide unsuccessfully. Artist: Paul Gauguin</p></blockquote>
+
+
+<p>Read More: <a href="http://en.wikipedia.org/wiki/Meaning_of_life" >Meaning of Life</a></p>
+
 <h2>Uncertainity</h2>
 
 
@@ -2419,7 +3094,7 @@ Arthur and Merlin: In interactive proof systems, the prover has unbounded comput
 <h2>Buddhist Philosophy</h2>
 
 
-<p>Personally, I believe in an afterlife. I run a process inside my brain which loads Buddist Concepts into my mind so that I can use them easily to perceive the world in a Buddhist way. I believe in &lsquo;Karma&rsquo; too. What we have now is the result of what we did in the past. (Actully these concepts are not as simple as the previous sentence)</p>
+<p>Personally, I believe in an afterlife and the previous lives. I run a process inside my brain which loads Buddist Concepts into my mind so that I can use them easily to perceive the world in a Buddhist way. I believe in &lsquo;Karma&rsquo; too. What we have now is the result of what we did in the past. (Actually these concepts are not as simple as the previous sentence)</p>
 
 <p>Source: <a href="https://en.wikipedia.org/wiki/Ethics" >Ethics</a></p>
 
@@ -2433,10 +3108,15 @@ Arthur and Merlin: In interactive proof systems, the prover has unbounded comput
 
 <p><a href="http://en.wikipedia.org/wiki/Four_Noble_Truths">http://en.wikipedia.org/wiki/Four_Noble_Truths</a></p>
 
+<h2>Simile of the Cave</h2>
+
+
+
+
 <h2>Money</h2>
 
 
-<p>We need to earn money to live a successfull life. You need to face the competition. You have to have sufficient amount of money to live a noble and spirital life. Without money, one will be working hard just for food.</p>
+<p>We need to earn money to live a successful life. You need to face the competition. You have to have sufficient amount of money to live a noble and spiritual life. Without money, one will be working hard just for food.</p>
 
 <p><img class='center' src="http://uw-freelancer.github.io/images/buddhism/5000-rupees.jpg" title="5000 Rupees" alt="5000 Rupees" /></p>
 
@@ -2448,56 +3128,6 @@ Arthur and Merlin: In interactive proof systems, the prover has unbounded comput
 <p>Lord Buddha is the greatest teacher. Read more about <a href="http://en.wikipedia.org/wiki/Gautama_Buddha" >Lord Buddha</a>.</p>
 
 <p><img class='center' src="http://uw-freelancer.github.io/images/buddhism/sandakada-pahana.jpg" title="Sandakada Pahana" alt="Sandakada Pahana" /></p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[What is Enlightenment]]></title>
-    <link href="http://uw-freelancer.github.io/blog/what-is-enlightenment/"/>
-    <updated>2012-12-10T22:00:00+05:30</updated>
-    <id>http://uw-freelancer.github.io/blog/what-is-enlightenment</id>
-    <content type="html"><![CDATA[<blockquote><p>Copied from the below url:<br/>http://www.columbia.edu/acis/ets/CCREAD/etscc/kant.html</p></blockquote>
-
-
-
-
-<h2>What is Enlightenment</h2>
-
-
-<p>Immanuel Kant</p>
-
-<p><img class='center' src="http://uw-freelancer.github.io/images/buddhism/immanuel-kant.jpg" title="Immanuel Kant" alt="Immanuel Kant" /></p>
-
-<p>Enlightenment is man&rsquo;s emergence from his self-imposed nonage. Nonage is the inability to use one&rsquo;s own understanding without another&rsquo;s guidance. This nonage is self-imposed if its cause lies not in lack of understanding but in indecision and lack of courage to use one&rsquo;s own mind without another&rsquo;s guidance. Dare to know! (Sapere aude.) &ldquo;Have the courage to use your own understanding,&rdquo; is therefore the motto of the enlightenment.</p>
-
-<p>Laziness and cowardice are the reasons why such a large part of mankind gladly remain minors all their lives, long after nature has freed them from external guidance. They are the reasons why it is so easy for others to set themselves up as guardians. It is so comfortable to be a minor. If I have a book that thinks for me, a pastor who acts as my conscience, a physician who prescribes my diet, and so on&mdash;then I have no need to exert myself. I have no need to think, if only I can pay; others will take care of that disagreeable business for me. Those guardians who have kindly taken supervision upon themselves see to it that the overwhelming majority of mankind&mdash;among them the entire fair sex&mdash;should consider the step to maturity, not only as hard, but as extremely dangerous. First, these guardians make their domestic cattle stupid and carefully prevent the docile creatures from taking a single step without the leading-strings to which they have fastened them. Then they show them the danger that would threaten them if they should try to walk by themselves. Now this danger is really not very great; after stumbling a few times they would, at last, learn to walk. However, examples of such failures intimidate and generally discourage all further attempts.</p>
-
-<p>Thus it is very difficult for the individual to work himself out of the nonage which has become almost second nature to him. He has even grown to like it, and is at first really incapable of using his own understanding because he has never been permitted to try it. Dogmas and formulas, these mechanical tools designed for reasonable use&mdash;or rather abuse&mdash;of his natural gifts, are the fetters of an everlasting nonage. The man who casts them off would make an uncertain leap over the narrowest ditch, because he is not used to such free movement. That is why there are only a few men who walk firmly, and who have emerged from nonage by cultivating their own minds.</p>
-
-<p>It is more nearly possible, however, for the public to enlighten itself; indeed, if it is only given freedom, enlightenment is almost inevitable. There will always be a few independent thinkers, even among the self-appointed guardians of the multitude. Once such men have thrown off the yoke of nonage, they will spread about them the spirit of a reasonable appreciation of man&rsquo;s value and of his duty to think for himself. It is especially to be noted that the public which was earlier brought under the yoke by these men afterwards forces these very guardians to remain in submission, if it is so incited by some of its guardians who are themselves incapable of any enlightenment. That shows how pernicious it is to implant prejudices: they will eventually revenge themselves upon their authors or their authors&#8217; descendants. Therefore, a public can achieve enlightenment only slowly. A revolution may bring about the end of a personal despotism or of avaricious tyrannical oppression, but never a true reform of modes of thought. New prejudices will serve, in place of the old, as guide lines for the unthinking multitude.</p>
-
-<p>This enlightenment requires nothing but freedom&mdash;and the most innocent of all that may be called &ldquo;freedom&rdquo;: freedom to make public use of one&rsquo;s reason in all matters. Now I hear the cry from all sides: &ldquo;Do not argue!&rdquo; The officer says: &ldquo;Do not argue&mdash;drill!&rdquo; The tax collector: &ldquo;Do not argue&mdash;pay!&rdquo; The pastor: &ldquo;Do not argue&mdash;believe!&rdquo; Only one ruler in the world says: &ldquo;Argue as much as you please, but obey!&rdquo; We find restrictions on freedom everywhere. But which restriction is harmful to enlightenment? Which restriction is innocent, and which advances enlightenment? I reply: the public use of one&rsquo;s reason must be free at all times, and this alone can bring enlightenment to mankind.</p>
-
-<p>On the other hand, the private use of reason may frequently be narrowly restricted without especially hindering the progress of enlightenment. By &ldquo;public use of one&rsquo;s reason&rdquo; I mean that use which a man, as scholar, makes of it before the reading public. I call &ldquo;private use&rdquo; that use which a man makes of his reason in a civic post that has been entrusted to him. In some affairs affecting the interest of the community a certain [governmental] mechanism is necessary in which some members of the community remain passive. This creates an artificial unanimity which will serve the fulfillment of public objectives, or at least keep these objectives from being destroyed. Here arguing is not permitted: one must obey. Insofar as a part of this machine considers himself at the same time a member of a universal community&mdash;a world society of citizens&mdash;(let us say that he thinks of himself as a scholar rationally addressing his public through his writings) he may indeed argue, and the affairs with which he is associated in part as a passive member will not suffer. Thus it would be very unfortunate if an officer on duty and under orders from his superiors should want to criticize the appropriateness or utility of his orders. He must obey. But as a scholar he could not rightfully be prevented from taking notice of the mistakes in the military service and from submitting his views to his public for its judgment. The citizen cannot refuse to pay the taxes levied upon him; indeed, impertinent censure of such taxes could be punished as a scandal that might cause general disobedience. Nevertheless, this man does not violate the duties of a citizen if, as a scholar, he publicly expresses his objections to the impropriety or possible injustice of such levies. A pastor, too, is bound to preach to his congregation in accord with the doctrines of the church which he serves, for he was ordained on that condition. But as a scholar he has full freedom, indeed the obligation, to communicate to his public all his carefully examined and constructive thoughts concerning errors in that doctrine and his proposals concerning improvement of religious dogma and church institutions. This is nothing that could burden his conscience. For what he teaches in pursuance of his office as representative of the church, he represents as something which he is not free to teach as he sees it. He speaks as one who is employed to speak in the name and under the orders of another. He will say: &ldquo;Our church teaches this or that; these are the proofs which it employs.&rdquo; Thus he will benefit his congregation as much as possible by presenting doctrines to which he may not subscribe with full conviction. He can commit himself to teach them because it is not completely impossible that they may contain hidden truth. In any event, he has found nothing in the doctrines that contradicts the heart of religion. For if he believed that such contradictions existed he would not be able to administer his office with a clear conscience. He would have to resign it. Therefore the use which a scholar makes of his reason before the congregation that employs him is only a private use, for no matter how sizable, this is only a domestic audience. In view of this he, as preacher, is not free and ought not to be free, since he is carrying out the orders of others. On the other hand, as the scholar who speaks to his own public (the world) through his writings, the minister in the public use of his reason enjoys unlimited freedom to use his own reason and to speak for himself. That the spiritual guardians of the people should themselves be treated as minors is an absurdity which would result in perpetuating absurdities.</p>
-
-<p>But should a society of ministers, say a Church Council, &hellip; have the right to commit itself by oath to a certain unalterable doctrine, in order to secure perpetual guardianship over all its members and through them over the people? I say that this is quite impossible. Such a contract, concluded to keep all further enlightenment from humanity, is simply null and void even if it should be confirmed by the sovereign power, by parliaments, and the most solemn treaties. An epoch cannot conclude a pact that will commit succeeding ages, prevent them from increasing their significant insights, purging themselves of errors, and generally progressing in enlightenment. That would be a crime against human nature whose proper destiny lies precisely in such progress. Therefore, succeeding ages are fully entitled to repudiate such decisions as unauthorized and outrageous. The touchstone of all those decisions that may be made into law for a people lies in this question: Could a people impose such a law upon itself? Now it might be possible to introduce a certain order for a definite short period of time in expectation of better order. But, while this provisional order continues, each citizen (above all, each pastor acting as a scholar) should be left free to publish his criticisms of the faults of existing institutions. This should continue until public understanding of these matters has gone so far that, by uniting the voices of many (although not necessarily all) scholars, reform proposals could be brought before the sovereign to protect those congregations which had decided according to their best lights upon an altered religious order, without, however, hindering those who want to remain true to the old institutions. But to agree to a perpetual religious constitution which is not publicly questioned by anyone would be, as it were, to annihilate a period of time in the progress of man&rsquo;s improvement. This must be absolutely forbidden.</p>
-
-<p>A man may postpone his own enlightenment, but only for a limited period of time. And to give up enlightenment altogether, either for oneself or one&rsquo;s descendants, is to violate and to trample upon the sacred rights of man. What a people may not decide for itself may even less be decided for it by a monarch, for his reputation as a ruler consists precisely in the way in which he unites the will of the whole people within his own. If he only sees to it that all true or supposed [religious] improvement remains in step with the civic order, he can for the rest leave his subjects alone to do what they find necessary for the salvation of their souls. Salvation is none of his business; it is his business to prevent one man from forcibly keeping another from determining and promoting his salvation to the best of his ability. Indeed, it would be prejudicial to his majesty if he meddled in these matters and supervised the writings in which his subjects seek to bring their [religious] views into the open, even when he does this from his own highest insight, because then he exposes himself to the reproach: Caesar non est supra grammaticos. 2    It is worse when he debases his sovereign power so far as to support the spiritual despotism of a few tyrants in his state over the rest of his subjects.</p>
-
-<p>When we ask, Are we now living in an enlightened age? the answer is, No, but we live in an age of enlightenment. As matters now stand it is still far from true that men are already capable of using their own reason in religious matters confidently and correctly without external guidance. Still, we have some obvious indications that the field of working toward the goal [of religious truth] is now opened. What is more, the hindrances against general enlightenment or the emergence from self-imposed nonage are gradually diminishing. In this respect this is the age of the enlightenment and the century of Frederick [the Great].</p>
-
-<p>A prince ought not to deem it beneath his dignity to state that he considers it his duty not to dictate anything to his subjects in religious matters, but to leave them complete freedom. If he repudiates the arrogant word &ldquo;tolerant&rdquo;, he is himself enlightened; he deserves to be praised by a grateful world and posterity as that man who was the first to liberate mankind from dependence, at least on the government, and let everybody use his own reason in matters of conscience. Under his reign, honorable pastors, acting as scholars and regardless of the duties of their office, can freely and openly publish their ideas to the world for inspection, although they deviate here and there from accepted doctrine. This is even more true of every person not restrained by any oath of office. This spirit of freedom is spreading beyond the boundaries [of Prussia] even where it has to struggle against the external hindrances established by a government that fails to grasp its true interest. [Frederick&rsquo;s Prussia] is a shining example that freedom need not cause the least worry concerning public order or the unity of the community. When one does not deliberately attempt to keep men in barbarism, they will gradually work out of that condition by themselves.</p>
-
-<p>I have emphasized the main point of the enlightenment&mdash;man&rsquo;s emergence from his self-imposed nonage&mdash;primarily in religious matters, because our rulers have no interest in playing the guardian to their subjects in the arts and sciences. Above all, nonage in religion is not only the most harmful but the most dishonorable. But the disposition of a sovereign ruler who favors freedom in the arts and sciences goes even further: he knows that there is no danger in permitting his subjects to make public use of their reason and to publish their ideas concerning a better constitution, as well as candid criticism of existing basic laws. We already have a striking example [of such freedom], and no monarch can match the one whom we venerate.</p>
-
-<p>But only the man who is himself enlightened, who is not afraid of shadows, and who commands at the same time a well disciplined and numerous army as guarantor of public peace&mdash;only he can say what [the sovereign of] a free state cannot dare to say: &ldquo;Argue as much as you like, and about what you like, but obey!&rdquo; Thus we observe here as elsewhere in human affairs, in which almost everything is paradoxical, a surprising and unexpected course of events: a large degree of civic freedom appears to be of advantage to the intellectual freedom of the people, yet at the same time it establishes insurmountable barriers. A lesser degree of civic freedom, however, creates room to let that free spirit expand to the limits of its capacity. Nature, then, has carefully cultivated the seed within the hard core&mdash;namely the urge for and the vocation of free thought. And this free thought gradually reacts back on the modes of thought of the people, and men become more and more capable of acting in freedom. At last free thought acts even on the fundamentals of government and the state finds it agreeable to treat man, who is now more than a machine, in accord with his dignity.</p>
-
-<p>Notes</p>
-
-<ol>
-<li>Translated by Mary C. Smith.</li>
-</ol>
-
 ]]></content>
   </entry>
   

@@ -9,7 +9,7 @@
   <meta name="author" content="Upeksha Wisidagama">
 
   
-  <meta name="description" content="I only needed one dollar. If you&rsquo;ve missed that post, read it here. However, I was fortunate enough to receive a dollar. In fact, I received 10 &hellip;">
+  <meta name="description" content="Vim is the editor I use for my day to day text editing tasks. Powerline Mode Indicator Vim Powerline plugin can show the &lsquo;mode information& &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -84,7 +84,7 @@
       
   <header>
     
-      <h1 class="entry-title"><a href="/blog/how-i-earned-one-usd/">How I Earned a Dollar</a></h1>
+      <h1 class="entry-title"><a href="/blog/vim-powerline/">Vim PowerLine</a></h1>
     
     
       <p class="meta">
@@ -100,36 +100,95 @@
   
 
 
-<time datetime="2013-07-01T11:05:00+05:30" pubdate data-updated="true">Jul 1<span>st</span>, 2013</time>
+<time datetime="2013-07-01T15:05:00+05:30" pubdate data-updated="true">Jul 1<span>st</span>, 2013</time>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content"><p>I only needed one dollar. If you&rsquo;ve missed that post, <a href="/blog/i-only-need-one-dollar/" >read it here</a>.</p>
+  <div class="entry-content"><p>Vim is the editor I use for my day to day text editing tasks.</p>
 
-<p>However, I was fortunate enough to receive a dollar. In fact, I received 10 USD. Mr. Cstoudt released 10 previously milestoned dollars.</p>
-
-<p><img class='center' src="/images/blog/how-i-earned-one-dollar.jpg" title="How I earned one dollar" alt="How I earned one dollar" /></p>
-
-<h2>An Unreleased Milestone</h2>
+<h2>Powerline Mode Indicator</h2>
 
 
-<p>Do you remember once I completed a project for Mr. Cstoudt? (See: <a href="/blog/wordpress-toolbar-customization/" >WordPress Toolbar Customization</a>) Eventhough I completed that project successfully, there remained an unreleased and fogotten milestone. While I was thinking how to find the missing dollar yesterday, while I was browsing through my freelancer.com financial dashboard, I noticed this milestone. I contacted Mr. Cstoudt and asked him to release the milestone.</p>
+<p>Vim Powerline plugin can show the &lsquo;mode information&rsquo; on the powerline.</p>
 
-<p><img class='center' src="/images/blog/requesting-to-release-the-milestone.jpg" title="Requesting to release the milestone" alt="Requesting to release the milestone" /></p>
+<p>Normal Mode</p>
 
-<p>I received this about 8:10 on 1st July, 2013. This is a new month. I was finding a dollar in the previous month. However I decided this payment should be counted as received in the previous month. I live in Sri Lanka (+5.30UTC). Client sent the payment from USA (-6.00UTC). For Mr. Cstoudt it was only 20:40 on 30th June, 2013. See the below illustration.</p>
+<p><img class='center' src="/images/blog/vim/powerline-normal.png" title="Vim Powerline Normal" alt="Vim Powerline Normal" /></p>
 
-<p><img class='center' src="/images/blog/sri-lanka-usa-time-relationship.jpg" title="Sri Lanka USA Time Relationship" alt="Sri Lanka USA Time Relationship" /></p>
+<p>Insert Mode</p>
 
-<h2>Finally, I collected the missing dollar</h2>
+<p><img class='center' src="/images/blog/vim/powerline-insert.png" title="Vim Powerline Insert" alt="Vim Powerline Insert" /></p>
+
+<p>Visual Line Mode</p>
+
+<p><img class='center' src="/images/blog/vim/powerline-vline.png" title="Vim Powerline Visual Line" alt="Vim Powerline Visual Line" /></p>
+
+<p>Visual Block Mode</p>
+
+<p><img class='center' src="/images/blog/vim/powerline-vbox.png" title="Vim Powerline Visual Block" alt="Vim Powerline Visual Block" /></p>
+
+<h2>Powerline Git Branch Indicator</h2>
 
 
-<p>Just before the end of the month (somewhere +X.YYUTC), I was able to withdraw money from my freelancer.com account. Thanks Mr. Cstout (10 USD) and Mr. Brant (30 USD).</p>
+<p>The above screens show we are working on the &lsquo;Master&rsquo; branch. Let&rsquo;s create and new branch called &lsquo;Upeksha&rsquo; and checkout it.</p>
 
-<p><img class='center' src="/images/blog/32-usd-to-sri-lanka.jpg" title="32 USD to Sri Lanka" alt="32 USD to Sri Lanka" /></p>
+<p><img class='center' src="/images/blog/vim/powerline-git-branch.png" title="Powerline Create Branch" alt="Powerline Create Branch" /></p>
+
+<p>Now the Git Branch Indicator shows the &lsquo;Upeksha&rsquo; branch.</p>
+
+<p><img class='center' src="/images/blog/vim/powerline-upeksha-branch.png" title="Powerline Upeksha Branch" alt="Powerline Upeksha Branch" /></p>
+
+<h2>How to install Powerline</h2>
+
+
+<p>1 &ndash; First, Install the Powerline plugin.</p>
+
+<figure class='code'><figcaption><span>&#8216;Installing Powerline Plugin&#8217; </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nb">cd</span> ~/.vim/bundle
+</span><span class='line'>git clone https://github.com/Lokaltog/vim-powerline.git
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>2 &ndash; Next, install the Powerline fonts.</p>
+
+<figure class='code'><figcaption><span>&#8216;Installing Powerline Fonts&#8217; </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>mkdir ~/.fonts
+</span><span class='line'><span class="nb">cd</span> ~/.fonts/
+</span><span class='line'>git clone https://github.com/scotu/ubuntu-mono-powerline.git
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>3 &ndash; Finally, configure your Vim instance.</p>
+
+<figure class='code'><figcaption><span>&#8216;Powerline Vim Configuration - .vimrc&#8217; </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="s2">&quot; Vim Powerline</span>
+</span><span class='line'><span class="s2">let g:Powerline_symbols = &#39;fancy&#39;</span>
+</span><span class='line'>
+</span><span class='line'><span class="s2">&quot;</span> Automatically delete buffers when browsing git <span class="nb">history</span>/objects.
+</span><span class='line'>au BufReadPost fugitive://* <span class="nb">set </span><span class="nv">bufhidden</span><span class="o">=</span>delete
+</span><span class='line'>
+</span><span class='line'><span class="err">&quot;</span> Optional Setting
+</span><span class='line'><span class="nb">set </span><span class="nv">t_Co</span><span class="o">=</span>256
+</span></code></pre></td></tr></table></div></figure>
+
+
+
 </div>
   
   
@@ -189,6 +248,10 @@
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/mapping-control-key-to-caps-lock-in-ubuntu/">Map Control Key to Caps Lock Key in Ubuntu X Server</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/building-a-linux-system-from-scratch/">Building a Linux System From Scratch</a>
       </li>
     
@@ -242,10 +305,6 @@
     
       <li class="post">
         <a href="/blog/fastcgi-suexec-apc-per-user/">Apache2 FastCGI and suEXEC Implementing APC Per User With PHP5-CGI</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/gnuplot-basics-2d-plots/">Gnuplot Basics - 2D Plots</a>
       </li>
     
   </ul>

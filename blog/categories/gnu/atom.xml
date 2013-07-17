@@ -4,7 +4,7 @@
   <title><![CDATA[Category: GNU | Freelance Projects]]></title>
   <link href="http://uw-freelancer.github.io/blog/categories/gnu/atom.xml" rel="self"/>
   <link href="http://uw-freelancer.github.io/"/>
-  <updated>2013-07-16T17:14:48+05:30</updated>
+  <updated>2013-07-17T18:06:03+05:30</updated>
   <id>http://uw-freelancer.github.io/</id>
   <author>
     <name><![CDATA[Upeksha Wisidagama]]></name>
@@ -52,6 +52,45 @@
 </pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nb">cd</span> ~/.vim/bundle
 </span><span class='line'>git clone &lt;a <span class="nv">href</span><span class="o">=</span><span class="s2">&quot;https://github.com/joonty/vdebug.git&quot;</span>&gt;https://github.com/joonty/vdebug.git&lt;/a&gt;
 </span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<h2>PHP5-Xdebug Configuration</h2>
+
+
+<p>You also need to install Xdebug PHP extension using <code>sudo apt-get install php5-xdebug</code>.</p>
+
+<p>Now configure xdebug initialization.</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>&lsquo;Xdebug Initialization (/etc/php5/apache2/conf.d/xdebug.ini)&rsquo; </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">zend_extension</span><span class="o">=</span>/usr/lib/php5/20090626+lfs/xdebug.so&lt;/p&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;p&gt;xdebug.remote_enable<span class="o">=</span>1
+</span><span class='line'>xdebug.remote_handler<span class="o">=</span>dbgp
+</span><span class='line'>xdebug.remote_mode<span class="o">=</span>req
+</span><span class='line'>xdebug.remote_host<span class="o">=</span>127.0.0.1
+</span><span class='line'>xdebug.remote_port<span class="o">=</span>9000&lt;/p&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;p&gt;xdebug.profiler_enable_trigger<span class="o">=</span>1
+</span><span class='line'>xdebug.profiler_output_dir<span class="o">=</span>/media/www/xdebugdata
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<h2>Xdebug Helper Google Chrome Extension</h2>
+
+
+<p>Installl Xdebug Helper Chrome extension to easily start a debugging session via browser.</p>
+
+<p><a href="https://chrome.google.com/webstore/detail/xdebug-helper/eadndfjplgieldjbigjakmdgkmoaaaoc">https://chrome.google.com/webstore/detail/xdebug-helper/eadndfjplgieldjbigjakmdgkmoaaaoc</a></p>
+
+<p><img class='center' src="/images/blog/vim/xdebug-helper.png" title="Xdebug Helper" alt="Xdebug Helper" /></p>
 ]]></content>
   </entry>
   

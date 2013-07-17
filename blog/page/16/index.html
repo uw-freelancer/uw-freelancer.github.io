@@ -9,7 +9,19 @@
   <meta name="author" content="Upeksha Wisidagama">
 
   
-  <meta name="description" content="InnoDB Folders and .frm Files MySQL stores its data dictionary information for tables in .frm files in database directories. Every InnoDB table also &hellip;">
+  <meta name="description" content="Let&rsquo;s start with a basic two dimensional plot. Create the data file (uw.dat). &#8216;Data File (uw.dat)&#8217; 1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+1, 5
+2, 4
+3 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -84,7 +96,7 @@
       
   <header>
     
-      <h1 class="entry-title"><a href="/blog/mysql-innodb-disk-space-usage/">MySQL InnoDB Disk Space Consumption</a></h1>
+      <h1 class="entry-title"><a href="/blog/gnuplot-basics-2d-plots/">Gnuplot Basics - 2D Plots</a></h1>
     
     
       <p class="meta">
@@ -100,95 +112,178 @@
   
 
 
-<time datetime="2013-05-05T12:00:00+05:30" pubdate data-updated="true">May 5<span>th</span>, 2013</time>
+<time datetime="2013-05-13T22:00:00+05:30" pubdate data-updated="true">May 13<span>th</span>, 2013</time>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content"><h2>InnoDB Folders and .frm Files</h2>
+  <div class="entry-content"><p>Let&rsquo;s start with a basic two dimensional plot. Create the data file (uw.dat).</p>
 
-
-<p>MySQL stores its data dictionary information for tables in .frm files in database directories.</p>
-
-<p>Every InnoDB table also has its own entry in the InnoDB internal data dictionary inside the tablespace. When MySQL drops a table or a database, it has to delete one or more .frm files as well as the corresponding entries inside the InnoDB data dictionary.</p>
-
-<p><a href="http://dev.mysql.com/doc/refman/5.5/en/innodb-table-and-index.html">http://dev.mysql.com/doc/refman/5.5/en/innodb-table-and-index.html</a></p>
-
-<h2>Employees Database Installation</h2>
-
-
-<p>We need a test database for testing. I decided to use the &lsquo;employees&rsquo; database.</p>
-
-<p><a href="http://dev.mysql.com/doc/employee/en/index.html">http://dev.mysql.com/doc/employee/en/index.html</a></p>
-
-<blockquote><p>The database contains about 300,000 employee records with 2.8 million salary entries. The export data is 167 MB, which is not huge, but heavy enough to be non-trivial for testing.</p></blockquote>
-
-
-<p>Login to remote host using <code>ssh uwlab</code>. Become root. Download the &lsquo;employees&rsquo; test database. Inspect current disk usage of MySQL.</p>
-
-<p><img class='center' src="/images/mysql/mysql-innodb-disk-usage.png" title="MySQL InnoDB Disk Usage" alt="MySQL InnoDB Disk Usage" /></p>
-
-<p>Employee Database tarball is of size 26M. MySQL main tablespace is about 18M (see ibdata1 file). Extract the database from tarball with <code>tar -jxvf employees_db-full-1.0.6.tar.bz2</code>.</p>
-
-<p>The uncompressed database size is about 161M (use <code>du -h -d 1</code>)</p>
-
-<p>Load the database dump into MySQL using <code>mysql -u root -p -t &lt; employees.sql</code>.</p>
-
-<p>Measue the MySQL data file size again.</p>
-
-<p><img class='center' src="/images/mysql/tablespace-file-size-increase.png" title="Tablespace File Size Increase" alt="Tablespace File Size Increase" /></p>
-
-<blockquote><p>After installing &#8216;employees&#8217; test database, &#8216;ibdata1&#8217; size increased from 18M to 218M. /var/lib/mysql/employees is only 80K.</p></blockquote>
-
-
-
-
-<h2>InnoDB Per-Table .ibd Files</h2>
-
-
-<p>By default, all InnoDB tables and indexes are stored in the system tablespace. As an alternative, you can store each InnoDB table and its indexes in its own file.</p>
-
-<p>First drop the &lsquo;employee&rsquo; database using <code>mysql -u root -p -e "drop database employees;"</code>. Add the following in your mysql configuration file.</p>
-
-<figure class='code'><figcaption><span>&#8217; (/etc/mysql/my.cnf)&#8217; </span></figcaption>
+<figure class='code'><figcaption><span>&#8216;Data File (uw.dat)&#8217; </span></figcaption>
  <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="o">[</span>mysqld<span class="o">]</span>
-</span><span class='line'><span class="nv">innodb_file_per_table</span> <span class="o">=</span> 1
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>1,  5
+</span><span class='line'>2,  4
+</span><span class='line'>3,  6
+</span><span class='line'>4, 10
+</span><span class='line'>5,  2
+</span><span class='line'>6,  1
+</span><span class='line'>7,  0
+</span><span class='line'>8,  5
+</span><span class='line'>9,  7
+</span><span class='line'>10, 9
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>Restart the mysql server. You can verify the configuration using <code>mysqld --help --verbose</code>.</p>
+<p>Create the plot configuration file (uw.config).</p>
 
-<p>Now add the &lsquo;employees&rsquo; database again using the above instructions. Now we have an &lsquo;ibd&rsquo; file per table.</p>
-
-<p><img class='center' src="/images/mysql/innodb-ibd-per-table.png" title="InnoDB IBD Per Table" alt="InnoDB IBD Per Table" /></p>
-
-<p>Be sure to do a full sql dump before experimenting with the server using, <code>mysqldump -u root -p --all-databases &gt; /home/upeksha/full-dump.sql</code>.</p>
-
-<p>Note how the file size is changed. Now &lsquo;ibdata1&rsquo; is only 18M. But the employees directory is 232M.</p>
-
-<p><img class='center' src="/images/mysql/innodb-disk-space-distribution.png" title="InnoDB Disk Space Distribution" alt="InnoDB Disk Space Distribution" /></p>
-
-<h2>MySQL Query Cache Size</h2>
+<figure class='code'><figcaption><span>&#8216;Configuration File (uw.config)&#8217; </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nb">set </span>term png size 600, 400
+</span><span class='line'><span class="nb">set </span>output <span class="s2">&quot;uw.png&quot;</span>
+</span><span class='line'>plot <span class="s2">&quot;uw.dat&quot;</span> with lines
+</span></code></pre></td></tr></table></div></figure>
 
 
-<p>The amount of memory allocated for caching query results. The default value is 0, which disables the query cache. Note that query_cache_size bytes of memory are allocated even if query_cache_type is set to 0.</p>
+<p>Now, plot using <code>gnuplot uw.config</code>.</p>
 
-<p><a href="http://dev.mysql.com/doc/refman/5.5/en/server-system-variables.html#sysvar_query_cache_size">http://dev.mysql.com/doc/refman/5.5/en/server-system-variables.html#sysvar_query_cache_size</a></p>
+<p><img class='center' src="/images/gnuplot/gnuplot-basics-2d-plot.png" title="Ubuntu Server Login" alt="Ubuntu Server Login" /></p>
 
-<p><img class='center' src="/images/mysql/demonstrating-mysql-query-cache-effects.png" title="MySQL Query Cache Effects" alt="MySQL Query Cache Effects" /></p>
-
-<p>Note, the first query took 939ms. But the identical subsequent queries took only 22ms and 19ms respectively.</p>
-
-<h2>More InnoDB Optimization</h2>
+<h3>Draw an Arrow</h3>
 
 
-<p>For tips on optimization, visit the following page,</p>
+<p>To draw and arrow from (3,2) to (6,8), use <code>set arrow from 3,2 to 6,8</code>. To specify end coordinate relative to the starting use <code>rto</code> instead <code>to</code>. e.g. <code>set arrow from 3,2 rto 1,1</code>.</p>
 
-<p><a href="http://dev.mysql.com/doc/refman/5.5/en/optimizing-innodb.html">http://dev.mysql.com/doc/refman/5.5/en/optimizing-innodb.html</a></p>
+<h2>Plotting the Exam Results of My Friends</h2>
+
+
+<p>These are the marks taken by each of the friends. Format: Name, Marks.</p>
+
+<figure class='code'><figcaption><span>&#8216;Exam Results (marks.dat)&#8217; </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>Alice 20
+</span><span class='line'>Bob 63
+</span><span class='line'>Charlie 56
+</span><span class='line'>Chuck 42
+</span><span class='line'>Craig 36
+</span><span class='line'>Dave 86
+</span><span class='line'>Erin 45
+</span><span class='line'>Frank 87
+</span><span class='line'>Eve 78
+</span><span class='line'>Mallory 2
+</span><span class='line'>Oscary 44
+</span><span class='line'>Peggy 12
+</span><span class='line'>Trent 56
+</span><span class='line'>Walter 55
+</span><span class='line'>Arthur 42
+</span><span class='line'>Paul 45
+</span><span class='line'>Upeksha 55
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<h3>A brief description of each of the friends</h3>
+
+
+<p>Alice and Bob. Generally, Alice wants to send a message to Bob.
+Carol, Carlos or Charlie, as a third participant in communications.</p>
+
+<p>Chuck, as a third participant usually of malicious intent.</p>
+
+<p>Craig, the password cracker (usually encountered in situations with stored hashed/salted passwords).</p>
+
+<p>Dan or Dave, a fourth participant.
+Erin, a fifth participant. (It&rsquo;s rare to see Erin; E is usually reserved for Eve.)
+Frank, a sixth participant (and so on alphabetically).</p>
+
+<p>Eve, an eavesdropper, is usually a passive attacker. While she can listen in on messages between Alice and Bob, she cannot modify them. In quantum cryptography, Eve may also represent the environment.</p>
+
+<p>Mallet or Mallory, a malicious attacker (less commonly called Trudy, an intruder.); unlike the passive Eve, this one is the active man-in-the-middle attacker who can modify messages, substitute his/her own messages, replay old messages, and so on. The difficulty of securing a system against Mallet/Mallory is much greater than against Eve.</p>
+
+<p>Oscar, an opponent, similar to Mallet/Mallory but not necessarily malicious. Could be white-hat but still wants to crack, modify, substitute, or replay messages.
+Peggy, a prover, and Victor, a verifier, often must interact in some way to show that the intended transaction has actually taken place. They are often found in zero-knowledge proofs.
+Trent, a trusted arbitrator, is some kind of neutral third party, whose exact role varies with the protocol under discussion.</p>
+
+<p>Walter, a warden, may be needed to guard Alice and Bob in some respect, depending on the protocol being discussed.
+Arthur and Merlin: In interactive proof systems, the prover has unbounded computational ability and is hence associated with Merlin, the powerful wizard. He claims the truth of a statement, and Arthur, the wise king, questions him to verify the claim.</p>
+
+<p>Paul and Carole. The characters were introduced in the solution of the Twenty Questions problem</p>
+
+<p>Source: This list is drawn mostly from the book Applied Cryptography by Bruce Schneier. Alice and Bob are archetypes in cryptography; Eve is also common. Names further down the alphabet are less common. <a href="http://en.wikipedia.org/wiki/Alice_and_Bob" >Read More</a></p>
+
+<p>Now you know most of my friends, Let&rsquo;s create the plot config file.</p>
+
+<figure class='code'><figcaption><span>&#8216;Exam Results Plot Config (marks.config)&#8217; </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nb">set </span>term png truecolor size 750, 400
+</span><span class='line'><span class="nb">set </span>output <span class="s2">&quot;marks.png&quot;</span>
+</span><span class='line'>
+</span><span class='line'><span class="nb">set </span>grid
+</span><span class='line'><span class="nb">set </span>boxwidth 0.8 relative
+</span><span class='line'><span class="nb">set </span>style fill transparent solid 0.5 noborder
+</span><span class='line'><span class="nb">set </span>object 1 rectangle from screen 0,0 to screen 1,1 fillcolor rgb<span class="s2">&quot;#ccffff&quot;</span> behind
+</span><span class='line'>
+</span><span class='line'><span class="nb">set </span>xlabel <span class="s2">&quot;Names of Friends&quot;</span>
+</span><span class='line'><span class="nb">set </span>ylabel <span class="s2">&quot;Marks&quot;</span>
+</span><span class='line'><span class="nb">set </span>title <span class="s2">&quot;Marks of the Friends of Upeksha&quot;</span>
+</span><span class='line'><span class="nb">set </span>yrange <span class="o">[</span>0:100<span class="o">]</span>
+</span><span class='line'><span class="nb">set </span>ytics 0,10
+</span><span class='line'>
+</span><span class='line'><span class="nb">set </span>xtics rotate
+</span><span class='line'>plot <span class="s1">&#39;marks.dat&#39;</span> using 2:xticlabels<span class="o">(</span>1<span class="o">)</span> with boxes notitle
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Run <code>gnuplot marks.config</code>.</p>
+
+<p><img class='center' src="/images/gnuplot/marks-of-friends-of-upeksha.png" title="Marks of Friends of Upeksha" alt="Marks of Friends of Upeksha" /></p>
+
+<blockquote><p>Despite gnuplot&#8217;s name, it is not part of or related to the GNU Project, nor does it use the GNU General Public License. You should always use simple &#8216;g&#8217;: &#8216;gnuplot&#8217;.</p></blockquote>
+
 </div>
   
   
@@ -248,6 +343,10 @@
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/mapping-control-key-to-caps-lock-in-ubuntu/">Map Control Key to Caps Lock Key in Ubuntu X Server</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/building-a-linux-system-from-scratch/">Building a Linux System From Scratch</a>
       </li>
     
@@ -301,10 +400,6 @@
     
       <li class="post">
         <a href="/blog/fastcgi-suexec-apc-per-user/">Apache2 FastCGI and suEXEC Implementing APC Per User With PHP5-CGI</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/gnuplot-basics-2d-plots/">Gnuplot Basics - 2D Plots</a>
       </li>
     
   </ul>

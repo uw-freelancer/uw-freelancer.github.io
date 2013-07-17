@@ -9,7 +9,7 @@
   <meta name="author" content="Upeksha Wisidagama">
 
   
-  <meta name="description" content="The project poster (Mr. Cstoudt) wanted to add custom menu to their WordPress Admin Bar. The correct term is ToolBar (not Admin Bar). The Toolbar was &hellip;">
+  <meta name="description" content="InnoDB Folders and .frm Files MySQL stores its data dictionary information for tables in .frm files in database directories. Every InnoDB table also &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -84,7 +84,7 @@
       
   <header>
     
-      <h1 class="entry-title"><a href="/blog/wordpress-toolbar-customization/">WordPress Toolbar Customization</a></h1>
+      <h1 class="entry-title"><a href="/blog/mysql-innodb-disk-space-usage/">MySQL InnoDB Disk Space Consumption</a></h1>
     
     
       <p class="meta">
@@ -100,34 +100,95 @@
   
 
 
-<time datetime="2013-04-15T20:55:00+05:30" pubdate data-updated="true">Apr 15<span>th</span>, 2013</time>
+<time datetime="2013-05-05T12:00:00+05:30" pubdate data-updated="true">May 5<span>th</span>, 2013</time>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content"><p>The project poster (Mr. Cstoudt) wanted to add custom menu to their WordPress Admin Bar.</p>
-
-<blockquote><p>The correct term is ToolBar (not Admin Bar). The Toolbar was added in Version 3.1 as Admin Bar and in Version 3.3 it was replaced by the Toolbar.</p></blockquote>
+  <div class="entry-content"><h2>InnoDB Folders and .frm Files</h2>
 
 
-<p>The following is an screenshot of the project description posted on freelancer.com.</p>
+<p>MySQL stores its data dictionary information for tables in .frm files in database directories.</p>
 
-<p><img class='center' src="/images/blog/wordpress-toolbar-customization-description.jpg" title="WordPress Toolbar Customization Description" alt="WordPress Toolbar Customization Description" /></p>
+<p>Every InnoDB table also has its own entry in the InnoDB internal data dictionary inside the tablespace. When MySQL drops a table or a database, it has to delete one or more .frm files as well as the corresponding entries inside the InnoDB data dictionary.</p>
 
-<p>I decided to implement administration functions of the menu with WordPress native menu editor. E.g. One can add/edit menu items as though it is an ordinary WordPress menu. But this menu will be displayed on WordPress Toolbar.</p>
+<p><a href="http://dev.mysql.com/doc/refman/5.5/en/innodb-table-and-index.html">http://dev.mysql.com/doc/refman/5.5/en/innodb-table-and-index.html</a></p>
 
-<h2>A Hidden Challenge</h2>
+<h2>Employees Database Installation</h2>
 
 
-<p>A challenge was hidden in this project. Menu items were dependent of the membership level being visited. i.e. different menu needs to be displayed for different membership levels. Membership management was done by another plugin. I was able to successfully satisfy these requirements too.</p>
+<p>We need a test database for testing. I decided to use the &lsquo;employees&rsquo; database.</p>
 
-<p>I was able to hook into the proper point of WordPress execution and inject the new menu to WordPress Toolbar. I was able to complete the project successfully.</p>
+<p><a href="http://dev.mysql.com/doc/employee/en/index.html">http://dev.mysql.com/doc/employee/en/index.html</a></p>
 
-<p>The following is the review by cstoudt for the correct interpretation and implementation of his needs for this project.</p>
+<blockquote><p>The database contains about 300,000 employee records with 2.8 million salary entries. The export data is 167 MB, which is not huge, but heavy enough to be non-trivial for testing.</p></blockquote>
 
-<p><img class='center' src="/images/blog/wp-toolbar-customization-feedback.jpg" title="WordPress Toolbar Customization Feedback" alt="WordPress Toolbar Customization Feedback" /></p>
+
+<p>Login to remote host using <code>ssh uwlab</code>. Become root. Download the &lsquo;employees&rsquo; test database. Inspect current disk usage of MySQL.</p>
+
+<p><img class='center' src="/images/mysql/mysql-innodb-disk-usage.png" title="MySQL InnoDB Disk Usage" alt="MySQL InnoDB Disk Usage" /></p>
+
+<p>Employee Database tarball is of size 26M. MySQL main tablespace is about 18M (see ibdata1 file). Extract the database from tarball with <code>tar -jxvf employees_db-full-1.0.6.tar.bz2</code>.</p>
+
+<p>The uncompressed database size is about 161M (use <code>du -h -d 1</code>)</p>
+
+<p>Load the database dump into MySQL using <code>mysql -u root -p -t &lt; employees.sql</code>.</p>
+
+<p>Measue the MySQL data file size again.</p>
+
+<p><img class='center' src="/images/mysql/tablespace-file-size-increase.png" title="Tablespace File Size Increase" alt="Tablespace File Size Increase" /></p>
+
+<blockquote><p>After installing &#8216;employees&#8217; test database, &#8216;ibdata1&#8217; size increased from 18M to 218M. /var/lib/mysql/employees is only 80K.</p></blockquote>
+
+
+
+
+<h2>InnoDB Per-Table .ibd Files</h2>
+
+
+<p>By default, all InnoDB tables and indexes are stored in the system tablespace. As an alternative, you can store each InnoDB table and its indexes in its own file.</p>
+
+<p>First drop the &lsquo;employee&rsquo; database using <code>mysql -u root -p -e "drop database employees;"</code>. Add the following in your mysql configuration file.</p>
+
+<figure class='code'><figcaption><span>&#8217; (/etc/mysql/my.cnf)&#8217; </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="o">[</span>mysqld<span class="o">]</span>
+</span><span class='line'><span class="nv">innodb_file_per_table</span> <span class="o">=</span> 1
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Restart the mysql server. You can verify the configuration using <code>mysqld --help --verbose</code>.</p>
+
+<p>Now add the &lsquo;employees&rsquo; database again using the above instructions. Now we have an &lsquo;ibd&rsquo; file per table.</p>
+
+<p><img class='center' src="/images/mysql/innodb-ibd-per-table.png" title="InnoDB IBD Per Table" alt="InnoDB IBD Per Table" /></p>
+
+<p>Be sure to do a full sql dump before experimenting with the server using, <code>mysqldump -u root -p --all-databases &gt; /home/upeksha/full-dump.sql</code>.</p>
+
+<p>Note how the file size is changed. Now &lsquo;ibdata1&rsquo; is only 18M. But the employees directory is 232M.</p>
+
+<p><img class='center' src="/images/mysql/innodb-disk-space-distribution.png" title="InnoDB Disk Space Distribution" alt="InnoDB Disk Space Distribution" /></p>
+
+<h2>MySQL Query Cache Size</h2>
+
+
+<p>The amount of memory allocated for caching query results. The default value is 0, which disables the query cache. Note that query_cache_size bytes of memory are allocated even if query_cache_type is set to 0.</p>
+
+<p><a href="http://dev.mysql.com/doc/refman/5.5/en/server-system-variables.html#sysvar_query_cache_size">http://dev.mysql.com/doc/refman/5.5/en/server-system-variables.html#sysvar_query_cache_size</a></p>
+
+<p><img class='center' src="/images/mysql/demonstrating-mysql-query-cache-effects.png" title="MySQL Query Cache Effects" alt="MySQL Query Cache Effects" /></p>
+
+<p>Note, the first query took 939ms. But the identical subsequent queries took only 22ms and 19ms respectively.</p>
+
+<h2>More InnoDB Optimization</h2>
+
+
+<p>For tips on optimization, visit the following page,</p>
+
+<p><a href="http://dev.mysql.com/doc/refman/5.5/en/optimizing-innodb.html">http://dev.mysql.com/doc/refman/5.5/en/optimizing-innodb.html</a></p>
 </div>
   
   
@@ -187,6 +248,10 @@
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/mapping-control-key-to-caps-lock-in-ubuntu/">Map Control Key to Caps Lock Key in Ubuntu X Server</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/building-a-linux-system-from-scratch/">Building a Linux System From Scratch</a>
       </li>
     
@@ -240,10 +305,6 @@
     
       <li class="post">
         <a href="/blog/fastcgi-suexec-apc-per-user/">Apache2 FastCGI and suEXEC Implementing APC Per User With PHP5-CGI</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/gnuplot-basics-2d-plots/">Gnuplot Basics - 2D Plots</a>
       </li>
     
   </ul>
