@@ -9,7 +9,7 @@
   <meta name="author" content="Upeksha Wisidagama">
 
   
-  <meta name="description" content="Install Syntastic Vim Syntax Checker Syntastic is a syntax checking plugin that runs files through external syntax checkers. This can be done on &hellip;">
+  <meta name="description" content="Install Python MySQL Module Note: Vim MySQL Query Plugin needs Python MySQLDB module. Install the MySQL module using the below command. sudo apt-get &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -84,7 +84,7 @@
       
   <header>
     
-      <h1 class="entry-title"><a href="/blog/Vim-Syntastic-JSHint/">Javascript Coding Standards - Vim, Syntastic and JSHint</a></h1>
+      <h1 class="entry-title"><a href="/blog/vim-mysql-query-plugin/">Vim MySQL Query Plugin</a></h1>
     
     
       <p class="meta">
@@ -100,62 +100,28 @@
   
 
 
-<time datetime="2013-07-18T06:00:00+05:30" pubdate data-updated="true">Jul 18<span>th</span>, 2013</time>
+<time datetime="2013-07-19T03:00:00+05:30" pubdate data-updated="true">Jul 19<span>th</span>, 2013</time>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content"><h2>Install Syntastic Vim Syntax Checker</h2>
+  <div class="entry-content"><h2>Install Python MySQL Module</h2>
 
 
-<p><img class='center' src="/images/blog/vim/zomg-its-syntastic.png" title="ZOMG It's Syntastic" alt="ZOMG It's Syntastic" /></p>
+<p>Note: Vim MySQL Query Plugin needs Python MySQLDB module. Install the MySQL module using the below command.</p>
 
-<blockquote><p>Syntastic is a syntax checking plugin that runs files through external syntax checkers. This can be done on demand, or automatically as files are saved and opened.</p></blockquote>
+<p><code>sudo apt-get install python-mysqldb</code></p>
 
-
-<p>Intall Syntastic via Bundle.</p>
-
-<figure class='code'><figcaption><span>&#8216;Vim Sytastic Installation&#8217; </span></figcaption>
- <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nb">cd</span> ~/.vim/bundle
-</span><span class='line'>git clone https://github.com/scrooloose/syntastic.git
-</span><span class='line'>:Helptags
-</span></code></pre></td></tr></table></div></figure>
+<h2>Source UW MySQL Query Plugin</h2>
 
 
+<p>Paste the following script in a new buffer <code>:vnew</code> and source it using <code>:source %</code>.</p>
 
+<p>You might save this for later use.</p>
 
-<h2>Install NodeJS</h2>
-
-
-
-
-<figure class='code'><figcaption><span>&#8216;NodeJS Installation&#8217; </span></figcaption>
- <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>sudo apt-get update
-</span><span class='line'>sudo apt-get install python-software-properties python g++ make
-</span><span class='line'>sudo add-apt-repository ppa:chris-lea/node.js
-</span><span class='line'>sudo apt-get update
-</span><span class='line'>sudo apt-get install nodejs
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Source: <a href="https://github.com/joyent/node/wiki/Installing-Node.js-via-package-manager">https://github.com/joyent/node/wiki/Installing-Node.js-via-package-manager</a></p>
-
-<h2>Install The Node Package Manager</h2>
-
-
-
-
-<figure class='code'><figcaption><span>&#8216;Node Package Manager Installation&#8217; </span></figcaption>
+<figure class='code'><figcaption><span>&#8216;UW Query Database (~/.vim/scripts/database/uw-query-mysql.vim)&#8217; </span></figcaption>
  <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
@@ -166,27 +132,175 @@
 <span class='line-number'>8</span>
 <span class='line-number'>9</span>
 <span class='line-number'>10</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>curl https://npmjs.org/install.sh | sh
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+<span class='line-number'>52</span>
+<span class='line-number'>53</span>
+<span class='line-number'>54</span>
+<span class='line-number'>55</span>
+<span class='line-number'>56</span>
+<span class='line-number'>57</span>
+<span class='line-number'>58</span>
+<span class='line-number'>59</span>
+<span class='line-number'>60</span>
+<span class='line-number'>61</span>
+<span class='line-number'>62</span>
+<span class='line-number'>63</span>
+<span class='line-number'>64</span>
+<span class='line-number'>65</span>
+<span class='line-number'>66</span>
+<span class='line-number'>67</span>
+<span class='line-number'>68</span>
+<span class='line-number'>69</span>
+<span class='line-number'>70</span>
+<span class='line-number'>71</span>
+<span class='line-number'>72</span>
+<span class='line-number'>73</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="s">&quot; -----------------------------------------------------------------------------</span>
+</span><span class='line'><span class="s">&quot;</span>
+</span><span class='line'><span class="s">&quot;   UW Query Database</span>
+</span><span class='line'><span class="s">&quot;   ~~~~~~~~~~~~~~~~~~~~</span>
+</span><span class='line'><span class="s">&quot;</span>
+</span><span class='line'><span class="s">&quot;   Execute any query on the database and get the result onto the current</span>
+</span><span class='line'><span class="s">&quot;   buffer.</span>
+</span><span class='line'><span class="s">&quot;</span>
+</span><span class='line'><span class="s">&quot;   0. Source this file :source %.</span>
+</span><span class='line'><span class="s">&quot;   1. Open a new buffer.</span>
+</span><span class='line'><span class="s">&quot;   2. Enter your query in the first line.</span>
+</span><span class='line'><span class="s">&quot;   3. Press &#39;;s&#39;.</span>
+</span><span class='line'><span class="s">&quot;   4. Buffer will be filled with the results.</span>
+</span><span class='line'><span class="s">&quot;   5. Press &#39;u&#39; and edit again.</span>
+</span><span class='line'><span class="s">&quot;   6. Press &#39;;s&#39;.</span>
+</span><span class='line'><span class="s">&quot;   7. Continue until you get what you want.</span>
+</span><span class='line'><span class="s">&quot;   8. Process with the Vim, Python or Unix tools.</span>
+</span><span class='line'><span class="s">&quot;</span>
+</span><span class='line'><span class="s">&quot;   Maintainer: Upeksha Wisidagama</span>
+</span><span class='line'><span class="s">&quot;   License: GNU GPL v3 or later</span>
+</span><span class='line'><span class="s">&quot;</span>
+</span><span class='line'><span class="s">&quot; -----------------------------------------------------------------------------</span>
+</span><span class='line'><span class="s">&quot;   Sample Queries</span>
+</span><span class='line'><span class="s">&quot;</span>
+</span><span class='line'><span class="s">&quot;   You can keep your frequently used queries in this area.</span>
+</span><span class='line'><span class="s">&quot;</span>
+</span><span class='line'><span class="s">&quot; -----------------------------------------------------------------------------</span>
+</span><span class='line'><span class="p">:</span><span class="n">fun</span><span class="err">!</span> <span class="n">UW_Query_Database</span><span class="p">()</span>
+</span><span class='line'><span class="n">python</span> <span class="o">&lt;&lt;</span> <span class="n">endpython</span>
+</span><span class='line'><span class="kn">import</span> <span class="nn">vim</span>
+</span><span class='line'><span class="kn">import</span> <span class="nn">MySQLdb</span> <span class="kn">as</span> <span class="nn">mdb</span>
 </span><span class='line'>
-</span><span class='line'>Written by John Gilmore and Jay Fenlason.
-</span><span class='line'>install npm@latest
-</span><span class='line'>fetching: http://registry.npmjs.org/npm/-/npm-1.3.4.tgz
+</span><span class='line'><span class="k">def</span> <span class="nf">uw_query_database</span><span class="p">():</span>
+</span><span class='line'>    <span class="n">current_buffer</span> <span class="o">=</span> <span class="n">vim</span><span class="o">.</span><span class="n">current</span><span class="o">.</span><span class="n">buffer</span>
+</span><span class='line'>    <span class="n">uw_query</span> <span class="o">=</span> <span class="n">current_buffer</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+</span><span class='line'>    <span class="n">data</span> <span class="o">=</span> <span class="n">uw_query_db</span><span class="p">(</span> <span class="n">uw_query</span> <span class="p">)</span>
+</span><span class='line'>    <span class="n">uw_write_buffer</span><span class="p">(</span> <span class="n">data</span> <span class="p">)</span>
 </span><span class='line'>
-</span><span class='line'>uw@uw:~/.vim/bundle<span class="nv">$ </span>node --version
-</span><span class='line'>v0.10.13
-</span><span class='line'>uw@uw:~/.vim/bundle<span class="nv">$ </span>npm --version
-</span><span class='line'>1.3.4
+</span><span class='line'><span class="k">def</span> <span class="nf">uw_query_db</span><span class="p">(</span> <span class="n">uw_query</span> <span class="p">):</span>
+</span><span class='line'>    <span class="k">try</span><span class="p">:</span>
+</span><span class='line'>        <span class="n">con</span> <span class="o">=</span> <span class="n">mdb</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="s">&#39;HOSTNAME&#39;</span><span class="p">,</span> <span class="s">&#39;USER&#39;</span><span class="p">,</span> <span class="s">&#39;PASSWORD&#39;</span><span class="p">,</span> <span class="s">&#39;DB_NAME&#39;</span><span class="p">);</span>
+</span><span class='line'>        <span class="n">cur</span> <span class="o">=</span> <span class="n">con</span><span class="o">.</span><span class="n">cursor</span><span class="p">()</span>
+</span><span class='line'>        <span class="n">cur</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">uw_query</span><span class="p">)</span>
+</span><span class='line'>        <span class="n">data</span> <span class="o">=</span> <span class="n">cur</span><span class="o">.</span><span class="n">fetchall</span><span class="p">()</span>
+</span><span class='line'>        <span class="k">return</span> <span class="n">data</span>
+</span><span class='line'>    <span class="k">except</span> <span class="n">mdb</span><span class="o">.</span><span class="n">Error</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
+</span><span class='line'>        <span class="k">print</span> <span class="s">&quot;Error </span><span class="si">%d</span><span class="s">: </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">e</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">e</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+</span><span class='line'>        <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+</span><span class='line'>    <span class="k">finally</span><span class="p">:</span>
+</span><span class='line'>        <span class="k">if</span> <span class="n">con</span><span class="p">:</span>
+</span><span class='line'>            <span class="n">con</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">def</span> <span class="nf">uw_write_buffer</span><span class="p">(</span> <span class="n">data</span> <span class="p">):</span>
+</span><span class='line'>    <span class="n">current_buffer</span> <span class="o">=</span> <span class="n">vim</span><span class="o">.</span><span class="n">current</span><span class="o">.</span><span class="n">buffer</span>
+</span><span class='line'>    <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span>
+</span><span class='line'>    <span class="n">current_buff</span> <span class="o">=</span> <span class="p">[]</span>
+</span><span class='line'>    <span class="k">for</span> <span class="n">datum</span> <span class="ow">in</span> <span class="n">data</span> <span class="p">:</span>
+</span><span class='line'>        <span class="n">record</span> <span class="o">=</span> <span class="s">&#39;&#39;</span>
+</span><span class='line'>        <span class="k">for</span> <span class="n">field</span> <span class="ow">in</span> <span class="n">datum</span> <span class="p">:</span>
+</span><span class='line'>            <span class="n">record</span> <span class="o">=</span> <span class="n">record</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">field</span><span class="p">)</span> <span class="o">+</span> <span class="s">&#39;</span><span class="se">\t</span><span class="s">&#39;</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="n">current_buff</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">record</span><span class="p">)</span>
+</span><span class='line'>        <span class="n">i</span> <span class="o">=</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">current_buffer</span><span class="p">[:]</span> <span class="o">=</span> <span class="n">current_buff</span>
+</span><span class='line'>    <span class="n">vim</span><span class="o">.</span><span class="n">command</span><span class="p">(</span> <span class="s">&#39;%!column -t&#39;</span> <span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">uw_query_database</span><span class="p">()</span>
+</span><span class='line'><span class="n">endpython</span>
+</span><span class='line'><span class="p">:</span><span class="n">endfun</span>
+</span><span class='line'><span class="s">&quot; -----------------------------------------------------------------------------</span>
+</span><span class='line'><span class="p">:</span><span class="n">noremap</span> <span class="o">&lt;</span><span class="n">silent</span><span class="o">&gt;</span> <span class="p">;</span><span class="n">s</span> <span class="p">:</span><span class="n">call</span> <span class="n">UW_Query_Database</span><span class="p">()</span><span class="o">&lt;</span><span class="n">CR</span><span class="o">&gt;</span>
+</span><span class='line'><span class="s">&quot; -----------------------------------------------------------------------------</span>
 </span></code></pre></td></tr></table></div></figure>
 
 
 
 
-<h2>Install JSHint</h2>
+<h2>Map to Anything</h2>
+
+
+<p>Currently executing the query is mapped to <code>;s</code>. But you are free to change it to anything you want.</p>
+
+<p><code>:noremap &lt;silent&gt; ANYTHING :call UW_Query_Database()&lt;CR&gt;</code></p>
+
+<h2>In Buffer Freaking Fast Data Processing</h2>
 
 
 
 
-<figure class='code'><figcaption><span>&#8216;JSHint Installation&#8217; </span></figcaption>
+<blockquote><p>Enter your query in the first line in a new buffer.  Press &#8216;;s&#8217;.  Buffer will be filled with the results. Press &#8216;u&#8217; and edit again. Press &#8216;;s&#8217;. Continue until you get what you want.</p></blockquote>
+
+
+<p>You can do all your processing just after retrieving the data from the database, in the buffer itself!</p>
+
+<p>Process data at home in Vim. You can even outsource some tasks to some GNU Tools external to Vim such as sort, column.</p>
+
+<p>Open a new buffer <code>:vnew</code> and enter the following query.</p>
+
+<p><code>select id, lockcode, model, paid, mask_no from gtk_sections where model = 111 and paid = 'paid' order by mask_no desc</code></p>
+
+<p>Press <code>;s</code>. The buffer will be filled with the results.</p>
+
+<p>Suppose you have the following data in your buffer</p>
+
+<figure class='code'><figcaption><span>&#8216;After Query&#8217; </span></figcaption>
  <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
@@ -195,46 +309,68 @@
 <span class='line-number'>6</span>
 <span class='line-number'>7</span>
 <span class='line-number'>8</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>uw@uw:~/.vim/bundle<span class="nv">$ </span>sudo npm install jshint -g
-</span><span class='line'>jshint@2.1.4 /usr/lib/node_modules/jshint
-</span><span class='line'>├── console-browserify@0.1.6
-</span><span class='line'>├── underscore@1.4.4
-</span><span class='line'>├── shelljs@0.1.4
-</span><span class='line'>├── minimatch@0.2.12 <span class="o">(</span>sigmund@1.0.0, lru-cache@2.3.0<span class="o">)</span>
-</span><span class='line'>└── cli@0.4.4-2 <span class="o">(</span>glob@3.2.3<span class="o">)</span>
-</span><span class='line'>uw@uw:~/.vim/bundle<span class="err">$</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>19495  marcon4396  111   paid  3062
+</span><span class='line'>18959  miglon9862  111   paid  3061
+</span><span class='line'>18248  julgom8162  111   paid  3060
+</span><span class='line'>19213  aleber8385  111   paid  3059
+</span><span class='line'>19010  danmic8781  111   paid  3058
+</span><span class='line'>14225  marbro1603  111   paid  3057
+</span><span class='line'>19190  joresp5333  111   paid  3056
+</span><span class='line'>19317  dancas7317  111   paid  3055
+</span><span class='line'>19052  margau1590  111   paid  3054
+</span><span class='line'>19275  herrio2625  111   paid  3053
+</span><span class='line'>18816  leahid6833  111   paid  3052
+</span><span class='line'>18839  gasote1450  111   paid  3051
+</span><span class='line'>20149  carsar2406  111   paid  3050
+</span><span class='line'>20133  juaret6692  111   paid  3049
+</span><span class='line'>20130  anafin1664  111   paid  3048
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>Create a <code>.jshintrc</code> file in your home directory.</p>
+<p>E.g. Run <code>:%!sort -n -k 1</code></p>
 
-<p>Source: <a href="https://github.com/jshint/jshint/blob/master/examples/.jshintrc">https://github.com/jshint/jshint/blob/master/examples/.jshintrc</a></p>
+<figure class='code'><figcaption><span>&#8216;After Processing with sort&#8217; </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>14225  marbro1603  111   paid  3057
+</span><span class='line'>18248  julgom8162  111   paid  3060
+</span><span class='line'>18816  leahid6833  111   paid  3052
+</span><span class='line'>18839  gasote1450  111   paid  3051
+</span><span class='line'>18959  miglon9862  111   paid  3061
+</span><span class='line'>19010  danmic8781  111   paid  3058
+</span><span class='line'>19052  margau1590  111   paid  3054
+</span><span class='line'>19190  joresp5333  111   paid  3056
+</span><span class='line'>19213  aleber8385  111   paid  3059
+</span><span class='line'>19275  herrio2625  111   paid  3053
+</span><span class='line'>19317  dancas7317  111   paid  3055
+</span><span class='line'>19495  marcon4396  111   paid  3062
+</span><span class='line'>20130  anafin1664  111   paid  3048
+</span><span class='line'>20133  juaret6692  111   paid  3049
+</span><span class='line'>20149  carsar2406  111   paid  3050
+</span></code></pre></td></tr></table></div></figure>
 
-<p>Option Reference: <a href="http://www.jshint.com/docs/">http://www.jshint.com/docs/</a></p>
 
-<h2>Javascript Coding Standard - Run the JSHint</h2>
-
-
-<p>Run <code>:SyntasticCheck</code> on a Javascript file. Fix Errors and Warnings.</p>
-
-<p>You can also check your code on <a href="http://www.jslint.com">http://www.jslint.com</a> and <a href="http://www.jshint.com">http://www.jshint.com</a></p>
-
-<h2>Sample .jshintrc Files</h2>
-
-
-<p><a href="https://github.com/jquery/jquery/blob/master/.jshintrc">https://github.com/jquery/jquery/blob/master/.jshintrc</a>
-<a href="https://github.com/mozilla/browserid/blob/dev/.jshintrc">https://github.com/mozilla/browserid/blob/dev/.jshintrc</a></p>
-
-<h2>Install UglifyJS2</h2>
-
-
-<p><code>npm install uglify-js@1</code></p>
-
-<p><a href="https://github.com/mishoo/UglifyJS">https://github.com/mishoo/UglifyJS</a></p>
-
-<p>Now uglify, <code>uglify filename.js &gt; filename.min.js</code>.</p>
-
-<p>Now you know the basics of how to write clean jQuery code and compress them to save bandwidth and improve page load time !</p>
+<p>You no longer have to copy paste data from other programs to prepare your reports. Vim can handle it for you with UW MySQL Database Query Plugin.</p>
 </div>
   
   
@@ -295,6 +431,10 @@
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/wordpress-pages-creation-plugin/">WordPress Pages Creation Plugin</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/vim-mysql-query-plugin/">Vim MySQL Query Plugin</a>
       </li>
     
@@ -348,10 +488,6 @@
     
       <li class="post">
         <a href="/blog/how-i-earned-one-usd/">How I Earned a Dollar</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/i-only-need-one-dollar/">I Only Need One Dollar</a>
       </li>
     
   </ul>
