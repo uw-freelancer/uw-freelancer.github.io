@@ -4,7 +4,7 @@
   <title><![CDATA[Category: GNU | Freelance Projects]]></title>
   <link href="http://uw-freelancer.github.io/blog/categories/gnu/atom.xml" rel="self"/>
   <link href="http://uw-freelancer.github.io/"/>
-  <updated>2013-07-17T23:26:39+05:30</updated>
+  <updated>2013-07-20T19:07:04+05:30</updated>
   <id>http://uw-freelancer.github.io/</id>
   <author>
     <name><![CDATA[Upeksha Wisidagama]]></name>
@@ -12,6 +12,282 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Vim MySQL Query Plugin]]></title>
+    <link href="http://uw-freelancer.github.io/blog/vim-mysql-query-plugin/"/>
+    <updated>2013-07-19T03:00:00+05:30</updated>
+    <id>http://uw-freelancer.github.io/blog/vim-mysql-query-plugin</id>
+    <content type="html"><![CDATA[<h2>Install Python MySQL Module</h2>
+
+
+<p>Note: Vim MySQL Query Plugin needs Python MySQLDB module. Install the MySQL module using the below command.</p>
+
+<p><code>sudo apt-get install python-mysqldb</code></p>
+
+<h2>Source UW MySQL Query Plugin</h2>
+
+
+<p>Paste the following script in a new buffer <code>:vnew</code> and source it using <code>:source %</code>.</p>
+
+<p>You might save this for later use.</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>&lsquo;UW Query Database (~/.vim/scripts/database/uw-query-mysql.vim)&rsquo; </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+<span class='line-number'>52</span>
+<span class='line-number'>53</span>
+<span class='line-number'>54</span>
+<span class='line-number'>55</span>
+<span class='line-number'>56</span>
+<span class='line-number'>57</span>
+<span class='line-number'>58</span>
+<span class='line-number'>59</span>
+<span class='line-number'>60</span>
+<span class='line-number'>61</span>
+<span class='line-number'>62</span>
+<span class='line-number'>63</span>
+<span class='line-number'>64</span>
+<span class='line-number'>65</span>
+<span class='line-number'>66</span>
+<span class='line-number'>67</span>
+<span class='line-number'>68</span>
+<span class='line-number'>69</span>
+<span class='line-number'>70</span>
+<span class='line-number'>71</span>
+<span class='line-number'>72</span>
+<span class='line-number'>73</span>
+<span class='line-number'>74</span>
+<span class='line-number'>75</span>
+<span class='line-number'>76</span>
+<span class='line-number'>77</span>
+<span class='line-number'>78</span>
+<span class='line-number'>79</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="o">&amp;</span><span class="n">ldquo</span><span class="p">;</span> <span class="o">&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&amp;</span><span class="n">ndash</span><span class="p">;</span>
+</span><span class='line'><span class="o">&amp;</span><span class="n">rdquo</span><span class="p">;</span>
+</span><span class='line'><span class="o">&amp;</span><span class="n">ldquo</span><span class="p">;</span>   <span class="n">UW</span> <span class="n">Query</span> <span class="n">Database</span>
+</span><span class='line'><span class="o">&amp;</span><span class="n">rdquo</span><span class="p">;</span>   <span class="o">~~~~~~~~~~~~~~~~~~~~</span>
+</span><span class='line'><span class="o">&amp;</span><span class="n">ldquo</span><span class="p">;</span>
+</span><span class='line'><span class="o">&amp;</span><span class="n">rdquo</span><span class="p">;</span>   <span class="n">Execute</span> <span class="nb">any</span> <span class="n">query</span> <span class="n">on</span> <span class="n">the</span> <span class="n">database</span> <span class="ow">and</span> <span class="n">get</span> <span class="n">the</span> <span class="n">result</span> <span class="n">onto</span> <span class="n">the</span> <span class="n">current</span>
+</span><span class='line'><span class="o">&amp;</span><span class="n">ldquo</span><span class="p">;</span>   <span class="nb">buffer</span><span class="o">.</span>
+</span><span class='line'><span class="o">&amp;</span><span class="n">rdquo</span><span class="p">;</span>
+</span><span class='line'><span class="o">&amp;</span><span class="n">ldquo</span><span class="p">;</span>   <span class="mf">0.</span> <span class="n">Source</span> <span class="n">this</span> <span class="nb">file</span> <span class="p">:</span><span class="n">source</span> <span class="o">%.</span>
+</span><span class='line'><span class="o">&amp;</span><span class="n">rdquo</span><span class="p">;</span>   <span class="mf">1.</span> <span class="n">Open</span> <span class="n">a</span> <span class="n">new</span> <span class="nb">buffer</span><span class="o">.</span>
+</span><span class='line'><span class="o">&amp;</span><span class="n">ldquo</span><span class="p">;</span>   <span class="mf">2.</span> <span class="n">Enter</span> <span class="n">your</span> <span class="n">query</span> <span class="ow">in</span> <span class="n">the</span> <span class="n">first</span> <span class="n">line</span><span class="o">.</span>
+</span><span class='line'><span class="o">&amp;</span><span class="n">rdquo</span><span class="p">;</span>   <span class="mf">3.</span> <span class="n">Press</span> <span class="o">&amp;</span><span class="n">lsquo</span><span class="p">;;</span><span class="n">s</span><span class="o">&amp;</span><span class="n">rsquo</span><span class="p">;</span><span class="o">.</span>
+</span><span class='line'><span class="o">&amp;</span><span class="n">ldquo</span><span class="p">;</span>   <span class="mf">4.</span> <span class="n">Buffer</span> <span class="n">will</span> <span class="n">be</span> <span class="n">filled</span> <span class="k">with</span> <span class="n">the</span> <span class="n">results</span><span class="o">.</span>
+</span><span class='line'><span class="o">&amp;</span><span class="n">rdquo</span><span class="p">;</span>   <span class="mf">5.</span> <span class="n">Press</span> <span class="o">&amp;</span><span class="n">lsquo</span><span class="p">;</span><span class="n">u</span><span class="o">&amp;</span><span class="n">rsquo</span><span class="p">;</span> <span class="ow">and</span> <span class="n">edit</span> <span class="n">again</span><span class="o">.</span>
+</span><span class='line'><span class="o">&amp;</span><span class="n">ldquo</span><span class="p">;</span>   <span class="mf">6.</span> <span class="n">Press</span> <span class="o">&amp;</span><span class="n">lsquo</span><span class="p">;;</span><span class="n">s</span><span class="o">&amp;</span><span class="n">rsquo</span><span class="p">;</span><span class="o">.</span>
+</span><span class='line'><span class="o">&amp;</span><span class="n">rdquo</span><span class="p">;</span>   <span class="mf">7.</span> <span class="n">Continue</span> <span class="n">until</span> <span class="n">you</span> <span class="n">get</span> <span class="n">what</span> <span class="n">you</span> <span class="n">want</span><span class="o">.</span>
+</span><span class='line'><span class="o">&amp;</span><span class="n">ldquo</span><span class="p">;</span>   <span class="mf">8.</span> <span class="n">Process</span> <span class="k">with</span> <span class="n">the</span> <span class="n">Vim</span><span class="p">,</span> <span class="n">Python</span> <span class="ow">or</span> <span class="n">Unix</span> <span class="n">tools</span><span class="o">.</span>
+</span><span class='line'><span class="o">&amp;</span><span class="n">rdquo</span><span class="p">;</span>
+</span><span class='line'><span class="o">&amp;</span><span class="n">ldquo</span><span class="p">;</span>   <span class="n">Maintainer</span><span class="p">:</span> <span class="n">Upeksha</span> <span class="n">Wisidagama</span>
+</span><span class='line'><span class="o">&amp;</span><span class="n">rdquo</span><span class="p">;</span>   <span class="n">License</span><span class="p">:</span> <span class="n">GNU</span> <span class="n">GPL</span> <span class="n">v3</span> <span class="ow">or</span> <span class="n">later</span>
+</span><span class='line'><span class="o">&amp;</span><span class="n">ldquo</span><span class="p">;</span>
+</span><span class='line'><span class="o">&amp;</span><span class="n">rdquo</span><span class="p">;</span> <span class="o">&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&amp;</span><span class="n">ndash</span><span class="p">;</span>
+</span><span class='line'><span class="o">&amp;</span><span class="n">ldquo</span><span class="p">;</span>   <span class="n">Sample</span> <span class="n">Queries</span>
+</span><span class='line'><span class="o">&amp;</span><span class="n">rdquo</span><span class="p">;</span>
+</span><span class='line'><span class="o">&amp;</span><span class="n">ldquo</span><span class="p">;</span>   <span class="n">You</span> <span class="n">can</span> <span class="n">keep</span> <span class="n">your</span> <span class="n">frequently</span> <span class="n">used</span> <span class="n">queries</span> <span class="ow">in</span> <span class="n">this</span> <span class="n">area</span><span class="o">.</span>
+</span><span class='line'><span class="o">&amp;</span><span class="n">rdquo</span><span class="p">;</span>
+</span><span class='line'><span class="o">&amp;</span><span class="n">ldquo</span><span class="p">;</span> <span class="o">&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&amp;</span><span class="n">ndash</span><span class="p">;</span>
+</span><span class='line'><span class="p">:</span><span class="n">fun</span><span class="err">!</span> <span class="n">UW_Query_Database</span><span class="p">()</span>
+</span><span class='line'><span class="n">python</span> <span class="o">&amp;</span><span class="n">lt</span><span class="p">;</span><span class="o">&amp;</span><span class="n">lt</span><span class="p">;</span> <span class="n">endpython</span>
+</span><span class='line'><span class="kn">import</span> <span class="nn">vim</span>
+</span><span class='line'><span class="kn">import</span> <span class="nn">MySQLdb</span> <span class="kn">as</span> <span class="nn">mdb</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="k">def</span> <span class="nf">uw_query_database</span><span class="p">():</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="n">current_buffer</span> <span class="o">=</span> <span class="n">vim</span><span class="o">.</span><span class="n">current</span><span class="o">.</span><span class="n">buffer</span>
+</span><span class='line'><span class="n">uw_query</span> <span class="o">=</span> <span class="n">current_buffer</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+</span><span class='line'><span class="n">data</span> <span class="o">=</span> <span class="n">uw_query_db</span><span class="p">(</span> <span class="n">uw_query</span> <span class="p">)</span>
+</span><span class='line'><span class="n">uw_write_buffer</span><span class="p">(</span> <span class="n">data</span> <span class="p">)</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="k">def</span> <span class="nf">uw_query_db</span><span class="p">(</span> <span class="n">uw_query</span> <span class="p">):</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="k">try</span><span class="p">:</span>
+</span><span class='line'>    <span class="n">con</span> <span class="o">=</span> <span class="n">mdb</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="s">&#39;HOSTNAME&#39;</span><span class="p">,</span> <span class="s">&#39;USER&#39;</span><span class="p">,</span> <span class="s">&#39;PASSWORD&#39;</span><span class="p">,</span> <span class="s">&#39;DB_NAME&#39;</span><span class="p">);</span>
+</span><span class='line'>    <span class="n">cur</span> <span class="o">=</span> <span class="n">con</span><span class="o">.</span><span class="n">cursor</span><span class="p">()</span>
+</span><span class='line'>    <span class="n">cur</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">uw_query</span><span class="p">)</span>
+</span><span class='line'>    <span class="n">data</span> <span class="o">=</span> <span class="n">cur</span><span class="o">.</span><span class="n">fetchall</span><span class="p">()</span>
+</span><span class='line'>    <span class="k">return</span> <span class="n">data</span>
+</span><span class='line'><span class="k">except</span> <span class="n">mdb</span><span class="o">.</span><span class="n">Error</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
+</span><span class='line'>    <span class="k">print</span> <span class="s">&quot;Error </span><span class="si">%d</span><span class="s">: </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">e</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">e</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+</span><span class='line'>    <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+</span><span class='line'><span class="k">finally</span><span class="p">:</span>
+</span><span class='line'>    <span class="k">if</span> <span class="n">con</span><span class="p">:</span>
+</span><span class='line'>        <span class="n">con</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="k">def</span> <span class="nf">uw_write_buffer</span><span class="p">(</span> <span class="n">data</span> <span class="p">):</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="n">current_buffer</span> <span class="o">=</span> <span class="n">vim</span><span class="o">.</span><span class="n">current</span><span class="o">.</span><span class="n">buffer</span>
+</span><span class='line'><span class="n">i</span> <span class="o">=</span> <span class="mi">0</span>
+</span><span class='line'><span class="n">current_buff</span> <span class="o">=</span> <span class="p">[]</span>
+</span><span class='line'><span class="k">for</span> <span class="n">datum</span> <span class="ow">in</span> <span class="n">data</span> <span class="p">:</span>
+</span><span class='line'>    <span class="n">record</span> <span class="o">=</span> <span class="s">&#39;&#39;</span>
+</span><span class='line'>    <span class="k">for</span> <span class="n">field</span> <span class="ow">in</span> <span class="n">datum</span> <span class="p">:</span>
+</span><span class='line'>        <span class="n">record</span> <span class="o">=</span> <span class="n">record</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">field</span><span class="p">)</span> <span class="o">+</span> <span class="s">&#39;</span><span class="se">\t</span><span class="s">&#39;</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">current_buff</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">record</span><span class="p">)</span>
+</span><span class='line'>    <span class="n">i</span> <span class="o">=</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">current_buffer</span><span class="p">[:]</span> <span class="o">=</span> <span class="n">current_buff</span>
+</span><span class='line'><span class="n">vim</span><span class="o">.</span><span class="n">command</span><span class="p">(</span> <span class="s">&#39;%!column -t&#39;</span> <span class="p">)</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="n">uw_query_database</span><span class="p">()</span>
+</span><span class='line'><span class="n">endpython</span>
+</span><span class='line'><span class="p">:</span><span class="n">endfun</span>
+</span><span class='line'><span class="o">&amp;</span><span class="n">ldquo</span><span class="p">;</span> <span class="o">&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&amp;</span><span class="n">ndash</span><span class="p">;</span>
+</span><span class='line'><span class="p">:</span><span class="n">noremap</span> <span class="o">&lt;</span><span class="n">silent</span><span class="o">&gt;</span> <span class="p">;</span><span class="n">s</span> <span class="p">:</span><span class="n">call</span> <span class="n">UW_Query_Database</span><span class="p">()</span><span class="o">&lt;</span><span class="n">CR</span><span class="o">&gt;</span>
+</span><span class='line'><span class="o">&amp;</span><span class="n">rdquo</span><span class="p">;</span> <span class="o">&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&amp;</span><span class="n">ndash</span><span class="p">;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<h2>Map to Anything</h2>
+
+
+<p>Currently executing the query is mapped to <code>;s</code>. But you are free to change it to anything you want.</p>
+
+<p><code>:noremap &lt;silent&gt; ANYTHING :call UW_Query_Database()&lt;CR&gt;</code></p>
+
+<h2>In Buffer Freaking Fast Data Processing</h2>
+
+
+<p><blockquote><p>Enter your query in the first line in a new buffer.  Press &lsquo;;s&rsquo;.  Buffer will be filled with the results. Press &lsquo;u&rsquo; and edit again. Press &lsquo;;s&rsquo;. Continue until you get what you want.</p></blockquote></p>
+
+<p>You can do all your processing just after retrieving the data from the database, in the buffer itself!</p>
+
+<p>Process data at home in Vim. You can even outsource some tasks to some GNU Tools external to Vim such as sort, column.</p>
+
+<p>Open a new buffer <code>:vnew</code> and enter the following query.</p>
+
+<p><code>select id, lockcode, model, paid, mask_no from gtk_sections where model = 111 and paid = 'paid' order by mask_no desc</code></p>
+
+<p>Press <code>;s</code>. The buffer will be filled with the results.</p>
+
+<p>Suppose you have the following data in your buffer</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>&lsquo;After Query&rsquo; </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>19495  marcon4396  111   paid  3062
+</span><span class='line'>18959  miglon9862  111   paid  3061
+</span><span class='line'>18248  julgom8162  111   paid  3060
+</span><span class='line'>19213  aleber8385  111   paid  3059
+</span><span class='line'>19010  danmic8781  111   paid  3058
+</span><span class='line'>14225  marbro1603  111   paid  3057
+</span><span class='line'>19190  joresp5333  111   paid  3056
+</span><span class='line'>19317  dancas7317  111   paid  3055
+</span><span class='line'>19052  margau1590  111   paid  3054
+</span><span class='line'>19275  herrio2625  111   paid  3053
+</span><span class='line'>18816  leahid6833  111   paid  3052
+</span><span class='line'>18839  gasote1450  111   paid  3051
+</span><span class='line'>20149  carsar2406  111   paid  3050
+</span><span class='line'>20133  juaret6692  111   paid  3049
+</span><span class='line'>20130  anafin1664  111   paid  3048
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>E.g. Run <code>:%!sort -n -k 1</code></p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>&lsquo;After Processing with sort&rsquo; </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>14225  marbro1603  111   paid  3057
+</span><span class='line'>18248  julgom8162  111   paid  3060
+</span><span class='line'>18816  leahid6833  111   paid  3052
+</span><span class='line'>18839  gasote1450  111   paid  3051
+</span><span class='line'>18959  miglon9862  111   paid  3061
+</span><span class='line'>19010  danmic8781  111   paid  3058
+</span><span class='line'>19052  margau1590  111   paid  3054
+</span><span class='line'>19190  joresp5333  111   paid  3056
+</span><span class='line'>19213  aleber8385  111   paid  3059
+</span><span class='line'>19275  herrio2625  111   paid  3053
+</span><span class='line'>19317  dancas7317  111   paid  3055
+</span><span class='line'>19495  marcon4396  111   paid  3062
+</span><span class='line'>20130  anafin1664  111   paid  3048
+</span><span class='line'>20133  juaret6692  111   paid  3049
+</span><span class='line'>20149  carsar2406  111   paid  3050
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>You no longer have to copy paste data from other programs to prepare your reports. Vim can handle it for you with UW MySQL Database Query Plugin.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Vim Vedug]]></title>

@@ -9,7 +9,7 @@
   <meta name="author" content="Upeksha Wisidagama">
 
   
-  <meta name="description" content="InnoDB Folders and .frm Files MySQL stores its data dictionary information for tables in .frm files in database directories. Every InnoDB table also &hellip;">
+  <meta name="description" content="Each user can be given their own Alternative PHP Cache (APC) with PHP running as a seperate process. First we need to disable Apache2 PHP module &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -84,7 +84,7 @@
       
   <header>
     
-      <h1 class="entry-title"><a href="/blog/mysql-innodb-disk-space-usage/">MySQL InnoDB Disk Space Consumption</a></h1>
+      <h1 class="entry-title"><a href="/blog/fastcgi-suexec-apc-per-user/">Apache2 FastCGI and suEXEC Implementing APC Per User With PHP5-CGI</a></h1>
     
     
       <p class="meta">
@@ -100,95 +100,320 @@
   
 
 
-<time datetime="2013-05-05T12:00:00+05:30" pubdate data-updated="true">May 5<span>th</span>, 2013</time>
+<time datetime="2013-06-13T22:00:00+05:30" pubdate data-updated="true">Jun 13<span>th</span>, 2013</time>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content"><h2>InnoDB Folders and .frm Files</h2>
+  <div class="entry-content"><p>Each user can be given their own Alternative PHP Cache (APC) with PHP running as a seperate process. First we need to disable Apache2 PHP module which is enabled by default. After doing this you no longer can set PHP settings in .htaccess files. Apache2 will have no knowledge about PHP, it only passes the execution to a seperate PHP process via FastCGI module.</p>
+
+<p><a href="/blog/setup-local-ubuntu-server/" >Setting up a local Ubuntu Server</a> is recommended to read before this post to learn how to setup a local Ubuntu Server.</p>
+
+<h2>Disable Apache2 PHP5 Module and Install PHP CGIs</h2>
 
 
-<p>MySQL stores its data dictionary information for tables in .frm files in database directories.</p>
+<p>Note the highlighted Resident and Shared memory consumption by Apache2 parent process and its children.</p>
 
-<p>Every InnoDB table also has its own entry in the InnoDB internal data dictionary inside the tablespace. When MySQL drops a table or a database, it has to delete one or more .frm files as well as the corresponding entries inside the InnoDB data dictionary.</p>
+<p><img class='center' src="/images/server/apache2-prefork-with-mod_php5.png" title="Apache2 Prefork with Mod_PHP" alt="Apache2 Prefork with Mod_PHP" /></p>
 
-<p><a href="http://dev.mysql.com/doc/refman/5.5/en/innodb-table-and-index.html">http://dev.mysql.com/doc/refman/5.5/en/innodb-table-and-index.html</a></p>
+<p>Disable <code>mod_php</code> with <code>sudo a2dismod php5</code>. Restart web server with <code>sudo service apache2 restart</code>. Now, if you check your &lsquo;/etc/apache2/mods-enabled&rsquo; directory, you will notice that <code>php.conf</code> and <code>php5.load</code> files have been deleted.</p>
 
-<h2>Employees Database Installation</h2>
+<p><img class='center' src="/images/server/apache2-prefork-without-mod_php5.png" title="Apache2 Prefork without Mod_PHP" alt="Apache2 Prefork without Mod_PHP" /></p>
 
+<p>Again, note the reduction of the memory consumption by Apache.</p>
 
-<p>We need a test database for testing. I decided to use the &lsquo;employees&rsquo; database.</p>
+<p>Next, you need to install <code>php5-cgi</code>. Run <code>sudo apt-get install php5-cgi</code>. After installation you will have two new executables (<code>php-cgi</code> and <code>php5-cgi</code>) in <code>/usr/bin/</code> directory.</p>
 
-<p><a href="http://dev.mysql.com/doc/employee/en/index.html">http://dev.mysql.com/doc/employee/en/index.html</a></p>
-
-<blockquote><p>The database contains about 300,000 employee records with 2.8 million salary entries. The export data is 167 MB, which is not huge, but heavy enough to be non-trivial for testing.</p></blockquote>
-
-
-<p>Login to remote host using <code>ssh uwlab</code>. Become root. Download the &lsquo;employees&rsquo; test database. Inspect current disk usage of MySQL.</p>
-
-<p><img class='center' src="/images/mysql/mysql-innodb-disk-usage.png" title="MySQL InnoDB Disk Usage" alt="MySQL InnoDB Disk Usage" /></p>
-
-<p>Employee Database tarball is of size 26M. MySQL main tablespace is about 18M (see ibdata1 file). Extract the database from tarball with <code>tar -jxvf employees_db-full-1.0.6.tar.bz2</code>.</p>
-
-<p>The uncompressed database size is about 161M (use <code>du -h -d 1</code>)</p>
-
-<p>Load the database dump into MySQL using <code>mysql -u root -p -t &lt; employees.sql</code>.</p>
-
-<p>Measue the MySQL data file size again.</p>
-
-<p><img class='center' src="/images/mysql/tablespace-file-size-increase.png" title="Tablespace File Size Increase" alt="Tablespace File Size Increase" /></p>
-
-<blockquote><p>After installing &#8216;employees&#8217; test database, &#8216;ibdata1&#8217; size increased from 18M to 218M. /var/lib/mysql/employees is only 80K.</p></blockquote>
+<h2>Install and Enable Apache2 FastCGI Module</h2>
 
 
+<p>Run <code>sudo apt-cache search apache2 cgi</code> and find the relevant module. Install using <code>sudo apt-get install libapache2-mod-fastcgi</code>. Restart the server once again. If you check <code>/etc/apache2/mods-enabled</code> directory, you will see FastCGI is enabled automatically after installation.</p>
 
+<p>Add the FastCGI configuration to the <code>apache2.conf</code> file in <code>/etc/apache2</code> directory.</p>
 
-<h2>InnoDB Per-Table .ibd Files</h2>
-
-
-<p>By default, all InnoDB tables and indexes are stored in the system tablespace. As an alternative, you can store each InnoDB table and its indexes in its own file.</p>
-
-<p>First drop the &lsquo;employee&rsquo; database using <code>mysql -u root -p -e "drop database employees;"</code>. Add the following in your mysql configuration file.</p>
-
-<figure class='code'><figcaption><span>&#8217; (/etc/mysql/my.cnf)&#8217; </span></figcaption>
+<figure class='code'><figcaption><span>&#8216;FastCGI Configuration (/etc/apache2/apache2.conf)&#8217; </span></figcaption>
  <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="o">[</span>mysqld<span class="o">]</span>
-</span><span class='line'><span class="nv">innodb_file_per_table</span> <span class="o">=</span> 1
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="c"># FastCGI</span>
+</span><span class='line'>&lt;IfModule mod_fastcgi.c&gt;
+</span><span class='line'>
+</span><span class='line'>FastCgiConfig -idle-timeout 20 -maxClassProcesses 1
+</span><span class='line'>FastCgiWrapper on
+</span><span class='line'>
+</span><span class='line'>AddHandler php5-fcgi .php
+</span><span class='line'>Action php5-fcgi /cgi-bin/php-fastcgi
+</span><span class='line'>
+</span><span class='line'>&lt;Location <span class="s2">&quot;/cgi-bin/php-fastcgi&quot;</span>&gt;
+</span><span class='line'>  Order Deny,Allow
+</span><span class='line'>  Deny from All
+</span><span class='line'>  Allow from <span class="nv">env</span><span class="o">=</span>REDIRECT_STATUS
+</span><span class='line'>  Options ExecCGI
+</span><span class='line'>  SetHandler fastcgi-script
+</span><span class='line'>&lt;/Location&gt;
+</span><span class='line'>&lt;/IfModule&gt;
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>Restart the mysql server. You can verify the configuration using <code>mysqld --help --verbose</code>.</p>
+<p>You might need to enable Action command via <code>sudo a2enmod actions</code> to parse the above configuration.</p>
 
-<p>Now add the &lsquo;employees&rsquo; database again using the above instructions. Now we have an &lsquo;ibd&rsquo; file per table.</p>
-
-<p><img class='center' src="/images/mysql/innodb-ibd-per-table.png" title="InnoDB IBD Per Table" alt="InnoDB IBD Per Table" /></p>
-
-<p>Be sure to do a full sql dump before experimenting with the server using, <code>mysqldump -u root -p --all-databases &gt; /home/upeksha/full-dump.sql</code>.</p>
-
-<p>Note how the file size is changed. Now &lsquo;ibdata1&rsquo; is only 18M. But the employees directory is 232M.</p>
-
-<p><img class='center' src="/images/mysql/innodb-disk-space-distribution.png" title="InnoDB Disk Space Distribution" alt="InnoDB Disk Space Distribution" /></p>
-
-<h2>MySQL Query Cache Size</h2>
+<h2>Install and Enable Apache2 suEXEC</h2>
 
 
-<p>The amount of memory allocated for caching query results. The default value is 0, which disables the query cache. Note that query_cache_size bytes of memory are allocated even if query_cache_type is set to 0.</p>
+<p><code>sudo apt-get install apache2-suexec</code></p>
 
-<p><a href="http://dev.mysql.com/doc/refman/5.5/en/server-system-variables.html#sysvar_query_cache_size">http://dev.mysql.com/doc/refman/5.5/en/server-system-variables.html#sysvar_query_cache_size</a></p>
+<p>Enable &lsquo;suEXEC&rsquo; with <code>sudo a2enmod suexec</code>.</p>
 
-<p><img class='center' src="/images/mysql/demonstrating-mysql-query-cache-effects.png" title="MySQL Query Cache Effects" alt="MySQL Query Cache Effects" /></p>
+<p>Create PHP FastCGI wrapper scripts in <code>/var/www/bin/</code> directory. Create a new directory for &lsquo;wisidagama&rsquo;. Create the &lsquo;php-fastcgi&rsquo; wrapper script.</p>
 
-<p>Note, the first query took 939ms. But the identical subsequent queries took only 22ms and 19ms respectively.</p>
+<figure class='code'><figcaption><span>&#8216;Fast CGI PHP Wrapper (/var/www/bin/wisidagama/php-fastcgi)&#8217; </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="c">#!/bin/sh</span>
+</span><span class='line'>
+</span><span class='line'><span class="nv">PHP_FCGI_CHILDREN</span><span class="o">=</span>2
+</span><span class='line'><span class="nb">export </span>PHP_FCGI_CHILDREN
+</span><span class='line'><span class="nv">PHP_FCGI_MAX_REQUESTS</span><span class="o">=</span>500
+</span><span class='line'><span class="nb">export </span>PHP_FCGI_MAX_REQUESTS
+</span><span class='line'>
+</span><span class='line'><span class="nb">umask </span>0022
+</span><span class='line'><span class="nb">exec</span> /usr/bin/php5-cgi -d apc.shm_size<span class="o">=</span>50M
+</span></code></pre></td></tr></table></div></figure>
 
-<h2>More InnoDB Optimization</h2>
+
+<p>Be sure to read and understand the <a href="http://httpd.apache.org/docs/2.2/suexec.html#model" >suEXEC Security Model</a> too.</p>
+
+<h2>Install and Enable PHP APC</h2>
 
 
-<p>For tips on optimization, visit the following page,</p>
+<p><code>sudo apt-get install php-apc</code></p>
 
-<p><a href="http://dev.mysql.com/doc/refman/5.5/en/optimizing-innodb.html">http://dev.mysql.com/doc/refman/5.5/en/optimizing-innodb.html</a></p>
+<p>You should get an <code>apc.ini</code> file in <code>/etc/php5/cgi/conf.d</code> directory. Enter <code>apc.enabled="1"</code> to enable APC for CGI PHP.</p>
+
+<h2>Add a User and Create a simple website</h2>
+
+
+<p>Add a new user called &lsquo;wisidagama&rsquo;. <code>sudo useradd wisidagama</code>.</p>
+
+<figure class='code'><figcaption><span>&#8216;Creating a New User&#8217; </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>upeksha@uwlab:/home<span class="nv">$ </span>sudo useradd -d /home/wisidagama -m wisidagama
+</span><span class='line'>upeksha@uwlab:/home<span class="nv">$ </span>sudo passwd wisidagama
+</span><span class='line'>Enter new UNIX password:
+</span><span class='line'>Retype new UNIX password:
+</span><span class='line'>passwd: password updated successfully
+</span><span class='line'>upeksha@uwlab:/home<span class="nv">$ </span>ls
+</span><span class='line'>upeksha  wisidagama
+</span><span class='line'>upeksha@uwlab:/home<span class="nv">$ </span>ls -al
+</span><span class='line'>total 16
+</span><span class='line'>drwxr-xr-x  4 root       root       4096 Jul  8 00:34 .
+</span><span class='line'>drwxr-xr-x 22 root       root       4096 Jul  7 10:52 ..
+</span><span class='line'>drwxr-xr-x  4 upeksha    upeksha    4096 Jul  7 23:41 upeksha
+</span><span class='line'>drwxr-xr-x  2 wisidagama wisidagama 4096 Jul  8 00:34 wisidagama
+</span><span class='line'>upeksha@uwlab:/home<span class="err">$</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Let&rsquo;s create a simple two-page website for wisidagama.</p>
+
+<figure class='code'><figcaption><span>&#8216;Creating a Simple Site&#8217; </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>upeksha@uw:~/test<span class="nv">$ </span>ssh wisidagama@uwlab
+</span><span class='line'>wisidagama@uwlab<span class="err">&#39;</span>s password:
+</span><span class='line'>Welcome to Ubuntu 12.04.2 LTS <span class="o">(</span>GNU/Linux 3.5.0-23-generic i686<span class="o">)</span>
+</span><span class='line'>...
+</span><span class='line'><span class="nv">$ </span>ls -al
+</span><span class='line'>total 28
+</span><span class='line'>drwxr-xr-x 3 wisidagama wisidagama 4096 Jul  8 00:45 .
+</span><span class='line'>drwxr-xr-x 4 root       root       4096 Jul  8 00:34 ..
+</span><span class='line'>-rw-r--r-- 1 wisidagama wisidagama  220 Apr  3  2012 .bash_logout
+</span><span class='line'>-rw-r--r-- 1 wisidagama wisidagama 3486 Apr  3  2012 .bashrc
+</span><span class='line'>drwx------ 2 wisidagama wisidagama 4096 Jul  8 00:45 .cache
+</span><span class='line'>-rw-r--r-- 1 wisidagama wisidagama  675 Apr  3  2012 .profile
+</span><span class='line'>-rw------- 1 wisidagama wisidagama  594 Jul  8 00:44 .viminfo
+</span><span class='line'><span class="nv">$ </span>mkdir public_html
+</span><span class='line'><span class="nv">$ </span><span class="nb">cd </span>public_html
+</span><span class='line'><span class="nv">$ </span>vi phpinfo.php
+</span><span class='line'><span class="nv">$ </span>vi index.php
+</span><span class='line'><span class="nv">$ </span>ls -al
+</span><span class='line'>total 16
+</span><span class='line'>drwxrwxr-x 2 wisidagama wisidagama 4096 Jul  8 00:47 .
+</span><span class='line'>drwxr-xr-x 4 wisidagama wisidagama 4096 Jul  8 00:47 ..
+</span><span class='line'>-rw-rw-r-- 1 wisidagama wisidagama   29 Jul  8 00:47 index.php
+</span><span class='line'>-rw-rw-r-- 1 wisidagama wisidagama   20 Jul  8 00:47 phpinfo.php
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Next we need serve these files as www.wisidagama.dev. Setup a Virtual Host for wisidagama.dev.</p>
+
+<p>Copy the &lsquo;default&rsquo; file to &lsquo;wisidagama.dev&rsquo; in &lsquo;/etc/apache2/sites-available&rsquo; directory. Edit the file as follows.</p>
+
+<figure class='code'><figcaption><span>&#8216;wisidagama.dev&#8217; </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>&lt;VirtualHost *:80&gt;
+</span><span class='line'>  ServerName www.wisidagama.dev
+</span><span class='line'>  ServerAdmin webmaster@wisidagama.dev
+</span><span class='line'>
+</span><span class='line'>  DocumentRoot /home/wisidagama/public_html/
+</span><span class='line'>  &lt;Directory /home/wisidagama/public_html/&gt;
+</span><span class='line'>      Options Indexes FollowSymLinks MultiViews
+</span><span class='line'>      AllowOverride None
+</span><span class='line'>      Order allow,deny
+</span><span class='line'>      allow from all
+</span><span class='line'>  &lt;/Directory&gt;
+</span><span class='line'>
+</span><span class='line'>  &lt;IfModule mod_fastcgi.c&gt;
+</span><span class='line'>        SuexecUserGroup wisidagama wisidagama
+</span><span class='line'>        Alias /cgi-bin/ /var/www/bin/wisidagama/
+</span><span class='line'>    &lt;/IfModule&gt;
+</span><span class='line'>
+</span><span class='line'>  ErrorLog /home/wisidagama/error.log
+</span><span class='line'>
+</span><span class='line'>  <span class="c"># Possible values include: debug, info, notice, warn, error, crit,</span>
+</span><span class='line'>  <span class="c"># alert, emerg.</span>
+</span><span class='line'>  LogLevel warn
+</span><span class='line'>
+</span><span class='line'>  CustomLog /home/wisidagama/access.log combined
+</span><span class='line'>&lt;/VirtualHost&gt;
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Enable <code>wisidagama.dev</code> using <code>sudo a2ensite wisidagama.dev</code>.</p>
+
+<p>From the client machine we need to tell www.wisidagama.dev to resolve to 192.168.1.8 since we don&rsquo;t have a DNS server to resolve this. Add the following line to your <code>/etc/hosts</code> file.</p>
+
+<p><code>192.168.1.8   www.wisidagama.dev</code></p>
+
+<h2>Disabling FastCGI or suEXEC</h2>
+
+
+<p>If you disable FastCGI module using <code>sudo a2dismod fastcgi</code>, then no one will handle .php files (Remember: AddHandler php5-fcgi .php). They will be downloaded to client machines.</p>
+
+<p>If you disable suExec module using <code>sudo a2dismod suexec</code>, Apache will fail.</p>
+
+<figure class='code'><figcaption><span>&#8216;Apache2 Fails to Start (/var/log/apache2/error.log)&#8217; </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>upeksha@uwlab:~<span class="nv">$ </span>sudo service apache2 restart
+</span><span class='line'>Syntax error on line 14 of /etc/apache2/sites-enabled/wisidagama.dev:
+</span><span class='line'>Invalid <span class="nb">command</span> <span class="s1">&#39;SuexecUserGroup&#39;</span>, perhaps misspelled or defined by a module not included in the server configuration
+</span><span class='line'>Action <span class="s1">&#39;configtest&#39;</span> failed.
+</span><span class='line'>The Apache error log may have more information.
+</span><span class='line'>   ...fail!
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<h2>Configuring APC size Per User</h2>
+
+
+<p>You can fine tune per user APC size in &lsquo;/var/www/bin/USER/php-fastcgi scripts. Use the <code>-d apc.shm_size=100M</code> argument to adjust per user APC size. See below, <code>phpinfo()</code> output shows the custom APC size for &#8216;wisidagama&rsquo;.</p>
+
+<p><img class='center' src="/images/server/cgi-fastcgi-as-php-server-api.png" title="CGI-FastCGI as PHP Sever API" alt="CGI-FastCGI as PHP Sever API" /></p>
+
+<p>APC configuration:</p>
+
+<p><img class='center' src="/images/server/php-fastcgi-apc-enabled.png" title="PHP FastCGI APC Enabled" alt="PHP FastCGI APC Enabled" /></p>
+
+<p>APC size per user:</p>
+
+<p><img class='center' src="/images/server/php-apc-shm-size.png" title="PHP APC SHM Size" alt="PHP APC SHM Size" /></p>
+
+<h2>Resource Consumption of PHP CGI running via FastCGI and usEXEC with per user APC</h2>
+
+
+<p><img class='center' src="/images/server/php5-cgi-process-resource-consumption.png" title="PHP CGI Process Resource Consumption" alt="PHP CGI Process Resource Consumption" /></p>
+
+<p>Now you can fine tune the various parameters to match your server needs and wants. Note: Apache2 still uses Prefork MPM.</p>
+
+<p><img class='center' src="/images/server/php-as-cgi-process-with-apache-prefork-mpm.png" title="PHP as CGI process with Apache2 Prefork MPM" alt="PHP as CGI process with Apache2 Prefork MPM" /></p>
 </div>
   
   
@@ -223,7 +448,8 @@
 <img class='center uw-logo' src="/images/vim_logo.png" title="The Editor" alt="The Editor" /><br />
 <a href="/blog/insanely-faster-vim-buffer-switching/" >Insanely Faster Vim Buffer Switching</a><br />
 <a href="/blog/vim-powerline/" >Vim PowerLine</a><br />
-<a href="/blog/vim-vdebug/" >Vim Vdebug</a><br /><br />
+<a href="/blog/vim-vdebug/" >Vim Vdebug</a><br />
+<a href="/blog/vim-mysql-query-plugin/" >Vim MySQL Query Plugin</a><br /><br />
 </section>
 
 <section class="odd" >
@@ -246,6 +472,10 @@
 <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/vim-mysql-query-plugin/">Vim MySQL Query Plugin</a>
+      </li>
     
       <li class="post">
         <a href="/blog/Vim-Syntastic-JSHint/">Javascript Coding Standards - Vim, Syntastic and JSHint</a>
@@ -280,6 +510,10 @@
       </li>
     
       <li class="post">
+        <a href="/blog/gimp-gnu-image-manipulation-program/">GNU Image Manipulation Program - GIMP</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/insanely-faster-vim-buffer-switching/">Insanely Faster Buffer Switching</a>
       </li>
     
@@ -297,14 +531,6 @@
     
       <li class="post">
         <a href="/blog/i-only-need-one-dollar/">I Only Need One Dollar</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/two-website-customizations/">Two Website Customizations</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/building-the-host-independant-toolchain/">Building the Host Independant Toolchain</a>
       </li>
     
   </ul>

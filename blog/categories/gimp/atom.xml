@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: GIMP | Freelance Projects]]></title>
+  <link href="http://uw-freelancer.github.io/blog/categories/gimp/atom.xml" rel="self"/>
+  <link href="http://uw-freelancer.github.io/"/>
+  <updated>2013-07-20T19:07:04+05:30</updated>
+  <id>http://uw-freelancer.github.io/</id>
+  <author>
+    <name><![CDATA[Upeksha Wisidagama]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[GNU Image Manipulation Program - GIMP]]></title>
+    <link href="http://uw-freelancer.github.io/blog/gimp-gnu-image-manipulation-program/"/>
+    <updated>2013-07-05T03:00:00+05:30</updated>
+    <id>http://uw-freelancer.github.io/blog/gimp-gnu-image-manipulation-program</id>
+    <content type="html"><![CDATA[<p>Install GIMP via the otto-kesselgulasch/gimp ppa.</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>&lsquo;GIMP Installation&rsquo; </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>sudo add-apt-repository ppa:otto-kesselgulasch/gimp
+</span><span class='line'>sudo apt-get update
+</span><span class='line'>sudo apt-get install gimp
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p><img class='center' src="/images/gimp/wilber.png" title="Wilber" alt="Wilber" /></p>
+
+<p>Further information about the Otto Meier and his GIMP repository can be found through the links in PPA introduction.</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>&lsquo;GIMP Otto Meier PPA Introduction&rsquo; </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>uw@uw:/media/www/uw-freelancer<span class="nv">$ </span>sudo add-apt-repository ppa:otto-kesselgulasch/gimp
+</span><span class='line'><span class="o">[</span>sudo<span class="o">]</span> password <span class="k">for </span>uw:
+</span><span class='line'>You are about to add the following PPA to your system:
+</span><span class='line'> This PPA is <span class="k">for </span>Ubuntu &gt;<span class="o">=</span>12.04 and Linux Mint &gt;<span class="o">=</span>13&lt;/p&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;p&gt;Many thanks to David Tschumperlé <span class="k">for </span>his masterpiece called G<span class="err">&#39;</span>MIC.
+</span><span class='line'>&lt;a <span class="nv">href</span><span class="o">=</span><span class="s2">&quot;http://gmic.sourceforge.net/index.shtml&quot;</span>&gt;http://gmic.sourceforge.net/index.shtml&lt;/a&gt;
+</span><span class='line'>Look <span class="k">for </span>the gmic packages!&lt;/p&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;p&gt;We should not forget the Gimp crew!
+</span><span class='line'>&lt;a <span class="nv">href</span><span class="o">=</span><span class="s2">&quot;http://www.gimp.org/&quot;</span>&gt;http://www.gimp.org/&lt;/a&gt;&lt;/p&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;p&gt;And many, many thanks to &lt;a <span class="nv">href</span><span class="o">=</span><span class="s2">&quot;http://siduction.org.&quot;</span>&gt;http://siduction.org.&lt;/a&gt; They helped me on my first steps making the Gimp packages.&lt;/p&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;p&gt;I promise as long as I live this PPA will never die and the most recent packages will <span class="k">for </span>ever be. ;&amp;ndash;<span class="o">)</span>&lt;/p&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;p&gt;Regards&lt;/p&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;p&gt;Otto Meier&lt;/p&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;p&gt;If you had a really problem:
+</span><span class='line'>Skype: thorsten.stettin
+</span><span class='line'>G+: &lt;a <span class="nv">href</span><span class="o">=</span><span class="s2">&quot;https://plus.google.com/u/0/117581776478455814502/posts&quot;</span>&gt;https://plus.google.com/u/0/117581776478455814502/posts&lt;/a&gt;
+</span><span class='line'>FB: &lt;a <span class="nv">href</span><span class="o">=</span><span class="s2">&quot;https://www.facebook.com/otto06217&quot;</span>&gt;https://www.facebook.com/otto06217&lt;/a&gt;&lt;/p&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;p&gt;Some stats:&lt;/p&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;p&gt;&lt;a <span class="nv">href</span><span class="o">=</span><span class="s2">&quot;http://kesselgulasch.org/ppastats/gimp/&quot;</span>&gt;http://kesselgulasch.org/ppastats/gimp/&lt;/a&gt;&lt;/p&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;p&gt;More info: &lt;a <span class="nv">href</span><span class="o">=</span><span class="s2">&quot;https://launchpad.net/~otto-kesselgulasch/+archive/gimp&quot;</span>&gt;https://launchpad.net/~otto-kesselgulasch/+archive/gimp&lt;/a&gt;
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<h2>Install GIMP Plugin Repository</h2>
+
+
+<p>GIMP plugin repository contains a large number of GIMP plugins to extend the native GIMP capabilities.</p>
+
+<p><code>sudo apt-get install gimp-plugin-registry</code></p>
+
+<p>URL: <a href="http://registry.gimp.org/">http://registry.gimp.org/</a></p>
+
+<h2>GREYC's Magic For Image Computing</h2>
+
+
+<p><img class='center' src="/images/gimp/gmic.jpg" title="GMIC" alt="GMIC" /></p>
+
+<p><blockquote><p>G'MIC extends GIMP retouching software capabilities by offering a large number of pre-defined image filters and effects. Of course, the plug-in is highly customizable and it is possible to add your own custom G'MIC-written filters in it.</p></blockquote></p>
+
+<p>A List of All Filters: <a href="http://gmic.sourceforge.net/gimp_filters.txt">http://gmic.sourceforge.net/gimp_filters.txt</a></p>
+
+<p>URL: <a href="http://gmic.sourceforge.net/gimp.shtml">http://gmic.sourceforge.net/gimp.shtml</a></p>
+
+<h2>GIMP User Manual</h2>
+
+
+<p>GIMP User Manual can be found under Help Menu. &lsquo;Basic Concepts&rsquo; section is a good starting point if you are new to GIMP.</p>
+
+<p><img class='center' src="/images/gimp/about-gimp.jpg" title="GIMP" alt="GIMP" /></p>
+]]></content>
+  </entry>
+  
+</feed>

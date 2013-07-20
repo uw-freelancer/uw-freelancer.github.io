@@ -1,0 +1,437 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Freelance Projects</title>
+  <meta name="author" content="Upeksha Wisidagama">
+
+  
+  <meta name="description" content="This is an experiment of this earthly world rather than a heavenly or spiritual one. Apache is a popular web server eventhough it can&rsquo;t solve &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://uw-freelancer.github.io/blog/page/27">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Freelance Projects" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <link href="/stylesheets/data-table.css" media="screen, projection" rel="stylesheet" type="text/css" />
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-42123622-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Freelance Projects</a></h1>
+  
+    <h2>Upeksha Wisidagama</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:uw-freelancer.github.io" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div class="blog-index">
+  
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/mundane-experiments-with-apache-mpm_prefork-and-mod_php/">Mundane Experiments With Apache Prefork MPM and Mod_PHP</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-04-12T06:15:00+05:30" pubdate data-updated="true">Apr 12<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>This is an experiment of this earthly world rather than a heavenly or spiritual one. Apache is a popular web server eventhough it can&rsquo;t solve the <a href="http://en.wikipedia.org/wiki/C10k_problem" >C10k Problem</a>.</p>
+
+<p>Prefork (Module Identifier:mpm_prefork_module) is the default Multi Processing Module for Apache Server in Ubuntu.</p>
+
+<blockquote><p>This Multi-Processing Module (MPM) implements a non-threaded, pre-forking web server. Each server process may answer incoming requests, and a parent process manages the size of the server pool.</p></blockquote>
+
+
+<p>The other MPMs are Event and Worker (there are others of course: mpm_netware, mpm_os2, mpm_winnt). Visit <a href="http://httpd.apache.org/docs/current/mod/" >Apache Module Index</a> to find out more.</p>
+
+<p><img class='center' src="/images/server/apache-prefork-mpm-in-action-top.png" title="Apache Prefork MPM in Action in Top" alt="Apache Prefork MPM in Action in Top" /></p>
+
+<p>I&rsquo;ve written a <a href="/blog/setup-local-ubuntu-server/" >How to install a local Ubuntu Server</a> post explaining how I set up a testing server. Now, I am going to use that server for the following experiments.</p>
+
+<p>PHP is loaded as Module by default. Log into your fresh server (described in the above linked article), and run the <code>top</code> command.</p>
+
+<p>Next enable highlighting by pressing <code>z</code>. Then enable column highlighting by pressing <code>x</code>. You can change the sorting of the rows by columns. Just press <code>&lt;</code> and <code>&gt;</code> until you get the required column highlighted. The above figure shows the rows as ordered by &lsquo;Resident Memory (RE)&rsquo; they consume. The most Resident Memory consuming process is the <code>mysqld</code>. This is the MySQL daemon, accounting for 33Mbs out of total 1GB RAM.</p>
+
+<blockquote><p>PID: 1668 is the Apache2 parent process owned by root. It consumes 7Mbs of RAM. Each of the children of Apache2 parent process consumes ~ 4.4Mbs of RAM. But 1MB of RAM is being shared.</p></blockquote>
+
+
+<p>How the server decided to spawn 9 children? Let&rsquo;s see the apache2 configuration files stored in &lsquo;/etc/apache2/&rsquo;.</p>
+
+<figure class='code'><figcaption><span>&#8216;Apache Prefork MPM Configuration (/etc/apache2/apache2.conf)&#8217; </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="c"># prefork MPM</span>
+</span><span class='line'><span class="c"># StartServers: number of server processes to start</span>
+</span><span class='line'><span class="c"># MinSpareServers: minimum number of server processes which are kept spare</span>
+</span><span class='line'><span class="c"># MaxSpareServers: maximum number of server processes which are kept spare</span>
+</span><span class='line'><span class="c"># MaxClients: maximum number of server processes allowed to start</span>
+</span><span class='line'><span class="c"># MaxRequestsPerChild: maximum number of requests a server process serves</span>
+</span><span class='line'>&lt;IfModule mpm_prefork_module&gt;
+</span><span class='line'>    StartServers          5
+</span><span class='line'>    MinSpareServers       5
+</span><span class='line'>    MaxSpareServers      10
+</span><span class='line'>    MaxClients          150
+</span><span class='line'>    MaxRequestsPerChild   0
+</span><span class='line'>&lt;/IfModule&gt;
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>By default, apache2 starts only 5 child processes(StartServers). I simulated a high traffic scenario using Apache Benchmarking tool (ab). As a resulf of the high traffic, Apache2 increased the number of processes to 9. Next, I restarted the server using <code>sudo service apache2 restart</code>. Then the number of child processes shown was 5. You can change the parameters under <code>mpm_prefork_module</code> to match your client needs and wants.</p>
+
+<p>Next I changed &lsquo;Start&rsquo;, &lsquo;Min&rsquo; and &lsquo;Max&rsquo; servers to 1. I even chaged &lsquo;MaxClients&rsquo; to 1. I need to run only one apache2 child. See the <code>top</code> output for one apache2 child process (PID: 4227).</p>
+
+<p><img class='center' src="/images/server/prefork-with-only-one-server.png" title="Prefork with only one server" alt="Prefork with only one server" /></p>
+
+<h2>Benchmarking Apache Performance with Varing number of Child Processes</h2>
+
+
+<p>Let&rsquo;s benchmark the performance of Apache with One Child and Five Children with <code>mod_php</code> enabled. We serve a simple html file.</p>
+
+<figure class='code'><figcaption><span>&#8216;index.html&#8217; </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='html'><span class='line'><span class="nt">&lt;html&gt;&lt;body&gt;&lt;h1&gt;</span>It works!<span class="nt">&lt;/h1&gt;</span>
+</span><span class='line'><span class="nt">&lt;p&gt;</span>This is the default web page for this server.<span class="nt">&lt;/p&gt;</span>
+</span><span class='line'><span class="nt">&lt;p&gt;</span>The web server software is running but no content has been added, yet.<span class="nt">&lt;/p&gt;</span>
+</span><span class='line'><span class="nt">&lt;/body&gt;&lt;/html&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>First, change the Prefork configuration to run only one child as described above.</p>
+
+<p>Run <code>ab -n 1000 -c 10 -g one-child.dat http://192.168.1.8/</code></p>
+
+<p>Then change Apache Prefork to span five children.</p>
+
+<p>Run <code>ab -n 1000 -c 10 -g five-children.dat http://192.168.1.8/</code></p>
+
+<p>Then plot the graph. We&rsquo;ll be using Gnuplot for plotting. Create the Prefork.p</p>
+
+<figure class='code'><figcaption><span>&#8216;Prefork.p&#8217; </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="c"># output as png image</span>
+</span><span class='line'><span class="nb">set </span>terminal png
+</span><span class='line'>
+</span><span class='line'><span class="c"># save file to &quot;prefork-benchmarking.png&quot;</span>
+</span><span class='line'><span class="nb">set </span>output <span class="s2">&quot;prefork-benchmarking.png&quot;</span>
+</span><span class='line'>
+</span><span class='line'><span class="c"># graph title</span>
+</span><span class='line'><span class="nb">set </span>title <span class="s2">&quot;Apache2 Benchmarking with Prefork MPM&quot;</span>
+</span><span class='line'>
+</span><span class='line'><span class="c"># nicer aspect ratio for image size</span>
+</span><span class='line'><span class="nb">set </span>size 1,0.7
+</span><span class='line'>
+</span><span class='line'><span class="c"># y-axis grid</span>
+</span><span class='line'><span class="nb">set </span>grid y
+</span><span class='line'>
+</span><span class='line'><span class="c"># x-axis label</span>
+</span><span class='line'><span class="nb">set </span>xlabel <span class="s2">&quot;request&quot;</span>
+</span><span class='line'>
+</span><span class='line'><span class="c"># y-axis label</span>
+</span><span class='line'><span class="nb">set </span>ylabel <span class="s2">&quot;response time (ms)&quot;</span>
+</span><span class='line'>
+</span><span class='line'><span class="c">#plot data from data files</span>
+</span><span class='line'>plot <span class="s2">&quot;one-child.dat&quot;</span> using 9 smooth sbezier with lines title <span class="s2">&quot;One Child&quot;</span>, <span class="se">\</span>
+</span><span class='line'><span class="s2">&quot;five-children.dat&quot;</span> using 9 smooth sbezier with lines title <span class="s2">&quot;Five Children&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Now plot the data using <code>gnuplot Prefork.p</code>.</p>
+
+<p><img class='center' src="/images/server/apache2-prefork-benchmarking-with-low-concurrency.png" title="Apache2 Prefork Benchmarking with Low Concurrency" alt="Apache2 Prefork Benchmarking with Low Concurrency" /></p>
+
+<p>The following is the plot when the concurrecy level is set to 100 (use -c 100 instead -c 10 in ab tool).</p>
+
+<p><img class='center' src="/images/server/apache2-prefork-benchmarking-with-high-concurrency.png" title="Apache2 Prefork Benchmarking with High Concurrency" alt="Apache2 Prefork Benchmarking with High Concurrency" /></p>
+
+<p>Now you have the basic building blocks of Apache2 benchmarking. You can tweak various parameters, collect data and plot. Observe the plot. Contemplate or even meditate on the data and the visualization of the data. Gnuplot can plot more than two datasets. Infact, it is capable of plotting in 3D. It is also used as a plotting engine by third-party applications like Octave.</p>
+
+<blockquote><p>Gnuplot was originally created to allow scientists and students to visualize mathematical functions and data interactively, but has grown to support many non-interactive uses such as web scripting.</p></blockquote>
+
+
+
+
+<h2>Relaxation of &#8216;one-per-second&#8217; Rule - Apache2 Process Creation</h2>
+
+
+<p>As of Apache 1.3, the code will relax the one-per-second rule. It will spawn one, wait a second, then spawn two, wait a second, then spawn four, and it will continue exponentially until it is spawning 32 children per second. It will stop whenever it satisfies the MinSpareServers setting. Read more about <a href="http://httpd.apache.org/docs/current/misc/perf-tuning.html" >Apache2 Performance Tuning</a>.</p>
+
+<p>Happy Apache2 Prefork Benchmarking with or without <code>mod_php</code>!</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  <div class="pagination">
+    
+      <a class="prev" href="/blog/page/28/">&larr; Older</a>
+    
+    <a href="/blog/archives">Blog Archives</a>
+    
+    <a class="next" href="/blog/page/26/">Newer &rarr;</a>
+    
+  </div>
+</div>
+<aside class="sidebar">
+  
+    <img class='center uw-logo' src="/images/uw-freelancer-logo.png" title="UW Freelancer Logo" alt="UW Freelancer Logo" />
+<section class="odd" >
+<h1>GNU Linux Systems</h2><br />
+<img class='center uw-logo' src="/images/gnu-logo.png" title="GNU is Not Unix" alt="GNU is Not Unix" /><br />
+<a href="/blog/building-a-linux-system-from-scratch/" >Building a GNU Linux System from Tarballs</a><br />
+<a href="/blog/compiling-the-linux-kernel-from-source/" >Compiling a Linux Kernel From Source</a><br />
+<a href="/blog/building-the-system-software-from-scratch/" >Building the System Software from Scratch</a><br />
+<a href="/blog/building-the-host-independant-toolchain/" >Building the Host Independant ToolChain</a><br />
+</section>
+
+<section class="odd" >
+<h1>The Vim Editor</h2><br />
+<img class='center uw-logo' src="/images/vim_logo.png" title="The Editor" alt="The Editor" /><br />
+<a href="/blog/insanely-faster-vim-buffer-switching/" >Insanely Faster Vim Buffer Switching</a><br />
+<a href="/blog/vim-powerline/" >Vim PowerLine</a><br />
+<a href="/blog/vim-vdebug/" >Vim Vdebug</a><br />
+<a href="/blog/vim-mysql-query-plugin/" >Vim MySQL Query Plugin</a><br /><br />
+</section>
+
+<section class="odd" >
+<h1>Apache HTTP Server</h2><br />
+<img class='center uw-logo' src="/images/apache_logo.png" title="Apache" alt="Apache" /><br />
+<a href="/blog/fastcgi-suexec-apc-per-user/" >Apache2 FastCGI and suEXEC Implementing APC Per User With PHP5-CGI</a><br />
+<a href="/blog/wordpress-performance-with-apc-via-fastcgi-php5/" >WordPress Performance Benchmarking With APC via FastCGI PHP5-CGI</a><br />
+<a href="/blog/mundane-experiments-with-apache-mpm_prefork-and-mod_php/" >Mundane Experiments With Apache Prefork MPM and Mod_PHP</a><br />
+<a href="/blog/setup-local-ubuntu-server/" >Setting Up a Local Ubuntu Server</a><br /><br />
+</section>
+
+<section class="odd" >
+<h1>PHP</h2><br />
+<img class='center uw-logo' src="/images/php_logo.png" title="PHP" alt="PHP" /><br />
+<a href="/blog/writing-php-extensions/" >Writing PHP Extensions</a><br />
+<a href="/blog/mysql-innodb-disk-space-usage/" >MySQL InnoDB Disk Space Consumption</a><br />
+<a href="/blog/wordpress-toolbar-customization/" >WordPress Toolbar Customization</a><br />
+<a href="/blog/two-website-customizations/" >Two Website Customizations</a><br /><br />
+</section>
+<section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/vim-mysql-query-plugin/">Vim MySQL Query Plugin</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/Vim-Syntastic-JSHint/">Javascript Coding Standards - Vim, Syntastic and JSHint</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/mapping-control-key-to-caps-lock-in-ubuntu/">Map Control Key to Caps Lock Key in Ubuntu X Server</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/building-a-linux-system-from-scratch/">Building a Linux System From Scratch</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/writing-php-extensions/">Writing PHP Extensions</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/compiling-the-linux-kernel-from-source/">Compiling a Linux Kernel From Source Tarball</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/wordpress-performance-with-apc-via-fastcgi-php5/">WordPress Performance Benchmarking With APC via FastCGI PHP5-CGI</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/vim-vdebug/">Vim Vedug</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/thanks-nit3hawks/">Thank You Mr. Nit3hawkz</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/gimp-gnu-image-manipulation-program/">GNU Image Manipulation Program - GIMP</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/insanely-faster-vim-buffer-switching/">Insanely Faster Buffer Switching</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/building-the-system-software-from-scratch/">Building the System Software From Scratch</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/vim-powerline/">Vim PowerLine</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/how-i-earned-one-usd/">How I Earned a Dollar</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/i-only-need-one-dollar/">I Only Need One Dollar</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+
+
+
+  
+</aside>
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2013 - Upeksha Wisidagama -
+    <a href="https://plus.google.com/115164496041018691013" rel="publisher">UW Freelancer Google+</a>
+</p>
+
+</footer>
+  
+
+
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id; js.async = true;
+  js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

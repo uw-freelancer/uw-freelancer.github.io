@@ -1,0 +1,581 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Vim MySQL Query Plugin - Freelance Projects</title>
+  <meta name="author" content="Upeksha Wisidagama">
+
+  
+  <meta name="description" content="Install Python MySQL Module Note: Vim MySQL Query Plugin needs Python MySQLDB module. Install the MySQL module using the below command. sudo apt-get &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://uw-freelancer.github.io/blog/vim-mysql-query-plugin">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Freelance Projects" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <link href="/stylesheets/data-table.css" media="screen, projection" rel="stylesheet" type="text/css" />
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-42123622-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Freelance Projects</a></h1>
+  
+    <h2>Upeksha Wisidagama</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:uw-freelancer.github.io" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Vim MySQL Query Plugin</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-07-19T03:00:00+05:30" pubdate data-updated="true">Jul 19<span>th</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><h2>Install Python MySQL Module</h2>
+
+
+<p>Note: Vim MySQL Query Plugin needs Python MySQLDB module. Install the MySQL module using the below command.</p>
+
+<p><code>sudo apt-get install python-mysqldb</code></p>
+
+<h2>Source UW MySQL Query Plugin</h2>
+
+
+<p>Paste the following script in a new buffer <code>:vnew</code> and source it using <code>:source %</code>.</p>
+
+<p>You might save this for later use.</p>
+
+<figure class='code'><figcaption><span>&#8216;UW Query Database (~/.vim/scripts/database/uw-query-mysql.vim)&#8217; </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+<span class='line-number'>52</span>
+<span class='line-number'>53</span>
+<span class='line-number'>54</span>
+<span class='line-number'>55</span>
+<span class='line-number'>56</span>
+<span class='line-number'>57</span>
+<span class='line-number'>58</span>
+<span class='line-number'>59</span>
+<span class='line-number'>60</span>
+<span class='line-number'>61</span>
+<span class='line-number'>62</span>
+<span class='line-number'>63</span>
+<span class='line-number'>64</span>
+<span class='line-number'>65</span>
+<span class='line-number'>66</span>
+<span class='line-number'>67</span>
+<span class='line-number'>68</span>
+<span class='line-number'>69</span>
+<span class='line-number'>70</span>
+<span class='line-number'>71</span>
+<span class='line-number'>72</span>
+<span class='line-number'>73</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="s">&quot; -----------------------------------------------------------------------------</span>
+</span><span class='line'><span class="s">&quot;</span>
+</span><span class='line'><span class="s">&quot;   UW Query Database</span>
+</span><span class='line'><span class="s">&quot;   ~~~~~~~~~~~~~~~~~~~~</span>
+</span><span class='line'><span class="s">&quot;</span>
+</span><span class='line'><span class="s">&quot;   Execute any query on the database and get the result onto the current</span>
+</span><span class='line'><span class="s">&quot;   buffer.</span>
+</span><span class='line'><span class="s">&quot;</span>
+</span><span class='line'><span class="s">&quot;   0. Source this file :source %.</span>
+</span><span class='line'><span class="s">&quot;   1. Open a new buffer.</span>
+</span><span class='line'><span class="s">&quot;   2. Enter your query in the first line.</span>
+</span><span class='line'><span class="s">&quot;   3. Press &#39;;s&#39;.</span>
+</span><span class='line'><span class="s">&quot;   4. Buffer will be filled with the results.</span>
+</span><span class='line'><span class="s">&quot;   5. Press &#39;u&#39; and edit again.</span>
+</span><span class='line'><span class="s">&quot;   6. Press &#39;;s&#39;.</span>
+</span><span class='line'><span class="s">&quot;   7. Continue until you get what you want.</span>
+</span><span class='line'><span class="s">&quot;   8. Process with the Vim, Python or Unix tools.</span>
+</span><span class='line'><span class="s">&quot;</span>
+</span><span class='line'><span class="s">&quot;   Maintainer: Upeksha Wisidagama</span>
+</span><span class='line'><span class="s">&quot;   License: GNU GPL v3 or later</span>
+</span><span class='line'><span class="s">&quot;</span>
+</span><span class='line'><span class="s">&quot; -----------------------------------------------------------------------------</span>
+</span><span class='line'><span class="s">&quot;   Sample Queries</span>
+</span><span class='line'><span class="s">&quot;</span>
+</span><span class='line'><span class="s">&quot;   You can keep your frequently used queries in this area.</span>
+</span><span class='line'><span class="s">&quot;</span>
+</span><span class='line'><span class="s">&quot; -----------------------------------------------------------------------------</span>
+</span><span class='line'><span class="p">:</span><span class="n">fun</span><span class="err">!</span> <span class="n">UW_Query_Database</span><span class="p">()</span>
+</span><span class='line'><span class="n">python</span> <span class="o">&lt;&lt;</span> <span class="n">endpython</span>
+</span><span class='line'><span class="kn">import</span> <span class="nn">vim</span>
+</span><span class='line'><span class="kn">import</span> <span class="nn">MySQLdb</span> <span class="kn">as</span> <span class="nn">mdb</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">def</span> <span class="nf">uw_query_database</span><span class="p">():</span>
+</span><span class='line'>    <span class="n">current_buffer</span> <span class="o">=</span> <span class="n">vim</span><span class="o">.</span><span class="n">current</span><span class="o">.</span><span class="n">buffer</span>
+</span><span class='line'>    <span class="n">uw_query</span> <span class="o">=</span> <span class="n">current_buffer</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+</span><span class='line'>    <span class="n">data</span> <span class="o">=</span> <span class="n">uw_query_db</span><span class="p">(</span> <span class="n">uw_query</span> <span class="p">)</span>
+</span><span class='line'>    <span class="n">uw_write_buffer</span><span class="p">(</span> <span class="n">data</span> <span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">def</span> <span class="nf">uw_query_db</span><span class="p">(</span> <span class="n">uw_query</span> <span class="p">):</span>
+</span><span class='line'>    <span class="k">try</span><span class="p">:</span>
+</span><span class='line'>        <span class="n">con</span> <span class="o">=</span> <span class="n">mdb</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="s">&#39;HOSTNAME&#39;</span><span class="p">,</span> <span class="s">&#39;USER&#39;</span><span class="p">,</span> <span class="s">&#39;PASSWORD&#39;</span><span class="p">,</span> <span class="s">&#39;DB_NAME&#39;</span><span class="p">);</span>
+</span><span class='line'>        <span class="n">cur</span> <span class="o">=</span> <span class="n">con</span><span class="o">.</span><span class="n">cursor</span><span class="p">()</span>
+</span><span class='line'>        <span class="n">cur</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">uw_query</span><span class="p">)</span>
+</span><span class='line'>        <span class="n">data</span> <span class="o">=</span> <span class="n">cur</span><span class="o">.</span><span class="n">fetchall</span><span class="p">()</span>
+</span><span class='line'>        <span class="k">return</span> <span class="n">data</span>
+</span><span class='line'>    <span class="k">except</span> <span class="n">mdb</span><span class="o">.</span><span class="n">Error</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
+</span><span class='line'>        <span class="k">print</span> <span class="s">&quot;Error </span><span class="si">%d</span><span class="s">: </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">e</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">e</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+</span><span class='line'>        <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+</span><span class='line'>    <span class="k">finally</span><span class="p">:</span>
+</span><span class='line'>        <span class="k">if</span> <span class="n">con</span><span class="p">:</span>
+</span><span class='line'>            <span class="n">con</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">def</span> <span class="nf">uw_write_buffer</span><span class="p">(</span> <span class="n">data</span> <span class="p">):</span>
+</span><span class='line'>    <span class="n">current_buffer</span> <span class="o">=</span> <span class="n">vim</span><span class="o">.</span><span class="n">current</span><span class="o">.</span><span class="n">buffer</span>
+</span><span class='line'>    <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span>
+</span><span class='line'>    <span class="n">current_buff</span> <span class="o">=</span> <span class="p">[]</span>
+</span><span class='line'>    <span class="k">for</span> <span class="n">datum</span> <span class="ow">in</span> <span class="n">data</span> <span class="p">:</span>
+</span><span class='line'>        <span class="n">record</span> <span class="o">=</span> <span class="s">&#39;&#39;</span>
+</span><span class='line'>        <span class="k">for</span> <span class="n">field</span> <span class="ow">in</span> <span class="n">datum</span> <span class="p">:</span>
+</span><span class='line'>            <span class="n">record</span> <span class="o">=</span> <span class="n">record</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">field</span><span class="p">)</span> <span class="o">+</span> <span class="s">&#39;</span><span class="se">\t</span><span class="s">&#39;</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="n">current_buff</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">record</span><span class="p">)</span>
+</span><span class='line'>        <span class="n">i</span> <span class="o">=</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">current_buffer</span><span class="p">[:]</span> <span class="o">=</span> <span class="n">current_buff</span>
+</span><span class='line'>    <span class="n">vim</span><span class="o">.</span><span class="n">command</span><span class="p">(</span> <span class="s">&#39;%!column -t&#39;</span> <span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">uw_query_database</span><span class="p">()</span>
+</span><span class='line'><span class="n">endpython</span>
+</span><span class='line'><span class="p">:</span><span class="n">endfun</span>
+</span><span class='line'><span class="s">&quot; -----------------------------------------------------------------------------</span>
+</span><span class='line'><span class="p">:</span><span class="n">noremap</span> <span class="o">&lt;</span><span class="n">silent</span><span class="o">&gt;</span> <span class="p">;</span><span class="n">s</span> <span class="p">:</span><span class="n">call</span> <span class="n">UW_Query_Database</span><span class="p">()</span><span class="o">&lt;</span><span class="n">CR</span><span class="o">&gt;</span>
+</span><span class='line'><span class="s">&quot; -----------------------------------------------------------------------------</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<h2>Map to Anything</h2>
+
+
+<p>Currently executing the query is mapped to <code>;s</code>. But you are free to change it to anything you want.</p>
+
+<p><code>:noremap &lt;silent&gt; ANYTHING :call UW_Query_Database()&lt;CR&gt;</code></p>
+
+<h2>In Buffer Freaking Fast Data Processing</h2>
+
+
+
+
+<blockquote><p>Enter your query in the first line in a new buffer.  Press &#8216;;s&#8217;.  Buffer will be filled with the results. Press &#8216;u&#8217; and edit again. Press &#8216;;s&#8217;. Continue until you get what you want.</p></blockquote>
+
+
+<p>You can do all your processing just after retrieving the data from the database, in the buffer itself!</p>
+
+<p>Process data at home in Vim. You can even outsource some tasks to some GNU Tools external to Vim such as sort, column.</p>
+
+<p>Open a new buffer <code>:vnew</code> and enter the following query.</p>
+
+<p><code>select id, lockcode, model, paid, mask_no from gtk_sections where model = 111 and paid = 'paid' order by mask_no desc</code></p>
+
+<p>Press <code>;s</code>. The buffer will be filled with the results.</p>
+
+<p>Suppose you have the following data in your buffer</p>
+
+<figure class='code'><figcaption><span>&#8216;After Query&#8217; </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>19495  marcon4396  111   paid  3062
+</span><span class='line'>18959  miglon9862  111   paid  3061
+</span><span class='line'>18248  julgom8162  111   paid  3060
+</span><span class='line'>19213  aleber8385  111   paid  3059
+</span><span class='line'>19010  danmic8781  111   paid  3058
+</span><span class='line'>14225  marbro1603  111   paid  3057
+</span><span class='line'>19190  joresp5333  111   paid  3056
+</span><span class='line'>19317  dancas7317  111   paid  3055
+</span><span class='line'>19052  margau1590  111   paid  3054
+</span><span class='line'>19275  herrio2625  111   paid  3053
+</span><span class='line'>18816  leahid6833  111   paid  3052
+</span><span class='line'>18839  gasote1450  111   paid  3051
+</span><span class='line'>20149  carsar2406  111   paid  3050
+</span><span class='line'>20133  juaret6692  111   paid  3049
+</span><span class='line'>20130  anafin1664  111   paid  3048
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>E.g. Run <code>:%!sort -n -k 1</code></p>
+
+<figure class='code'><figcaption><span>&#8216;After Processing with sort&#8217; </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>14225  marbro1603  111   paid  3057
+</span><span class='line'>18248  julgom8162  111   paid  3060
+</span><span class='line'>18816  leahid6833  111   paid  3052
+</span><span class='line'>18839  gasote1450  111   paid  3051
+</span><span class='line'>18959  miglon9862  111   paid  3061
+</span><span class='line'>19010  danmic8781  111   paid  3058
+</span><span class='line'>19052  margau1590  111   paid  3054
+</span><span class='line'>19190  joresp5333  111   paid  3056
+</span><span class='line'>19213  aleber8385  111   paid  3059
+</span><span class='line'>19275  herrio2625  111   paid  3053
+</span><span class='line'>19317  dancas7317  111   paid  3055
+</span><span class='line'>19495  marcon4396  111   paid  3062
+</span><span class='line'>20130  anafin1664  111   paid  3048
+</span><span class='line'>20133  juaret6692  111   paid  3049
+</span><span class='line'>20149  carsar2406  111   paid  3050
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>You no longer have to copy paste data from other programs to prepare your reports. Vim can handle it for you with UW MySQL Database Query Plugin.</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by 
+    <span class="fn"><a href="https://plus.google.com/115164496041018691013?rel=author">Upeksha Wisidagama</a></span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-07-19T03:00:00+05:30" pubdate data-updated="true">Jul 19<span>th</span>, 2013</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/gnu/'>GNU</a>, <a class='category' href='/blog/categories/ubuntu/'>Ubuntu</a>, <a class='category' href='/blog/categories/vim/'>Vim</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://uw-freelancer.github.io/blog/vim-mysql-query-plugin/" data-via="" data-counturl="http://uw-freelancer.github.io/blog/vim-mysql-query-plugin/" >Tweet</a>
+  
+  
+  
+    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/Vim-Syntastic-JSHint/" title="Previous Post: Javascript Coding Standards - Vim, Syntastic and JSHint">&laquo; Javascript Coding Standards - Vim, Syntastic and JSHint</a>
+      
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <img class='center uw-logo' src="/images/uw-freelancer-logo.png" title="UW Freelancer Logo" alt="UW Freelancer Logo" />
+<section class="odd" >
+<h1>GNU Linux Systems</h2><br />
+<img class='center uw-logo' src="/images/gnu-logo.png" title="GNU is Not Unix" alt="GNU is Not Unix" /><br />
+<a href="/blog/building-a-linux-system-from-scratch/" >Building a GNU Linux System from Tarballs</a><br />
+<a href="/blog/compiling-the-linux-kernel-from-source/" >Compiling a Linux Kernel From Source</a><br />
+<a href="/blog/building-the-system-software-from-scratch/" >Building the System Software from Scratch</a><br />
+<a href="/blog/building-the-host-independant-toolchain/" >Building the Host Independant ToolChain</a><br />
+</section>
+
+<section class="odd" >
+<h1>The Vim Editor</h2><br />
+<img class='center uw-logo' src="/images/vim_logo.png" title="The Editor" alt="The Editor" /><br />
+<a href="/blog/insanely-faster-vim-buffer-switching/" >Insanely Faster Vim Buffer Switching</a><br />
+<a href="/blog/vim-powerline/" >Vim PowerLine</a><br />
+<a href="/blog/vim-vdebug/" >Vim Vdebug</a><br />
+<a href="/blog/vim-mysql-query-plugin/" >Vim MySQL Query Plugin</a><br /><br />
+</section>
+
+<section class="odd" >
+<h1>Apache HTTP Server</h2><br />
+<img class='center uw-logo' src="/images/apache_logo.png" title="Apache" alt="Apache" /><br />
+<a href="/blog/fastcgi-suexec-apc-per-user/" >Apache2 FastCGI and suEXEC Implementing APC Per User With PHP5-CGI</a><br />
+<a href="/blog/wordpress-performance-with-apc-via-fastcgi-php5/" >WordPress Performance Benchmarking With APC via FastCGI PHP5-CGI</a><br />
+<a href="/blog/mundane-experiments-with-apache-mpm_prefork-and-mod_php/" >Mundane Experiments With Apache Prefork MPM and Mod_PHP</a><br />
+<a href="/blog/setup-local-ubuntu-server/" >Setting Up a Local Ubuntu Server</a><br /><br />
+</section>
+
+<section class="odd" >
+<h1>PHP</h2><br />
+<img class='center uw-logo' src="/images/php_logo.png" title="PHP" alt="PHP" /><br />
+<a href="/blog/writing-php-extensions/" >Writing PHP Extensions</a><br />
+<a href="/blog/mysql-innodb-disk-space-usage/" >MySQL InnoDB Disk Space Consumption</a><br />
+<a href="/blog/wordpress-toolbar-customization/" >WordPress Toolbar Customization</a><br />
+<a href="/blog/two-website-customizations/" >Two Website Customizations</a><br /><br />
+</section>
+<section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/vim-mysql-query-plugin/">Vim MySQL Query Plugin</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/Vim-Syntastic-JSHint/">Javascript Coding Standards - Vim, Syntastic and JSHint</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/mapping-control-key-to-caps-lock-in-ubuntu/">Map Control Key to Caps Lock Key in Ubuntu X Server</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/building-a-linux-system-from-scratch/">Building a Linux System From Scratch</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/writing-php-extensions/">Writing PHP Extensions</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/compiling-the-linux-kernel-from-source/">Compiling a Linux Kernel From Source Tarball</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/wordpress-performance-with-apc-via-fastcgi-php5/">WordPress Performance Benchmarking With APC via FastCGI PHP5-CGI</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/vim-vdebug/">Vim Vedug</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/thanks-nit3hawks/">Thank You Mr. Nit3hawkz</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/gimp-gnu-image-manipulation-program/">GNU Image Manipulation Program - GIMP</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/insanely-faster-vim-buffer-switching/">Insanely Faster Buffer Switching</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/building-the-system-software-from-scratch/">Building the System Software From Scratch</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/vim-powerline/">Vim PowerLine</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/how-i-earned-one-usd/">How I Earned a Dollar</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/i-only-need-one-dollar/">I Only Need One Dollar</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2013 - Upeksha Wisidagama -
+    <a href="https://plus.google.com/115164496041018691013" rel="publisher">UW Freelancer Google+</a>
+</p>
+
+</footer>
+  
+
+
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id; js.async = true;
+  js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>
