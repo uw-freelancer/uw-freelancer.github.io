@@ -9,7 +9,7 @@
   <meta name="author" content="Upeksha Wisidagama">
 
   
-  <meta name="description" content="It&rsquo;s been a year, completing my first project on freelancer.com and receiving a 5 star feedback. In retrospect, it seems like it all happened &hellip;">
+  <meta name="description" content="I&rsquo;ve been using various debuggers for Vim. But when tried Vdeug, I realized Vdebug has almost all the possible features for a Vim Debugger. &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -84,7 +84,7 @@
       
   <header>
     
-      <h1 class="entry-title"><a href="/blog/thanks-nit3hawks/">Thank You Mr. Nit3hawkz</a></h1>
+      <h1 class="entry-title"><a href="/blog/vim-vdebug/">Vim Vedug</a></h1>
     
     
       <p class="meta">
@@ -100,52 +100,95 @@
   
 
 
-<time datetime="2013-07-06T05:00:00+05:30" pubdate data-updated="true">Jul 6<span>th</span>, 2013</time>
+<time datetime="2013-07-06T15:13:00+05:30" pubdate data-updated="true">Jul 6<span>th</span>, 2013</time>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content"><p>It&rsquo;s been a year, completing my first project on freelancer.com and receiving a 5 star feedback.</p>
+  <div class="entry-content"><p>I&rsquo;ve been using various debuggers for Vim. But when tried Vdeug, I realized Vdebug has almost all the possible features for a Vim Debugger.</p>
 
-<blockquote><p>In retrospect, it seems like it all happened so quickly.</p></blockquote>
+<p><img class='center' src="/images/blog/vim/vdebug-help.jpg" title="Vdebug Help" alt="Vdebug Help" /></p>
 
+<p>Vdebug, technically, said to support languages that have a debugging engine that uses the DBGP protocol. This plugin has been designed with four languages in mind, PHP, Python, Ruby and Perl.</p>
 
-<p>Remember the first feedback I received, that positive feedback had a great impact on my freelancing career.</p>
-
-<p><img class='center' src="/images/blog/thanks-nit3hawkz-review.jpg" title="Mr. Nit3hawkz Review" alt="Mr. Nit3hawkz Review" /></p>
-
-<p>After that I was able to complete a series of freelancing projects. At the same time I learned a great deal of new things about web design and development.</p>
-
-<blockquote><p>&#8220;How far that little candle throws his beams! So shines a good deed in a weary world.&#8221; - William Shakespeare</p></blockquote>
-
-
-<p><img class='center' src="/images/blog/nit3hawkz-profile.jpg" title="Mr. Nit3hawkz Profile" alt="Mr. Nit3hawkz Profile" /></p>
-
-<p>Thank you Mr. Nit3hawkz for helping me to start my career in freelancing. I completed three projects for Mr. Nit3hawkz in the past year.</p>
-
-<p>First Project &ndash; <a href="/blog/coming-soon-site/" >Exp Tennis Project</a><br />
-Second Project &ndash; <a href="/blog/facebook-app-sweepstakes/" >Facebook App Project</a><br />
-Third Project &ndash; <a href="/blog/language-parlor-project/" >Language Parlor Project</a><br /></p>
-
-<blockquote><p>&#8220;Unselfish and noble actions are the most radiant pages in the biography of souls.&#8221; - David Thomas</p></blockquote>
+<blockquote><p>Vdebug: A powerful, fast, multi-language debugger for Vim</p></blockquote>
 
 
 
 
-<h2>Dear Other Employers,</h2>
+<h3>Vim Vdebug Debugger Stack</h3>
 
 
-<p>I thank all of you.</p>
+<p><img class='center' src="/images/blog/vim/vdebug-debuggerstack.jpg" title="Vdebug Debugger Stack" alt="Vdebug Debugger Stack" /></p>
 
-<blockquote><p>I can&#8217;t win, I can&#8217;t reign<br/>I will never win this game<br/>Without you, without you<br/>I am lost, I am vain,<br/>I will never be the same<br/>Without you, without you</p></blockquote>
+<h3>Vim Vdebug Debugger Watch</h3>
 
 
-<p><img class='center' src="/images/blog/thank-you.jpg" title="Thank You All" alt="Thank You All" /></p>
+<p><img class='center' src="/images/blog/vim/vdebug-debuggerwatch.jpg" title="Vdebug Debugger Watch" alt="Vdebug Debugger Watch" /></p>
 
-<blockquote><p>&#8220;I would maintain that thanks are the highest form of thought, and that gratitude is happiness doubled by wonder.&#8221; - G.K. Chesterton</p></blockquote>
+<h3>Vim Vdebug Debugger Status</h3>
 
+
+<p><img class='center' src="/images/blog/vim/vdebug-debuggerstatus.jpg" title="Vdebug Debugger Status" alt="Vdebug Debugger Status" /></p>
+
+<h2>Installing Vdebug Plugin</h2>
+
+
+<p>Clone the Vdebug Github repository in your local bundle.</p>
+
+<figure class='code'><figcaption><span>&#8216;Installing Vdebug&#8217; </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nb">cd</span> ~/.vim/bundle
+</span><span class='line'>git clone https://github.com/joonty/vdebug.git
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<h2>PHP5-Xdebug Configuration</h2>
+
+
+<p>You also need to install Xdebug PHP extension using <code>sudo apt-get install php5-xdebug</code>.</p>
+
+<p>Now configure xdebug initialization.</p>
+
+<figure class='code'><figcaption><span>&#8216;Xdebug Initialization (/etc/php5/apache2/conf.d/xdebug.ini)&#8217; </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">zend_extension</span><span class="o">=</span>/usr/lib/php5/20090626+lfs/xdebug.so
+</span><span class='line'>
+</span><span class='line'>xdebug.remote_enable<span class="o">=</span>1
+</span><span class='line'>xdebug.remote_handler<span class="o">=</span>dbgp
+</span><span class='line'>xdebug.remote_mode<span class="o">=</span>req
+</span><span class='line'>xdebug.remote_host<span class="o">=</span>127.0.0.1
+</span><span class='line'>xdebug.remote_port<span class="o">=</span>9000
+</span><span class='line'>
+</span><span class='line'>xdebug.profiler_enable_trigger<span class="o">=</span>1
+</span><span class='line'>xdebug.profiler_output_dir<span class="o">=</span>/media/www/xdebugdata
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<h2>Xdebug Helper Google Chrome Extension</h2>
+
+
+<p>Installl Xdebug Helper Chrome extension to easily start a debugging session via browser.</p>
+
+<p><a href="https://chrome.google.com/webstore/detail/xdebug-helper/eadndfjplgieldjbigjakmdgkmoaaaoc">https://chrome.google.com/webstore/detail/xdebug-helper/eadndfjplgieldjbigjakmdgkmoaaaoc</a></p>
+
+<p><img class='center' src="/images/blog/vim/xdebug-helper.png" title="Xdebug Helper" alt="Xdebug Helper" /></p>
 </div>
   
   
@@ -185,12 +228,10 @@ Third Project &ndash; <a href="/blog/language-parlor-project/" >Language Parlor 
 </section>
 
 <section class="odd" >
-<h1>Apache HTTP Server</h2><br />
-<img class='center uw-logo' src="/images/apache_logo.png" title="Apache" alt="Apache" /><br />
-<a href="/blog/fastcgi-suexec-apc-per-user/" >Apache2 FastCGI and suEXEC Implementing APC Per User With PHP5-CGI</a><br />
-<a href="/blog/wordpress-performance-with-apc-via-fastcgi-php5/" >WordPress Performance Benchmarking With APC via FastCGI PHP5-CGI</a><br />
-<a href="/blog/mundane-experiments-with-apache-mpm_prefork-and-mod_php/" >Mundane Experiments With Apache Prefork MPM and Mod_PHP</a><br />
-<a href="/blog/setup-local-ubuntu-server/" >Setting Up a Local Ubuntu Server</a><br /><br />
+<h1>WordPress</h2><br />
+<img class='center uw-logo' src="/images/wordpress_logo.png" title="WordPress" alt="WordPress" /><br />
+<a href="/blog/wordpress-toolbar-customization/" >WordPress Toolbar Customization</a><br />
+<a href="/blog/two-website-customizations/" >Two Website Customizations</a><br /><br />
 </section>
 
 <section class="odd" >
@@ -198,12 +239,23 @@ Third Project &ndash; <a href="/blog/language-parlor-project/" >Language Parlor 
 <img class='center uw-logo' src="/images/php_logo.png" title="PHP" alt="PHP" /><br />
 <a href="/blog/writing-php-extensions/" >Writing PHP Extensions</a><br />
 <a href="/blog/mysql-innodb-disk-space-usage/" >MySQL InnoDB Disk Space Consumption</a><br />
-<a href="/blog/wordpress-toolbar-customization/" >WordPress Toolbar Customization</a><br />
-<a href="/blog/two-website-customizations/" >Two Website Customizations</a><br /><br />
+</section>
+
+<section class="odd" >
+<h1>Apache HTTP Server</h2><br />
+<img class='center uw-logo' src="/images/apache_logo.png" title="Apache" alt="Apache" /><br />
+<a href="/blog/fastcgi-suexec-apc-per-user/" >Apache2 FastCGI and suEXEC Implementing APC Per User With PHP5-CGI</a><br />
+<a href="/blog/wordpress-performance-with-apc-via-fastcgi-php5/" >WordPress Performance Benchmarking With APC via FastCGI PHP5-CGI</a><br />
+<a href="/blog/mundane-experiments-with-apache-mpm_prefork-and-mod_php/" >Mundane Experiments With Apache Prefork MPM and Mod_PHP</a><br />
+<a href="/blog/setup-local-ubuntu-server/" >Setting Up a Local Ubuntu Server</a><br /><br />
 </section>
 <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/asala-full-moon-poya-day/">Asala Full Moon Poya Day</a>
+      </li>
     
       <li class="post">
         <a href="/blog/wordpress-pages-creation-plugin/">WordPress Pages Creation Plugin</a>
@@ -259,10 +311,6 @@ Third Project &ndash; <a href="/blog/language-parlor-project/" >Language Parlor 
     
       <li class="post">
         <a href="/blog/vim-powerline/">Vim PowerLine</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/how-i-earned-one-usd/">How I Earned a Dollar</a>
       </li>
     
   </ul>

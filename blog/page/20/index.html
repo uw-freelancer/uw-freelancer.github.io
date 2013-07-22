@@ -9,19 +9,7 @@
   <meta name="author" content="Upeksha Wisidagama">
 
   
-  <meta name="description" content="Let&rsquo;s start with a basic two dimensional plot. Create the data file (uw.dat). &#8216;Data File (uw.dat)&#8217; 1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-1, 5
-2, 4
-3 &hellip;">
+  <meta name="description" content="Each user can be given their own Alternative PHP Cache (APC) with PHP running as a seperate process. First we need to disable Apache2 PHP module &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -96,7 +84,7 @@
       
   <header>
     
-      <h1 class="entry-title"><a href="/blog/gnuplot-basics-2d-plots/">Gnuplot Basics - 2D Plots</a></h1>
+      <h1 class="entry-title"><a href="/blog/fastcgi-suexec-apc-per-user/">Apache2 FastCGI and suEXEC Implementing APC Per User With PHP5-CGI</a></h1>
     
     
       <p class="meta">
@@ -112,66 +100,40 @@
   
 
 
-<time datetime="2013-05-13T22:00:00+05:30" pubdate data-updated="true">May 13<span>th</span>, 2013</time>
+<time datetime="2013-06-13T22:00:00+05:30" pubdate data-updated="true">Jun 13<span>th</span>, 2013</time>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content"><p>Let&rsquo;s start with a basic two dimensional plot. Create the data file (uw.dat).</p>
+  <div class="entry-content"><p>Each user can be given their own Alternative PHP Cache (APC) with PHP running as a seperate process. First we need to disable Apache2 PHP module which is enabled by default. After doing this you no longer can set PHP settings in .htaccess files. Apache2 will have no knowledge about PHP, it only passes the execution to a seperate PHP process via FastCGI module.</p>
 
-<figure class='code'><figcaption><span>&#8216;Data File (uw.dat)&#8217; </span></figcaption>
- <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>1,  5
-</span><span class='line'>2,  4
-</span><span class='line'>3,  6
-</span><span class='line'>4, 10
-</span><span class='line'>5,  2
-</span><span class='line'>6,  1
-</span><span class='line'>7,  0
-</span><span class='line'>8,  5
-</span><span class='line'>9,  7
-</span><span class='line'>10, 9
-</span></code></pre></td></tr></table></div></figure>
+<p><a href="/blog/setup-local-ubuntu-server/" >Setting up a local Ubuntu Server</a> is recommended to read before this post to learn how to setup a local Ubuntu Server.</p>
+
+<h2>Disable Apache2 PHP5 Module and Install PHP CGIs</h2>
 
 
-<p>Create the plot configuration file (uw.config).</p>
+<p>Note the highlighted Resident and Shared memory consumption by Apache2 parent process and its children.</p>
 
-<figure class='code'><figcaption><span>&#8216;Configuration File (uw.config)&#8217; </span></figcaption>
- <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nb">set </span>term png size 600, 400
-</span><span class='line'><span class="nb">set </span>output <span class="s2">&quot;uw.png&quot;</span>
-</span><span class='line'>plot <span class="s2">&quot;uw.dat&quot;</span> with lines
-</span></code></pre></td></tr></table></div></figure>
+<p><img class='center' src="/images/server/apache2-prefork-with-mod_php5.png" title="Apache2 Prefork with Mod_PHP" alt="Apache2 Prefork with Mod_PHP" /></p>
 
+<p>Disable <code>mod_php</code> with <code>sudo a2dismod php5</code>. Restart web server with <code>sudo service apache2 restart</code>. Now, if you check your &lsquo;/etc/apache2/mods-enabled&rsquo; directory, you will notice that <code>php.conf</code> and <code>php5.load</code> files have been deleted.</p>
 
-<p>Now, plot using <code>gnuplot uw.config</code>.</p>
+<p><img class='center' src="/images/server/apache2-prefork-without-mod_php5.png" title="Apache2 Prefork without Mod_PHP" alt="Apache2 Prefork without Mod_PHP" /></p>
 
-<p><img class='center' src="/images/gnuplot/gnuplot-basics-2d-plot.png" title="Ubuntu Server Login" alt="Ubuntu Server Login" /></p>
+<p>Again, note the reduction of the memory consumption by Apache.</p>
 
-<h3>Draw an Arrow</h3>
+<p>Next, you need to install <code>php5-cgi</code>. Run <code>sudo apt-get install php5-cgi</code>. After installation you will have two new executables (<code>php-cgi</code> and <code>php5-cgi</code>) in <code>/usr/bin/</code> directory.</p>
+
+<h2>Install and Enable Apache2 FastCGI Module</h2>
 
 
-<p>To draw and arrow from (3,2) to (6,8), use <code>set arrow from 3,2 to 6,8</code>. To specify end coordinate relative to the starting use <code>rto</code> instead <code>to</code>. e.g. <code>set arrow from 3,2 rto 1,1</code>.</p>
+<p>Run <code>sudo apt-cache search apache2 cgi</code> and find the relevant module. Install using <code>sudo apt-get install libapache2-mod-fastcgi</code>. Restart the server once again. If you check <code>/etc/apache2/mods-enabled</code> directory, you will see FastCGI is enabled automatically after installation.</p>
 
-<h2>Plotting the Exam Results of My Friends</h2>
+<p>Add the FastCGI configuration to the <code>apache2.conf</code> file in <code>/etc/apache2</code> directory.</p>
 
-
-<p>These are the marks taken by each of the friends. Format: Name, Marks.</p>
-
-<figure class='code'><figcaption><span>&#8216;Exam Results (marks.dat)&#8217; </span></figcaption>
+<figure class='code'><figcaption><span>&#8216;FastCGI Configuration (/etc/apache2/apache2.conf)&#8217; </span></figcaption>
  <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
@@ -189,60 +151,108 @@
 <span class='line-number'>15</span>
 <span class='line-number'>16</span>
 <span class='line-number'>17</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>Alice 20
-</span><span class='line'>Bob 63
-</span><span class='line'>Charlie 56
-</span><span class='line'>Chuck 42
-</span><span class='line'>Craig 36
-</span><span class='line'>Dave 86
-</span><span class='line'>Erin 45
-</span><span class='line'>Frank 87
-</span><span class='line'>Eve 78
-</span><span class='line'>Mallory 2
-</span><span class='line'>Oscary 44
-</span><span class='line'>Peggy 12
-</span><span class='line'>Trent 56
-</span><span class='line'>Walter 55
-</span><span class='line'>Arthur 42
-</span><span class='line'>Paul 45
-</span><span class='line'>Upeksha 55
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="c"># FastCGI</span>
+</span><span class='line'>&lt;IfModule mod_fastcgi.c&gt;
+</span><span class='line'>
+</span><span class='line'>FastCgiConfig -idle-timeout 20 -maxClassProcesses 1
+</span><span class='line'>FastCgiWrapper on
+</span><span class='line'>
+</span><span class='line'>AddHandler php5-fcgi .php
+</span><span class='line'>Action php5-fcgi /cgi-bin/php-fastcgi
+</span><span class='line'>
+</span><span class='line'>&lt;Location <span class="s2">&quot;/cgi-bin/php-fastcgi&quot;</span>&gt;
+</span><span class='line'>  Order Deny,Allow
+</span><span class='line'>  Deny from All
+</span><span class='line'>  Allow from <span class="nv">env</span><span class="o">=</span>REDIRECT_STATUS
+</span><span class='line'>  Options ExecCGI
+</span><span class='line'>  SetHandler fastcgi-script
+</span><span class='line'>&lt;/Location&gt;
+</span><span class='line'>&lt;/IfModule&gt;
 </span></code></pre></td></tr></table></div></figure>
 
 
+<p>You might need to enable Action command via <code>sudo a2enmod actions</code> to parse the above configuration.</p>
+
+<h2>Install and Enable Apache2 suEXEC</h2>
 
 
-<h3>A brief description of each of the friends</h3>
+<p><code>sudo apt-get install apache2-suexec</code></p>
+
+<p>Enable &lsquo;suEXEC&rsquo; with <code>sudo a2enmod suexec</code>.</p>
+
+<p>Create PHP FastCGI wrapper scripts in <code>/var/www/bin/</code> directory. Create a new directory for &lsquo;wisidagama&rsquo;. Create the &lsquo;php-fastcgi&rsquo; wrapper script.</p>
+
+<figure class='code'><figcaption><span>&#8216;Fast CGI PHP Wrapper (/var/www/bin/wisidagama/php-fastcgi)&#8217; </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="c">#!/bin/sh</span>
+</span><span class='line'>
+</span><span class='line'><span class="nv">PHP_FCGI_CHILDREN</span><span class="o">=</span>2
+</span><span class='line'><span class="nb">export </span>PHP_FCGI_CHILDREN
+</span><span class='line'><span class="nv">PHP_FCGI_MAX_REQUESTS</span><span class="o">=</span>500
+</span><span class='line'><span class="nb">export </span>PHP_FCGI_MAX_REQUESTS
+</span><span class='line'>
+</span><span class='line'><span class="nb">umask </span>0022
+</span><span class='line'><span class="nb">exec</span> /usr/bin/php5-cgi -d apc.shm_size<span class="o">=</span>50M
+</span></code></pre></td></tr></table></div></figure>
 
 
-<p>Alice and Bob. Generally, Alice wants to send a message to Bob.
-Carol, Carlos or Charlie, as a third participant in communications.</p>
+<p>Be sure to read and understand the <a href="http://httpd.apache.org/docs/2.2/suexec.html#model" >suEXEC Security Model</a> too.</p>
 
-<p>Chuck, as a third participant usually of malicious intent.</p>
+<h2>Install and Enable PHP APC</h2>
 
-<p>Craig, the password cracker (usually encountered in situations with stored hashed/salted passwords).</p>
 
-<p>Dan or Dave, a fourth participant.
-Erin, a fifth participant. (It&rsquo;s rare to see Erin; E is usually reserved for Eve.)
-Frank, a sixth participant (and so on alphabetically).</p>
+<p><code>sudo apt-get install php-apc</code></p>
 
-<p>Eve, an eavesdropper, is usually a passive attacker. While she can listen in on messages between Alice and Bob, she cannot modify them. In quantum cryptography, Eve may also represent the environment.</p>
+<p>You should get an <code>apc.ini</code> file in <code>/etc/php5/cgi/conf.d</code> directory. Enter <code>apc.enabled="1"</code> to enable APC for CGI PHP.</p>
 
-<p>Mallet or Mallory, a malicious attacker (less commonly called Trudy, an intruder.); unlike the passive Eve, this one is the active man-in-the-middle attacker who can modify messages, substitute his/her own messages, replay old messages, and so on. The difficulty of securing a system against Mallet/Mallory is much greater than against Eve.</p>
+<h2>Add a User and Create a simple website</h2>
 
-<p>Oscar, an opponent, similar to Mallet/Mallory but not necessarily malicious. Could be white-hat but still wants to crack, modify, substitute, or replay messages.
-Peggy, a prover, and Victor, a verifier, often must interact in some way to show that the intended transaction has actually taken place. They are often found in zero-knowledge proofs.
-Trent, a trusted arbitrator, is some kind of neutral third party, whose exact role varies with the protocol under discussion.</p>
 
-<p>Walter, a warden, may be needed to guard Alice and Bob in some respect, depending on the protocol being discussed.
-Arthur and Merlin: In interactive proof systems, the prover has unbounded computational ability and is hence associated with Merlin, the powerful wizard. He claims the truth of a statement, and Arthur, the wise king, questions him to verify the claim.</p>
+<p>Add a new user called &lsquo;wisidagama&rsquo;. <code>sudo useradd wisidagama</code>.</p>
 
-<p>Paul and Carole. The characters were introduced in the solution of the Twenty Questions problem</p>
+<figure class='code'><figcaption><span>&#8216;Creating a New User&#8217; </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>upeksha@uwlab:/home<span class="nv">$ </span>sudo useradd -d /home/wisidagama -m wisidagama
+</span><span class='line'>upeksha@uwlab:/home<span class="nv">$ </span>sudo passwd wisidagama
+</span><span class='line'>Enter new UNIX password:
+</span><span class='line'>Retype new UNIX password:
+</span><span class='line'>passwd: password updated successfully
+</span><span class='line'>upeksha@uwlab:/home<span class="nv">$ </span>ls
+</span><span class='line'>upeksha  wisidagama
+</span><span class='line'>upeksha@uwlab:/home<span class="nv">$ </span>ls -al
+</span><span class='line'>total 16
+</span><span class='line'>drwxr-xr-x  4 root       root       4096 Jul  8 00:34 .
+</span><span class='line'>drwxr-xr-x 22 root       root       4096 Jul  7 10:52 ..
+</span><span class='line'>drwxr-xr-x  4 upeksha    upeksha    4096 Jul  7 23:41 upeksha
+</span><span class='line'>drwxr-xr-x  2 wisidagama wisidagama 4096 Jul  8 00:34 wisidagama
+</span><span class='line'>upeksha@uwlab:/home<span class="err">$</span>
+</span></code></pre></td></tr></table></div></figure>
 
-<p>Source: This list is drawn mostly from the book Applied Cryptography by Bruce Schneier. Alice and Bob are archetypes in cryptography; Eve is also common. Names further down the alphabet are less common. <a href="http://en.wikipedia.org/wiki/Alice_and_Bob" >Read More</a></p>
 
-<p>Now you know most of my friends, Let&rsquo;s create the plot config file.</p>
+<p>Let&rsquo;s create a simple two-page website for wisidagama.</p>
 
-<figure class='code'><figcaption><span>&#8216;Exam Results Plot Config (marks.config)&#8217; </span></figcaption>
+<figure class='code'><figcaption><span>&#8216;Creating a Simple Site&#8217; </span></figcaption>
  <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
@@ -259,31 +269,151 @@ Arthur and Merlin: In interactive proof systems, the prover has unbounded comput
 <span class='line-number'>14</span>
 <span class='line-number'>15</span>
 <span class='line-number'>16</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nb">set </span>term png truecolor size 750, 400
-</span><span class='line'><span class="nb">set </span>output <span class="s2">&quot;marks.png&quot;</span>
-</span><span class='line'>
-</span><span class='line'><span class="nb">set </span>grid
-</span><span class='line'><span class="nb">set </span>boxwidth 0.8 relative
-</span><span class='line'><span class="nb">set </span>style fill transparent solid 0.5 noborder
-</span><span class='line'><span class="nb">set </span>object 1 rectangle from screen 0,0 to screen 1,1 fillcolor rgb<span class="s2">&quot;#ccffff&quot;</span> behind
-</span><span class='line'>
-</span><span class='line'><span class="nb">set </span>xlabel <span class="s2">&quot;Names of Friends&quot;</span>
-</span><span class='line'><span class="nb">set </span>ylabel <span class="s2">&quot;Marks&quot;</span>
-</span><span class='line'><span class="nb">set </span>title <span class="s2">&quot;Marks of the Friends of Upeksha&quot;</span>
-</span><span class='line'><span class="nb">set </span>yrange <span class="o">[</span>0:100<span class="o">]</span>
-</span><span class='line'><span class="nb">set </span>ytics 0,10
-</span><span class='line'>
-</span><span class='line'><span class="nb">set </span>xtics rotate
-</span><span class='line'>plot <span class="s1">&#39;marks.dat&#39;</span> using 2:xticlabels<span class="o">(</span>1<span class="o">)</span> with boxes notitle
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>upeksha@uw:~/test<span class="nv">$ </span>ssh wisidagama@uwlab
+</span><span class='line'>wisidagama@uwlab<span class="err">&#39;</span>s password:
+</span><span class='line'>Welcome to Ubuntu 12.04.2 LTS <span class="o">(</span>GNU/Linux 3.5.0-23-generic i686<span class="o">)</span>
+</span><span class='line'>...
+</span><span class='line'><span class="nv">$ </span>ls -al
+</span><span class='line'>total 28
+</span><span class='line'>drwxr-xr-x 3 wisidagama wisidagama 4096 Jul  8 00:45 .
+</span><span class='line'>drwxr-xr-x 4 root       root       4096 Jul  8 00:34 ..
+</span><span class='line'>-rw-r--r-- 1 wisidagama wisidagama  220 Apr  3  2012 .bash_logout
+</span><span class='line'>-rw-r--r-- 1 wisidagama wisidagama 3486 Apr  3  2012 .bashrc
+</span><span class='line'>drwx------ 2 wisidagama wisidagama 4096 Jul  8 00:45 .cache
+</span><span class='line'>-rw-r--r-- 1 wisidagama wisidagama  675 Apr  3  2012 .profile
+</span><span class='line'>-rw------- 1 wisidagama wisidagama  594 Jul  8 00:44 .viminfo
+</span><span class='line'><span class="nv">$ </span>mkdir public_html
+</span><span class='line'><span class="nv">$ </span><span class="nb">cd </span>public_html
+</span><span class='line'><span class="nv">$ </span>vi phpinfo.php
+</span><span class='line'><span class="nv">$ </span>vi index.php
+</span><span class='line'><span class="nv">$ </span>ls -al
+</span><span class='line'>total 16
+</span><span class='line'>drwxrwxr-x 2 wisidagama wisidagama 4096 Jul  8 00:47 .
+</span><span class='line'>drwxr-xr-x 4 wisidagama wisidagama 4096 Jul  8 00:47 ..
+</span><span class='line'>-rw-rw-r-- 1 wisidagama wisidagama   29 Jul  8 00:47 index.php
+</span><span class='line'>-rw-rw-r-- 1 wisidagama wisidagama   20 Jul  8 00:47 phpinfo.php
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>Run <code>gnuplot marks.config</code>.</p>
+<p>Next we need serve these files as www.wisidagama.dev. Setup a Virtual Host for wisidagama.dev.</p>
 
-<p><img class='center' src="/images/gnuplot/marks-of-friends-of-upeksha.png" title="Marks of Friends of Upeksha" alt="Marks of Friends of Upeksha" /></p>
+<p>Copy the &lsquo;default&rsquo; file to &lsquo;wisidagama.dev&rsquo; in &lsquo;/etc/apache2/sites-available&rsquo; directory. Edit the file as follows.</p>
 
-<blockquote><p>Despite gnuplot&#8217;s name, it is not part of or related to the GNU Project, nor does it use the GNU General Public License. You should always use simple &#8216;g&#8217;: &#8216;gnuplot&#8217;.</p></blockquote>
+<figure class='code'><figcaption><span>&#8216;wisidagama.dev&#8217; </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>&lt;VirtualHost *:80&gt;
+</span><span class='line'>  ServerName www.wisidagama.dev
+</span><span class='line'>  ServerAdmin webmaster@wisidagama.dev
+</span><span class='line'>
+</span><span class='line'>  DocumentRoot /home/wisidagama/public_html/
+</span><span class='line'>  &lt;Directory /home/wisidagama/public_html/&gt;
+</span><span class='line'>      Options Indexes FollowSymLinks MultiViews
+</span><span class='line'>      AllowOverride None
+</span><span class='line'>      Order allow,deny
+</span><span class='line'>      allow from all
+</span><span class='line'>  &lt;/Directory&gt;
+</span><span class='line'>
+</span><span class='line'>  &lt;IfModule mod_fastcgi.c&gt;
+</span><span class='line'>        SuexecUserGroup wisidagama wisidagama
+</span><span class='line'>        Alias /cgi-bin/ /var/www/bin/wisidagama/
+</span><span class='line'>    &lt;/IfModule&gt;
+</span><span class='line'>
+</span><span class='line'>  ErrorLog /home/wisidagama/error.log
+</span><span class='line'>
+</span><span class='line'>  <span class="c"># Possible values include: debug, info, notice, warn, error, crit,</span>
+</span><span class='line'>  <span class="c"># alert, emerg.</span>
+</span><span class='line'>  LogLevel warn
+</span><span class='line'>
+</span><span class='line'>  CustomLog /home/wisidagama/access.log combined
+</span><span class='line'>&lt;/VirtualHost&gt;
+</span></code></pre></td></tr></table></div></figure>
 
+
+<p>Enable <code>wisidagama.dev</code> using <code>sudo a2ensite wisidagama.dev</code>.</p>
+
+<p>From the client machine we need to tell www.wisidagama.dev to resolve to 192.168.1.8 since we don&rsquo;t have a DNS server to resolve this. Add the following line to your <code>/etc/hosts</code> file.</p>
+
+<p><code>192.168.1.8   www.wisidagama.dev</code></p>
+
+<h2>Disabling FastCGI or suEXEC</h2>
+
+
+<p>If you disable FastCGI module using <code>sudo a2dismod fastcgi</code>, then no one will handle .php files (Remember: AddHandler php5-fcgi .php). They will be downloaded to client machines.</p>
+
+<p>If you disable suExec module using <code>sudo a2dismod suexec</code>, Apache will fail.</p>
+
+<figure class='code'><figcaption><span>&#8216;Apache2 Fails to Start (/var/log/apache2/error.log)&#8217; </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>upeksha@uwlab:~<span class="nv">$ </span>sudo service apache2 restart
+</span><span class='line'>Syntax error on line 14 of /etc/apache2/sites-enabled/wisidagama.dev:
+</span><span class='line'>Invalid <span class="nb">command</span> <span class="s1">&#39;SuexecUserGroup&#39;</span>, perhaps misspelled or defined by a module not included in the server configuration
+</span><span class='line'>Action <span class="s1">&#39;configtest&#39;</span> failed.
+</span><span class='line'>The Apache error log may have more information.
+</span><span class='line'>   ...fail!
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<h2>Configuring APC size Per User</h2>
+
+
+<p>You can fine tune per user APC size in &lsquo;/var/www/bin/USER/php-fastcgi scripts. Use the <code>-d apc.shm_size=100M</code> argument to adjust per user APC size. See below, <code>phpinfo()</code> output shows the custom APC size for &#8216;wisidagama&rsquo;.</p>
+
+<p><img class='center' src="/images/server/cgi-fastcgi-as-php-server-api.png" title="CGI-FastCGI as PHP Sever API" alt="CGI-FastCGI as PHP Sever API" /></p>
+
+<p>APC configuration:</p>
+
+<p><img class='center' src="/images/server/php-fastcgi-apc-enabled.png" title="PHP FastCGI APC Enabled" alt="PHP FastCGI APC Enabled" /></p>
+
+<p>APC size per user:</p>
+
+<p><img class='center' src="/images/server/php-apc-shm-size.png" title="PHP APC SHM Size" alt="PHP APC SHM Size" /></p>
+
+<h2>Resource Consumption of PHP CGI running via FastCGI and usEXEC with per user APC</h2>
+
+
+<p><img class='center' src="/images/server/php5-cgi-process-resource-consumption.png" title="PHP CGI Process Resource Consumption" alt="PHP CGI Process Resource Consumption" /></p>
+
+<p>Now you can fine tune the various parameters to match your server needs and wants. Note: Apache2 still uses Prefork MPM.</p>
+
+<p><img class='center' src="/images/server/php-as-cgi-process-with-apache-prefork-mpm.png" title="PHP as CGI process with Apache2 Prefork MPM" alt="PHP as CGI process with Apache2 Prefork MPM" /></p>
 </div>
   
   
@@ -323,12 +453,10 @@ Arthur and Merlin: In interactive proof systems, the prover has unbounded comput
 </section>
 
 <section class="odd" >
-<h1>Apache HTTP Server</h2><br />
-<img class='center uw-logo' src="/images/apache_logo.png" title="Apache" alt="Apache" /><br />
-<a href="/blog/fastcgi-suexec-apc-per-user/" >Apache2 FastCGI and suEXEC Implementing APC Per User With PHP5-CGI</a><br />
-<a href="/blog/wordpress-performance-with-apc-via-fastcgi-php5/" >WordPress Performance Benchmarking With APC via FastCGI PHP5-CGI</a><br />
-<a href="/blog/mundane-experiments-with-apache-mpm_prefork-and-mod_php/" >Mundane Experiments With Apache Prefork MPM and Mod_PHP</a><br />
-<a href="/blog/setup-local-ubuntu-server/" >Setting Up a Local Ubuntu Server</a><br /><br />
+<h1>WordPress</h2><br />
+<img class='center uw-logo' src="/images/wordpress_logo.png" title="WordPress" alt="WordPress" /><br />
+<a href="/blog/wordpress-toolbar-customization/" >WordPress Toolbar Customization</a><br />
+<a href="/blog/two-website-customizations/" >Two Website Customizations</a><br /><br />
 </section>
 
 <section class="odd" >
@@ -336,12 +464,23 @@ Arthur and Merlin: In interactive proof systems, the prover has unbounded comput
 <img class='center uw-logo' src="/images/php_logo.png" title="PHP" alt="PHP" /><br />
 <a href="/blog/writing-php-extensions/" >Writing PHP Extensions</a><br />
 <a href="/blog/mysql-innodb-disk-space-usage/" >MySQL InnoDB Disk Space Consumption</a><br />
-<a href="/blog/wordpress-toolbar-customization/" >WordPress Toolbar Customization</a><br />
-<a href="/blog/two-website-customizations/" >Two Website Customizations</a><br /><br />
+</section>
+
+<section class="odd" >
+<h1>Apache HTTP Server</h2><br />
+<img class='center uw-logo' src="/images/apache_logo.png" title="Apache" alt="Apache" /><br />
+<a href="/blog/fastcgi-suexec-apc-per-user/" >Apache2 FastCGI and suEXEC Implementing APC Per User With PHP5-CGI</a><br />
+<a href="/blog/wordpress-performance-with-apc-via-fastcgi-php5/" >WordPress Performance Benchmarking With APC via FastCGI PHP5-CGI</a><br />
+<a href="/blog/mundane-experiments-with-apache-mpm_prefork-and-mod_php/" >Mundane Experiments With Apache Prefork MPM and Mod_PHP</a><br />
+<a href="/blog/setup-local-ubuntu-server/" >Setting Up a Local Ubuntu Server</a><br /><br />
 </section>
 <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/asala-full-moon-poya-day/">Asala Full Moon Poya Day</a>
+      </li>
     
       <li class="post">
         <a href="/blog/wordpress-pages-creation-plugin/">WordPress Pages Creation Plugin</a>
@@ -397,10 +536,6 @@ Arthur and Merlin: In interactive proof systems, the prover has unbounded comput
     
       <li class="post">
         <a href="/blog/vim-powerline/">Vim PowerLine</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/how-i-earned-one-usd/">How I Earned a Dollar</a>
       </li>
     
   </ul>

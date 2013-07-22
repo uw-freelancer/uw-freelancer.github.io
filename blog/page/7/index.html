@@ -9,7 +9,7 @@
   <meta name="author" content="Upeksha Wisidagama">
 
   
-  <meta name="description" content="This is the third post about building a linux system from source files. If you have rebooted your host after completing the steps described in the &hellip;">
+  <meta name="description" content="If you’re reading this tutorial, you probably have some interest in writing an extension for the PHP language. If not… well perhaps when we’re done &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -84,7 +84,7 @@
       
   <header>
     
-      <h1 class="entry-title"><a href="/blog/compiling-the-linux-kernel-from-source/">Compiling a Linux Kernel From Source Tarball</a></h1>
+      <h1 class="entry-title"><a href="/blog/writing-php-extensions/">Writing PHP Extensions</a></h1>
     
     
       <p class="meta">
@@ -100,103 +100,185 @@
   
 
 
-<time datetime="2013-07-12T20:20:00+05:30" pubdate data-updated="true">Jul 12<span>th</span>, 2013</time>
+<time datetime="2013-07-13T23:00:00+05:30" pubdate data-updated="true">Jul 13<span>th</span>, 2013</time>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content"><p>This is the third post about building a linux system from source files.</p>
-
-<p>If you have rebooted your host after completing the steps described in the second post, first, mount the new system partition.</p>
-
-<p>Our new system is on sdb disk.</p>
-
-<figure class='code'><figcaption><span>&#8216;Mounting the new system&#8217; </span></figcaption>
- <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>sudo su
-</span><span class='line'><span class="nb">export </span><span class="nv">LFS</span><span class="o">=</span>/mnt/lfs
-</span><span class='line'>mount -v -t ext3 /dev/sdb <span class="nv">$LFS</span>
-</span></code></pre></td></tr></table></div></figure>
+  <div class="entry-content"><blockquote><p>If you’re reading this tutorial, you probably have some interest in writing an extension for the PHP language. If not… well perhaps when we’re done you’ll have discovered an interest you didn’t know existed! - devzone.zend.com</p></blockquote>
 
 
-<p><img class='center' src="/images/lfs/mounting-the-system.png" title="Mounting the system filesystem" alt="Mounting the system filesystem" /></p>
+<p>If you have your PHP installed in a custom location, you need to add the <code>bin</code> directory to your <code>PATH</code> environment variable to avoid typing the full path. e.g. I have the bleeding edge PHP (PHP version 5.5.0) installed in <code>/usr/local/php5/</code>. To add the binaries to the $PATH,</p>
 
-<h2>Mounting and Populating Device (Virtual) Filesystem</h2>
+<p><code>export PATH=$PATH:/usr/local/php5/bin/</code></p>
 
-
-
-
-<figure class='code'><figcaption><span>&#8216;Mounting Dev Filesystem&#8217; </span></figcaption>
- <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>mount -v --bind /dev <span class="nv">$LFS</span>/dev
-</span></code></pre></td></tr></table></div></figure>
+<h3>Preparing to Build the PHP Extension</h3>
 
 
+<p>Create a new directory for the new extension under <code>source/ext</code>. You need to create the following three files for a simple extension.</p>
 
+<p>Create the <code>config.m4</code> file.</p>
 
-<h2>Mounting Virtual Kernel Filesystems</h2>
-
-
-
-
-<figure class='code'><figcaption><span>&#8216;Mounting Virtual Kernel Filesystems&#8217; </span></figcaption>
- <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>mount -vt devpts devpts <span class="nv">$LFS</span>/dev/pts
-</span><span class='line'>mount -vt proc proc <span class="nv">$LFS</span>/proc
-</span><span class='line'>mount -vt sysfs sysfs <span class="nv">$LFS</span>/sys
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p><img class='center' src="/images/lfs/mounting-virtual-kernel-filesystems.png" title="Mounting Virtual Kernel Filesystems" alt="Mounting Virtual Kernel Filesystems" /></p>
-
-<h2>Chroot to New System and Compile the Kernel</h2>
-
-
-
-
-<figure class='code'><figcaption><span>&#8216;Chrooting into new System&#8217; </span></figcaption>
+<figure class='code'><figcaption><span>&#8216;config.m4&#8217; </span></figcaption>
  <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>chroot <span class="s2">&quot;$LFS&quot;</span> /usr/bin/env -i <span class="se">\</span>
-</span><span class='line'>    <span class="nv">HOME</span><span class="o">=</span>/root <span class="nv">TERM</span><span class="o">=</span><span class="s2">&quot;$TERM&quot;</span> <span class="nv">PS1</span><span class="o">=</span><span class="s1">&#39;\u:\w\$ &#39;</span> <span class="se">\</span>
-</span><span class='line'>    <span class="nv">PATH</span><span class="o">=</span>/bin:/usr/bin:/sbin:/usr/sbin <span class="se">\</span>
-</span><span class='line'>    /bin/bash --login
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="n">PHP_ARG_ENABLE</span><span class="p">(</span><span class="n">upeksha_extension</span><span class="p">,</span> <span class="n">whether</span> <span class="n">to</span> <span class="n">enable</span> <span class="n">upeksha</span> <span class="n">extension</span><span class="p">,</span>
+</span><span class='line'><span class="p">[</span> <span class="o">--</span><span class="n">enable</span><span class="o">-</span><span class="n">upeksha</span><span class="o">-</span><span class="n">extension</span>   <span class="n">Enable</span> <span class="n">Upeksha</span> <span class="n">extension</span><span class="p">])</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">if</span> <span class="n">test</span> <span class="s">&quot;$PHP_UPEKSHA_EXTENSION&quot;</span> <span class="o">=</span> <span class="s">&quot;yes&quot;</span><span class="p">;</span> <span class="n">then</span>
+</span><span class='line'>  <span class="n">AC_DEFINE</span><span class="p">(</span><span class="n">HAVE_UPEKSHA_EXTENSION</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="p">[</span><span class="n">Whether</span> <span class="n">you</span> <span class="n">have</span> <span class="n">Upeksha</span> <span class="n">extension</span><span class="p">])</span>
+</span><span class='line'>  <span class="n">PHP_NEW_EXTENSION</span><span class="p">(</span><span class="n">upeksha_extension</span><span class="p">,</span> <span class="n">upeksha_extension</span><span class="p">.</span><span class="n">c</span><span class="p">,</span> <span class="err">$</span><span class="n">ext_shared</span><span class="p">)</span>
+</span><span class='line'><span class="n">fi</span>
 </span></code></pre></td></tr></table></div></figure>
 
 
+<p>Create the <code>upeksha.h</code> file.</p>
 
-
-<blockquote><p>&#8216;Make MrProper&#8217; ensures that the kernel tree is absolutely clean. The kernel team recommends that this command be issued prior to each kernel compilation. Do not rely on the source tree being clean after un-tarring.</p></blockquote>
-
-
-<p>Now run &lsquo;make LANG=en_US LC_ALL= menuconfig&rsquo; after &lsquo;make mrproper&rsquo;.</p>
-
-<p><img class='center' src="/images/lfs/linux-kernel-configuration.png" title="Linux Kernel Configuration" alt="Linux Kernel Configuration" /></p>
-
-<h2>Install the Fresh Linux Kernel in the Boot Directory</h2>
-
-
-<p>Finally run the following command to install the Linux Kernel in the Boot directory.</p>
-
-<figure class='code'><figcaption><span>&#8216;Install Kernel in Boot Directory&#8217; </span></figcaption>
+<figure class='code'><figcaption><span>&#8216;upeksha.h&#8217; </span></figcaption>
  <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>make
-</span><span class='line'>cp -v arch/x86/boot/bzImage /boot/vmlinuz-3.8.1-upeksha-7.3
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="cp">#ifndef PHP_UPEKSHA_H</span>
+</span><span class='line'>
+</span><span class='line'><span class="cp">#define PHP_UPEKSHA_H 1</span>
+</span><span class='line'>
+</span><span class='line'><span class="cp">#define PHP_UPEKSHA_VERSION &quot;0.1&quot;</span>
+</span><span class='line'><span class="cp">#define PHP_UPEKSHA_EXTNAME &quot;upeksha_extension&quot;</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">PHP_FUNCTION</span><span class="p">(</span><span class="n">say_name</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">extern</span> <span class="n">zend_module_entry</span> <span class="n">upeksha_module_entry</span><span class="p">;</span>
+</span><span class='line'><span class="cp">#define phpext_upeksha_ptr &amp;upeksha_module_entry</span>
+</span><span class='line'>
+</span><span class='line'><span class="cp">#endif</span>
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>Now configure the Grub Bootloader and boot into the New Linux System.</p>
+<p>Create the <code>upeksha_extension.c</code> file.</p>
 
-<p><a href="/blog/building-a-linux-system-from-scratch/" >Next: Booting and Logging into the New Linux System</a><br /></p>
+<figure class='code'><figcaption><span>&#8216;upeksha_extension&#8217; </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="cp">#ifdef HAVE_CONFIG_H</span>
+</span><span class='line'><span class="cp">#include &quot;config.h&quot;</span>
+</span><span class='line'><span class="cp">#endif</span>
+</span><span class='line'>
+</span><span class='line'><span class="cp">#include &quot;php.h&quot;</span>
+</span><span class='line'><span class="cp">#include &quot;upeksha.h&quot;</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">// list of custom PHP functions provided by this extension</span>
+</span><span class='line'><span class="c1">// set {NULL, NULL, NULL} as the last record to mark the end of list</span>
+</span><span class='line'><span class="k">static</span> <span class="n">zend_function_entry</span> <span class="n">upeksha_functions</span><span class="p">[]</span> <span class="o">=</span> <span class="p">{</span>
+</span><span class='line'>    <span class="n">PHP_FE</span><span class="p">(</span><span class="n">say_name</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">)</span>
+</span><span class='line'>    <span class="p">{</span><span class="nb">NULL</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">}</span>
+</span><span class='line'><span class="p">};</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">// the following code creates an entry for the module and registers it with Zend.</span>
+</span><span class='line'><span class="n">zend_module_entry</span> <span class="n">upeksha_extension_module_entry</span> <span class="o">=</span> <span class="p">{</span>
+</span><span class='line'>    <span class="n">STANDARD_MODULE_HEADER</span><span class="p">,</span>
+</span><span class='line'>    <span class="n">PHP_UPEKSHA_EXTNAME</span><span class="p">,</span>
+</span><span class='line'>    <span class="n">upeksha_functions</span><span class="p">,</span>
+</span><span class='line'>    <span class="nb">NULL</span><span class="p">,</span> <span class="c1">// name of the MINIT function or NULL if not applicable</span>
+</span><span class='line'>    <span class="nb">NULL</span><span class="p">,</span> <span class="c1">// name of the MSHUTDOWN function or NULL if not applicable</span>
+</span><span class='line'>    <span class="nb">NULL</span><span class="p">,</span> <span class="c1">// name of the RINIT function or NULL if not applicable</span>
+</span><span class='line'>    <span class="nb">NULL</span><span class="p">,</span> <span class="c1">// name of the RSHUTDOWN function or NULL if not applicable</span>
+</span><span class='line'>    <span class="nb">NULL</span><span class="p">,</span> <span class="c1">// name of the MINFO function or NULL if not applicable</span>
+</span><span class='line'>    <span class="n">PHP_UPEKSHA_VERSION</span><span class="p">,</span>
+</span><span class='line'>    <span class="n">STANDARD_MODULE_PROPERTIES</span>
+</span><span class='line'><span class="p">};</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">ZEND_GET_MODULE</span><span class="p">(</span><span class="n">upeksha_extension</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">// implementation of a custom say_name()</span>
+</span><span class='line'><span class="n">PHP_FUNCTION</span><span class="p">(</span><span class="n">say_name</span><span class="p">)</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>    <span class="n">RETURN_STRING</span><span class="p">(</span><span class="s">&quot;Upeksha Wisidagama&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">);</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Next run <code>phpize</code> in the same directory.</p>
+
+<p><img class='center' src="/images/php-extension/configuring-the-php-extension.png" title="Configuring the PHP Extension" alt="Configuring the PHP Extension" /></p>
+
+<h3>Making and Installing the Upeksha PHP Extension</h3>
+
+
+<p>run <code>make</code>. You&rsquo;ll get a message, &lsquo;Libraries have been installed in: /home/uw/Downloads/php-5.5.0/ext/uw/modules&rsquo;.</p>
+
+<p>Load the extension by adding the following line to the <code>php.ini</code> file.</p>
+
+<p><code>extension=/home/uw/Downloads/php-5.5.0/ext/uw/modules/upeksha_extension.so</code></p>
+
+<p>Restart the Web Server.</p>
+
+<p>Now, create the following php file with the function from the new extension.</p>
+
+<figure class='code'><figcaption><span>&#8216;hello.php&#8217; </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='php'><span class='line'><span class="cp">&lt;?php</span>
+</span><span class='line'><span class="k">echo</span> <span class="nx">say_name</span><span class="p">();</span>
+</span><span class='line'><span class="cp">?&gt;</span><span class="x"></span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p><img class='center' src="/images/php-extension/upeksha-php-extension.png" title="Upeksha PHP Extension" alt="Upeksha PHP Extension" /></p>
+
+<p>See the new extension listed in <code>phpinfo()</code>.</p>
+
+<p><img class='center' src="/images/php-extension/upeksha-extension-in-phpinfo.png" title="Upeksha PHP Extension in phpinfo()" alt="Upeksha PHP Extension in phpinfo()" /></p>
 </div>
   
   
@@ -236,12 +318,10 @@
 </section>
 
 <section class="odd" >
-<h1>Apache HTTP Server</h2><br />
-<img class='center uw-logo' src="/images/apache_logo.png" title="Apache" alt="Apache" /><br />
-<a href="/blog/fastcgi-suexec-apc-per-user/" >Apache2 FastCGI and suEXEC Implementing APC Per User With PHP5-CGI</a><br />
-<a href="/blog/wordpress-performance-with-apc-via-fastcgi-php5/" >WordPress Performance Benchmarking With APC via FastCGI PHP5-CGI</a><br />
-<a href="/blog/mundane-experiments-with-apache-mpm_prefork-and-mod_php/" >Mundane Experiments With Apache Prefork MPM and Mod_PHP</a><br />
-<a href="/blog/setup-local-ubuntu-server/" >Setting Up a Local Ubuntu Server</a><br /><br />
+<h1>WordPress</h2><br />
+<img class='center uw-logo' src="/images/wordpress_logo.png" title="WordPress" alt="WordPress" /><br />
+<a href="/blog/wordpress-toolbar-customization/" >WordPress Toolbar Customization</a><br />
+<a href="/blog/two-website-customizations/" >Two Website Customizations</a><br /><br />
 </section>
 
 <section class="odd" >
@@ -249,12 +329,23 @@
 <img class='center uw-logo' src="/images/php_logo.png" title="PHP" alt="PHP" /><br />
 <a href="/blog/writing-php-extensions/" >Writing PHP Extensions</a><br />
 <a href="/blog/mysql-innodb-disk-space-usage/" >MySQL InnoDB Disk Space Consumption</a><br />
-<a href="/blog/wordpress-toolbar-customization/" >WordPress Toolbar Customization</a><br />
-<a href="/blog/two-website-customizations/" >Two Website Customizations</a><br /><br />
+</section>
+
+<section class="odd" >
+<h1>Apache HTTP Server</h2><br />
+<img class='center uw-logo' src="/images/apache_logo.png" title="Apache" alt="Apache" /><br />
+<a href="/blog/fastcgi-suexec-apc-per-user/" >Apache2 FastCGI and suEXEC Implementing APC Per User With PHP5-CGI</a><br />
+<a href="/blog/wordpress-performance-with-apc-via-fastcgi-php5/" >WordPress Performance Benchmarking With APC via FastCGI PHP5-CGI</a><br />
+<a href="/blog/mundane-experiments-with-apache-mpm_prefork-and-mod_php/" >Mundane Experiments With Apache Prefork MPM and Mod_PHP</a><br />
+<a href="/blog/setup-local-ubuntu-server/" >Setting Up a Local Ubuntu Server</a><br /><br />
 </section>
 <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/asala-full-moon-poya-day/">Asala Full Moon Poya Day</a>
+      </li>
     
       <li class="post">
         <a href="/blog/wordpress-pages-creation-plugin/">WordPress Pages Creation Plugin</a>
@@ -310,10 +401,6 @@
     
       <li class="post">
         <a href="/blog/vim-powerline/">Vim PowerLine</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/how-i-earned-one-usd/">How I Earned a Dollar</a>
       </li>
     
   </ul>
