@@ -9,7 +9,7 @@
   <meta name="author" content="Upeksha Wisidagama">
 
   
-  <meta name="description" content="This project is different from other freelance projects in many ways. First I failed. Then I was promoted to level 16. Again I succeeded. Next I was &hellip;">
+  <meta name="description" content="Many device drivers and other kernel elements are compiled as modules. If a driver is compiled directly into the kernel, its code and static data &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -71,6 +71,7 @@
 <ul class="main-navigation">
   <li><a href="/">Blog</a></li>
   <li><a href="/blog/archives">Archives</a></li>
+  <li><a href="/contact">Contact</a></li>
 </ul>
 
 </nav>
@@ -84,7 +85,7 @@
       
   <header>
     
-      <h1 class="entry-title"><a href="/blog/wordpress-pages-creation-plugin/">WordPress Pages Creation Plugin</a></h1>
+      <h1 class="entry-title"><a href="/blog/uw-loadable-kernel-module/">UW Loadable Kernel Module</a></h1>
     
     
       <p class="meta">
@@ -100,55 +101,103 @@
   
 
 
-<time datetime="2013-07-20T15:00:00+05:30" pubdate data-updated="true">Jul 20<span>th</span>, 2013</time>
+<time datetime="2013-07-29T14:00:00+05:30" pubdate data-updated="true">Jul 29<span>th</span>, 2013</time>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content"><p>This project is different from other freelance projects in many ways. First I failed. Then I was promoted to level 16. Again I succeeded. Next I was paid. Finally I was recognized as a good service provider.</p>
+  <div class="entry-content"><p>Many device drivers and other kernel elements are compiled as modules. If a driver is compiled directly into the kernel, its code and static data occupy space even if they&rsquo;re not used. But if the driver is compiled as a module, it requires memory only if memory is needed and subsequently loaded, into the kernel.</p>
 
-<h2> Level 16 @ Freelancer.com [Novice]</h2>
+<p>Interestingly, you won&rsquo;t notice a performance hit for LKMs, so they&rsquo;re a powerful means of creating a lean kernel that adapts to its environment based upon the available hardware and attached devices.</p>
 
-
-<p>I was able to reach the Level 16 at Freelancer.com with the completion of this project.</p>
-
-<p><img class='center' src="/images/blog/level16-novice.jpg" title="Level 16 Novice" alt="Level 16 Novice" /></p>
-
-<h2>A Failed Project</h2>
+<h2>UW Linux Loadable Kernel Module</h2>
 
 
-<p>I wasn&rsquo;t able to delivery what I promised initially. The result was a bad review from the employer.</p>
+<p>Create the Linux Loadable Kernel Module C file.</p>
 
-<p><img class='center' src="/images/blog/communication-failure.jpg" title="Communication Failure" alt="Communication Failure" /></p>
+<figure class='code'><figcaption><span>&#8216;uw-lkm.c&#8217; </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="cp">#include &lt;linux/module.h&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="cm">/**</span>
+</span><span class='line'><span class="cm"> * Defines the license for this LKM</span>
+</span><span class='line'><span class="cm"> */</span>
+</span><span class='line'><span class="n">MODULE_LICENSE</span><span class="p">(</span><span class="s">&quot;GPL&quot;</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'><span class="cm">/**</span>
+</span><span class='line'><span class="cm"> * Init function called on module entry</span>
+</span><span class='line'><span class="cm"> */</span>
+</span><span class='line'><span class="kt">int</span> <span class="nf">uw_module_init</span><span class="p">(</span> <span class="kt">void</span> <span class="p">)</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>    <span class="n">printk</span><span class="p">(</span><span class="n">KERN_INFO</span> <span class="s">&quot;uw_module_init called.  UW Module is now loaded.</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+</span><span class='line'>    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="cm">/**</span>
+</span><span class='line'><span class="cm"> * Cleanup function called on module exit</span>
+</span><span class='line'><span class="cm"> */</span>
+</span><span class='line'><span class="kt">void</span> <span class="nf">uw_module_cleanup</span><span class="p">(</span> <span class="kt">void</span> <span class="p">)</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>    <span class="n">printk</span><span class="p">(</span><span class="n">KERN_INFO</span> <span class="s">&quot;uw_module_cleanup called.  UW Module is now unloaded.</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+</span><span class='line'>    <span class="k">return</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="cm">/**</span>
+</span><span class='line'><span class="cm"> * Declare entry and exit functions</span>
+</span><span class='line'><span class="cm"> */</span>
+</span><span class='line'><span class="n">module_init</span><span class="p">(</span> <span class="n">uw_module_init</span> <span class="p">);</span>
+</span><span class='line'><span class="n">module_exit</span><span class="p">(</span> <span class="n">uw_module_cleanup</span> <span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure>
 
-<p>I deserve that review. I failed to deliver what he initially demanded to do. I thought I would be able to complete the project. But Pinterest made it hard to connect with them without a proper API. The following is the initial project description.</p>
 
-<p><img class='center' src="/images/blog/wordpress-plugin-post-to-pinterest.jpg" title="WordPress Plugin Post to Pinterest" alt="WordPress Plugin Post to Pinterest" /></p>
+<p>Next Create the Makefile.</p>
 
-<p>See the above review: <b>On Time: No</b></p>
-
-<p>I&rsquo;ve tried many hours to get this plugin work. All attempts failed. Project went for a long time than I initially promised. However, employer assigned me the other project he had posted on freelancer.com. I knew that I could complete that project, at the first impression of the project description. I accepted the project. I delivered it very quickly.</p>
-
-<h2>5.50USD Tip</h2>
+<figure class='code'><figcaption><span>&#8216;Making of the UW Loadable Kernel Module&#8217; </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>obj-m +<span class="o">=</span> uw-lkm.o
+</span></code></pre></td></tr></table></div></figure>
 
 
-<p>I received a tip for the successful completion of the second project.</p>
+<p>Compile the Loadable Kernel Module using <code>make -C /usr/src/linux-headers-`uname -r` SUBDIRS=$PWD modules</code>.</p>
 
-<p><img class='center' src="/images/blog/5usd-bonus.jpg" title="5 USD Bonus" alt="5 USD Bonus" /></p>
+<p>Then insert the new module using <code>sudo insmod uw-lkm.ko</code>.</p>
 
-<h2>Recognition as a Good Service Provider</h2>
+<p>Finally, check the Log to confirm the new module is loaded using <code>sudo dmesg | tail -1</code>.</p>
 
-
-<p>Eventhough the first project failed, the second project was a success. I tried my best to deliver a good plugin for the second project. I received a comment from the employer worth of thousands of dollars.</p>
-
-<blockquote><p>Thanks for the work you have done. You really do go an extra mile and that is what separates you from the a lot of people. Being a service provider always go along way. So Thanks a bunch. Have a great weekend! :-) All the best.</p><p>- runeellingsen</p></blockquote>
-
-
-<p>The following are the feedbacks exchanged after the project completion.</p>
-
-<p><img class='center' src="/images/blog/post-to-pinterest-feedback.jpg" title="Post to Pinterest Feedback" alt="Post to Pinterest Feedback" /></p>
+<p><img class='center' src="/images/kernel/uw-lkm-compilation.png" title="UW Loadable Kernel Module" alt="UW Loadable Kernel Module" /></p>
 </div>
   
   
@@ -176,6 +225,20 @@
 <a href="/blog/compiling-the-linux-kernel-from-source/" >Compiling a Linux Kernel From Source</a><br />
 <a href="/blog/building-the-system-software-from-scratch/" >Building the System Software from Scratch</a><br />
 <a href="/blog/building-the-host-independant-toolchain/" >Building the Host Independant ToolChain</a><br />
+</section>
+
+<section class="odd" >
+<h1>Linux Kernel</h2><br />
+<img class='center uw-logo' src="/images/linux-logo.png" title="Linux Kernel" alt="Linux Kernel" /><br />
+<a href="/blog/uw-loadable-kernel-module/" >UW Loadable Kernel Module</a><br />
+<a href="/blog/ps-command/" >Procps Procfs Tools</a><br />
+</section>
+
+<section class="odd" >
+<h1>GCC and LibGC</h2><br />
+<img class='center uw-logo' src="/images/gcc-logo.png" title="GCC" alt="GCC" /><br />
+<a href="/blog/introduction-to-c/" >UW 103: Introduction to C Programming</a><br />
+<a href="/blog/valgrind-dynamic-analysis/" >Valgrind Dynamic Program Analysis</a><br />
 </section>
 
 <section class="odd" >
@@ -214,6 +277,30 @@
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/php-gd-and-cart-using-paypal-rest-api/">PHP GD + PayPal REST API Integration</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/uw-loadable-kernel-module/">UW Loadable Kernel Module</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/introduction-to-c/">UW 103: Introduction to C Programming</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/ps-command/">Procps Procfs Tools</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/valgrind-dynamic-analysis/">Dynamic Program Analysis With Valgrind</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/freelancer-com-payoneer-prepaid-mastercard/">Freelancer.com Payoneer Prepaid MasterCard</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/asala-full-moon-poya-day/">Asala Full Moon Poya Day</a>
       </li>
     
@@ -247,30 +334,6 @@
     
       <li class="post">
         <a href="/blog/wordpress-performance-with-apc-via-fastcgi-php5/">WordPress Performance Benchmarking With APC via FastCGI PHP5-CGI</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/vim-vdebug/">Vim Vedug</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/thanks-nit3hawks/">Thank You Mr. Nit3hawkz</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/gimp-gnu-image-manipulation-program/">GNU Image Manipulation Program - GIMP</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/insanely-faster-vim-buffer-switching/">Insanely Faster Buffer Switching</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/building-the-system-software-from-scratch/">Building the System Software From Scratch</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/vim-powerline/">Vim PowerLine</a>
       </li>
     
   </ul>

@@ -9,7 +9,7 @@
   <meta name="author" content="Upeksha Wisidagama">
 
   
-  <meta name="description" content="I only needed one dollar. If you&rsquo;ve missed that post, read it here. However, I was fortunate enough to receive a dollar. In fact, I received 10 &hellip;">
+  <meta name="description" content="I&rsquo;ve been using various debuggers for Vim. But when tried Vdeug, I realized Vdebug has almost all the possible features for a Vim Debugger. &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -71,6 +71,7 @@
 <ul class="main-navigation">
   <li><a href="/">Blog</a></li>
   <li><a href="/blog/archives">Archives</a></li>
+  <li><a href="/contact">Contact</a></li>
 </ul>
 
 </nav>
@@ -84,7 +85,7 @@
       
   <header>
     
-      <h1 class="entry-title"><a href="/blog/how-i-earned-one-usd/">How I Earned a Dollar</a></h1>
+      <h1 class="entry-title"><a href="/blog/vim-vdebug/">Vim Vedug</a></h1>
     
     
       <p class="meta">
@@ -100,36 +101,95 @@
   
 
 
-<time datetime="2013-07-01T11:05:00+05:30" pubdate data-updated="true">Jul 1<span>st</span>, 2013</time>
+<time datetime="2013-07-06T15:13:00+05:30" pubdate data-updated="true">Jul 6<span>th</span>, 2013</time>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content"><p>I only needed one dollar. If you&rsquo;ve missed that post, <a href="/blog/i-only-need-one-dollar/" >read it here</a>.</p>
+  <div class="entry-content"><p>I&rsquo;ve been using various debuggers for Vim. But when tried Vdeug, I realized Vdebug has almost all the possible features for a Vim Debugger.</p>
 
-<p>However, I was fortunate enough to receive a dollar. In fact, I received 10 USD. Mr. Cstoudt released 10 previously milestoned dollars.</p>
+<p><img class='center' src="/images/blog/vim/vdebug-help.jpg" title="Vdebug Help" alt="Vdebug Help" /></p>
 
-<p><img class='center' src="/images/blog/how-i-earned-one-dollar.jpg" title="How I earned one dollar" alt="How I earned one dollar" /></p>
+<p>Vdebug, technically, said to support languages that have a debugging engine that uses the DBGP protocol. This plugin has been designed with four languages in mind, PHP, Python, Ruby and Perl.</p>
 
-<h2>An Unreleased Milestone</h2>
-
-
-<p>Do you remember once I completed a project for Mr. Cstoudt? (See: <a href="/blog/wordpress-toolbar-customization/" >WordPress Toolbar Customization</a>) Eventhough I completed that project successfully, there remained an unreleased and fogotten milestone. While I was thinking how to find the missing dollar yesterday, while I was browsing through my freelancer.com financial dashboard, I noticed this milestone. I contacted Mr. Cstoudt and asked him to release the milestone.</p>
-
-<p><img class='center' src="/images/blog/requesting-to-release-the-milestone.jpg" title="Requesting to release the milestone" alt="Requesting to release the milestone" /></p>
-
-<p>I received this about 8:10 on 1st July, 2013. This is a new month. I was finding a dollar in the previous month. However I decided this payment should be counted as received in the previous month. I live in Sri Lanka (+5.30UTC). Client sent the payment from USA (-6.00UTC). For Mr. Cstoudt it was only 20:40 on 30th June, 2013. See the below illustration.</p>
-
-<p><img class='center' src="/images/blog/sri-lanka-usa-time-relationship.jpg" title="Sri Lanka USA Time Relationship" alt="Sri Lanka USA Time Relationship" /></p>
-
-<h2>Finally, I collected the missing dollar</h2>
+<blockquote><p>Vdebug: A powerful, fast, multi-language debugger for Vim</p></blockquote>
 
 
-<p>Just before the end of the month (somewhere +X.YYUTC), I was able to withdraw money from my freelancer.com account. Thanks Mr. Cstout (10 USD) and Mr. Brant (30 USD).</p>
 
-<p><img class='center' src="/images/blog/32-usd-to-sri-lanka.jpg" title="32 USD to Sri Lanka" alt="32 USD to Sri Lanka" /></p>
+
+<h3>Vim Vdebug Debugger Stack</h3>
+
+
+<p><img class='center' src="/images/blog/vim/vdebug-debuggerstack.jpg" title="Vdebug Debugger Stack" alt="Vdebug Debugger Stack" /></p>
+
+<h3>Vim Vdebug Debugger Watch</h3>
+
+
+<p><img class='center' src="/images/blog/vim/vdebug-debuggerwatch.jpg" title="Vdebug Debugger Watch" alt="Vdebug Debugger Watch" /></p>
+
+<h3>Vim Vdebug Debugger Status</h3>
+
+
+<p><img class='center' src="/images/blog/vim/vdebug-debuggerstatus.jpg" title="Vdebug Debugger Status" alt="Vdebug Debugger Status" /></p>
+
+<h2>Installing Vdebug Plugin</h2>
+
+
+<p>Clone the Vdebug Github repository in your local bundle.</p>
+
+<figure class='code'><figcaption><span>&#8216;Installing Vdebug&#8217; </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nb">cd</span> ~/.vim/bundle
+</span><span class='line'>git clone https://github.com/joonty/vdebug.git
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<h2>PHP5-Xdebug Configuration</h2>
+
+
+<p>You also need to install Xdebug PHP extension using <code>sudo apt-get install php5-xdebug</code>.</p>
+
+<p>Now configure xdebug initialization.</p>
+
+<figure class='code'><figcaption><span>&#8216;Xdebug Initialization (/etc/php5/apache2/conf.d/xdebug.ini)&#8217; </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">zend_extension</span><span class="o">=</span>/usr/lib/php5/20090626+lfs/xdebug.so
+</span><span class='line'>
+</span><span class='line'>xdebug.remote_enable<span class="o">=</span>1
+</span><span class='line'>xdebug.remote_handler<span class="o">=</span>dbgp
+</span><span class='line'>xdebug.remote_mode<span class="o">=</span>req
+</span><span class='line'>xdebug.remote_host<span class="o">=</span>127.0.0.1
+</span><span class='line'>xdebug.remote_port<span class="o">=</span>9000
+</span><span class='line'>
+</span><span class='line'>xdebug.profiler_enable_trigger<span class="o">=</span>1
+</span><span class='line'>xdebug.profiler_output_dir<span class="o">=</span>/media/www/xdebugdata
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<h2>Xdebug Helper Google Chrome Extension</h2>
+
+
+<p>Installl Xdebug Helper Chrome extension to easily start a debugging session via browser.</p>
+
+<p><a href="https://chrome.google.com/webstore/detail/xdebug-helper/eadndfjplgieldjbigjakmdgkmoaaaoc">https://chrome.google.com/webstore/detail/xdebug-helper/eadndfjplgieldjbigjakmdgkmoaaaoc</a></p>
+
+<p><img class='center' src="/images/blog/vim/xdebug-helper.png" title="Xdebug Helper" alt="Xdebug Helper" /></p>
 </div>
   
   
@@ -157,6 +217,20 @@
 <a href="/blog/compiling-the-linux-kernel-from-source/" >Compiling a Linux Kernel From Source</a><br />
 <a href="/blog/building-the-system-software-from-scratch/" >Building the System Software from Scratch</a><br />
 <a href="/blog/building-the-host-independant-toolchain/" >Building the Host Independant ToolChain</a><br />
+</section>
+
+<section class="odd" >
+<h1>Linux Kernel</h2><br />
+<img class='center uw-logo' src="/images/linux-logo.png" title="Linux Kernel" alt="Linux Kernel" /><br />
+<a href="/blog/uw-loadable-kernel-module/" >UW Loadable Kernel Module</a><br />
+<a href="/blog/ps-command/" >Procps Procfs Tools</a><br />
+</section>
+
+<section class="odd" >
+<h1>GCC and LibGC</h2><br />
+<img class='center uw-logo' src="/images/gcc-logo.png" title="GCC" alt="GCC" /><br />
+<a href="/blog/introduction-to-c/" >UW 103: Introduction to C Programming</a><br />
+<a href="/blog/valgrind-dynamic-analysis/" >Valgrind Dynamic Program Analysis</a><br />
 </section>
 
 <section class="odd" >
@@ -195,6 +269,30 @@
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/php-gd-and-cart-using-paypal-rest-api/">PHP GD + PayPal REST API Integration</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/uw-loadable-kernel-module/">UW Loadable Kernel Module</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/introduction-to-c/">UW 103: Introduction to C Programming</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/ps-command/">Procps Procfs Tools</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/valgrind-dynamic-analysis/">Dynamic Program Analysis With Valgrind</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/freelancer-com-payoneer-prepaid-mastercard/">Freelancer.com Payoneer Prepaid MasterCard</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/asala-full-moon-poya-day/">Asala Full Moon Poya Day</a>
       </li>
     
@@ -228,30 +326,6 @@
     
       <li class="post">
         <a href="/blog/wordpress-performance-with-apc-via-fastcgi-php5/">WordPress Performance Benchmarking With APC via FastCGI PHP5-CGI</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/vim-vdebug/">Vim Vedug</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/thanks-nit3hawks/">Thank You Mr. Nit3hawkz</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/gimp-gnu-image-manipulation-program/">GNU Image Manipulation Program - GIMP</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/insanely-faster-vim-buffer-switching/">Insanely Faster Buffer Switching</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/building-the-system-software-from-scratch/">Building the System Software From Scratch</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/vim-powerline/">Vim PowerLine</a>
       </li>
     
   </ul>

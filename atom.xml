@@ -4,7 +4,7 @@
   <title><![CDATA[Freelance Projects]]></title>
   <link href="http://uw-freelancer.github.io/atom.xml" rel="self"/>
   <link href="http://uw-freelancer.github.io/"/>
-  <updated>2013-07-22T17:34:57+05:30</updated>
+  <updated>2013-08-08T21:26:59+05:30</updated>
   <id>http://uw-freelancer.github.io/</id>
   <author>
     <name><![CDATA[Upeksha Wisidagama]]></name>
@@ -12,6 +12,560 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[PHP GD + PayPal REST API Integration]]></title>
+    <link href="http://uw-freelancer.github.io/blog/php-gd-and-cart-using-paypal-rest-api/"/>
+    <updated>2013-08-07T00:00:00+05:30</updated>
+    <id>http://uw-freelancer.github.io/blog/php-gd-and-cart-using-paypal-rest-api</id>
+    <content type="html"><![CDATA[<p>A PHP GD extensive WordPress Plugin for Dynamic ID Card Generation with c128b Bars and Spaces Encoded Strings having a Cart Communicating to PayPal via REST(beta) API.</p>
+
+<h2>Mr. Archieh and His ID Card Project</h2>
+
+
+<p>The project was posted by Mr. Archieh on freelancer.com. I was among another 26 bidders with an average of 558USD budget. I knew, I could do this. I bidded with 388USD.</p>
+
+<p><img class='center' src="http://uw-freelancer.github.io/images/idcards/project-description.png" title="Project Description" alt="Project Description" /></p>
+
+<h2>Extensive use of the PHP GD Extension</h2>
+
+
+<p>A set of PHP GD image manupulation functions were at the core of this plugin serving the purpose of generating dynamic ID cards that were ready to be printed. Creating image resources from uploaded files. Adding text on top of the image. Even overlaying transparent image on top of the background was done. The project was about living inside <b>the wonderful world of PHP GD image manupulation</b>.</p>
+
+<p><a href="http://php.net/manual/en/book.image.php">http://php.net/manual/en/book.image.php</a></p>
+
+<h2>RESTful PayPal Beta</h2>
+
+
+<p><img class='center' src="http://uw-freelancer.github.io/images/idcards/restful-paypal-beta.png" title="RESTful PayPal Beta" alt="RESTful PayPal Beta" /></p>
+
+<blockquote><p>The PayPal API uses HTTP verbs and a RESTful endpoint structure. OAuth 2.0 is used as the API Authorization framework. Request and response payloads are formatted as JSON.</p><p>- PayPal REST API Reference</p></blockquote>
+
+
+<p>With OAuth 2.0 authorization is easy. All you need to do is present your client credentials and obtain a bearer token. No signing of requests is needed as with earlier OAuth.</p>
+
+<p><a href="https://developer.paypal.com/webapps/developer/docs/api/">https://developer.paypal.com/webapps/developer/docs/api/</a></p>
+
+<h2>C128b Encoded Data</h2>
+
+
+<p>Visitors should be given a facility to enter a string of their choice and it should be immediately converted to a Barcode (c128b).</p>
+
+<figure class='code'><figcaption><span>&#8216;c128b Encoding with PHP&#8217; </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+</pre></td><td class='code'><pre><code class='php'><span class='line'><span class="cp">&lt;?php</span>
+</span><span class='line'><span class="nv">$source_length</span> <span class="o">=</span> <span class="nb">strlen</span><span class="p">(</span><span class="nv">$encoded_string</span><span class="p">);</span>
+</span><span class='line'><span class="nv">$p</span> <span class="o">=</span> <span class="nv">$padding_x</span><span class="p">;</span>
+</span><span class='line'><span class="k">for</span><span class="p">(</span><span class="nv">$i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nv">$i</span> <span class="o">&lt;</span> <span class="nv">$source_length</span><span class="p">;</span> <span class="nv">$i</span><span class="o">++</span><span class="p">){</span>
+</span><span class='line'>    <span class="nv">$val</span> <span class="o">=</span> <span class="nb">intval</span><span class="p">(</span><span class="nx">substr</span><span class="p">(</span><span class="nv">$encoded_string</span><span class="p">,</span> <span class="nv">$i</span><span class="p">,</span> <span class="mi">1</span><span class="p">));</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="nv">$bar</span> <span class="o">=</span> <span class="mi">0</span> <span class="o">==</span> <span class="nv">$i</span><span class="o">%</span><span class="mi">2</span> <span class="o">?</span> <span class="k">true</span> <span class="o">:</span> <span class="k">false</span><span class="p">;</span>
+</span><span class='line'>    <span class="k">for</span><span class="p">(</span><span class="nv">$n</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nv">$n</span> <span class="o">&lt;</span> <span class="nv">$val</span><span class="p">;</span> <span class="nv">$n</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>        <span class="nv">$p</span> <span class="o">+=</span> <span class="mi">1</span><span class="p">;</span>
+</span><span class='line'>        <span class="k">if</span><span class="p">(</span><span class="nv">$bar</span><span class="p">){</span>
+</span><span class='line'>            <span class="nx">imageline</span><span class="p">(</span><span class="nv">$barcode</span><span class="p">,</span> <span class="nv">$p</span><span class="o">*</span><span class="nv">$thickness</span><span class="p">,</span> <span class="nv">$padding_y</span><span class="p">,</span>
+</span><span class='line'>                <span class="nv">$p</span><span class="o">*</span><span class="nv">$thickness</span><span class="p">,</span> <span class="nv">$height</span><span class="p">,</span> <span class="nv">$black</span><span class="p">);</span>
+</span><span class='line'>        <span class="p">}</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'><span class="k">return</span> <span class="nv">$barcode</span><span class="p">;</span>
+</span><span class='line'><span class="cp">?&gt;</span><span class="x"></span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<blockquote><p>Code 128 is a very high-density barcode symbology. It is used for alphanumeric or numeric-only barcodes. It can encode all 128 characters of ASCII and, by use of an extension character (FNC4), the Latin-1 characters defined in ISO/IEC 8859-1</p><p>- Wikipedia</p></blockquote>
+
+
+<p><a href="https://en.wikipedia.org/wiki/Code%5F128/">https://en.wikipedia.org/wiki/Code%5F128/</a></p>
+
+<h2>Completion of the Project</h2>
+
+
+<p>I was able to successfully finish the project.</p>
+
+<p><img class='center' src="http://uw-freelancer.github.io/images/idcards/project-feedback.png" title="Project Feedback" alt="Project Feedback" /></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[UW Loadable Kernel Module]]></title>
+    <link href="http://uw-freelancer.github.io/blog/uw-loadable-kernel-module/"/>
+    <updated>2013-07-29T14:00:00+05:30</updated>
+    <id>http://uw-freelancer.github.io/blog/uw-loadable-kernel-module</id>
+    <content type="html"><![CDATA[<p>Many device drivers and other kernel elements are compiled as modules. If a driver is compiled directly into the kernel, its code and static data occupy space even if they&rsquo;re not used. But if the driver is compiled as a module, it requires memory only if memory is needed and subsequently loaded, into the kernel.</p>
+
+<p>Interestingly, you won&rsquo;t notice a performance hit for LKMs, so they&rsquo;re a powerful means of creating a lean kernel that adapts to its environment based upon the available hardware and attached devices.</p>
+
+<h2>UW Linux Loadable Kernel Module</h2>
+
+
+<p>Create the Linux Loadable Kernel Module C file.</p>
+
+<figure class='code'><figcaption><span>&#8216;uw-lkm.c&#8217; </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="cp">#include &lt;linux/module.h&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="cm">/**</span>
+</span><span class='line'><span class="cm"> * Defines the license for this LKM</span>
+</span><span class='line'><span class="cm"> */</span>
+</span><span class='line'><span class="n">MODULE_LICENSE</span><span class="p">(</span><span class="s">&quot;GPL&quot;</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'><span class="cm">/**</span>
+</span><span class='line'><span class="cm"> * Init function called on module entry</span>
+</span><span class='line'><span class="cm"> */</span>
+</span><span class='line'><span class="kt">int</span> <span class="nf">uw_module_init</span><span class="p">(</span> <span class="kt">void</span> <span class="p">)</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>    <span class="n">printk</span><span class="p">(</span><span class="n">KERN_INFO</span> <span class="s">&quot;uw_module_init called.  UW Module is now loaded.</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+</span><span class='line'>    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="cm">/**</span>
+</span><span class='line'><span class="cm"> * Cleanup function called on module exit</span>
+</span><span class='line'><span class="cm"> */</span>
+</span><span class='line'><span class="kt">void</span> <span class="nf">uw_module_cleanup</span><span class="p">(</span> <span class="kt">void</span> <span class="p">)</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>    <span class="n">printk</span><span class="p">(</span><span class="n">KERN_INFO</span> <span class="s">&quot;uw_module_cleanup called.  UW Module is now unloaded.</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+</span><span class='line'>    <span class="k">return</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="cm">/**</span>
+</span><span class='line'><span class="cm"> * Declare entry and exit functions</span>
+</span><span class='line'><span class="cm"> */</span>
+</span><span class='line'><span class="n">module_init</span><span class="p">(</span> <span class="n">uw_module_init</span> <span class="p">);</span>
+</span><span class='line'><span class="n">module_exit</span><span class="p">(</span> <span class="n">uw_module_cleanup</span> <span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Next Create the Makefile.</p>
+
+<figure class='code'><figcaption><span>&#8216;Making of the UW Loadable Kernel Module&#8217; </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>obj-m +<span class="o">=</span> uw-lkm.o
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Compile the Loadable Kernel Module using <code>make -C /usr/src/linux-headers-`uname -r` SUBDIRS=$PWD modules</code>.</p>
+
+<p>Then insert the new module using <code>sudo insmod uw-lkm.ko</code>.</p>
+
+<p>Finally, check the Log to confirm the new module is loaded using <code>sudo dmesg | tail -1</code>.</p>
+
+<p><img class='center' src="http://uw-freelancer.github.io/images/kernel/uw-lkm-compilation.png" title="UW Loadable Kernel Module" alt="UW Loadable Kernel Module" /></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[UW 103: Introduction to C Programming]]></title>
+    <link href="http://uw-freelancer.github.io/blog/introduction-to-c/"/>
+    <updated>2013-07-28T06:00:00+05:30</updated>
+    <id>http://uw-freelancer.github.io/blog/introduction-to-c</id>
+    <content type="html"><![CDATA[<blockquote><p>Some years ago I was struck by how many false things I had believed, and by how doubtful was the structure of beliefs that I had based on them. I realized that if I wanted to establish anything in the sciences that was stable and likely to last, I needed – just once in my life – to demolish everything completely and start again from the foundations. It looked like an enormous task, and I decided to wait until I was old enough to be sure that there was nothing to be gained from putting it off any longer. I have now delayed it for so long that I have no excuse for going on planning to do it rather than getting to work. So today I have set all my worries aside and arranged for myself a clear stretch of free time. I am here quite alone, and at last I will devote myself, sincerely and without holding back, to demolishing my opinions.</p><p>—Rene Descartes, Meditations On First Philosophy</p><p>FIRST MEDITATION: On what can be called into doubt</p></blockquote>
+
+
+<p>Read More: <a href="http://www.marxists.org/reference/archive/descartes/1639/meditations.htm">http://www.marxists.org/reference/archive/descartes/1639/meditations.htm</a></p>
+
+<p>&lsquo;To demolish everything completely and start again from the foundations&rsquo;, you need to learn C.</p>
+
+<h2>C Liberates You from Stupidity</h2>
+
+
+<p>To many programmers, this makes C scary and evil. It is the Devil, Satan, the trickster Loki come to destroy your productivity with his seductive talk of pointers and direct access to the machine. Then, once this computational Lucifer has you hooked, he destroys your world with the evil &ldquo;segfault&rdquo; and laughs as he reveals the trickery in your bargain with him.</p>
+
+<p>&ldquo;The computer is some purely functional fantasy land with padded walls for little babies&rdquo;</p>
+
+<p>But, C is not to blame for this state of affairs. No my friends, your computer and the Operating System controlling it are the real tricksters. They conspire to hide their true inner workings from you so that you can never really know what is going on. The C programming language&rsquo;s only failing is giving you access to what is really there, and telling you the cold hard raw truth. C gives you the red pill. C pulls the curtain back to show you the wizard. C is truth.</p>
+
+<p>Why use C then if it&rsquo;s so dangerous? Because C gives you power over the false reality of abstraction and liberates you from stupidity.</p>
+
+<p>(The above sentences are quoted from c.learncodethehardway.org)</p>
+
+<h2>The C Programming Language</h2>
+
+
+<p>C is a general-purpose programming language initially developed by Dennis Ritchie between 1969 and 1973 at AT&amp;T Bell Labs. Like most imperative languages in the ALGOL tradition, C has facilities for structured programming and allows lexical variable scope and recursion, while a static type system prevents many unintended operations. Its design provides constructs that map efficiently to typical machine instructions, and therefore it has found lasting use in applications that had formerly been coded in assembly language, most notably system software like the Unix computer operating system.</p>
+
+<p>C is one of the most widely used programming languages of all time, and C compilers are available for the majority of available computer architectures and operating systems.</p>
+
+<p>Read More: <a href="http://en.wikipedia.org/wiki/C_">http://en.wikipedia.org/wiki/C_</a>(programming_language)</p>
+
+<p>Read More: <a href="http://en.wikipedia.org/wiki/ANSI_C">http://en.wikipedia.org/wiki/ANSI_C</a></p>
+
+<p><img class='center' src="http://uw-freelancer.github.io/images/c/thompson-and-ritchie.jpg" title="Ken Thompson and Dennis Ritchie" alt="Ken Thompson and Dennis Ritchie" /></p>
+
+<p>Ken Thompson and Dennis Ritchie, from left to right. Dennis MacAlistair Ritchie was an American computer scientist who &ldquo;helped shape the digital era.&rdquo; He created the C programming language and, with long-time colleague Ken Thompson. Ritchie and Thompson received the Turing Award from the ACM in 1983, the Hamming Medal from the IEEE in 1990 and the National Medal of Technology from President Clinton in 1999.</p>
+
+<h2>GNU C Compiler</h2>
+
+
+<p><img class='center' src="http://uw-freelancer.github.io/images/c/richard-stallman.jpg" title="Richard Stallman" alt="Richard Stallman" /></p>
+
+<blockquote><p>I then realized that the Pastel compiler functioned by parsing the entire input file into a syntax tree, converting the whole syntax tree into a chain of “instructions”, and then generating the whole output file, without ever freeing any storage.</p><p>At this point, I concluded I would have to write a new compiler from scratch.</p><p>That new compiler is now known as GCC</p><p>- Richard Stallman</p></blockquote>
+
+
+<p>Read More: <a href="http://www.gnu.org/gnu/thegnuproject.html">http://www.gnu.org/gnu/thegnuproject.html</a></p>
+
+<p>The GNU Compiler Collection (GCC) is a compiler system produced by the GNU Project supporting various programming languages. GCC is a key component of the GNU toolchain. The Free Software Foundation (FSF) distributes GCC under the GNU General Public License (GNU GPL). GCC has played an important role in the growth of free software, as both a tool and an example.</p>
+
+<p>Do you remember <a href="http://uw-freelancer.github.io/blog/building-a-linux-system-from-scratch/" >building GNU Linux System from scratch</a>?  First Binutils-2.23.1 &ndash; Pass 1, Then, GCC-4.7.2 &ndash; Pass 1 and Linux-3.8.1 API Headers, finally, Glibc-2.17. Again Binutils-2.23.1 &ndash; Pass 2, etc.</p>
+
+<p>Originally named the GNU C Compiler, because it only handled the C programming language, GCC 1.0 was released in 1987 and the compiler was extended to compile C++ in December of that year.[1] Front ends were later developed for Objective-C, Objective-C++, Fortran, Java, Ada, and Go among others.</p>
+
+<p>Read More: <a href="https://en.wikipedia.org/wiki/GNU_Compiler_Collection">https://en.wikipedia.org/wiki/GNU_Compiler_Collection</a></p>
+
+<p>Compiler Collection Website: <a href="http://gcc.gnu.org/">http://gcc.gnu.org/</a></p>
+
+<p>The GNU C Reference Manual is a reference for the C programming language, as implemented by the GNU C Compiler. GNU-C Manual: <a href="http://www.gnu.org/software/gnu-c-manual/">http://www.gnu.org/software/gnu-c-manual/</a> View as HTML or Download as PDF.</p>
+
+<h2>The GNU C Library</h2>
+
+
+<p>Any Unix-like operating system needs a C library: the library which defines the &ldquo;system calls&rdquo; and other basic facilities such as open, malloc, printf, exit&hellip;</p>
+
+<p>The GNU C Library is used as the C library in the GNU systems and most systems with the Linux kernel.</p>
+
+<p>Website: <a href="https://www.gnu.org/software/libc/index.html">https://www.gnu.org/software/libc/index.html</a></p>
+
+<p>The GNU C Library Manual: <a href="https://www.gnu.org/software/libc/manual/">https://www.gnu.org/software/libc/manual/</a></p>
+
+<h2>Can You C This?</h2>
+
+
+<p>Create the uw.c file.</p>
+
+<figure class='code'><figcaption><span>&#8216;uw.c&#8217; </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>int main<span class="o">(</span>int argc, char *argv<span class="o">[])</span>
+</span><span class='line'><span class="o">{</span>
+</span><span class='line'>    puts<span class="o">(</span><span class="s2">&quot;Hello Upeksha!&quot;</span><span class="o">)</span>;
+</span><span class='line'>    <span class="k">return </span>0;
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Compile the C using GCC &ndash; <code>gcc uw.c</code>.</p>
+
+<p>Now execute it using <code>./a.out</code>.</p>
+
+<p><img class='center' src="http://uw-freelancer.github.io/images/c/simple-c-program.png" title="Simple C Program" alt="Simple C Program" /></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Procps Procfs Tools]]></title>
+    <link href="http://uw-freelancer.github.io/blog/ps-command/"/>
+    <updated>2013-07-27T22:00:00+05:30</updated>
+    <id>http://uw-freelancer.github.io/blog/ps-command</id>
+    <content type="html"><![CDATA[<h2>Procps-3.2.8 Tools</h2>
+
+
+<p>procps is the package that has a bunch of small useful utilities that give information about processes using the /proc filesystem.</p>
+
+<p><img class='center' src="http://uw-freelancer.github.io/images/system/procps-logo.png" title="procps logo" alt="procps logo" /></p>
+
+<blockquote><p>procps includes the programs ps, top, vmstat, w, kill, free, slabtop, and skill.</p></blockquote>
+
+
+<p>Browse Repository: <a href="http://procps.cvs.sourceforge.net/procps/procps/">http://procps.cvs.sourceforge.net/procps/procps/</a></p>
+
+<p>Home Page: <a href="http://procps.sourceforge.net/index.html">http://procps.sourceforge.net/index.html</a></p>
+
+<h2>Procps New Generation (procps-ng)</h2>
+
+
+<p>procps-ng is the Debian, Fedora and openSUSE fork of procps.</p>
+
+<p>From their NEWS page,</p>
+
+<figure class='code'><figcaption><span>&#8216;From procps to procps-ng&#8217; </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>procps-3.2.8 --&gt; procps-ng-3.3.0
+</span><span class='line'>Debian, Fedora and openSUSE fork of procps.
+</span><span class='line'>https://gitorious.org/procps
+</span><span class='line'>...
+</span><span class='line'>...
+</span><span class='line'>
+</span><span class='line'>procps-3.2.7 --&gt; procps-3.2.8
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Did you notice the change in their versioning? See below, Eric Bélanger is asking about switching to procps-ng.</p>
+
+<p><img class='center' src="http://uw-freelancer.github.io/images/system/moving-to-procps-ng.png" title="Switching to procps-ng?" alt="Switching to procps-ng?" /></p>
+
+<p>Site: <a href="https://gitorious.org/procps">https://gitorious.org/procps</a></p>
+
+<h2>What happened to the Warning?</h2>
+
+
+<p>Did you remember bad syntax warning, when you type <code>ps -aux</code> in old ps program.</p>
+
+<p>Warning: bad ps syntax, perhaps a bogus &lsquo;&ndash;&rsquo;? See <a href="http://procps.sf.net/faq.html">http://procps.sf.net/faq.html</a></p>
+
+<blockquote><p>This behavior is intended to aid in transitioning old scripts and habits. It is fragile, subject to change, and thus should not be relied upon.</p><p>-man ps</p></blockquote>
+
+
+<p>Now this warning has been removed. You no longer get a warning.</p>
+
+<p><img class='center' src="http://uw-freelancer.github.io/images/system/warning-removed.png" title="ps-aux warning removed" alt="ps-aux warning removed" /></p>
+
+<p>I built a <a href="http://uw-freelancer.github.io/blog/building-a-linux-system-from-scratch/" >GNU Linux System from Scratch</a>, I used Procps-ng-3.3.6. I don&rsquo;t get this warning anymore. Did you still get this warning?</p>
+
+<h2>Proc File System</h2>
+
+
+
+
+<blockquote><p>The proc filesystem provides a method of communication between kernel space and user space.</p></blockquote>
+
+
+<p><img class='center' src="http://uw-freelancer.github.io/images/system/user-kernel-bridge.jpg" title="User Space - Kernel Space Bridge" alt="User Space - Kernel Space Bridge" /></p>
+
+<p>User space(see left) and Kernel Space(see right) are bridged using proc file system. Proc file system belongs to Kernel Space.</p>
+
+<p>User space creatures can read the proc files. Sometime there are writable proc files that can be used to control the Kernel.</p>
+
+<p>cat /proc/sys/net/ipv4/ip_forward</p>
+
+<p>echo &ldquo;1&rdquo; > /proc/sys/net/ipv4/ip_forward</p>
+
+<p>Controls whether the kernel will allow tcp forwarding. The default value is 0 which means forwarding is OFF.You can set this to 1 if you with to enable it.</p>
+
+<p>Read More: <a href="http://en.wikipedia.org/wiki/Procfs">http://en.wikipedia.org/wiki/Procfs</a></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Dynamic Program Analysis with Valgrind]]></title>
+    <link href="http://uw-freelancer.github.io/blog/valgrind-dynamic-analysis/"/>
+    <updated>2013-07-26T12:00:00+05:30</updated>
+    <id>http://uw-freelancer.github.io/blog/valgrind-dynamic-analysis</id>
+    <content type="html"><![CDATA[<p><img class='center' src="http://uw-freelancer.github.io/images/c/valgrind-logo.png" title="Valgrind" alt="Valgrind" /></p>
+
+<h2>Valgrind</h2>
+
+
+<p>The &ldquo;Val&rdquo; as in the world &ldquo;value&rdquo;. The &ldquo;grind&rdquo; is pronounced with a short &lsquo;i&rsquo; &mdash; ie. &ldquo;grinned&rdquo; (rhymes with &ldquo;tinned&rdquo;) rather than &ldquo;grined&rdquo; (rhymes with &ldquo;find&rdquo;).</p>
+
+<p>Don&rsquo;t feel bad: almost everyone gets it wrong at first.</p>
+
+<p><img class='center' src="http://uw-freelancer.github.io/images/c/valgrind-large.png" title="Valgrind" alt="Valgrind" /></p>
+
+<p>Where does the name &ldquo;Valgrind&rdquo; come from? From Nordic mythology. Originally (before release) the project was named Heimdall, after the watchman of the Nordic gods. He could &ldquo;see a hundred miles by day or night, hear the grass growing, see the wool growing on a sheep&rsquo;s back&rdquo;, etc. This would have been a great name, but it was already taken by a security package &ldquo;Heimdal&rdquo;.</p>
+
+<p>Keeping with the Nordic theme, Valgrind was chosen. Valgrind is the name of the main entrance to Valhalla (the Hall of the Chosen Slain in Asgard). Over this entrance there resides a wolf and over it there is the head of a boar and on it perches a huge eagle, whose eyes can see to the far regions of the nine worlds. Only those judged worthy by the guardians are allowed to pass through Valgrind. All others are refused entrance.</p>
+
+<p>Read More: <a href="http://en.wikipedia.org/wiki/Norse_mythology">http://en.wikipedia.org/wiki/Norse_mythology</a></p>
+
+<p><img class='center' src="http://uw-freelancer.github.io/images/c/thors-fight-with-giants.jpg" title="Thor's fight with giants" alt="Thor's fight with giants" /></p>
+
+<blockquote><p>Valgrind: It&#8217;s not short for &#8220;value grinder&#8221;, although that&#8217;s not a bad guess.</p><p>- FAQ</p></blockquote>
+
+
+
+
+<h2>Detecting Memory Errors in ls Program!</h2>
+
+
+<p>Install Valgrind using <code>sudo apt-get install valgrind</code>.</p>
+
+<p>Run Valgrind on ls using <code>valgrind ls</code>.</p>
+
+<p><img class='center' src="http://uw-freelancer.github.io/images/c/valgrind-ls.png" title="Valgrind ls" alt="Valgrind ls" /></p>
+
+<p>ERROR SUMMARY: 0 errors from 0 contexts  :&ndash;)</p>
+
+<h2>How Analyze your C program Dynamically</h2>
+
+
+<p>Create the following C file.</p>
+
+<figure class='code'><figcaption><span>&#8216;uw.c&#8217; </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="cp">#include &lt;stdio.h&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="kt">int</span> <span class="nf">main</span><span class="p">()</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>  <span class="kt">char</span> <span class="o">*</span><span class="n">p</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="n">p</span> <span class="o">=</span> <span class="p">(</span><span class="kt">char</span> <span class="o">*</span><span class="p">)</span> <span class="n">malloc</span><span class="p">(</span><span class="mi">10</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="n">p</span> <span class="o">=</span> <span class="p">(</span><span class="kt">char</span> <span class="o">*</span><span class="p">)</span> <span class="n">malloc</span><span class="p">(</span><span class="mi">17</span><span class="p">);</span>
+</span><span class='line'>  <span class="n">free</span><span class="p">(</span><span class="n">p</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="n">p</span> <span class="o">=</span> <span class="p">(</span><span class="kt">char</span> <span class="o">*</span><span class="p">)</span> <span class="n">malloc</span><span class="p">(</span><span class="mi">13</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Compile using <code>gcc -o uw -g uw.c</code>. Run Valgrind with <code>valgrind ./uw</code>.</p>
+
+<p><img class='center' src="http://uw-freelancer.github.io/images/c/valgrind-output.png" title="Valgrind Output" alt="Valgrind Output" /></p>
+
+<h3>HEAP SUMMARY</h3>
+
+
+<p>in use at exit: 23 bytes in 2 blocks. total heap usage: 3 allocs, 1 frees, 40 bytes allocated.</p>
+
+<h3>LEAK SUMMARY</h3>
+
+
+<p>definitely lost: 23 bytes in 2 blocks.</p>
+
+<p>In the above file, we didn&rsquo;t free the p memory allocation twice. Therefore total 10 + 13 = 23 bytes of memory was leaked in our program.</p>
+
+<p>Learn More: <a href="http://valgrind.org/docs/manual/quick-start.html">http://valgrind.org/docs/manual/quick-start.html</a></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Freelancer.com Payoneer Prepaid MasterCard]]></title>
+    <link href="http://uw-freelancer.github.io/blog/freelancer-com-payoneer-prepaid-mastercard/"/>
+    <updated>2013-07-24T18:00:00+05:30</updated>
+    <id>http://uw-freelancer.github.io/blog/freelancer-com-payoneer-prepaid-mastercard</id>
+    <content type="html"><![CDATA[<p>I received my Freelancer.com Payoneer Mastercard by post.</p>
+
+<p><img class='center uw-logo' src="http://uw-freelancer.github.io/images/freelancer-payoneer-card.png" title="Freelancer Payoneer Card" alt="Freelancer Payoneer Card" /><br /></p>
+
+<h2>Credit Card Number</h2>
+
+
+
+
+<h3>First Digit (1 digit) - Industry ID</h3>
+
+
+<p>1, 2 Airline<br />
+3 Travel and Entertainment (3Amex)<br />
+4, 5 Banking and Financial (4 Visa, 5 Mastercard)<br />
+6 Merchandising and Banking (6 Discover, Diners Club)<br />
+7 Petrolium<br />
+8 Telecom<br />
+9 Misc.<br /></p>
+
+<h3>2 - 6 Digits (5 digits) Issuer ID</h3>
+
+
+
+
+<h3>7 - 15 Digits (9 digits) Account ID</h3>
+
+
+
+
+<h3>16th Or Last Digit (1 digit) Checksum</h3>
+
+
+
+
+<h2>Why they ask for the Card</h2>
+
+
+<p>Some retail stores will ask to see your card so they can manually type in the last four digits on the card. This verifies that the number embossed in the card is the same number that is programmed to the magnet stripe on the back; this is one way retailers can catch the <b>reprogrammed cards</b> before the goods leave the store.</p>
+
+<p>Read More: <a href="http://en.wikipedia.org/wiki/Credit_card">http://en.wikipedia.org/wiki/Credit_card</a></p>
+
+<p>Read more about numbers: <a href="http://en.wikipedia.org/wiki/Credit_card_number">http://en.wikipedia.org/wiki/Credit_card_number</a></p>
+
+<p><img class='center uw-logo' src="http://uw-freelancer.github.io/images/freelancer-payoneer-card-back.png" title="Freelancer Payoneer Card Back" alt="Freelancer Payoneer Card Back" /><br /></p>
+
+<h2>Luhn Algorithm</h2>
+
+
+
+
+<blockquote><p>With the Luhn Algorithm, there is a process to deciphering validity of a credit card. The end result is a number that is divisible by ten, although arriving at the end result is complex. <b>Anyone</b> could follow this process and come up with a valid credit card number to make purchases, especially on the Internet.</p><p>- Anonymous</p></blockquote>
+
+
+<p>Read More: <a href="http://en.wikipedia.org/wiki/Luhn_algorithm">http://en.wikipedia.org/wiki/Luhn_algorithm</a></p>
+
+<h2>CVC</h2>
+
+
+<p>The Card Security Code, also called a Card Verification Code, is a three-digit number code that is on the back of the credit card. It is the number that ultimately validates use of the card. There is not set system, technique, or algorithm used to arrive at this number. Each issuing institution has its own way of coming up with a correct CVC number, and that system is known only by that institution.</p>
+
+<blockquote><p>Although it may be still be possible to come up with a valid credit card number using the Luhn Algorithm, it is impossible to decipher the number and come up with an expiration date and CVC. Attempting to do so could net you some <b>federal fraud charges</b>.</p></blockquote>
+
+
+<p>My Freelancer.com prepaid MasterCard is issued by Payoneer.</p>
+
+<p><img class='center uw-logo' src="http://uw-freelancer.github.io/images/payoneer-logo.jpg" title="Payoneer Logo" alt="Payoneer Logo" /><br /></p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Asala Full Moon Poya Day]]></title>
@@ -45,7 +599,7 @@
 
 <p><img class='center' src="http://uw-freelancer.github.io/images/asala/maslows-hierarchy-of-needs.png" title="Maslow's Hierarchy of Needs" alt="Maslow's Hierarchy of Needs" /></p>
 
-<p>Read More: <a href="https://en.wikipedia.org/wiki/Maslow">https://en.wikipedia.org/wiki/Maslow</a>&rsquo;s_hierarchy_of_needs</p>
+<p>Read More: <a href="https://en.wikipedia.org/wiki/Maslow%27s_hierarchy_of_needs">https://en.wikipedia.org/wiki/Maslow%27s_hierarchy_of_needs</a></p>
 
 <blockquote><p>&#8220;the study of crippled, stunted, immature, and unhealthy specimens can yield only a cripple psychology and a cripple philosophy.&#8221;</p><p>- Abraham Maslow</p><p>(Maslow studied the healthiest 1% of the college student population)</p></blockquote>
 
@@ -61,7 +615,7 @@
 
 <p>Values and Symbols: In binary digital electronics, binary means we have only two values i.e. being or not-being. Digital means we map numbers into these two values. 1 as being and 0 as not-being. Now how do we communicate this? We have the utility of electronics. We symbolize a voltage difference of 5V as 1 or being. Otherwise 0 or not-being.</p>
 
-<p>We use voltage level to symbolize binary digital value. We can communicate digital values through Voltage Symbols. The critical point to understand is a random variation of voltage across a conducting medium is of no use. The value lies within the symbols and only the society that encodes the symbol can decode it.</p>
+<p>We use voltage level to symbolize binary digital value. We can communicate digital values through Voltage Symbols. The critical point to understand is a random variation of voltage across a conducting medium is of no use. The value lies within the symbols and only the society that encodes the value into a symbol can decode it.</p>
 
 <p>Religions can be thought as a set of symbols that communicate values across the time and generation aiding societies to increase their rate of development.</p>
 
@@ -2647,709 +3201,6 @@ I looked at the keybord: Do nothing.<br /></p>
 
 
 <p>Now we have all System Software installed. Next we should compile the kernel. See <a href="http://uw-freelancer.github.io/blog/compiling-the-linux-kernel-from-source/" >Compiling a Linux Kernel From Source</a> post.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Vim PowerLine]]></title>
-    <link href="http://uw-freelancer.github.io/blog/vim-powerline/"/>
-    <updated>2013-07-01T15:05:00+05:30</updated>
-    <id>http://uw-freelancer.github.io/blog/vim-powerline</id>
-    <content type="html"><![CDATA[<p>Vim is the editor I use for my day to day text editing tasks.</p>
-
-<h2>Powerline Mode Indicator</h2>
-
-
-<p>Vim Powerline plugin can show the &lsquo;mode information&rsquo; on the powerline.</p>
-
-<p>Normal Mode</p>
-
-<p><img class='center' src="http://uw-freelancer.github.io/images/blog/vim/powerline-normal.png" title="Vim Powerline Normal" alt="Vim Powerline Normal" /></p>
-
-<p>Insert Mode</p>
-
-<p><img class='center' src="http://uw-freelancer.github.io/images/blog/vim/powerline-insert.png" title="Vim Powerline Insert" alt="Vim Powerline Insert" /></p>
-
-<p>Visual Line Mode</p>
-
-<p><img class='center' src="http://uw-freelancer.github.io/images/blog/vim/powerline-vline.png" title="Vim Powerline Visual Line" alt="Vim Powerline Visual Line" /></p>
-
-<p>Visual Block Mode</p>
-
-<p><img class='center' src="http://uw-freelancer.github.io/images/blog/vim/powerline-vbox.png" title="Vim Powerline Visual Block" alt="Vim Powerline Visual Block" /></p>
-
-<h2>Powerline Git Branch Indicator</h2>
-
-
-<p>The above screens show we are working on the &lsquo;Master&rsquo; branch. Let&rsquo;s create and new branch called &lsquo;Upeksha&rsquo; and checkout it.</p>
-
-<p><img class='center' src="http://uw-freelancer.github.io/images/blog/vim/powerline-git-branch.png" title="Powerline Create Branch" alt="Powerline Create Branch" /></p>
-
-<p>Now the Git Branch Indicator shows the &lsquo;Upeksha&rsquo; branch.</p>
-
-<p><img class='center' src="http://uw-freelancer.github.io/images/blog/vim/powerline-upeksha-branch.png" title="Powerline Upeksha Branch" alt="Powerline Upeksha Branch" /></p>
-
-<h2>How to install Powerline</h2>
-
-
-<p>1 &ndash; First, Install the Powerline plugin.</p>
-
-<figure class='code'><figcaption><span>&#8216;Installing Powerline Plugin&#8217; </span></figcaption>
- <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nb">cd</span> ~/.vim/bundle
-</span><span class='line'>git clone https://github.com/Lokaltog/vim-powerline.git
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>2 &ndash; Next, install the Powerline fonts.</p>
-
-<figure class='code'><figcaption><span>&#8216;Installing Powerline Fonts&#8217; </span></figcaption>
- <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>mkdir ~/.fonts
-</span><span class='line'><span class="nb">cd</span> ~/.fonts/
-</span><span class='line'>git clone https://github.com/scotu/ubuntu-mono-powerline.git
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>3 &ndash; Finally, configure your Vim instance.</p>
-
-<figure class='code'><figcaption><span>&#8216;Powerline Vim Configuration - .vimrc&#8217; </span></figcaption>
- <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="s2">&quot; Vim Powerline</span>
-</span><span class='line'><span class="s2">let g:Powerline_symbols = &#39;fancy&#39;</span>
-</span><span class='line'>
-</span><span class='line'><span class="s2">&quot;</span> Automatically delete buffers when browsing git <span class="nb">history</span>/objects.
-</span><span class='line'>au BufReadPost fugitive://* <span class="nb">set </span><span class="nv">bufhidden</span><span class="o">=</span>delete
-</span><span class='line'>
-</span><span class='line'><span class="err">&quot;</span> Optional Setting
-</span><span class='line'><span class="nb">set </span><span class="nv">t_Co</span><span class="o">=</span>256
-</span></code></pre></td></tr></table></div></figure>
-
-
-
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[How I earned A Dollar]]></title>
-    <link href="http://uw-freelancer.github.io/blog/how-i-earned-one-usd/"/>
-    <updated>2013-07-01T11:05:00+05:30</updated>
-    <id>http://uw-freelancer.github.io/blog/how-i-earned-one-usd</id>
-    <content type="html"><![CDATA[<p>I only needed one dollar. If you&rsquo;ve missed that post, <a href="http://uw-freelancer.github.io/blog/i-only-need-one-dollar/" >read it here</a>.</p>
-
-<p>However, I was fortunate enough to receive a dollar. In fact, I received 10 USD. Mr. Cstoudt released 10 previously milestoned dollars.</p>
-
-<p><img class='center' src="http://uw-freelancer.github.io/images/blog/how-i-earned-one-dollar.jpg" title="How I earned one dollar" alt="How I earned one dollar" /></p>
-
-<h2>An Unreleased Milestone</h2>
-
-
-<p>Do you remember once I completed a project for Mr. Cstoudt? (See: <a href="http://uw-freelancer.github.io/blog/wordpress-toolbar-customization/" >WordPress Toolbar Customization</a>) Eventhough I completed that project successfully, there remained an unreleased and fogotten milestone. While I was thinking how to find the missing dollar yesterday, while I was browsing through my freelancer.com financial dashboard, I noticed this milestone. I contacted Mr. Cstoudt and asked him to release the milestone.</p>
-
-<p><img class='center' src="http://uw-freelancer.github.io/images/blog/requesting-to-release-the-milestone.jpg" title="Requesting to release the milestone" alt="Requesting to release the milestone" /></p>
-
-<p>I received this about 8:10 on 1st July, 2013. This is a new month. I was finding a dollar in the previous month. However I decided this payment should be counted as received in the previous month. I live in Sri Lanka (+5.30UTC). Client sent the payment from USA (-6.00UTC). For Mr. Cstoudt it was only 20:40 on 30th June, 2013. See the below illustration.</p>
-
-<p><img class='center' src="http://uw-freelancer.github.io/images/blog/sri-lanka-usa-time-relationship.jpg" title="Sri Lanka USA Time Relationship" alt="Sri Lanka USA Time Relationship" /></p>
-
-<h2>Finally, I collected the missing dollar</h2>
-
-
-<p>Just before the end of the month (somewhere +X.YYUTC), I was able to withdraw money from my freelancer.com account. Thanks Mr. Cstout (10 USD) and Mr. Brant (30 USD).</p>
-
-<p><img class='center' src="http://uw-freelancer.github.io/images/blog/32-usd-to-sri-lanka.jpg" title="32 USD to Sri Lanka" alt="32 USD to Sri Lanka" /></p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[I only need One Dollar]]></title>
-    <link href="http://uw-freelancer.github.io/blog/i-only-need-one-dollar/"/>
-    <updated>2013-06-30T09:13:00+05:30</updated>
-    <id>http://uw-freelancer.github.io/blog/i-only-need-one-dollar</id>
-    <content type="html"><![CDATA[<p>Today is the last day of this month (June, 2013). My account balance is &lsquo;29.19&rsquo;.</p>
-
-<p>In order to withdraw money from freelancer.com, My account balance should be at least 30 USD.</p>
-
-<p><img class='center' src="http://uw-freelancer.github.io/images/blog/i-only-need-one-dollar.jpg" title="I only need one dollar" alt="I only need one dollar" /></p>
-
-<p>I recently completed a project for Mr. Brant (Two WordPress Customizations). I agreed with him to be paid 30 USD for the completion of this project. But freelancer.com charged me a fee of 5 USD. ( Freelancer.com service fee is fair compared to other service providers. But at this time the total went below 30 USD ).</p>
-
-<p><img class='center' src="http://uw-freelancer.github.io/images/blog/wordpress-freelancer-cost.jpg" title="WordPress Freelancer Cost" alt="WordPress Freelancer Cost" /></p>
-
-<p>So I started bidding on projects, planing to earn the missing 1 USD. Today is the final day of the month. Still, I haven&rsquo;t had a chance to win a project. I started to lower my bids. Then people started to ask me why my bid is so low (they can&rsquo;t trust that the work could be that cheap). See the below conversation with one of my potential clients (Alias: MasterCook).</p>
-
-<blockquote><p>MasterCook: ok so 1. why you bid so low and how do i know your not wasting my time</p><p>Upeksha: I have been bidding for a couple of days without any work. I have $29 in my account and I need at least another $1 to withdraw money from freelancer.com.</p><p>Upeksha: I have done various WordPress related projects. I am confident I can do the customizations you need.</p><p>MasterCook: you price is good but I am worried about cheap labour</p></blockquote>
-
-
-<p>Usually, freelancer.com charges 10% of the total project price (for a 30USD project that should be 3USD). At this time they charged 5 USD. The reason is the lowest project commission is 5 USD. However now I can&rsquo;t withdraw funds to Skrill account without another dollar. I only need One Dollar.</p>
-
-<p><img class='center' src="http://uw-freelancer.github.io/images/blog/cannot-withdraw-less-than-30-usd.jpg" title="Cannot withdraw less than 30 USD" alt="Cannot withdraw less than 30 USD" /></p>
-
-<h2>Update 2013-07-01</h2>
-
-
-<p>I was able to receive the missing dollar. Read <a href="http://uw-freelancer.github.io/blog/how-i-earned-one-usd/" >how I found a dollar</a>.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Two Website Customizations]]></title>
-    <link href="http://uw-freelancer.github.io/blog/two-website-customizations/"/>
-    <updated>2013-06-29T21:05:00+05:30</updated>
-    <id>http://uw-freelancer.github.io/blog/two-website-customizations</id>
-    <content type="html"><![CDATA[<p>Two websites had to be customized when I was contacted for this project. I was contacted by Mr. Brant about this improvement. A freelancer.com project was created to make payments and exchange feedback.</p>
-
-<p><img class='center' src="http://uw-freelancer.github.io/images/blog/website-customization-project-specification.jpg" title="Website Customization Project Description" alt="Website Customization Project Description" /></p>
-
-<p>First one of two projects was described on oDesk. A child theme (called &lsquo;Curb Appeal&rsquo;) based on popular Genesis Framework needed to be customized.</p>
-
-<p><img class='center' src="http://uw-freelancer.github.io/images/blog/genesis-framework-customization.jpg" title="Genesis Framework Customization" alt="Genesis Framework Customization" /></p>
-
-<p>In &lsquo;Curb Appeal&rsquo; theme there was only one section in home top area.</p>
-
-<figure class='code'><figcaption><span>&#8216;Initial Code - functions.php&#8217; </span></figcaption>
- <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-</pre></td><td class='code'><pre><code class='php'><span class='line'><span class="cp">&lt;?php</span>
-</span><span class='line'><span class="nx">genesis_register_sidebar</span><span class="p">(</span> <span class="k">array</span><span class="p">(</span>
-</span><span class='line'>    <span class="s1">&#39;id&#39;</span>          <span class="o">=&gt;</span> <span class="s1">&#39;home-top&#39;</span><span class="p">,</span>
-</span><span class='line'>    <span class="s1">&#39;name&#39;</span>            <span class="o">=&gt;</span> <span class="s1">&#39;Home Top&#39;</span><span class="p">,</span>
-</span><span class='line'>    <span class="s1">&#39;description&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;This is the Home Top section&#39;</span>
-</span><span class='line'><span class="p">)</span> <span class="p">);</span>
-</span><span class='line'><span class="cp">?&gt;</span><span class="x"></span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>I replaced it with two sidebars as follows.</p>
-
-<figure class='code'><figcaption><span>&#8216;Code After Modification - functions.php&#8217; </span></figcaption>
- <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-</pre></td><td class='code'><pre><code class='php'><span class='line'><span class="cp">&lt;?php</span>
-</span><span class='line'><span class="nx">genesis_register_sidebar</span><span class="p">(</span> <span class="k">array</span><span class="p">(</span>
-</span><span class='line'>    <span class="s1">&#39;id&#39;</span>          <span class="o">=&gt;</span> <span class="s1">&#39;home-top-left&#39;</span><span class="p">,</span>
-</span><span class='line'>    <span class="s1">&#39;name&#39;</span>            <span class="o">=&gt;</span> <span class="s1">&#39;Home Top Left&#39;</span><span class="p">,</span>
-</span><span class='line'>    <span class="s1">&#39;description&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;This is the Home Top Left section&#39;</span>
-</span><span class='line'><span class="p">)</span> <span class="p">);</span>
-</span><span class='line'><span class="nx">genesis_register_sidebar</span><span class="p">(</span> <span class="k">array</span><span class="p">(</span>
-</span><span class='line'>    <span class="s1">&#39;id&#39;</span>          <span class="o">=&gt;</span> <span class="s1">&#39;home-top-right&#39;</span><span class="p">,</span>
-</span><span class='line'>    <span class="s1">&#39;name&#39;</span>            <span class="o">=&gt;</span> <span class="s1">&#39;Home Top Right&#39;</span><span class="p">,</span>
-</span><span class='line'>    <span class="s1">&#39;description&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;This is the Home Top Right section&#39;</span>
-</span><span class='line'><span class="p">)</span> <span class="p">);</span>
-</span><span class='line'><span class="cp">?&gt;</span><span class="x"></span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Next project was about adding a &lsquo;Banner&rsquo; for category archive pages. The following is the category banner uploader I developed.</p>
-
-<p><img class='center' src="http://uw-freelancer.github.io/images/blog/wordpress-category-banner.jpg" title="Category Banner Uploader" alt="Category Banner Uploader" /></p>
-
-<p>I was able to successfully complete the project and earned $25USD (freelancer.com charges only 10% of the total amount. But the lowest possible is $5USD).</p>
-
-<p><img class='center' src="http://uw-freelancer.github.io/images/blog/website-customization-feedback.jpg" title="Website Customization Feedback" alt="Website Customization Feedback" /></p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Building the Host Independant Toolchain]]></title>
-    <link href="http://uw-freelancer.github.io/blog/building-the-host-independant-toolchain/"/>
-    <updated>2013-06-14T12:00:00+05:30</updated>
-    <id>http://uw-freelancer.github.io/blog/building-the-host-independant-toolchain</id>
-    <content type="html"><![CDATA[<p>We are going to build a Linux Kernel based System with GNU Components by configuring, compiling and installing source tarballs. Mount a new ext3 disk on <code>/mnt/lfs</code> without partitioning. Create <code>sources</code> directory.</p>
-
-<p>Most of these steps are described in &lsquo;Linux From Scratch 7.3&rsquo; book. But I will describe you how I build this system on an Ubuntu host with further explanations where applicable.</p>
-
-<h2>Finding the New Disk, Formatting and Mouting</h2>
-
-
-<p>Run <code>sudo lshw</code>. Find your disk logical name. e.g. I found my disk at &lsquo;core&rsquo; > &lsquo;pci&rsquo; > &lsquo;storage&rsquo; > &lsquo;disk2&rsquo;.
-<code>logical name: /dev/sdc</code></p>
-
-<figure class='code'><figcaption><span>&#8216;Static IP Assignment for eth1 (/etc/network/interfaces)&#8217; </span></figcaption>
- <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>sudo su
-</span><span class='line'>mke2fs -jv /dev/sdc
-</span><span class='line'>mount -v -t ext3 /dev/sdc /mnt/lfs
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p><img class='center' src="http://uw-freelancer.github.io/images/kernel/mounting-the-new-disk.png" title="Mounting the New Disk" alt="Mounting the New Disk" /></p>
-
-<h2>GNU BinUtils 2.23.1 Installation</h2>
-
-
-<p>The GNU Binutils are a collection of binary tools. The main ones are:</p>
-
-<p>ld &ndash; the GNU linker.<br /><br />
-as &ndash; the GNU assembler.</p>
-
-<p><a href="http://www.gnu.org/software/binutils/">http://www.gnu.org/software/binutils/</a></p>
-
-<p>Download the &lsquo;GNU BinUtils&rsquo; (21.5MB) using <code>wget</code> into <code>/mnt/lfs/sources</code>.
-Untar using <code>tar -jxvf binutils-2.23.1.tar.bz2</code>. j option is for bzip2 archives. (154MB)</p>
-
-<p>run the <code>configure</code> command with the relevant arguments. Now <code>make</code>.</p>
-
-<p>The time to compile BinUtils is called 1SBU. For me 1SBU ~ 2.5min.</p>
-
-<p>&lsquo;binutils-build&rsquo; ~ 85MB.</p>
-
-<p>Time to install. <code>make install</code>. This will install the BinUtils in &lsquo;tools&rsquo; directory.</p>
-
-<h2>GNU Compiler Collection 4.7.2 Installation</h2>
-
-
-<p>The GNU Compiler Collection includes front ends for C, C++, Objective-C, Fortran, Java, Ada, and Go, as well as libraries for these languages (libstdc++, libgcj,&hellip;). GCC was originally written as the compiler for the GNU operating system.</p>
-
-<p><a href="http://gcc.gnu.org/">http://gcc.gnu.org/</a></p>
-
-<h3>The GNU Multi Precision Library (MPC) 5.1.1</h3>
-
-
-<p><a href="http://gmplib.org/">http://gmplib.org/</a></p>
-
-<p>Arithmetic without limitations &ndash; The GNU Multiple Precision Arithmetic Library</p>
-
-<p>GMP is a free library for arbitrary precision arithmetic, operating on signed integers, rational numbers, and floating point numbers. There is no practical limit to the precision except the ones implied by the available memory in the machine GMP runs on. GMP has a rich set of functions, and the functions have a regular interface.</p>
-
-<p><a href="ftp://ftp.gmplib.org/pub/gmp-5.1.1/gmp-5.1.1.tar.xz">ftp://ftp.gmplib.org/pub/gmp-5.1.1/gmp-5.1.1.tar.xz</a></p>
-
-<h3>The GNU MPFR Library 3.1.1</h3>
-
-
-<p><a href="http://www.mpfr.org/">http://www.mpfr.org/</a></p>
-
-<p>MPFR is based on the GMP multiple-precision library (MPC).</p>
-
-<p>The MPFR library is a C library for multiple-precision floating-point computations with correct rounding. The main goal of MPFR is to provide a library for multiple-precision floating-point computation which is both efficient and has a well-defined semantics. It copies the good ideas from the ANSI/IEEE-754 standard for double-precision floating-point arithmetic (53-bit significand).</p>
-
-<p><a href="http://www.mpfr.org/mpfr-3.1.1/mpfr-3.1.1.tar.xz">http://www.mpfr.org/mpfr-3.1.1/mpfr-3.1.1.tar.xz</a></p>
-
-<h3>GNU MPC 1.0.1</h3>
-
-
-<p><a href="http://www.multiprecision.org/">http://www.multiprecision.org/</a></p>
-
-<p>Gnu Mpc is a C library for the arithmetic of complex numbers with arbitrarily high precision and correct rounding of the result. It extends the principles of the IEEE-754 standard for fixed precision real floating point numbers to complex numbers, providing well-defined semantics for every operation. At the same time, speed of operation at high precision is a major design goal.</p>
-
-<p><a href="http://www.multiprecision.org/mpc/download/mpc-1.0.1.tar.gz">http://www.multiprecision.org/mpc/download/mpc-1.0.1.tar.gz</a></p>
-
-<h3>IEEE 754</h3>
-
-
-<p>IEEE Standard for Floating-Point Arithmetic (IEEE 754).</p>
-
-<p><img class='center' src="http://uw-freelancer.github.io/images/kernel/ieee-logo.png" title="IEEE 754" alt="IEEE 754" /></p>
-
-<p>The IEEE Standard for Floating-Point Arithmetic (IEEE 754) is a technical standard for floating-point computation established in 1985 by the Institute of Electrical and Electronics Engineers (IEEE). Many hardware floating point units use the IEEE 754 standard. The current version, IEEE 754-2008 published in August 2008, includes nearly all of the original IEEE 754-1985 standard and the IEEE Standard for Radix-Independent Floating-Point Arithmetic (IEEE 854-1987). The international standard ISO/IEC/IEEE 60559:2011 (with identical content to IEEE 754) has been approved for adoption through JTC1/SC 25 under the ISO/IEEE PSDO Agreement and published.</p>
-
-<p>GNU MPC and GNU MPFR are base on IEEE 754 Standard.</p>
-
-<p><a href="https://en.wikipedia.org/wiki/IEEE_floating_point">https://en.wikipedia.org/wiki/IEEE_floating_point</a></p>
-
-<h3>Linux Kernel 3.8.1</h3>
-
-
-<p><a href="https://www.kernel.org/">https://www.kernel.org/</a></p>
-
-<p>The Linux API Headers expose the kernel&rsquo;s API for use by Glibc.</p>
-
-<p><img class='center' src="http://uw-freelancer.github.io/images/kernel/linux-logo.png" title="Linux Kernel" alt="Linux Kernel" /></p>
-
-<p>The Linux kernel needs to expose an Application Programming Interface (API) for the system&rsquo;s C library (Glibc in LFS) to use. This is done by way of sanitizing various C header files that are shipped in the Linux kernel source tarball.</p>
-
-<p><a href="http://www.kernel.org/pub/linux/kernel/v3.x/linux-3.8.1.tar.xz">http://www.kernel.org/pub/linux/kernel/v3.x/linux-3.8.1.tar.xz</a></p>
-
-<h3>The GNU C Library 2.17</h3>
-
-
-<p><a href="http://www.gnu.org/software/libc/">http://www.gnu.org/software/libc/</a></p>
-
-<p>Any Unix-like operating system needs a C library: the library which defines the &ldquo;system calls&rdquo; and other basic facilities such as open, malloc, printf, exit&hellip;</p>
-
-<p>The GNU C Library is used as the C library in the GNU systems and most systems with the Linux kernel.</p>
-
-<p>The GNU C Library is primarily designed to be a portable and high performance C library. It follows all relevant standards including ISO C11 and POSIX.1-2008. It is also internationalized and has one of the most complete internationalization interfaces known.</p>
-
-<p><a href="http://ftp.gnu.org/gnu/glibc/glibc-2.17.tar.xz">http://ftp.gnu.org/gnu/glibc/glibc-2.17.tar.xz</a></p>
-
-<h3>Second Pass - BinUtils and GCC</h3>
-
-
-<p>After installing above programs, BinUtils and GCC needs another pass. Recompile and Reinstall both.</p>
-
-<h3>Toolchain Remaining Tools</h3>
-
-
-<p>Install the rest of the tools required to actually build the System From Source Tarballs.</p>
-
-<p>Tcl 8.6.0<br />
-Expect 5.45<br />
-DejaGNU 1.5<br />
-Check 0.9.9<br />
-Ncurses 5.9<br />
-Bash 4.2<br />
-Bzip2 1.0.6<br />
-Coreutils 8.21<br />
-Diffutils 3.2<br />
-File 5.13<br />
-Findutils 4.4.2<br />
-Gawk 4.0.2<br />
-Gettext 0.18.2<br />
-Grep 2.14<br />
-Gzip 1.5<br />
-M4 1.4.16<br />
-Make 3.82<br />
-Patch 2.7.1<br />
-Perl 5.16.2<br />
-Sed 4.2.2<br />
-Tar 1.26<br />
-Texinfo 5.0<br />
-Xz 5.0.4<br /><br /></p>
-
-<p>Next Read the post about <a href="http://uw-freelancer.github.io/blog/building-the-system-software-from-scratch/" >Building the System Software From Scratch</a>.<br /></p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Apache2 FastCGI and suEXEC implementing APC per user with PHP5-CGI]]></title>
-    <link href="http://uw-freelancer.github.io/blog/fastcgi-suexec-apc-per-user/"/>
-    <updated>2013-06-13T22:00:00+05:30</updated>
-    <id>http://uw-freelancer.github.io/blog/fastcgi-suexec-apc-per-user</id>
-    <content type="html"><![CDATA[<p>Each user can be given their own Alternative PHP Cache (APC) with PHP running as a seperate process. First we need to disable Apache2 PHP module which is enabled by default. After doing this you no longer can set PHP settings in .htaccess files. Apache2 will have no knowledge about PHP, it only passes the execution to a seperate PHP process via FastCGI module.</p>
-
-<p><a href="http://uw-freelancer.github.io/blog/setup-local-ubuntu-server/" >Setting up a local Ubuntu Server</a> is recommended to read before this post to learn how to setup a local Ubuntu Server.</p>
-
-<h2>Disable Apache2 PHP5 Module and Install PHP CGIs</h2>
-
-
-<p>Note the highlighted Resident and Shared memory consumption by Apache2 parent process and its children.</p>
-
-<p><img class='center' src="http://uw-freelancer.github.io/images/server/apache2-prefork-with-mod_php5.png" title="Apache2 Prefork with Mod_PHP" alt="Apache2 Prefork with Mod_PHP" /></p>
-
-<p>Disable <code>mod_php</code> with <code>sudo a2dismod php5</code>. Restart web server with <code>sudo service apache2 restart</code>. Now, if you check your &lsquo;/etc/apache2/mods-enabled&rsquo; directory, you will notice that <code>php.conf</code> and <code>php5.load</code> files have been deleted.</p>
-
-<p><img class='center' src="http://uw-freelancer.github.io/images/server/apache2-prefork-without-mod_php5.png" title="Apache2 Prefork without Mod_PHP" alt="Apache2 Prefork without Mod_PHP" /></p>
-
-<p>Again, note the reduction of the memory consumption by Apache.</p>
-
-<p>Next, you need to install <code>php5-cgi</code>. Run <code>sudo apt-get install php5-cgi</code>. After installation you will have two new executables (<code>php-cgi</code> and <code>php5-cgi</code>) in <code>/usr/bin/</code> directory.</p>
-
-<h2>Install and Enable Apache2 FastCGI Module</h2>
-
-
-<p>Run <code>sudo apt-cache search apache2 cgi</code> and find the relevant module. Install using <code>sudo apt-get install libapache2-mod-fastcgi</code>. Restart the server once again. If you check <code>/etc/apache2/mods-enabled</code> directory, you will see FastCGI is enabled automatically after installation.</p>
-
-<p>Add the FastCGI configuration to the <code>apache2.conf</code> file in <code>/etc/apache2</code> directory.</p>
-
-<figure class='code'><figcaption><span>&#8216;FastCGI Configuration (/etc/apache2/apache2.conf)&#8217; </span></figcaption>
- <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="c"># FastCGI</span>
-</span><span class='line'>&lt;IfModule mod_fastcgi.c&gt;
-</span><span class='line'>
-</span><span class='line'>FastCgiConfig -idle-timeout 20 -maxClassProcesses 1
-</span><span class='line'>FastCgiWrapper on
-</span><span class='line'>
-</span><span class='line'>AddHandler php5-fcgi .php
-</span><span class='line'>Action php5-fcgi /cgi-bin/php-fastcgi
-</span><span class='line'>
-</span><span class='line'>&lt;Location <span class="s2">&quot;/cgi-bin/php-fastcgi&quot;</span>&gt;
-</span><span class='line'>  Order Deny,Allow
-</span><span class='line'>  Deny from All
-</span><span class='line'>  Allow from <span class="nv">env</span><span class="o">=</span>REDIRECT_STATUS
-</span><span class='line'>  Options ExecCGI
-</span><span class='line'>  SetHandler fastcgi-script
-</span><span class='line'>&lt;/Location&gt;
-</span><span class='line'>&lt;/IfModule&gt;
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>You might need to enable Action command via <code>sudo a2enmod actions</code> to parse the above configuration.</p>
-
-<h2>Install and Enable Apache2 suEXEC</h2>
-
-
-<p><code>sudo apt-get install apache2-suexec</code></p>
-
-<p>Enable &lsquo;suEXEC&rsquo; with <code>sudo a2enmod suexec</code>.</p>
-
-<p>Create PHP FastCGI wrapper scripts in <code>/var/www/bin/</code> directory. Create a new directory for &lsquo;wisidagama&rsquo;. Create the &lsquo;php-fastcgi&rsquo; wrapper script.</p>
-
-<figure class='code'><figcaption><span>&#8216;Fast CGI PHP Wrapper (/var/www/bin/wisidagama/php-fastcgi)&#8217; </span></figcaption>
- <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="c">#!/bin/sh</span>
-</span><span class='line'>
-</span><span class='line'><span class="nv">PHP_FCGI_CHILDREN</span><span class="o">=</span>2
-</span><span class='line'><span class="nb">export </span>PHP_FCGI_CHILDREN
-</span><span class='line'><span class="nv">PHP_FCGI_MAX_REQUESTS</span><span class="o">=</span>500
-</span><span class='line'><span class="nb">export </span>PHP_FCGI_MAX_REQUESTS
-</span><span class='line'>
-</span><span class='line'><span class="nb">umask </span>0022
-</span><span class='line'><span class="nb">exec</span> /usr/bin/php5-cgi -d apc.shm_size<span class="o">=</span>50M
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Be sure to read and understand the <a href="http://httpd.apache.org/docs/2.2/suexec.html#model" >suEXEC Security Model</a> too.</p>
-
-<h2>Install and Enable PHP APC</h2>
-
-
-<p><code>sudo apt-get install php-apc</code></p>
-
-<p>You should get an <code>apc.ini</code> file in <code>/etc/php5/cgi/conf.d</code> directory. Enter <code>apc.enabled="1"</code> to enable APC for CGI PHP.</p>
-
-<h2>Add a User and Create a simple website</h2>
-
-
-<p>Add a new user called &lsquo;wisidagama&rsquo;. <code>sudo useradd wisidagama</code>.</p>
-
-<figure class='code'><figcaption><span>&#8216;Creating a New User&#8217; </span></figcaption>
- <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>upeksha@uwlab:/home<span class="nv">$ </span>sudo useradd -d /home/wisidagama -m wisidagama
-</span><span class='line'>upeksha@uwlab:/home<span class="nv">$ </span>sudo passwd wisidagama
-</span><span class='line'>Enter new UNIX password:
-</span><span class='line'>Retype new UNIX password:
-</span><span class='line'>passwd: password updated successfully
-</span><span class='line'>upeksha@uwlab:/home<span class="nv">$ </span>ls
-</span><span class='line'>upeksha  wisidagama
-</span><span class='line'>upeksha@uwlab:/home<span class="nv">$ </span>ls -al
-</span><span class='line'>total 16
-</span><span class='line'>drwxr-xr-x  4 root       root       4096 Jul  8 00:34 .
-</span><span class='line'>drwxr-xr-x 22 root       root       4096 Jul  7 10:52 ..
-</span><span class='line'>drwxr-xr-x  4 upeksha    upeksha    4096 Jul  7 23:41 upeksha
-</span><span class='line'>drwxr-xr-x  2 wisidagama wisidagama 4096 Jul  8 00:34 wisidagama
-</span><span class='line'>upeksha@uwlab:/home<span class="err">$</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Let&rsquo;s create a simple two-page website for wisidagama.</p>
-
-<figure class='code'><figcaption><span>&#8216;Creating a Simple Site&#8217; </span></figcaption>
- <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>upeksha@uw:~/test<span class="nv">$ </span>ssh wisidagama@uwlab
-</span><span class='line'>wisidagama@uwlab<span class="err">&#39;</span>s password:
-</span><span class='line'>Welcome to Ubuntu 12.04.2 LTS <span class="o">(</span>GNU/Linux 3.5.0-23-generic i686<span class="o">)</span>
-</span><span class='line'>...
-</span><span class='line'><span class="nv">$ </span>ls -al
-</span><span class='line'>total 28
-</span><span class='line'>drwxr-xr-x 3 wisidagama wisidagama 4096 Jul  8 00:45 .
-</span><span class='line'>drwxr-xr-x 4 root       root       4096 Jul  8 00:34 ..
-</span><span class='line'>-rw-r--r-- 1 wisidagama wisidagama  220 Apr  3  2012 .bash_logout
-</span><span class='line'>-rw-r--r-- 1 wisidagama wisidagama 3486 Apr  3  2012 .bashrc
-</span><span class='line'>drwx------ 2 wisidagama wisidagama 4096 Jul  8 00:45 .cache
-</span><span class='line'>-rw-r--r-- 1 wisidagama wisidagama  675 Apr  3  2012 .profile
-</span><span class='line'>-rw------- 1 wisidagama wisidagama  594 Jul  8 00:44 .viminfo
-</span><span class='line'><span class="nv">$ </span>mkdir public_html
-</span><span class='line'><span class="nv">$ </span><span class="nb">cd </span>public_html
-</span><span class='line'><span class="nv">$ </span>vi phpinfo.php
-</span><span class='line'><span class="nv">$ </span>vi index.php
-</span><span class='line'><span class="nv">$ </span>ls -al
-</span><span class='line'>total 16
-</span><span class='line'>drwxrwxr-x 2 wisidagama wisidagama 4096 Jul  8 00:47 .
-</span><span class='line'>drwxr-xr-x 4 wisidagama wisidagama 4096 Jul  8 00:47 ..
-</span><span class='line'>-rw-rw-r-- 1 wisidagama wisidagama   29 Jul  8 00:47 index.php
-</span><span class='line'>-rw-rw-r-- 1 wisidagama wisidagama   20 Jul  8 00:47 phpinfo.php
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Next we need serve these files as www.wisidagama.dev. Setup a Virtual Host for wisidagama.dev.</p>
-
-<p>Copy the &lsquo;default&rsquo; file to &lsquo;wisidagama.dev&rsquo; in &lsquo;/etc/apache2/sites-available&rsquo; directory. Edit the file as follows.</p>
-
-<figure class='code'><figcaption><span>&#8216;wisidagama.dev&#8217; </span></figcaption>
- <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>&lt;VirtualHost *:80&gt;
-</span><span class='line'>  ServerName www.wisidagama.dev
-</span><span class='line'>  ServerAdmin webmaster@wisidagama.dev
-</span><span class='line'>
-</span><span class='line'>  DocumentRoot /home/wisidagama/public_html/
-</span><span class='line'>  &lt;Directory /home/wisidagama/public_html/&gt;
-</span><span class='line'>      Options Indexes FollowSymLinks MultiViews
-</span><span class='line'>      AllowOverride None
-</span><span class='line'>      Order allow,deny
-</span><span class='line'>      allow from all
-</span><span class='line'>  &lt;/Directory&gt;
-</span><span class='line'>
-</span><span class='line'>  &lt;IfModule mod_fastcgi.c&gt;
-</span><span class='line'>        SuexecUserGroup wisidagama wisidagama
-</span><span class='line'>        Alias /cgi-bin/ /var/www/bin/wisidagama/
-</span><span class='line'>    &lt;/IfModule&gt;
-</span><span class='line'>
-</span><span class='line'>  ErrorLog /home/wisidagama/error.log
-</span><span class='line'>
-</span><span class='line'>  <span class="c"># Possible values include: debug, info, notice, warn, error, crit,</span>
-</span><span class='line'>  <span class="c"># alert, emerg.</span>
-</span><span class='line'>  LogLevel warn
-</span><span class='line'>
-</span><span class='line'>  CustomLog /home/wisidagama/access.log combined
-</span><span class='line'>&lt;/VirtualHost&gt;
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Enable <code>wisidagama.dev</code> using <code>sudo a2ensite wisidagama.dev</code>.</p>
-
-<p>From the client machine we need to tell www.wisidagama.dev to resolve to 192.168.1.8 since we don&rsquo;t have a DNS server to resolve this. Add the following line to your <code>/etc/hosts</code> file.</p>
-
-<p><code>192.168.1.8   www.wisidagama.dev</code></p>
-
-<h2>Disabling FastCGI or suEXEC</h2>
-
-
-<p>If you disable FastCGI module using <code>sudo a2dismod fastcgi</code>, then no one will handle .php files (Remember: AddHandler php5-fcgi .php). They will be downloaded to client machines.</p>
-
-<p>If you disable suExec module using <code>sudo a2dismod suexec</code>, Apache will fail.</p>
-
-<figure class='code'><figcaption><span>&#8216;Apache2 Fails to Start (/var/log/apache2/error.log)&#8217; </span></figcaption>
- <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>upeksha@uwlab:~<span class="nv">$ </span>sudo service apache2 restart
-</span><span class='line'>Syntax error on line 14 of /etc/apache2/sites-enabled/wisidagama.dev:
-</span><span class='line'>Invalid <span class="nb">command</span> <span class="s1">&#39;SuexecUserGroup&#39;</span>, perhaps misspelled or defined by a module not included in the server configuration
-</span><span class='line'>Action <span class="s1">&#39;configtest&#39;</span> failed.
-</span><span class='line'>The Apache error log may have more information.
-</span><span class='line'>   ...fail!
-</span></code></pre></td></tr></table></div></figure>
-
-
-
-
-<h2>Configuring APC size Per User</h2>
-
-
-<p>You can fine tune per user APC size in &lsquo;/var/www/bin/USER/php-fastcgi scripts. Use the <code>-d apc.shm_size=100M</code> argument to adjust per user APC size. See below, <code>phpinfo()</code> output shows the custom APC size for &#8216;wisidagama&rsquo;.</p>
-
-<p><img class='center' src="http://uw-freelancer.github.io/images/server/cgi-fastcgi-as-php-server-api.png" title="CGI-FastCGI as PHP Sever API" alt="CGI-FastCGI as PHP Sever API" /></p>
-
-<p>APC configuration:</p>
-
-<p><img class='center' src="http://uw-freelancer.github.io/images/server/php-fastcgi-apc-enabled.png" title="PHP FastCGI APC Enabled" alt="PHP FastCGI APC Enabled" /></p>
-
-<p>APC size per user:</p>
-
-<p><img class='center' src="http://uw-freelancer.github.io/images/server/php-apc-shm-size.png" title="PHP APC SHM Size" alt="PHP APC SHM Size" /></p>
-
-<h2>Resource Consumption of PHP CGI running via FastCGI and usEXEC with per user APC</h2>
-
-
-<p><img class='center' src="http://uw-freelancer.github.io/images/server/php5-cgi-process-resource-consumption.png" title="PHP CGI Process Resource Consumption" alt="PHP CGI Process Resource Consumption" /></p>
-
-<p>Now you can fine tune the various parameters to match your server needs and wants. Note: Apache2 still uses Prefork MPM.</p>
-
-<p><img class='center' src="http://uw-freelancer.github.io/images/server/php-as-cgi-process-with-apache-prefork-mpm.png" title="PHP as CGI process with Apache2 Prefork MPM" alt="PHP as CGI process with Apache2 Prefork MPM" /></p>
 ]]></content>
   </entry>
   

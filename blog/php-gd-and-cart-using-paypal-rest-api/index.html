@@ -1,0 +1,421 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>PHP GD + PayPal REST API Integration - Freelance Projects</title>
+  <meta name="author" content="Upeksha Wisidagama">
+
+  
+  <meta name="description" content="A PHP GD extensive WordPress Plugin for Dynamic ID Card Generation with c128b Bars and Spaces Encoded Strings having a Cart Communicating to PayPal &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://uw-freelancer.github.io/blog/php-gd-and-cart-using-paypal-rest-api">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Freelance Projects" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <link href="/stylesheets/data-table.css" media="screen, projection" rel="stylesheet" type="text/css" />
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-42123622-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Freelance Projects</a></h1>
+  
+    <h2>Upeksha Wisidagama</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:uw-freelancer.github.io" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+  <li><a href="/contact">Contact</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">PHP GD + PayPal REST API Integration</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-08-07T00:00:00+05:30" pubdate data-updated="true">Aug 7<span>th</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>A PHP GD extensive WordPress Plugin for Dynamic ID Card Generation with c128b Bars and Spaces Encoded Strings having a Cart Communicating to PayPal via REST(beta) API.</p>
+
+<h2>Mr. Archieh and His ID Card Project</h2>
+
+
+<p>The project was posted by Mr. Archieh on freelancer.com. I was among another 26 bidders with an average of 558USD budget. I knew, I could do this. I bidded with 388USD.</p>
+
+<p><img class='center' src="/images/idcards/project-description.png" title="Project Description" alt="Project Description" /></p>
+
+<h2>Extensive use of the PHP GD Extension</h2>
+
+
+<p>A set of PHP GD image manupulation functions were at the core of this plugin serving the purpose of generating dynamic ID cards that were ready to be printed. Creating image resources from uploaded files. Adding text on top of the image. Even overlaying transparent image on top of the background was done. The project was about living inside <b>the wonderful world of PHP GD image manupulation</b>.</p>
+
+<p><a href="http://php.net/manual/en/book.image.php">http://php.net/manual/en/book.image.php</a></p>
+
+<h2>RESTful PayPal Beta</h2>
+
+
+<p><img class='center' src="/images/idcards/restful-paypal-beta.png" title="RESTful PayPal Beta" alt="RESTful PayPal Beta" /></p>
+
+<blockquote><p>The PayPal API uses HTTP verbs and a RESTful endpoint structure. OAuth 2.0 is used as the API Authorization framework. Request and response payloads are formatted as JSON.</p><p>- PayPal REST API Reference</p></blockquote>
+
+
+<p>With OAuth 2.0 authorization is easy. All you need to do is present your client credentials and obtain a bearer token. No signing of requests is needed as with earlier OAuth.</p>
+
+<p><a href="https://developer.paypal.com/webapps/developer/docs/api/">https://developer.paypal.com/webapps/developer/docs/api/</a></p>
+
+<h2>C128b Encoded Data</h2>
+
+
+<p>Visitors should be given a facility to enter a string of their choice and it should be immediately converted to a Barcode (c128b).</p>
+
+<figure class='code'><figcaption><span>&#8216;c128b Encoding with PHP&#8217; </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+</pre></td><td class='code'><pre><code class='php'><span class='line'><span class="cp">&lt;?php</span>
+</span><span class='line'><span class="nv">$source_length</span> <span class="o">=</span> <span class="nb">strlen</span><span class="p">(</span><span class="nv">$encoded_string</span><span class="p">);</span>
+</span><span class='line'><span class="nv">$p</span> <span class="o">=</span> <span class="nv">$padding_x</span><span class="p">;</span>
+</span><span class='line'><span class="k">for</span><span class="p">(</span><span class="nv">$i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nv">$i</span> <span class="o">&lt;</span> <span class="nv">$source_length</span><span class="p">;</span> <span class="nv">$i</span><span class="o">++</span><span class="p">){</span>
+</span><span class='line'>    <span class="nv">$val</span> <span class="o">=</span> <span class="nb">intval</span><span class="p">(</span><span class="nx">substr</span><span class="p">(</span><span class="nv">$encoded_string</span><span class="p">,</span> <span class="nv">$i</span><span class="p">,</span> <span class="mi">1</span><span class="p">));</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="nv">$bar</span> <span class="o">=</span> <span class="mi">0</span> <span class="o">==</span> <span class="nv">$i</span><span class="o">%</span><span class="mi">2</span> <span class="o">?</span> <span class="k">true</span> <span class="o">:</span> <span class="k">false</span><span class="p">;</span>
+</span><span class='line'>    <span class="k">for</span><span class="p">(</span><span class="nv">$n</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nv">$n</span> <span class="o">&lt;</span> <span class="nv">$val</span><span class="p">;</span> <span class="nv">$n</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>        <span class="nv">$p</span> <span class="o">+=</span> <span class="mi">1</span><span class="p">;</span>
+</span><span class='line'>        <span class="k">if</span><span class="p">(</span><span class="nv">$bar</span><span class="p">){</span>
+</span><span class='line'>            <span class="nx">imageline</span><span class="p">(</span><span class="nv">$barcode</span><span class="p">,</span> <span class="nv">$p</span><span class="o">*</span><span class="nv">$thickness</span><span class="p">,</span> <span class="nv">$padding_y</span><span class="p">,</span>
+</span><span class='line'>                <span class="nv">$p</span><span class="o">*</span><span class="nv">$thickness</span><span class="p">,</span> <span class="nv">$height</span><span class="p">,</span> <span class="nv">$black</span><span class="p">);</span>
+</span><span class='line'>        <span class="p">}</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'><span class="k">return</span> <span class="nv">$barcode</span><span class="p">;</span>
+</span><span class='line'><span class="cp">?&gt;</span><span class="x"></span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<blockquote><p>Code 128 is a very high-density barcode symbology. It is used for alphanumeric or numeric-only barcodes. It can encode all 128 characters of ASCII and, by use of an extension character (FNC4), the Latin-1 characters defined in ISO/IEC 8859-1</p><p>- Wikipedia</p></blockquote>
+
+
+<p><a href="https://en.wikipedia.org/wiki/Code%5F128/">https://en.wikipedia.org/wiki/Code%5F128/</a></p>
+
+<h2>Completion of the Project</h2>
+
+
+<p>I was able to successfully finish the project.</p>
+
+<p><img class='center' src="/images/idcards/project-feedback.png" title="Project Feedback" alt="Project Feedback" /></p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by 
+    <span class="fn"><a href="https://plus.google.com/115164496041018691013?rel=author">Upeksha Wisidagama</a></span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-08-07T00:00:00+05:30" pubdate data-updated="true">Aug 7<span>th</span>, 2013</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/gd/'>GD</a>, <a class='category' href='/blog/categories/paypal/'>PayPal</a>, <a class='category' href='/blog/categories/wordpress/'>WordPress</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://uw-freelancer.github.io/blog/php-gd-and-cart-using-paypal-rest-api/" data-via="" data-counturl="http://uw-freelancer.github.io/blog/php-gd-and-cart-using-paypal-rest-api/" >Tweet</a>
+  
+  
+  
+    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/uw-loadable-kernel-module/" title="Previous Post: UW Loadable Kernel Module">&laquo; UW Loadable Kernel Module</a>
+      
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <img class='center uw-logo' src="/images/uw-freelancer-logo.png" title="UW Freelancer Logo" alt="UW Freelancer Logo" />
+<section class="odd" >
+<h1>GNU Linux Systems</h2><br />
+<img class='center uw-logo' src="/images/gnu-logo.png" title="GNU is Not Unix" alt="GNU is Not Unix" /><br />
+<a href="/blog/building-a-linux-system-from-scratch/" >Building a GNU Linux System from Tarballs</a><br />
+<a href="/blog/compiling-the-linux-kernel-from-source/" >Compiling a Linux Kernel From Source</a><br />
+<a href="/blog/building-the-system-software-from-scratch/" >Building the System Software from Scratch</a><br />
+<a href="/blog/building-the-host-independant-toolchain/" >Building the Host Independant ToolChain</a><br />
+</section>
+
+<section class="odd" >
+<h1>Linux Kernel</h2><br />
+<img class='center uw-logo' src="/images/linux-logo.png" title="Linux Kernel" alt="Linux Kernel" /><br />
+<a href="/blog/uw-loadable-kernel-module/" >UW Loadable Kernel Module</a><br />
+<a href="/blog/ps-command/" >Procps Procfs Tools</a><br />
+</section>
+
+<section class="odd" >
+<h1>GCC and LibGC</h2><br />
+<img class='center uw-logo' src="/images/gcc-logo.png" title="GCC" alt="GCC" /><br />
+<a href="/blog/introduction-to-c/" >UW 103: Introduction to C Programming</a><br />
+<a href="/blog/valgrind-dynamic-analysis/" >Valgrind Dynamic Program Analysis</a><br />
+</section>
+
+<section class="odd" >
+<h1>The Vim Editor</h2><br />
+<img class='center uw-logo' src="/images/vim_logo.png" title="The Editor" alt="The Editor" /><br />
+<a href="/blog/insanely-faster-vim-buffer-switching/" >Insanely Faster Vim Buffer Switching</a><br />
+<a href="/blog/vim-powerline/" >Vim PowerLine</a><br />
+<a href="/blog/vim-vdebug/" >Vim Vdebug</a><br />
+<a href="/blog/vim-mysql-query-plugin/" >Vim MySQL Query Plugin</a><br /><br />
+</section>
+
+<section class="odd" >
+<h1>WordPress</h2><br />
+<img class='center uw-logo' src="/images/wordpress_logo.png" title="WordPress" alt="WordPress" /><br />
+<a href="/blog/wordpress-toolbar-customization/" >WordPress Toolbar Customization</a><br />
+<a href="/blog/two-website-customizations/" >Two Website Customizations</a><br /><br />
+</section>
+
+<section class="odd" >
+<h1>PHP</h2><br />
+<img class='center uw-logo' src="/images/php_logo.png" title="PHP" alt="PHP" /><br />
+<a href="/blog/writing-php-extensions/" >Writing PHP Extensions</a><br />
+<a href="/blog/mysql-innodb-disk-space-usage/" >MySQL InnoDB Disk Space Consumption</a><br />
+</section>
+
+<section class="odd" >
+<h1>Apache HTTP Server</h2><br />
+<img class='center uw-logo' src="/images/apache_logo.png" title="Apache" alt="Apache" /><br />
+<a href="/blog/fastcgi-suexec-apc-per-user/" >Apache2 FastCGI and suEXEC Implementing APC Per User With PHP5-CGI</a><br />
+<a href="/blog/wordpress-performance-with-apc-via-fastcgi-php5/" >WordPress Performance Benchmarking With APC via FastCGI PHP5-CGI</a><br />
+<a href="/blog/mundane-experiments-with-apache-mpm_prefork-and-mod_php/" >Mundane Experiments With Apache Prefork MPM and Mod_PHP</a><br />
+<a href="/blog/setup-local-ubuntu-server/" >Setting Up a Local Ubuntu Server</a><br /><br />
+</section>
+<section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/php-gd-and-cart-using-paypal-rest-api/">PHP GD + PayPal REST API Integration</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/uw-loadable-kernel-module/">UW Loadable Kernel Module</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/introduction-to-c/">UW 103: Introduction to C Programming</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/ps-command/">Procps Procfs Tools</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/valgrind-dynamic-analysis/">Dynamic Program Analysis With Valgrind</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/freelancer-com-payoneer-prepaid-mastercard/">Freelancer.com Payoneer Prepaid MasterCard</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/asala-full-moon-poya-day/">Asala Full Moon Poya Day</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/wordpress-pages-creation-plugin/">WordPress Pages Creation Plugin</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/vim-mysql-query-plugin/">Vim MySQL Query Plugin</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/Vim-Syntastic-JSHint/">Javascript Coding Standards - Vim, Syntastic and JSHint</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/mapping-control-key-to-caps-lock-in-ubuntu/">Map Control Key to Caps Lock Key in Ubuntu X Server</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/building-a-linux-system-from-scratch/">Building a Linux System From Scratch</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/writing-php-extensions/">Writing PHP Extensions</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/compiling-the-linux-kernel-from-source/">Compiling a Linux Kernel From Source Tarball</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/wordpress-performance-with-apc-via-fastcgi-php5/">WordPress Performance Benchmarking With APC via FastCGI PHP5-CGI</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2013 - Upeksha Wisidagama -
+    <a href="https://plus.google.com/115164496041018691013" rel="publisher">UW Freelancer Google+</a>
+</p>
+
+</footer>
+  
+
+
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id; js.async = true;
+  js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

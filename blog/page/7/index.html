@@ -9,7 +9,7 @@
   <meta name="author" content="Upeksha Wisidagama">
 
   
-  <meta name="description" content="If you’re reading this tutorial, you probably have some interest in writing an extension for the PHP language. If not… well perhaps when we’re done &hellip;">
+  <meta name="description" content="The First Disclosure - The Wheel of Truth Today is Asala Full Moon Poya Day. It was on the Esala Poya Day, seven weeks after the attainment of &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -71,6 +71,7 @@
 <ul class="main-navigation">
   <li><a href="/">Blog</a></li>
   <li><a href="/blog/archives">Archives</a></li>
+  <li><a href="/contact">Contact</a></li>
 </ul>
 
 </nav>
@@ -84,7 +85,7 @@
       
   <header>
     
-      <h1 class="entry-title"><a href="/blog/writing-php-extensions/">Writing PHP Extensions</a></h1>
+      <h1 class="entry-title"><a href="/blog/asala-full-moon-poya-day/">Asala Full Moon Poya Day</a></h1>
     
     
       <p class="meta">
@@ -100,185 +101,90 @@
   
 
 
-<time datetime="2013-07-13T23:00:00+05:30" pubdate data-updated="true">Jul 13<span>th</span>, 2013</time>
+<time datetime="2013-07-22T17:00:00+05:30" pubdate data-updated="true">Jul 22<span>nd</span>, 2013</time>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content"><blockquote><p>If you’re reading this tutorial, you probably have some interest in writing an extension for the PHP language. If not… well perhaps when we’re done you’ll have discovered an interest you didn’t know existed! - devzone.zend.com</p></blockquote>
+  <div class="entry-content"><h2>The First Disclosure - The Wheel of Truth</h2>
 
 
-<p>If you have your PHP installed in a custom location, you need to add the <code>bin</code> directory to your <code>PATH</code> environment variable to avoid typing the full path. e.g. I have the bleeding edge PHP (PHP version 5.5.0) installed in <code>/usr/local/php5/</code>. To add the binaries to the $PATH,</p>
+<p>Today is Asala Full Moon Poya Day. It was on the Esala Poya Day, seven weeks after the attainment of Buddhahood, the Buddha delivered His first discourse, the Dhammachakkapavattna Sutta (the wheel of truth) to the five Ascetics, Kondanna, Vappa, Bhaddiya, Mahanama and Assaji at Isipathanaya in Benares (Baranasi).</p>
 
-<p><code>export PATH=$PATH:/usr/local/php5/bin/</code></p>
+<p>The sermon consisted of the central teachings of the Buddha &ndash; the Four Noble Truths and the Noble Eightfold Path. At the end of the Sutta the eldest Kondangna Thera attained sotapatti, the first stage of sainthood.</p>
 
-<h3>Preparing to Build the PHP Extension</h3>
-
-
-<p>Create a new directory for the new extension under <code>source/ext</code>. You need to create the following three files for a simple extension.</p>
-
-<p>Create the <code>config.m4</code> file.</p>
-
-<figure class='code'><figcaption><span>&#8216;config.m4&#8217; </span></figcaption>
- <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="n">PHP_ARG_ENABLE</span><span class="p">(</span><span class="n">upeksha_extension</span><span class="p">,</span> <span class="n">whether</span> <span class="n">to</span> <span class="n">enable</span> <span class="n">upeksha</span> <span class="n">extension</span><span class="p">,</span>
-</span><span class='line'><span class="p">[</span> <span class="o">--</span><span class="n">enable</span><span class="o">-</span><span class="n">upeksha</span><span class="o">-</span><span class="n">extension</span>   <span class="n">Enable</span> <span class="n">Upeksha</span> <span class="n">extension</span><span class="p">])</span>
-</span><span class='line'>
-</span><span class='line'><span class="k">if</span> <span class="n">test</span> <span class="s">&quot;$PHP_UPEKSHA_EXTENSION&quot;</span> <span class="o">=</span> <span class="s">&quot;yes&quot;</span><span class="p">;</span> <span class="n">then</span>
-</span><span class='line'>  <span class="n">AC_DEFINE</span><span class="p">(</span><span class="n">HAVE_UPEKSHA_EXTENSION</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="p">[</span><span class="n">Whether</span> <span class="n">you</span> <span class="n">have</span> <span class="n">Upeksha</span> <span class="n">extension</span><span class="p">])</span>
-</span><span class='line'>  <span class="n">PHP_NEW_EXTENSION</span><span class="p">(</span><span class="n">upeksha_extension</span><span class="p">,</span> <span class="n">upeksha_extension</span><span class="p">.</span><span class="n">c</span><span class="p">,</span> <span class="err">$</span><span class="n">ext_shared</span><span class="p">)</span>
-</span><span class='line'><span class="n">fi</span>
-</span></code></pre></td></tr></table></div></figure>
+<blockquote><p>&#8220;What, O Bhikkus, is that middle path the Thathagatha has discovered which promotes sight, knowledge, peace, higher wisdom, Enlightenment and Nibbana? It is this Noble Eightfold Path&#8221;.</p><p>-Buddha</p></blockquote>
 
 
-<p>Create the <code>upeksha.h</code> file.</p>
+<p>Read more on Noble Eightfold Path: <a href="https://en.wikipedia.org/wiki/Noble_Eightfold_Path">https://en.wikipedia.org/wiki/Noble_Eightfold_Path</a></p>
 
-<figure class='code'><figcaption><span>&#8216;upeksha.h&#8217; </span></figcaption>
- <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="cp">#ifndef PHP_UPEKSHA_H</span>
-</span><span class='line'>
-</span><span class='line'><span class="cp">#define PHP_UPEKSHA_H 1</span>
-</span><span class='line'>
-</span><span class='line'><span class="cp">#define PHP_UPEKSHA_VERSION &quot;0.1&quot;</span>
-</span><span class='line'><span class="cp">#define PHP_UPEKSHA_EXTNAME &quot;upeksha_extension&quot;</span>
-</span><span class='line'>
-</span><span class='line'><span class="n">PHP_FUNCTION</span><span class="p">(</span><span class="n">say_name</span><span class="p">);</span>
-</span><span class='line'>
-</span><span class='line'><span class="k">extern</span> <span class="n">zend_module_entry</span> <span class="n">upeksha_module_entry</span><span class="p">;</span>
-</span><span class='line'><span class="cp">#define phpext_upeksha_ptr &amp;upeksha_module_entry</span>
-</span><span class='line'>
-</span><span class='line'><span class="cp">#endif</span>
-</span></code></pre></td></tr></table></div></figure>
+<h2>Society and Values</h2>
 
 
-<p>Create the <code>upeksha_extension.c</code> file.</p>
+<p>Values: In a society, we have values. Values allow us to work as community and improve further. Individuals have values themselves. Groups and societies share common values.</p>
 
-<figure class='code'><figcaption><span>&#8216;upeksha_extension&#8217; </span></figcaption>
- <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-<span class='line-number'>28</span>
-<span class='line-number'>29</span>
-<span class='line-number'>30</span>
-<span class='line-number'>31</span>
-<span class='line-number'>32</span>
-<span class='line-number'>33</span>
-<span class='line-number'>34</span>
-<span class='line-number'>35</span>
-</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="cp">#ifdef HAVE_CONFIG_H</span>
-</span><span class='line'><span class="cp">#include &quot;config.h&quot;</span>
-</span><span class='line'><span class="cp">#endif</span>
-</span><span class='line'>
-</span><span class='line'><span class="cp">#include &quot;php.h&quot;</span>
-</span><span class='line'><span class="cp">#include &quot;upeksha.h&quot;</span>
-</span><span class='line'>
-</span><span class='line'><span class="c1">// list of custom PHP functions provided by this extension</span>
-</span><span class='line'><span class="c1">// set {NULL, NULL, NULL} as the last record to mark the end of list</span>
-</span><span class='line'><span class="k">static</span> <span class="n">zend_function_entry</span> <span class="n">upeksha_functions</span><span class="p">[]</span> <span class="o">=</span> <span class="p">{</span>
-</span><span class='line'>    <span class="n">PHP_FE</span><span class="p">(</span><span class="n">say_name</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">)</span>
-</span><span class='line'>    <span class="p">{</span><span class="nb">NULL</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">}</span>
-</span><span class='line'><span class="p">};</span>
-</span><span class='line'>
-</span><span class='line'><span class="c1">// the following code creates an entry for the module and registers it with Zend.</span>
-</span><span class='line'><span class="n">zend_module_entry</span> <span class="n">upeksha_extension_module_entry</span> <span class="o">=</span> <span class="p">{</span>
-</span><span class='line'>    <span class="n">STANDARD_MODULE_HEADER</span><span class="p">,</span>
-</span><span class='line'>    <span class="n">PHP_UPEKSHA_EXTNAME</span><span class="p">,</span>
-</span><span class='line'>    <span class="n">upeksha_functions</span><span class="p">,</span>
-</span><span class='line'>    <span class="nb">NULL</span><span class="p">,</span> <span class="c1">// name of the MINIT function or NULL if not applicable</span>
-</span><span class='line'>    <span class="nb">NULL</span><span class="p">,</span> <span class="c1">// name of the MSHUTDOWN function or NULL if not applicable</span>
-</span><span class='line'>    <span class="nb">NULL</span><span class="p">,</span> <span class="c1">// name of the RINIT function or NULL if not applicable</span>
-</span><span class='line'>    <span class="nb">NULL</span><span class="p">,</span> <span class="c1">// name of the RSHUTDOWN function or NULL if not applicable</span>
-</span><span class='line'>    <span class="nb">NULL</span><span class="p">,</span> <span class="c1">// name of the MINFO function or NULL if not applicable</span>
-</span><span class='line'>    <span class="n">PHP_UPEKSHA_VERSION</span><span class="p">,</span>
-</span><span class='line'>    <span class="n">STANDARD_MODULE_PROPERTIES</span>
-</span><span class='line'><span class="p">};</span>
-</span><span class='line'>
-</span><span class='line'><span class="n">ZEND_GET_MODULE</span><span class="p">(</span><span class="n">upeksha_extension</span><span class="p">)</span>
-</span><span class='line'>
-</span><span class='line'><span class="c1">// implementation of a custom say_name()</span>
-</span><span class='line'><span class="n">PHP_FUNCTION</span><span class="p">(</span><span class="n">say_name</span><span class="p">)</span>
-</span><span class='line'><span class="p">{</span>
-</span><span class='line'>    <span class="n">RETURN_STRING</span><span class="p">(</span><span class="s">&quot;Upeksha Wisidagama&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">);</span>
-</span><span class='line'><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure>
+<p>Example of a Value: Treating parents in their Elderhood.</p>
+
+<p>Upon birth humans are one of the most vulnerable animals to external threats. Parents protects us from the external and feed us. They gave us education and other required things for our life. This is a good behavior. How do we reinforce this pattern? Parents should be rewarded for what they are doing. Looking at the current generation, next generation of parents will treat their children even better. By retaining this value in our group or society, we&rsquo;ll be able to develop our societies better and faster.</p>
+
+<p>Another Example of a Value: Respecting our teachers.</p>
+
+<p>Teachers are paid for their service. Do we need to respect them or worship them? Well, according to Abraham Maslow, Money isn&rsquo;t enough. We all have self-esteem needs. By helping teachers to satisfy their self-esteem needs, we can make sure the next generation of teachers teach their children even better. Yes, one can argue, society should pay more for teachers so that they can purchase self-esteem. I agree, that&rsquo;s possible. But that leads to another side effect which I don&rsquo;t need to discuss in this article.</p>
+
+<p><img class='center' src="/images/asala/maslows-hierarchy-of-needs.png" title="Maslow's Hierarchy of Needs" alt="Maslow's Hierarchy of Needs" /></p>
+
+<p>Read More: <a href="https://en.wikipedia.org/wiki/Maslow%27s_hierarchy_of_needs">https://en.wikipedia.org/wiki/Maslow%27s_hierarchy_of_needs</a></p>
+
+<blockquote><p>&#8220;the study of crippled, stunted, immature, and unhealthy specimens can yield only a cripple psychology and a cripple philosophy.&#8221;</p><p>- Abraham Maslow</p><p>(Maslow studied the healthiest 1% of the college student population)</p></blockquote>
 
 
-<p>Next run <code>phpize</code> in the same directory.</p>
+<p>Read More: <a href="http://en.wikipedia.org/wiki/Abraham_Maslow">http://en.wikipedia.org/wiki/Abraham_Maslow</a></p>
 
-<p><img class='center' src="/images/php-extension/configuring-the-php-extension.png" title="Configuring the PHP Extension" alt="Configuring the PHP Extension" /></p>
+<p>Now we understand how the values aid the development of a society and how we can make the development faster by carefully choosing what our values should be.</p>
 
-<h3>Making and Installing the Upeksha PHP Extension</h3>
-
-
-<p>run <code>make</code>. You&rsquo;ll get a message, &lsquo;Libraries have been installed in: /home/uw/Downloads/php-5.5.0/ext/uw/modules&rsquo;.</p>
-
-<p>Load the extension by adding the following line to the <code>php.ini</code> file.</p>
-
-<p><code>extension=/home/uw/Downloads/php-5.5.0/ext/uw/modules/upeksha_extension.so</code></p>
-
-<p>Restart the Web Server.</p>
-
-<p>Now, create the following php file with the function from the new extension.</p>
-
-<figure class='code'><figcaption><span>&#8216;hello.php&#8217; </span></figcaption>
- <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class='php'><span class='line'><span class="cp">&lt;?php</span>
-</span><span class='line'><span class="k">echo</span> <span class="nx">say_name</span><span class="p">();</span>
-</span><span class='line'><span class="cp">?&gt;</span><span class="x"></span>
-</span></code></pre></td></tr></table></div></figure>
+<h2>Religion as a Medium of Communication</h2>
 
 
-<p><img class='center' src="/images/php-extension/upeksha-php-extension.png" title="Upeksha PHP Extension" alt="Upeksha PHP Extension" /></p>
+<p>Values are concepts, more specifically abstract concepts. We can use values within ourselves but cannot communicate. We need symbols to represent values.</p>
 
-<p>See the new extension listed in <code>phpinfo()</code>.</p>
+<p>Values and Symbols: In binary digital electronics, binary means we have only two values i.e. being or not-being. Digital means we map numbers into these two values. 1 as being and 0 as not-being. Now how do we communicate this? We have the utility of electronics. We symbolize a voltage difference of 5V as 1 or being. Otherwise 0 or not-being.</p>
 
-<p><img class='center' src="/images/php-extension/upeksha-extension-in-phpinfo.png" title="Upeksha PHP Extension in phpinfo()" alt="Upeksha PHP Extension in phpinfo()" /></p>
+<p>We use voltage level to symbolize binary digital value. We can communicate digital values through Voltage Symbols. The critical point to understand is a random variation of voltage across a conducting medium is of no use. The value lies within the symbols and only the society that encodes the value into a symbol can decode it.</p>
+
+<p>Religions can be thought as a set of symbols that communicate values across the time and generation aiding societies to increase their rate of development.</p>
+
+<h2>Religious Professionals</h2>
+
+
+<p><img class='center' src="/images/asala/Jesus_and_the_doctors_of_the_Faith.jpg" title="Jesus and the doctors of the Faith" alt="Jesus and the doctors of the Faith" />
+Jesus and the doctors of the Faith, a painting by a follower of Giuseppe Ribera.</p>
+
+<blockquote><p>Professions tend to be autonomous, which means they have a high degree of control of their own affairs: &#8220;professionals are autonomous insofar as they can make independent judgments about their work&#8221;. This usually means &#8220;the freedom to exercise their professional judgment.&#8221;</p></blockquote>
+
+
+<p>Read more: <a href="http://en.wikipedia.org/wiki/Profession">http://en.wikipedia.org/wiki/Profession</a></p>
+
+<p>Religious leaders in the society should maintain a professional status. In fact, they are more important than other professionals such as medical doctors, accountants, teachers, engineers, etc.</p>
+
+<h2>Philosophical Independence</h2>
+
+
+<p>In a complex world or society, it&rsquo;s hard to be philosophically independent, even if you have high intellectual capacity. The best option is to choose someone good to depend on. I chose Gauthama Buddha as my teacher of life. I happy shaping my life according to Buddhism.</p>
+
+<p>Please allocate some of your precious time for religious and spiritual activities.</p>
+
+<h2>Wheel of Life</h2>
+
+
+<p><img class='center' src="/images/asala/dharma-wheel.png" title="Dharma Wheel" alt="Dharma Wheel" /></p>
+
+<p>In Buddhism, according to the Pali Canon (Vinayapitaka, Khandhaka, Mahavagga, and Dhammacakkappavattanasutta), eight spokes represent the Noble Eightfold Path.</p>
+
+<p>Read More: <a href="https://en.wikipedia.org/wiki/Noble_Eightfold_Path">https://en.wikipedia.org/wiki/Noble_Eightfold_Path</a></p>
+
+<p>I am practicing Noble Eightfold Path as the way leading to the cessation of suffering (dukkha) and the achievement of self-awakening.</p>
 </div>
   
   
@@ -306,6 +212,20 @@
 <a href="/blog/compiling-the-linux-kernel-from-source/" >Compiling a Linux Kernel From Source</a><br />
 <a href="/blog/building-the-system-software-from-scratch/" >Building the System Software from Scratch</a><br />
 <a href="/blog/building-the-host-independant-toolchain/" >Building the Host Independant ToolChain</a><br />
+</section>
+
+<section class="odd" >
+<h1>Linux Kernel</h2><br />
+<img class='center uw-logo' src="/images/linux-logo.png" title="Linux Kernel" alt="Linux Kernel" /><br />
+<a href="/blog/uw-loadable-kernel-module/" >UW Loadable Kernel Module</a><br />
+<a href="/blog/ps-command/" >Procps Procfs Tools</a><br />
+</section>
+
+<section class="odd" >
+<h1>GCC and LibGC</h2><br />
+<img class='center uw-logo' src="/images/gcc-logo.png" title="GCC" alt="GCC" /><br />
+<a href="/blog/introduction-to-c/" >UW 103: Introduction to C Programming</a><br />
+<a href="/blog/valgrind-dynamic-analysis/" >Valgrind Dynamic Program Analysis</a><br />
 </section>
 
 <section class="odd" >
@@ -344,6 +264,30 @@
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/php-gd-and-cart-using-paypal-rest-api/">PHP GD + PayPal REST API Integration</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/uw-loadable-kernel-module/">UW Loadable Kernel Module</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/introduction-to-c/">UW 103: Introduction to C Programming</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/ps-command/">Procps Procfs Tools</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/valgrind-dynamic-analysis/">Dynamic Program Analysis With Valgrind</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/freelancer-com-payoneer-prepaid-mastercard/">Freelancer.com Payoneer Prepaid MasterCard</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/asala-full-moon-poya-day/">Asala Full Moon Poya Day</a>
       </li>
     
@@ -377,30 +321,6 @@
     
       <li class="post">
         <a href="/blog/wordpress-performance-with-apc-via-fastcgi-php5/">WordPress Performance Benchmarking With APC via FastCGI PHP5-CGI</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/vim-vdebug/">Vim Vedug</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/thanks-nit3hawks/">Thank You Mr. Nit3hawkz</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/gimp-gnu-image-manipulation-program/">GNU Image Manipulation Program - GIMP</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/insanely-faster-vim-buffer-switching/">Insanely Faster Buffer Switching</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/building-the-system-software-from-scratch/">Building the System Software From Scratch</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/vim-powerline/">Vim PowerLine</a>
       </li>
     
   </ul>

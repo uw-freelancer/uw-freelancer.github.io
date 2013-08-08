@@ -9,7 +9,7 @@
   <meta name="author" content="Upeksha Wisidagama">
 
   
-  <meta name="description" content="Copied from the below url:http://www.columbia.edu/acis/ets/CCREAD/etscc/kant.html What is Enlightenment Immanuel Kant Enlightenment is man&rsquo;s &hellip;">
+  <meta name="description" content="Each user can be given their own Alternative PHP Cache (APC) with PHP running as a seperate process. First we need to disable Apache2 PHP module &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -71,6 +71,7 @@
 <ul class="main-navigation">
   <li><a href="/">Blog</a></li>
   <li><a href="/blog/archives">Archives</a></li>
+  <li><a href="/contact">Contact</a></li>
 </ul>
 
 </nav>
@@ -84,7 +85,7 @@
       
   <header>
     
-      <h1 class="entry-title"><a href="/blog/what-is-enlightenment/">What Is Enlightenment</a></h1>
+      <h1 class="entry-title"><a href="/blog/fastcgi-suexec-apc-per-user/">Apache2 FastCGI and suEXEC Implementing APC Per User With PHP5-CGI</a></h1>
     
     
       <p class="meta">
@@ -100,55 +101,320 @@
   
 
 
-<time datetime="2012-12-10T22:00:00+05:30" pubdate data-updated="true">Dec 10<span>th</span>, 2012</time>
+<time datetime="2013-06-13T22:00:00+05:30" pubdate data-updated="true">Jun 13<span>th</span>, 2013</time>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content"><blockquote><p>Copied from the below url:<br/>http://www.columbia.edu/acis/ets/CCREAD/etscc/kant.html</p></blockquote>
+  <div class="entry-content"><p>Each user can be given their own Alternative PHP Cache (APC) with PHP running as a seperate process. First we need to disable Apache2 PHP module which is enabled by default. After doing this you no longer can set PHP settings in .htaccess files. Apache2 will have no knowledge about PHP, it only passes the execution to a seperate PHP process via FastCGI module.</p>
+
+<p><a href="/blog/setup-local-ubuntu-server/" >Setting up a local Ubuntu Server</a> is recommended to read before this post to learn how to setup a local Ubuntu Server.</p>
+
+<h2>Disable Apache2 PHP5 Module and Install PHP CGIs</h2>
+
+
+<p>Note the highlighted Resident and Shared memory consumption by Apache2 parent process and its children.</p>
+
+<p><img class='center' src="/images/server/apache2-prefork-with-mod_php5.png" title="Apache2 Prefork with Mod_PHP" alt="Apache2 Prefork with Mod_PHP" /></p>
+
+<p>Disable <code>mod_php</code> with <code>sudo a2dismod php5</code>. Restart web server with <code>sudo service apache2 restart</code>. Now, if you check your &lsquo;/etc/apache2/mods-enabled&rsquo; directory, you will notice that <code>php.conf</code> and <code>php5.load</code> files have been deleted.</p>
+
+<p><img class='center' src="/images/server/apache2-prefork-without-mod_php5.png" title="Apache2 Prefork without Mod_PHP" alt="Apache2 Prefork without Mod_PHP" /></p>
+
+<p>Again, note the reduction of the memory consumption by Apache.</p>
+
+<p>Next, you need to install <code>php5-cgi</code>. Run <code>sudo apt-get install php5-cgi</code>. After installation you will have two new executables (<code>php-cgi</code> and <code>php5-cgi</code>) in <code>/usr/bin/</code> directory.</p>
+
+<h2>Install and Enable Apache2 FastCGI Module</h2>
+
+
+<p>Run <code>sudo apt-cache search apache2 cgi</code> and find the relevant module. Install using <code>sudo apt-get install libapache2-mod-fastcgi</code>. Restart the server once again. If you check <code>/etc/apache2/mods-enabled</code> directory, you will see FastCGI is enabled automatically after installation.</p>
+
+<p>Add the FastCGI configuration to the <code>apache2.conf</code> file in <code>/etc/apache2</code> directory.</p>
+
+<figure class='code'><figcaption><span>&#8216;FastCGI Configuration (/etc/apache2/apache2.conf)&#8217; </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="c"># FastCGI</span>
+</span><span class='line'>&lt;IfModule mod_fastcgi.c&gt;
+</span><span class='line'>
+</span><span class='line'>FastCgiConfig -idle-timeout 20 -maxClassProcesses 1
+</span><span class='line'>FastCgiWrapper on
+</span><span class='line'>
+</span><span class='line'>AddHandler php5-fcgi .php
+</span><span class='line'>Action php5-fcgi /cgi-bin/php-fastcgi
+</span><span class='line'>
+</span><span class='line'>&lt;Location <span class="s2">&quot;/cgi-bin/php-fastcgi&quot;</span>&gt;
+</span><span class='line'>  Order Deny,Allow
+</span><span class='line'>  Deny from All
+</span><span class='line'>  Allow from <span class="nv">env</span><span class="o">=</span>REDIRECT_STATUS
+</span><span class='line'>  Options ExecCGI
+</span><span class='line'>  SetHandler fastcgi-script
+</span><span class='line'>&lt;/Location&gt;
+</span><span class='line'>&lt;/IfModule&gt;
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>You might need to enable Action command via <code>sudo a2enmod actions</code> to parse the above configuration.</p>
+
+<h2>Install and Enable Apache2 suEXEC</h2>
+
+
+<p><code>sudo apt-get install apache2-suexec</code></p>
+
+<p>Enable &lsquo;suEXEC&rsquo; with <code>sudo a2enmod suexec</code>.</p>
+
+<p>Create PHP FastCGI wrapper scripts in <code>/var/www/bin/</code> directory. Create a new directory for &lsquo;wisidagama&rsquo;. Create the &lsquo;php-fastcgi&rsquo; wrapper script.</p>
+
+<figure class='code'><figcaption><span>&#8216;Fast CGI PHP Wrapper (/var/www/bin/wisidagama/php-fastcgi)&#8217; </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="c">#!/bin/sh</span>
+</span><span class='line'>
+</span><span class='line'><span class="nv">PHP_FCGI_CHILDREN</span><span class="o">=</span>2
+</span><span class='line'><span class="nb">export </span>PHP_FCGI_CHILDREN
+</span><span class='line'><span class="nv">PHP_FCGI_MAX_REQUESTS</span><span class="o">=</span>500
+</span><span class='line'><span class="nb">export </span>PHP_FCGI_MAX_REQUESTS
+</span><span class='line'>
+</span><span class='line'><span class="nb">umask </span>0022
+</span><span class='line'><span class="nb">exec</span> /usr/bin/php5-cgi -d apc.shm_size<span class="o">=</span>50M
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Be sure to read and understand the <a href="http://httpd.apache.org/docs/2.2/suexec.html#model" >suEXEC Security Model</a> too.</p>
+
+<h2>Install and Enable PHP APC</h2>
+
+
+<p><code>sudo apt-get install php-apc</code></p>
+
+<p>You should get an <code>apc.ini</code> file in <code>/etc/php5/cgi/conf.d</code> directory. Enter <code>apc.enabled="1"</code> to enable APC for CGI PHP.</p>
+
+<h2>Add a User and Create a simple website</h2>
+
+
+<p>Add a new user called &lsquo;wisidagama&rsquo;. <code>sudo useradd wisidagama</code>.</p>
+
+<figure class='code'><figcaption><span>&#8216;Creating a New User&#8217; </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>upeksha@uwlab:/home<span class="nv">$ </span>sudo useradd -d /home/wisidagama -m wisidagama
+</span><span class='line'>upeksha@uwlab:/home<span class="nv">$ </span>sudo passwd wisidagama
+</span><span class='line'>Enter new UNIX password:
+</span><span class='line'>Retype new UNIX password:
+</span><span class='line'>passwd: password updated successfully
+</span><span class='line'>upeksha@uwlab:/home<span class="nv">$ </span>ls
+</span><span class='line'>upeksha  wisidagama
+</span><span class='line'>upeksha@uwlab:/home<span class="nv">$ </span>ls -al
+</span><span class='line'>total 16
+</span><span class='line'>drwxr-xr-x  4 root       root       4096 Jul  8 00:34 .
+</span><span class='line'>drwxr-xr-x 22 root       root       4096 Jul  7 10:52 ..
+</span><span class='line'>drwxr-xr-x  4 upeksha    upeksha    4096 Jul  7 23:41 upeksha
+</span><span class='line'>drwxr-xr-x  2 wisidagama wisidagama 4096 Jul  8 00:34 wisidagama
+</span><span class='line'>upeksha@uwlab:/home<span class="err">$</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Let&rsquo;s create a simple two-page website for wisidagama.</p>
+
+<figure class='code'><figcaption><span>&#8216;Creating a Simple Site&#8217; </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>upeksha@uw:~/test<span class="nv">$ </span>ssh wisidagama@uwlab
+</span><span class='line'>wisidagama@uwlab<span class="err">&#39;</span>s password:
+</span><span class='line'>Welcome to Ubuntu 12.04.2 LTS <span class="o">(</span>GNU/Linux 3.5.0-23-generic i686<span class="o">)</span>
+</span><span class='line'>...
+</span><span class='line'><span class="nv">$ </span>ls -al
+</span><span class='line'>total 28
+</span><span class='line'>drwxr-xr-x 3 wisidagama wisidagama 4096 Jul  8 00:45 .
+</span><span class='line'>drwxr-xr-x 4 root       root       4096 Jul  8 00:34 ..
+</span><span class='line'>-rw-r--r-- 1 wisidagama wisidagama  220 Apr  3  2012 .bash_logout
+</span><span class='line'>-rw-r--r-- 1 wisidagama wisidagama 3486 Apr  3  2012 .bashrc
+</span><span class='line'>drwx------ 2 wisidagama wisidagama 4096 Jul  8 00:45 .cache
+</span><span class='line'>-rw-r--r-- 1 wisidagama wisidagama  675 Apr  3  2012 .profile
+</span><span class='line'>-rw------- 1 wisidagama wisidagama  594 Jul  8 00:44 .viminfo
+</span><span class='line'><span class="nv">$ </span>mkdir public_html
+</span><span class='line'><span class="nv">$ </span><span class="nb">cd </span>public_html
+</span><span class='line'><span class="nv">$ </span>vi phpinfo.php
+</span><span class='line'><span class="nv">$ </span>vi index.php
+</span><span class='line'><span class="nv">$ </span>ls -al
+</span><span class='line'>total 16
+</span><span class='line'>drwxrwxr-x 2 wisidagama wisidagama 4096 Jul  8 00:47 .
+</span><span class='line'>drwxr-xr-x 4 wisidagama wisidagama 4096 Jul  8 00:47 ..
+</span><span class='line'>-rw-rw-r-- 1 wisidagama wisidagama   29 Jul  8 00:47 index.php
+</span><span class='line'>-rw-rw-r-- 1 wisidagama wisidagama   20 Jul  8 00:47 phpinfo.php
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Next we need serve these files as www.wisidagama.dev. Setup a Virtual Host for wisidagama.dev.</p>
+
+<p>Copy the &lsquo;default&rsquo; file to &lsquo;wisidagama.dev&rsquo; in &lsquo;/etc/apache2/sites-available&rsquo; directory. Edit the file as follows.</p>
+
+<figure class='code'><figcaption><span>&#8216;wisidagama.dev&#8217; </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>&lt;VirtualHost *:80&gt;
+</span><span class='line'>  ServerName www.wisidagama.dev
+</span><span class='line'>  ServerAdmin webmaster@wisidagama.dev
+</span><span class='line'>
+</span><span class='line'>  DocumentRoot /home/wisidagama/public_html/
+</span><span class='line'>  &lt;Directory /home/wisidagama/public_html/&gt;
+</span><span class='line'>      Options Indexes FollowSymLinks MultiViews
+</span><span class='line'>      AllowOverride None
+</span><span class='line'>      Order allow,deny
+</span><span class='line'>      allow from all
+</span><span class='line'>  &lt;/Directory&gt;
+</span><span class='line'>
+</span><span class='line'>  &lt;IfModule mod_fastcgi.c&gt;
+</span><span class='line'>        SuexecUserGroup wisidagama wisidagama
+</span><span class='line'>        Alias /cgi-bin/ /var/www/bin/wisidagama/
+</span><span class='line'>    &lt;/IfModule&gt;
+</span><span class='line'>
+</span><span class='line'>  ErrorLog /home/wisidagama/error.log
+</span><span class='line'>
+</span><span class='line'>  <span class="c"># Possible values include: debug, info, notice, warn, error, crit,</span>
+</span><span class='line'>  <span class="c"># alert, emerg.</span>
+</span><span class='line'>  LogLevel warn
+</span><span class='line'>
+</span><span class='line'>  CustomLog /home/wisidagama/access.log combined
+</span><span class='line'>&lt;/VirtualHost&gt;
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Enable <code>wisidagama.dev</code> using <code>sudo a2ensite wisidagama.dev</code>.</p>
+
+<p>From the client machine we need to tell www.wisidagama.dev to resolve to 192.168.1.8 since we don&rsquo;t have a DNS server to resolve this. Add the following line to your <code>/etc/hosts</code> file.</p>
+
+<p><code>192.168.1.8   www.wisidagama.dev</code></p>
+
+<h2>Disabling FastCGI or suEXEC</h2>
+
+
+<p>If you disable FastCGI module using <code>sudo a2dismod fastcgi</code>, then no one will handle .php files (Remember: AddHandler php5-fcgi .php). They will be downloaded to client machines.</p>
+
+<p>If you disable suExec module using <code>sudo a2dismod suexec</code>, Apache will fail.</p>
+
+<figure class='code'><figcaption><span>&#8216;Apache2 Fails to Start (/var/log/apache2/error.log)&#8217; </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>upeksha@uwlab:~<span class="nv">$ </span>sudo service apache2 restart
+</span><span class='line'>Syntax error on line 14 of /etc/apache2/sites-enabled/wisidagama.dev:
+</span><span class='line'>Invalid <span class="nb">command</span> <span class="s1">&#39;SuexecUserGroup&#39;</span>, perhaps misspelled or defined by a module not included in the server configuration
+</span><span class='line'>Action <span class="s1">&#39;configtest&#39;</span> failed.
+</span><span class='line'>The Apache error log may have more information.
+</span><span class='line'>   ...fail!
+</span></code></pre></td></tr></table></div></figure>
 
 
 
 
-<h2>What is Enlightenment</h2>
+<h2>Configuring APC size Per User</h2>
 
 
-<p>Immanuel Kant</p>
+<p>You can fine tune per user APC size in &lsquo;/var/www/bin/USER/php-fastcgi scripts. Use the <code>-d apc.shm_size=100M</code> argument to adjust per user APC size. See below, <code>phpinfo()</code> output shows the custom APC size for &#8216;wisidagama&rsquo;.</p>
 
-<p><img class='center' src="/images/buddhism/immanuel-kant.jpg" title="Immanuel Kant" alt="Immanuel Kant" /></p>
+<p><img class='center' src="/images/server/cgi-fastcgi-as-php-server-api.png" title="CGI-FastCGI as PHP Sever API" alt="CGI-FastCGI as PHP Sever API" /></p>
 
-<p>Enlightenment is man&rsquo;s emergence from his self-imposed nonage. Nonage is the inability to use one&rsquo;s own understanding without another&rsquo;s guidance. This nonage is self-imposed if its cause lies not in lack of understanding but in indecision and lack of courage to use one&rsquo;s own mind without another&rsquo;s guidance. Dare to know! (Sapere aude.) &ldquo;Have the courage to use your own understanding,&rdquo; is therefore the motto of the enlightenment.</p>
+<p>APC configuration:</p>
 
-<p>Laziness and cowardice are the reasons why such a large part of mankind gladly remain minors all their lives, long after nature has freed them from external guidance. They are the reasons why it is so easy for others to set themselves up as guardians. It is so comfortable to be a minor. If I have a book that thinks for me, a pastor who acts as my conscience, a physician who prescribes my diet, and so on&mdash;then I have no need to exert myself. I have no need to think, if only I can pay; others will take care of that disagreeable business for me. Those guardians who have kindly taken supervision upon themselves see to it that the overwhelming majority of mankind&mdash;among them the entire fair sex&mdash;should consider the step to maturity, not only as hard, but as extremely dangerous. First, these guardians make their domestic cattle stupid and carefully prevent the docile creatures from taking a single step without the leading-strings to which they have fastened them. Then they show them the danger that would threaten them if they should try to walk by themselves. Now this danger is really not very great; after stumbling a few times they would, at last, learn to walk. However, examples of such failures intimidate and generally discourage all further attempts.</p>
+<p><img class='center' src="/images/server/php-fastcgi-apc-enabled.png" title="PHP FastCGI APC Enabled" alt="PHP FastCGI APC Enabled" /></p>
 
-<p>Thus it is very difficult for the individual to work himself out of the nonage which has become almost second nature to him. He has even grown to like it, and is at first really incapable of using his own understanding because he has never been permitted to try it. Dogmas and formulas, these mechanical tools designed for reasonable use&mdash;or rather abuse&mdash;of his natural gifts, are the fetters of an everlasting nonage. The man who casts them off would make an uncertain leap over the narrowest ditch, because he is not used to such free movement. That is why there are only a few men who walk firmly, and who have emerged from nonage by cultivating their own minds.</p>
+<p>APC size per user:</p>
 
-<p>It is more nearly possible, however, for the public to enlighten itself; indeed, if it is only given freedom, enlightenment is almost inevitable. There will always be a few independent thinkers, even among the self-appointed guardians of the multitude. Once such men have thrown off the yoke of nonage, they will spread about them the spirit of a reasonable appreciation of man&rsquo;s value and of his duty to think for himself. It is especially to be noted that the public which was earlier brought under the yoke by these men afterwards forces these very guardians to remain in submission, if it is so incited by some of its guardians who are themselves incapable of any enlightenment. That shows how pernicious it is to implant prejudices: they will eventually revenge themselves upon their authors or their authors&#8217; descendants. Therefore, a public can achieve enlightenment only slowly. A revolution may bring about the end of a personal despotism or of avaricious tyrannical oppression, but never a true reform of modes of thought. New prejudices will serve, in place of the old, as guide lines for the unthinking multitude.</p>
+<p><img class='center' src="/images/server/php-apc-shm-size.png" title="PHP APC SHM Size" alt="PHP APC SHM Size" /></p>
 
-<p>This enlightenment requires nothing but freedom&mdash;and the most innocent of all that may be called &ldquo;freedom&rdquo;: freedom to make public use of one&rsquo;s reason in all matters. Now I hear the cry from all sides: &ldquo;Do not argue!&rdquo; The officer says: &ldquo;Do not argue&mdash;drill!&rdquo; The tax collector: &ldquo;Do not argue&mdash;pay!&rdquo; The pastor: &ldquo;Do not argue&mdash;believe!&rdquo; Only one ruler in the world says: &ldquo;Argue as much as you please, but obey!&rdquo; We find restrictions on freedom everywhere. But which restriction is harmful to enlightenment? Which restriction is innocent, and which advances enlightenment? I reply: the public use of one&rsquo;s reason must be free at all times, and this alone can bring enlightenment to mankind.</p>
+<h2>Resource Consumption of PHP CGI running via FastCGI and usEXEC with per user APC</h2>
 
-<p>On the other hand, the private use of reason may frequently be narrowly restricted without especially hindering the progress of enlightenment. By &ldquo;public use of one&rsquo;s reason&rdquo; I mean that use which a man, as scholar, makes of it before the reading public. I call &ldquo;private use&rdquo; that use which a man makes of his reason in a civic post that has been entrusted to him. In some affairs affecting the interest of the community a certain [governmental] mechanism is necessary in which some members of the community remain passive. This creates an artificial unanimity which will serve the fulfillment of public objectives, or at least keep these objectives from being destroyed. Here arguing is not permitted: one must obey. Insofar as a part of this machine considers himself at the same time a member of a universal community&mdash;a world society of citizens&mdash;(let us say that he thinks of himself as a scholar rationally addressing his public through his writings) he may indeed argue, and the affairs with which he is associated in part as a passive member will not suffer. Thus it would be very unfortunate if an officer on duty and under orders from his superiors should want to criticize the appropriateness or utility of his orders. He must obey. But as a scholar he could not rightfully be prevented from taking notice of the mistakes in the military service and from submitting his views to his public for its judgment. The citizen cannot refuse to pay the taxes levied upon him; indeed, impertinent censure of such taxes could be punished as a scandal that might cause general disobedience. Nevertheless, this man does not violate the duties of a citizen if, as a scholar, he publicly expresses his objections to the impropriety or possible injustice of such levies. A pastor, too, is bound to preach to his congregation in accord with the doctrines of the church which he serves, for he was ordained on that condition. But as a scholar he has full freedom, indeed the obligation, to communicate to his public all his carefully examined and constructive thoughts concerning errors in that doctrine and his proposals concerning improvement of religious dogma and church institutions. This is nothing that could burden his conscience. For what he teaches in pursuance of his office as representative of the church, he represents as something which he is not free to teach as he sees it. He speaks as one who is employed to speak in the name and under the orders of another. He will say: &ldquo;Our church teaches this or that; these are the proofs which it employs.&rdquo; Thus he will benefit his congregation as much as possible by presenting doctrines to which he may not subscribe with full conviction. He can commit himself to teach them because it is not completely impossible that they may contain hidden truth. In any event, he has found nothing in the doctrines that contradicts the heart of religion. For if he believed that such contradictions existed he would not be able to administer his office with a clear conscience. He would have to resign it. Therefore the use which a scholar makes of his reason before the congregation that employs him is only a private use, for no matter how sizable, this is only a domestic audience. In view of this he, as preacher, is not free and ought not to be free, since he is carrying out the orders of others. On the other hand, as the scholar who speaks to his own public (the world) through his writings, the minister in the public use of his reason enjoys unlimited freedom to use his own reason and to speak for himself. That the spiritual guardians of the people should themselves be treated as minors is an absurdity which would result in perpetuating absurdities.</p>
 
-<p>But should a society of ministers, say a Church Council, &hellip; have the right to commit itself by oath to a certain unalterable doctrine, in order to secure perpetual guardianship over all its members and through them over the people? I say that this is quite impossible. Such a contract, concluded to keep all further enlightenment from humanity, is simply null and void even if it should be confirmed by the sovereign power, by parliaments, and the most solemn treaties. An epoch cannot conclude a pact that will commit succeeding ages, prevent them from increasing their significant insights, purging themselves of errors, and generally progressing in enlightenment. That would be a crime against human nature whose proper destiny lies precisely in such progress. Therefore, succeeding ages are fully entitled to repudiate such decisions as unauthorized and outrageous. The touchstone of all those decisions that may be made into law for a people lies in this question: Could a people impose such a law upon itself? Now it might be possible to introduce a certain order for a definite short period of time in expectation of better order. But, while this provisional order continues, each citizen (above all, each pastor acting as a scholar) should be left free to publish his criticisms of the faults of existing institutions. This should continue until public understanding of these matters has gone so far that, by uniting the voices of many (although not necessarily all) scholars, reform proposals could be brought before the sovereign to protect those congregations which had decided according to their best lights upon an altered religious order, without, however, hindering those who want to remain true to the old institutions. But to agree to a perpetual religious constitution which is not publicly questioned by anyone would be, as it were, to annihilate a period of time in the progress of man&rsquo;s improvement. This must be absolutely forbidden.</p>
+<p><img class='center' src="/images/server/php5-cgi-process-resource-consumption.png" title="PHP CGI Process Resource Consumption" alt="PHP CGI Process Resource Consumption" /></p>
 
-<p>A man may postpone his own enlightenment, but only for a limited period of time. And to give up enlightenment altogether, either for oneself or one&rsquo;s descendants, is to violate and to trample upon the sacred rights of man. What a people may not decide for itself may even less be decided for it by a monarch, for his reputation as a ruler consists precisely in the way in which he unites the will of the whole people within his own. If he only sees to it that all true or supposed [religious] improvement remains in step with the civic order, he can for the rest leave his subjects alone to do what they find necessary for the salvation of their souls. Salvation is none of his business; it is his business to prevent one man from forcibly keeping another from determining and promoting his salvation to the best of his ability. Indeed, it would be prejudicial to his majesty if he meddled in these matters and supervised the writings in which his subjects seek to bring their [religious] views into the open, even when he does this from his own highest insight, because then he exposes himself to the reproach: Caesar non est supra grammaticos. 2    It is worse when he debases his sovereign power so far as to support the spiritual despotism of a few tyrants in his state over the rest of his subjects.</p>
+<p>Now you can fine tune the various parameters to match your server needs and wants. Note: Apache2 still uses Prefork MPM.</p>
 
-<p>When we ask, Are we now living in an enlightened age? the answer is, No, but we live in an age of enlightenment. As matters now stand it is still far from true that men are already capable of using their own reason in religious matters confidently and correctly without external guidance. Still, we have some obvious indications that the field of working toward the goal [of religious truth] is now opened. What is more, the hindrances against general enlightenment or the emergence from self-imposed nonage are gradually diminishing. In this respect this is the age of the enlightenment and the century of Frederick [the Great].</p>
-
-<p>A prince ought not to deem it beneath his dignity to state that he considers it his duty not to dictate anything to his subjects in religious matters, but to leave them complete freedom. If he repudiates the arrogant word &ldquo;tolerant&rdquo;, he is himself enlightened; he deserves to be praised by a grateful world and posterity as that man who was the first to liberate mankind from dependence, at least on the government, and let everybody use his own reason in matters of conscience. Under his reign, honorable pastors, acting as scholars and regardless of the duties of their office, can freely and openly publish their ideas to the world for inspection, although they deviate here and there from accepted doctrine. This is even more true of every person not restrained by any oath of office. This spirit of freedom is spreading beyond the boundaries [of Prussia] even where it has to struggle against the external hindrances established by a government that fails to grasp its true interest. [Frederick&rsquo;s Prussia] is a shining example that freedom need not cause the least worry concerning public order or the unity of the community. When one does not deliberately attempt to keep men in barbarism, they will gradually work out of that condition by themselves.</p>
-
-<p>I have emphasized the main point of the enlightenment&mdash;man&rsquo;s emergence from his self-imposed nonage&mdash;primarily in religious matters, because our rulers have no interest in playing the guardian to their subjects in the arts and sciences. Above all, nonage in religion is not only the most harmful but the most dishonorable. But the disposition of a sovereign ruler who favors freedom in the arts and sciences goes even further: he knows that there is no danger in permitting his subjects to make public use of their reason and to publish their ideas concerning a better constitution, as well as candid criticism of existing basic laws. We already have a striking example [of such freedom], and no monarch can match the one whom we venerate.</p>
-
-<p>But only the man who is himself enlightened, who is not afraid of shadows, and who commands at the same time a well disciplined and numerous army as guarantor of public peace&mdash;only he can say what [the sovereign of] a free state cannot dare to say: &ldquo;Argue as much as you like, and about what you like, but obey!&rdquo; Thus we observe here as elsewhere in human affairs, in which almost everything is paradoxical, a surprising and unexpected course of events: a large degree of civic freedom appears to be of advantage to the intellectual freedom of the people, yet at the same time it establishes insurmountable barriers. A lesser degree of civic freedom, however, creates room to let that free spirit expand to the limits of its capacity. Nature, then, has carefully cultivated the seed within the hard core&mdash;namely the urge for and the vocation of free thought. And this free thought gradually reacts back on the modes of thought of the people, and men become more and more capable of acting in freedom. At last free thought acts even on the fundamentals of government and the state finds it agreeable to treat man, who is now more than a machine, in accord with his dignity.</p>
-
-<p>Notes</p>
-
-<ol>
-<li>Translated by Mary C. Smith.</li>
-</ol>
-
+<p><img class='center' src="/images/server/php-as-cgi-process-with-apache-prefork-mpm.png" title="PHP as CGI process with Apache2 Prefork MPM" alt="PHP as CGI process with Apache2 Prefork MPM" /></p>
 </div>
   
   
@@ -176,6 +442,20 @@
 <a href="/blog/compiling-the-linux-kernel-from-source/" >Compiling a Linux Kernel From Source</a><br />
 <a href="/blog/building-the-system-software-from-scratch/" >Building the System Software from Scratch</a><br />
 <a href="/blog/building-the-host-independant-toolchain/" >Building the Host Independant ToolChain</a><br />
+</section>
+
+<section class="odd" >
+<h1>Linux Kernel</h2><br />
+<img class='center uw-logo' src="/images/linux-logo.png" title="Linux Kernel" alt="Linux Kernel" /><br />
+<a href="/blog/uw-loadable-kernel-module/" >UW Loadable Kernel Module</a><br />
+<a href="/blog/ps-command/" >Procps Procfs Tools</a><br />
+</section>
+
+<section class="odd" >
+<h1>GCC and LibGC</h2><br />
+<img class='center uw-logo' src="/images/gcc-logo.png" title="GCC" alt="GCC" /><br />
+<a href="/blog/introduction-to-c/" >UW 103: Introduction to C Programming</a><br />
+<a href="/blog/valgrind-dynamic-analysis/" >Valgrind Dynamic Program Analysis</a><br />
 </section>
 
 <section class="odd" >
@@ -214,6 +494,30 @@
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/php-gd-and-cart-using-paypal-rest-api/">PHP GD + PayPal REST API Integration</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/uw-loadable-kernel-module/">UW Loadable Kernel Module</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/introduction-to-c/">UW 103: Introduction to C Programming</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/ps-command/">Procps Procfs Tools</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/valgrind-dynamic-analysis/">Dynamic Program Analysis With Valgrind</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/freelancer-com-payoneer-prepaid-mastercard/">Freelancer.com Payoneer Prepaid MasterCard</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/asala-full-moon-poya-day/">Asala Full Moon Poya Day</a>
       </li>
     
@@ -247,30 +551,6 @@
     
       <li class="post">
         <a href="/blog/wordpress-performance-with-apc-via-fastcgi-php5/">WordPress Performance Benchmarking With APC via FastCGI PHP5-CGI</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/vim-vdebug/">Vim Vedug</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/thanks-nit3hawks/">Thank You Mr. Nit3hawkz</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/gimp-gnu-image-manipulation-program/">GNU Image Manipulation Program - GIMP</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/insanely-faster-vim-buffer-switching/">Insanely Faster Buffer Switching</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/building-the-system-software-from-scratch/">Building the System Software From Scratch</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/vim-powerline/">Vim PowerLine</a>
       </li>
     
   </ul>

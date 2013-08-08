@@ -4,7 +4,7 @@
   <title><![CDATA[Category: WordPress | Freelance Projects]]></title>
   <link href="http://uw-freelancer.github.io/blog/categories/wordpress/atom.xml" rel="self"/>
   <link href="http://uw-freelancer.github.io/"/>
-  <updated>2013-07-22T17:34:57+05:30</updated>
+  <updated>2013-08-08T21:26:59+05:30</updated>
   <id>http://uw-freelancer.github.io/</id>
   <author>
     <name><![CDATA[Upeksha Wisidagama]]></name>
@@ -12,6 +12,103 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[PHP GD + PayPal REST API Integration]]></title>
+    <link href="http://uw-freelancer.github.io/blog/php-gd-and-cart-using-paypal-rest-api/"/>
+    <updated>2013-08-07T00:00:00+05:30</updated>
+    <id>http://uw-freelancer.github.io/blog/php-gd-and-cart-using-paypal-rest-api</id>
+    <content type="html"><![CDATA[<p>A PHP GD extensive WordPress Plugin for Dynamic ID Card Generation with c128b Bars and Spaces Encoded Strings having a Cart Communicating to PayPal via REST(beta) API.</p>
+
+<h2>Mr. Archieh and His ID Card Project</h2>
+
+
+<p>The project was posted by Mr. Archieh on freelancer.com. I was among another 26 bidders with an average of 558USD budget. I knew, I could do this. I bidded with 388USD.</p>
+
+<p><img class='center' src="/images/idcards/project-description.png" title="Project Description" alt="Project Description" /></p>
+
+<h2>Extensive use of the PHP GD Extension</h2>
+
+
+<p>A set of PHP GD image manupulation functions were at the core of this plugin serving the purpose of generating dynamic ID cards that were ready to be printed. Creating image resources from uploaded files. Adding text on top of the image. Even overlaying transparent image on top of the background was done. The project was about living inside <b>the wonderful world of PHP GD image manupulation</b>.</p>
+
+<p><a href="http://php.net/manual/en/book.image.php">http://php.net/manual/en/book.image.php</a></p>
+
+<h2>RESTful PayPal Beta</h2>
+
+
+<p><img class='center' src="/images/idcards/restful-paypal-beta.png" title="RESTful PayPal Beta" alt="RESTful PayPal Beta" /></p>
+
+<p><blockquote><p>The PayPal API uses HTTP verbs and a RESTful endpoint structure. OAuth 2.0 is used as the API Authorization framework. Request and response payloads are formatted as JSON.</p></p><p><ul><br/><li>PayPal REST API Reference</p></blockquote></li>
+</ul>
+
+
+<p>With OAuth 2.0 authorization is easy. All you need to do is present your client credentials and obtain a bearer token. No signing of requests is needed as with earlier OAuth.</p>
+
+<p><a href="https://developer.paypal.com/webapps/developer/docs/api/">https://developer.paypal.com/webapps/developer/docs/api/</a></p>
+
+<h2>C128b Encoded Data</h2>
+
+
+<p>Visitors should be given a facility to enter a string of their choice and it should be immediately converted to a Barcode (c128b).</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>&lsquo;c128b Encoding with PHP&rsquo; </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+</pre></td><td class='code'><pre><code class='php'><span class='line'><span class="x">&amp;lt;?php</span>
+</span><span class='line'><span class="x">$source_length = strlen($encoded_string);</span>
+</span><span class='line'><span class="x">$p = $padding_x;</span>
+</span><span class='line'><span class="x">for($i = 0; $i &amp;lt; $source_length; $i++){&lt;/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="x">&lt;pre&gt;&lt;code&gt;$val = intval(substr($encoded_string, $i, 1));</span>
+</span><span class='line'>
+</span><span class='line'><span class="x">$bar = 0 == $i%2 ? true : false;</span>
+</span><span class='line'><span class="x">for($n = 0; $n &amp;lt; $val; $n++) {</span>
+</span><span class='line'><span class="x">    $p += 1;</span>
+</span><span class='line'><span class="x">    if($bar){</span>
+</span><span class='line'><span class="x">        imageline($barcode, $p*$thickness, $padding_y,</span>
+</span><span class='line'><span class="x">            $p*$thickness, $height, $black);</span>
+</span><span class='line'><span class="x">    }</span>
+</span><span class='line'><span class="x">}</span>
+</span><span class='line'><span class="x">&lt;/code&gt;&lt;/pre&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="x">&lt;p&gt;}</span>
+</span><span class='line'><span class="x">return $barcode;</span>
+</span><span class='line'><span class="x">?&gt;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p><blockquote><p>Code 128 is a very high-density barcode symbology. It is used for alphanumeric or numeric-only barcodes. It can encode all 128 characters of ASCII and, by use of an extension character (FNC4), the Latin-1 characters defined in ISO/IEC 8859-1</p></p><p><ul><br/><li>Wikipedia</p></blockquote></li>
+</ul>
+
+
+<p><a href="https://en.wikipedia.org/wiki/Code%5F128/">https://en.wikipedia.org/wiki/Code%5F128/</a></p>
+
+<h2>Completion of the Project</h2>
+
+
+<p>I was able to successfully finish the project.</p>
+
+<p><img class='center' src="/images/idcards/project-feedback.png" title="Project Feedback" alt="Project Feedback" /></p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[WordPress Pages Creation Plugin]]></title>

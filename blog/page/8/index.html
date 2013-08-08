@@ -9,7 +9,7 @@
   <meta name="author" content="Upeksha Wisidagama">
 
   
-  <meta name="description" content="This is the third post about building a linux system from source files. If you have rebooted your host after completing the steps described in the &hellip;">
+  <meta name="description" content="This project is different from other freelance projects in many ways. First I failed. Then I was promoted to level 16. Again I succeeded. Next I was &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -71,6 +71,7 @@
 <ul class="main-navigation">
   <li><a href="/">Blog</a></li>
   <li><a href="/blog/archives">Archives</a></li>
+  <li><a href="/contact">Contact</a></li>
 </ul>
 
 </nav>
@@ -84,7 +85,7 @@
       
   <header>
     
-      <h1 class="entry-title"><a href="/blog/compiling-the-linux-kernel-from-source/">Compiling a Linux Kernel From Source Tarball</a></h1>
+      <h1 class="entry-title"><a href="/blog/wordpress-pages-creation-plugin/">WordPress Pages Creation Plugin</a></h1>
     
     
       <p class="meta">
@@ -100,103 +101,55 @@
   
 
 
-<time datetime="2013-07-12T20:20:00+05:30" pubdate data-updated="true">Jul 12<span>th</span>, 2013</time>
+<time datetime="2013-07-20T15:00:00+05:30" pubdate data-updated="true">Jul 20<span>th</span>, 2013</time>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content"><p>This is the third post about building a linux system from source files.</p>
+  <div class="entry-content"><p>This project is different from other freelance projects in many ways. First I failed. Then I was promoted to level 16. Again I succeeded. Next I was paid. Finally I was recognized as a good service provider.</p>
 
-<p>If you have rebooted your host after completing the steps described in the second post, first, mount the new system partition.</p>
-
-<p>Our new system is on sdb disk.</p>
-
-<figure class='code'><figcaption><span>&#8216;Mounting the new system&#8217; </span></figcaption>
- <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>sudo su
-</span><span class='line'><span class="nb">export </span><span class="nv">LFS</span><span class="o">=</span>/mnt/lfs
-</span><span class='line'>mount -v -t ext3 /dev/sdb <span class="nv">$LFS</span>
-</span></code></pre></td></tr></table></div></figure>
+<h2> Level 16 @ Freelancer.com [Novice]</h2>
 
 
-<p><img class='center' src="/images/lfs/mounting-the-system.png" title="Mounting the system filesystem" alt="Mounting the system filesystem" /></p>
+<p>I was able to reach the Level 16 at Freelancer.com with the completion of this project.</p>
 
-<h2>Mounting and Populating Device (Virtual) Filesystem</h2>
+<p><img class='center' src="/images/blog/level16-novice.jpg" title="Level 16 Novice" alt="Level 16 Novice" /></p>
 
-
-
-
-<figure class='code'><figcaption><span>&#8216;Mounting Dev Filesystem&#8217; </span></figcaption>
- <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>mount -v --bind /dev <span class="nv">$LFS</span>/dev
-</span></code></pre></td></tr></table></div></figure>
+<h2>A Failed Project</h2>
 
 
+<p>I wasn&rsquo;t able to delivery what I promised initially. The result was a bad review from the employer.</p>
+
+<p><img class='center' src="/images/blog/communication-failure.jpg" title="Communication Failure" alt="Communication Failure" /></p>
+
+<p>I deserve that review. I failed to deliver what he initially demanded to do. I thought I would be able to complete the project. But Pinterest made it hard to connect with them without a proper API. The following is the initial project description.</p>
+
+<p><img class='center' src="/images/blog/wordpress-plugin-post-to-pinterest.jpg" title="WordPress Plugin Post to Pinterest" alt="WordPress Plugin Post to Pinterest" /></p>
+
+<p>See the above review: <b>On Time: No</b></p>
+
+<p>I&rsquo;ve tried many hours to get this plugin work. All attempts failed. Project went for a long time than I initially promised. However, employer assigned me the other project he had posted on freelancer.com. I knew that I could complete that project, at the first impression of the project description. I accepted the project. I delivered it very quickly.</p>
+
+<h2>5.50USD Tip</h2>
 
 
-<h2>Mounting Virtual Kernel Filesystems</h2>
+<p>I received a tip for the successful completion of the second project.</p>
+
+<p><img class='center' src="/images/blog/5usd-bonus.jpg" title="5 USD Bonus" alt="5 USD Bonus" /></p>
+
+<h2>Recognition as a Good Service Provider</h2>
 
 
+<p>Eventhough the first project failed, the second project was a success. I tried my best to deliver a good plugin for the second project. I received a comment from the employer worth of thousands of dollars.</p>
+
+<blockquote><p>Thanks for the work you have done. You really do go an extra mile and that is what separates you from the a lot of people. Being a service provider always go along way. So Thanks a bunch. Have a great weekend! :-) All the best.</p><p>- runeellingsen</p></blockquote>
 
 
-<figure class='code'><figcaption><span>&#8216;Mounting Virtual Kernel Filesystems&#8217; </span></figcaption>
- <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>mount -vt devpts devpts <span class="nv">$LFS</span>/dev/pts
-</span><span class='line'>mount -vt proc proc <span class="nv">$LFS</span>/proc
-</span><span class='line'>mount -vt sysfs sysfs <span class="nv">$LFS</span>/sys
-</span></code></pre></td></tr></table></div></figure>
+<p>The following are the feedbacks exchanged after the project completion.</p>
 
-
-<p><img class='center' src="/images/lfs/mounting-virtual-kernel-filesystems.png" title="Mounting Virtual Kernel Filesystems" alt="Mounting Virtual Kernel Filesystems" /></p>
-
-<h2>Chroot to New System and Compile the Kernel</h2>
-
-
-
-
-<figure class='code'><figcaption><span>&#8216;Chrooting into new System&#8217; </span></figcaption>
- <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>chroot <span class="s2">&quot;$LFS&quot;</span> /usr/bin/env -i <span class="se">\</span>
-</span><span class='line'>    <span class="nv">HOME</span><span class="o">=</span>/root <span class="nv">TERM</span><span class="o">=</span><span class="s2">&quot;$TERM&quot;</span> <span class="nv">PS1</span><span class="o">=</span><span class="s1">&#39;\u:\w\$ &#39;</span> <span class="se">\</span>
-</span><span class='line'>    <span class="nv">PATH</span><span class="o">=</span>/bin:/usr/bin:/sbin:/usr/sbin <span class="se">\</span>
-</span><span class='line'>    /bin/bash --login
-</span></code></pre></td></tr></table></div></figure>
-
-
-
-
-<blockquote><p>&#8216;Make MrProper&#8217; ensures that the kernel tree is absolutely clean. The kernel team recommends that this command be issued prior to each kernel compilation. Do not rely on the source tree being clean after un-tarring.</p></blockquote>
-
-
-<p>Now run &lsquo;make LANG=en_US LC_ALL= menuconfig&rsquo; after &lsquo;make mrproper&rsquo;.</p>
-
-<p><img class='center' src="/images/lfs/linux-kernel-configuration.png" title="Linux Kernel Configuration" alt="Linux Kernel Configuration" /></p>
-
-<h2>Install the Fresh Linux Kernel in the Boot Directory</h2>
-
-
-<p>Finally run the following command to install the Linux Kernel in the Boot directory.</p>
-
-<figure class='code'><figcaption><span>&#8216;Install Kernel in Boot Directory&#8217; </span></figcaption>
- <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>make
-</span><span class='line'>cp -v arch/x86/boot/bzImage /boot/vmlinuz-3.8.1-upeksha-7.3
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Now configure the Grub Bootloader and boot into the New Linux System.</p>
-
-<p><a href="/blog/building-a-linux-system-from-scratch/" >Next: Booting and Logging into the New Linux System</a><br /></p>
+<p><img class='center' src="/images/blog/post-to-pinterest-feedback.jpg" title="Post to Pinterest Feedback" alt="Post to Pinterest Feedback" /></p>
 </div>
   
   
@@ -224,6 +177,20 @@
 <a href="/blog/compiling-the-linux-kernel-from-source/" >Compiling a Linux Kernel From Source</a><br />
 <a href="/blog/building-the-system-software-from-scratch/" >Building the System Software from Scratch</a><br />
 <a href="/blog/building-the-host-independant-toolchain/" >Building the Host Independant ToolChain</a><br />
+</section>
+
+<section class="odd" >
+<h1>Linux Kernel</h2><br />
+<img class='center uw-logo' src="/images/linux-logo.png" title="Linux Kernel" alt="Linux Kernel" /><br />
+<a href="/blog/uw-loadable-kernel-module/" >UW Loadable Kernel Module</a><br />
+<a href="/blog/ps-command/" >Procps Procfs Tools</a><br />
+</section>
+
+<section class="odd" >
+<h1>GCC and LibGC</h2><br />
+<img class='center uw-logo' src="/images/gcc-logo.png" title="GCC" alt="GCC" /><br />
+<a href="/blog/introduction-to-c/" >UW 103: Introduction to C Programming</a><br />
+<a href="/blog/valgrind-dynamic-analysis/" >Valgrind Dynamic Program Analysis</a><br />
 </section>
 
 <section class="odd" >
@@ -262,6 +229,30 @@
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/php-gd-and-cart-using-paypal-rest-api/">PHP GD + PayPal REST API Integration</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/uw-loadable-kernel-module/">UW Loadable Kernel Module</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/introduction-to-c/">UW 103: Introduction to C Programming</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/ps-command/">Procps Procfs Tools</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/valgrind-dynamic-analysis/">Dynamic Program Analysis With Valgrind</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/freelancer-com-payoneer-prepaid-mastercard/">Freelancer.com Payoneer Prepaid MasterCard</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/asala-full-moon-poya-day/">Asala Full Moon Poya Day</a>
       </li>
     
@@ -295,30 +286,6 @@
     
       <li class="post">
         <a href="/blog/wordpress-performance-with-apc-via-fastcgi-php5/">WordPress Performance Benchmarking With APC via FastCGI PHP5-CGI</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/vim-vdebug/">Vim Vedug</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/thanks-nit3hawks/">Thank You Mr. Nit3hawkz</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/gimp-gnu-image-manipulation-program/">GNU Image Manipulation Program - GIMP</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/insanely-faster-vim-buffer-switching/">Insanely Faster Buffer Switching</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/building-the-system-software-from-scratch/">Building the System Software From Scratch</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/vim-powerline/">Vim PowerLine</a>
       </li>
     
   </ul>

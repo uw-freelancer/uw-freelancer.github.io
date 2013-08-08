@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Payoneer | Freelance Projects]]></title>
+  <link href="http://uw-freelancer.github.io/blog/categories/payoneer/atom.xml" rel="self"/>
+  <link href="http://uw-freelancer.github.io/"/>
+  <updated>2013-08-08T21:26:59+05:30</updated>
+  <id>http://uw-freelancer.github.io/</id>
+  <author>
+    <name><![CDATA[Upeksha Wisidagama]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Freelancer.com Payoneer Prepaid MasterCard]]></title>
+    <link href="http://uw-freelancer.github.io/blog/freelancer-com-payoneer-prepaid-mastercard/"/>
+    <updated>2013-07-24T18:00:00+05:30</updated>
+    <id>http://uw-freelancer.github.io/blog/freelancer-com-payoneer-prepaid-mastercard</id>
+    <content type="html"><![CDATA[<p>I received my Freelancer.com Payoneer Mastercard by post.</p>
+
+<p><img class='center uw-logo' src="/images/freelancer-payoneer-card.png" title="Freelancer Payoneer Card" alt="Freelancer Payoneer Card" /><br /></p>
+
+<h2>Credit Card Number</h2>
+
+
+
+
+<h3>First Digit (1 digit) - Industry ID</h3>
+
+
+<p>1, 2 Airline<br />
+3 Travel and Entertainment (3Amex)<br />
+4, 5 Banking and Financial (4 Visa, 5 Mastercard)<br />
+6 Merchandising and Banking (6 Discover, Diners Club)<br />
+7 Petrolium<br />
+8 Telecom<br />
+9 Misc.<br /></p>
+
+<h3>2 - 6 Digits (5 digits) Issuer ID</h3>
+
+
+
+
+<h3>7 - 15 Digits (9 digits) Account ID</h3>
+
+
+
+
+<h3>16th Or Last Digit (1 digit) Checksum</h3>
+
+
+
+
+<h2>Why they ask for the Card</h2>
+
+
+<p>Some retail stores will ask to see your card so they can manually type in the last four digits on the card. This verifies that the number embossed in the card is the same number that is programmed to the magnet stripe on the back; this is one way retailers can catch the <b>reprogrammed cards</b> before the goods leave the store.</p>
+
+<p>Read More: <a href="http://en.wikipedia.org/wiki/Credit_card">http://en.wikipedia.org/wiki/Credit_card</a></p>
+
+<p>Read more about numbers: <a href="http://en.wikipedia.org/wiki/Credit_card_number">http://en.wikipedia.org/wiki/Credit_card_number</a></p>
+
+<p><img class='center uw-logo' src="/images/freelancer-payoneer-card-back.png" title="Freelancer Payoneer Card Back" alt="Freelancer Payoneer Card Back" /><br /></p>
+
+<h2>Luhn Algorithm</h2>
+
+
+<p><blockquote><p>With the Luhn Algorithm, there is a process to deciphering validity of a credit card. The end result is a number that is divisible by ten, although arriving at the end result is complex. <b>Anyone</b> could follow this process and come up with a valid credit card number to make purchases, especially on the Internet.</p></p><p><ul><br/><li>Anonymous</p></blockquote></li>
+</ul>
+
+
+<p>Read More: <a href="http://en.wikipedia.org/wiki/Luhn_algorithm">http://en.wikipedia.org/wiki/Luhn_algorithm</a></p>
+
+<h2>CVC</h2>
+
+
+<p>The Card Security Code, also called a Card Verification Code, is a three-digit number code that is on the back of the credit card. It is the number that ultimately validates use of the card. There is not set system, technique, or algorithm used to arrive at this number. Each issuing institution has its own way of coming up with a correct CVC number, and that system is known only by that institution.</p>
+
+<p><blockquote><p>Although it may be still be possible to come up with a valid credit card number using the Luhn Algorithm, it is impossible to decipher the number and come up with an expiration date and CVC. Attempting to do so could net you some <b>federal fraud charges</b>.</p></blockquote></p>
+
+<p>My Freelancer.com prepaid MasterCard is issued by Payoneer.</p>
+
+<p><img class='center uw-logo' src="/images/payoneer-logo.jpg" title="Payoneer Logo" alt="Payoneer Logo" /><br /></p>
+]]></content>
+  </entry>
+  
+</feed>

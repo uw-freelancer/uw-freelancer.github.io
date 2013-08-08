@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Linux | Freelance Projects]]></title>
   <link href="http://uw-freelancer.github.io/blog/categories/linux/atom.xml" rel="self"/>
   <link href="http://uw-freelancer.github.io/"/>
-  <updated>2013-07-22T17:34:57+05:30</updated>
+  <updated>2013-08-08T21:26:59+05:30</updated>
   <id>http://uw-freelancer.github.io/</id>
   <author>
     <name><![CDATA[Upeksha Wisidagama]]></name>
@@ -12,6 +12,116 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[UW Loadable Kernel Module]]></title>
+    <link href="http://uw-freelancer.github.io/blog/uw-loadable-kernel-module/"/>
+    <updated>2013-07-29T14:00:00+05:30</updated>
+    <id>http://uw-freelancer.github.io/blog/uw-loadable-kernel-module</id>
+    <content type="html"><![CDATA[<p>Many device drivers and other kernel elements are compiled as modules. If a driver is compiled directly into the kernel, its code and static data occupy space even if they&rsquo;re not used. But if the driver is compiled as a module, it requires memory only if memory is needed and subsequently loaded, into the kernel.</p>
+
+<p>Interestingly, you won&rsquo;t notice a performance hit for LKMs, so they&rsquo;re a powerful means of creating a lean kernel that adapts to its environment based upon the available hardware and attached devices.</p>
+
+<h2>UW Linux Loadable Kernel Module</h2>
+
+
+<p>Create the Linux Loadable Kernel Module C file.</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>&lsquo;uw-lkm.c&rsquo; </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">h1</span><span class="o">&gt;</span><span class="n">include</span> <span class="o">&amp;</span><span class="n">lt</span><span class="p">;</span><span class="n">linux</span><span class="o">/</span><span class="n">module</span><span class="p">.</span><span class="n">h</span><span class="o">&gt;&lt;/</span><span class="n">h1</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;/&lt;</span><span class="n">em</span><span class="o">&gt;*</span>
+</span><span class='line'> <span class="o">*</span> <span class="n">Defines</span> <span class="n">the</span> <span class="n">license</span> <span class="k">for</span> <span class="n">this</span> <span class="n">LKM</span>
+</span><span class='line'> <span class="o">&lt;/</span><span class="n">em</span><span class="o">&gt;/</span>
+</span><span class='line'><span class="n">MODULE_LICENSE</span><span class="p">(</span><span class="o">&amp;</span><span class="n">ldquo</span><span class="p">;</span><span class="n">GPL</span><span class="o">&amp;</span><span class="n">rdquo</span><span class="p">;);</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;/&lt;</span><span class="n">em</span><span class="o">&gt;*</span>
+</span><span class='line'> <span class="o">*</span> <span class="n">Init</span> <span class="n">function</span> <span class="n">called</span> <span class="n">on</span> <span class="n">module</span> <span class="n">entry</span>
+</span><span class='line'> <span class="o">&lt;/</span><span class="n">em</span><span class="o">&gt;/</span>
+</span><span class='line'><span class="kt">int</span> <span class="n">uw_module_init</span><span class="p">(</span> <span class="kt">void</span> <span class="p">)</span>
+</span><span class='line'><span class="p">{</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="n">printk</span><span class="p">(</span><span class="n">KERN_INFO</span> <span class="s">&quot;uw_module_init called.  UW Module is now loaded.</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+</span><span class='line'><span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="p">}</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;/&lt;</span><span class="n">em</span><span class="o">&gt;*</span>
+</span><span class='line'> <span class="o">*</span> <span class="n">Cleanup</span> <span class="n">function</span> <span class="n">called</span> <span class="n">on</span> <span class="n">module</span> <span class="n">exit</span>
+</span><span class='line'> <span class="o">&lt;/</span><span class="n">em</span><span class="o">&gt;/</span>
+</span><span class='line'><span class="kt">void</span> <span class="n">uw_module_cleanup</span><span class="p">(</span> <span class="kt">void</span> <span class="p">)</span>
+</span><span class='line'><span class="p">{</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="n">printk</span><span class="p">(</span><span class="n">KERN_INFO</span> <span class="s">&quot;uw_module_cleanup called.  UW Module is now unloaded.</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+</span><span class='line'><span class="k">return</span><span class="p">;</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="p">}</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;/&lt;</span><span class="n">em</span><span class="o">&gt;*</span>
+</span><span class='line'> <span class="o">*</span> <span class="n">Declare</span> <span class="n">entry</span> <span class="n">and</span> <span class="n">exit</span> <span class="n">functions</span>
+</span><span class='line'> <span class="o">&lt;/</span><span class="n">em</span><span class="o">&gt;/</span>
+</span><span class='line'><span class="n">module_init</span><span class="p">(</span> <span class="n">uw_module_init</span> <span class="p">);</span>
+</span><span class='line'><span class="n">module_exit</span><span class="p">(</span> <span class="n">uw_module_cleanup</span> <span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>Next Create the Makefile.</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>&lsquo;Making of the UW Loadable Kernel Module&rsquo; </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>obj-m +<span class="o">=</span> uw-lkm.o
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>Compile the Loadable Kernel Module using <code>make -C /usr/src/linux-headers-`uname -r` SUBDIRS=$PWD modules</code>.</p>
+
+<p>Then insert the new module using <code>sudo insmod uw-lkm.ko</code>.</p>
+
+<p>Finally, check the Log to confirm the new module is loaded using <code>sudo dmesg | tail -1</code>.</p>
+
+<p><img class='center' src="/images/kernel/uw-lkm-compilation.png" title="UW Loadable Kernel Module" alt="UW Loadable Kernel Module" /></p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Building a Linux System From Scratch]]></title>
