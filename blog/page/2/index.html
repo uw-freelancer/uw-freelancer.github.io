@@ -9,7 +9,7 @@
   <meta name="author" content="Upeksha Wisidagama">
 
   
-  <meta name="description" content="Many device drivers and other kernel elements are compiled as modules. If a driver is compiled directly into the kernel, its code and static data &hellip;">
+  <meta name="description" content="A PHP GD extensive WordPress Plugin for Dynamic ID Card Generation with c128b Bars and Spaces Encoded Strings having a Cart Communicating to PayPal &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -85,7 +85,7 @@
       
   <header>
     
-      <h1 class="entry-title"><a href="/blog/uw-loadable-kernel-module/">UW Loadable Kernel Module</a></h1>
+      <h1 class="entry-title"><a href="/blog/php-gd-and-cart-using-paypal-rest-api/">PHP GD + PayPal REST API Integration</a></h1>
     
     
       <p class="meta">
@@ -101,23 +101,47 @@
   
 
 
-<time datetime="2013-07-29T14:00:00+05:30" pubdate data-updated="true">Jul 29<span>th</span>, 2013</time>
+<time datetime="2013-08-07T00:00:00+05:30" pubdate data-updated="true">Aug 7<span>th</span>, 2013</time>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content"><p>Many device drivers and other kernel elements are compiled as modules. If a driver is compiled directly into the kernel, its code and static data occupy space even if they&rsquo;re not used. But if the driver is compiled as a module, it requires memory only if memory is needed and subsequently loaded, into the kernel.</p>
+  <div class="entry-content"><p>A PHP GD extensive WordPress Plugin for Dynamic ID Card Generation with c128b Bars and Spaces Encoded Strings having a Cart Communicating to PayPal via REST(beta) API.</p>
 
-<p>Interestingly, you won&rsquo;t notice a performance hit for LKMs, so they&rsquo;re a powerful means of creating a lean kernel that adapts to its environment based upon the available hardware and attached devices.</p>
-
-<h2>UW Linux Loadable Kernel Module</h2>
+<h2>Mr. Archieh and His ID Card Project</h2>
 
 
-<p>Create the Linux Loadable Kernel Module C file.</p>
+<p>The project was posted by Mr. Archieh on freelancer.com. I was among another 26 bidders with an average of 558USD budget. I knew, I could do this. I bidded with 388USD.</p>
 
-<figure class='code'><figcaption><span>&#8216;uw-lkm.c&#8217; </span></figcaption>
+<p><img class='center' src="/images/idcards/project-description.png" title="Project Description" alt="Project Description" /></p>
+
+<h2>Extensive use of the PHP GD Extension</h2>
+
+
+<p>A set of PHP GD image manupulation functions were at the core of this plugin serving the purpose of generating dynamic ID cards that were ready to be printed. Creating image resources from uploaded files. Adding text on top of the image. Even overlaying transparent image on top of the background was done. The project was about living inside <b>the wonderful world of PHP GD image manupulation</b>.</p>
+
+<p><a href="http://php.net/manual/en/book.image.php">http://php.net/manual/en/book.image.php</a></p>
+
+<h2>RESTful PayPal Beta</h2>
+
+
+<p><img class='center' src="/images/idcards/restful-paypal-beta.png" title="RESTful PayPal Beta" alt="RESTful PayPal Beta" /></p>
+
+<blockquote><p>The PayPal API uses HTTP verbs and a RESTful endpoint structure. OAuth 2.0 is used as the API Authorization framework. Request and response payloads are formatted as JSON.</p><p>- PayPal REST API Reference</p></blockquote>
+
+
+<p>With OAuth 2.0 authorization is easy. All you need to do is present your client credentials and obtain a bearer token. No signing of requests is needed as with earlier OAuth.</p>
+
+<p><a href="https://developer.paypal.com/webapps/developer/docs/api/">https://developer.paypal.com/webapps/developer/docs/api/</a></p>
+
+<h2>C128b Encoded Data</h2>
+
+
+<p>Visitors should be given a facility to enter a string of their choice and it should be immediately converted to a Barcode (c128b).</p>
+
+<figure class='code'><figcaption><span>&#8216;c128b Encoding with PHP&#8217; </span></figcaption>
  <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
@@ -135,69 +159,39 @@
 <span class='line-number'>15</span>
 <span class='line-number'>16</span>
 <span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-<span class='line-number'>28</span>
-<span class='line-number'>29</span>
-<span class='line-number'>30</span>
-<span class='line-number'>31</span>
-</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="cp">#include &lt;linux/module.h&gt;</span>
+</pre></td><td class='code'><pre><code class='php'><span class='line'><span class="cp">&lt;?php</span>
+</span><span class='line'><span class="nv">$source_length</span> <span class="o">=</span> <span class="nb">strlen</span><span class="p">(</span><span class="nv">$encoded_string</span><span class="p">);</span>
+</span><span class='line'><span class="nv">$p</span> <span class="o">=</span> <span class="nv">$padding_x</span><span class="p">;</span>
+</span><span class='line'><span class="k">for</span><span class="p">(</span><span class="nv">$i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nv">$i</span> <span class="o">&lt;</span> <span class="nv">$source_length</span><span class="p">;</span> <span class="nv">$i</span><span class="o">++</span><span class="p">){</span>
+</span><span class='line'>    <span class="nv">$val</span> <span class="o">=</span> <span class="nb">intval</span><span class="p">(</span><span class="nx">substr</span><span class="p">(</span><span class="nv">$encoded_string</span><span class="p">,</span> <span class="nv">$i</span><span class="p">,</span> <span class="mi">1</span><span class="p">));</span>
 </span><span class='line'>
-</span><span class='line'><span class="cm">/**</span>
-</span><span class='line'><span class="cm"> * Defines the license for this LKM</span>
-</span><span class='line'><span class="cm"> */</span>
-</span><span class='line'><span class="n">MODULE_LICENSE</span><span class="p">(</span><span class="s">&quot;GPL&quot;</span><span class="p">);</span>
-</span><span class='line'>
-</span><span class='line'>
-</span><span class='line'><span class="cm">/**</span>
-</span><span class='line'><span class="cm"> * Init function called on module entry</span>
-</span><span class='line'><span class="cm"> */</span>
-</span><span class='line'><span class="kt">int</span> <span class="nf">uw_module_init</span><span class="p">(</span> <span class="kt">void</span> <span class="p">)</span>
-</span><span class='line'><span class="p">{</span>
-</span><span class='line'>    <span class="n">printk</span><span class="p">(</span><span class="n">KERN_INFO</span> <span class="s">&quot;uw_module_init called.  UW Module is now loaded.</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
-</span><span class='line'>    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+</span><span class='line'>    <span class="nv">$bar</span> <span class="o">=</span> <span class="mi">0</span> <span class="o">==</span> <span class="nv">$i</span><span class="o">%</span><span class="mi">2</span> <span class="o">?</span> <span class="k">true</span> <span class="o">:</span> <span class="k">false</span><span class="p">;</span>
+</span><span class='line'>    <span class="k">for</span><span class="p">(</span><span class="nv">$n</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nv">$n</span> <span class="o">&lt;</span> <span class="nv">$val</span><span class="p">;</span> <span class="nv">$n</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>        <span class="nv">$p</span> <span class="o">+=</span> <span class="mi">1</span><span class="p">;</span>
+</span><span class='line'>        <span class="k">if</span><span class="p">(</span><span class="nv">$bar</span><span class="p">){</span>
+</span><span class='line'>            <span class="nx">imageline</span><span class="p">(</span><span class="nv">$barcode</span><span class="p">,</span> <span class="nv">$p</span><span class="o">*</span><span class="nv">$thickness</span><span class="p">,</span> <span class="nv">$padding_y</span><span class="p">,</span>
+</span><span class='line'>                <span class="nv">$p</span><span class="o">*</span><span class="nv">$thickness</span><span class="p">,</span> <span class="nv">$height</span><span class="p">,</span> <span class="nv">$black</span><span class="p">);</span>
+</span><span class='line'>        <span class="p">}</span>
+</span><span class='line'>    <span class="p">}</span>
 </span><span class='line'><span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'><span class="cm">/**</span>
-</span><span class='line'><span class="cm"> * Cleanup function called on module exit</span>
-</span><span class='line'><span class="cm"> */</span>
-</span><span class='line'><span class="kt">void</span> <span class="nf">uw_module_cleanup</span><span class="p">(</span> <span class="kt">void</span> <span class="p">)</span>
-</span><span class='line'><span class="p">{</span>
-</span><span class='line'>    <span class="n">printk</span><span class="p">(</span><span class="n">KERN_INFO</span> <span class="s">&quot;uw_module_cleanup called.  UW Module is now unloaded.</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
-</span><span class='line'>    <span class="k">return</span><span class="p">;</span>
-</span><span class='line'><span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'><span class="cm">/**</span>
-</span><span class='line'><span class="cm"> * Declare entry and exit functions</span>
-</span><span class='line'><span class="cm"> */</span>
-</span><span class='line'><span class="n">module_init</span><span class="p">(</span> <span class="n">uw_module_init</span> <span class="p">);</span>
-</span><span class='line'><span class="n">module_exit</span><span class="p">(</span> <span class="n">uw_module_cleanup</span> <span class="p">);</span>
+</span><span class='line'><span class="k">return</span> <span class="nv">$barcode</span><span class="p">;</span>
+</span><span class='line'><span class="cp">?&gt;</span><span class="x"></span>
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>Next Create the Makefile.</p>
-
-<figure class='code'><figcaption><span>&#8216;Making of the UW Loadable Kernel Module&#8217; </span></figcaption>
- <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>obj-m +<span class="o">=</span> uw-lkm.o
-</span></code></pre></td></tr></table></div></figure>
 
 
-<p>Compile the Loadable Kernel Module using <code>make -C /usr/src/linux-headers-`uname -r` SUBDIRS=$PWD modules</code>.</p>
+<blockquote><p>Code 128 is a very high-density barcode symbology. It is used for alphanumeric or numeric-only barcodes. It can encode all 128 characters of ASCII and, by use of an extension character (FNC4), the Latin-1 characters defined in ISO/IEC 8859-1</p><p>- Wikipedia</p></blockquote>
 
-<p>Then insert the new module using <code>sudo insmod uw-lkm.ko</code>.</p>
 
-<p>Finally, check the Log to confirm the new module is loaded using <code>sudo dmesg | tail -1</code>.</p>
+<p><a href="https://en.wikipedia.org/wiki/Code%5F128/">https://en.wikipedia.org/wiki/Code%5F128/</a></p>
 
-<p><img class='center' src="/images/kernel/uw-lkm-compilation.png" title="UW Loadable Kernel Module" alt="UW Loadable Kernel Module" /></p>
+<h2>Completion of the Project</h2>
+
+
+<p>I was able to successfully finish the project.</p>
+
+<p><img class='center' src="/images/idcards/project-feedback.png" title="Project Feedback" alt="Project Feedback" /></p>
 </div>
   
   
@@ -253,6 +247,7 @@
 <section class="odd" >
 <h1>WordPress</h2><br />
 <img class='center uw-logo' src="/images/wordpress_logo.png" title="WordPress" alt="WordPress" /><br />
+<a href="http://bapml.com/ubuntu-localhost-gmail-and-sendmail/" title="View on BaPML.com" >WordPress to GMail</a><br />
 <a href="/blog/wordpress-toolbar-customization/" >WordPress Toolbar Customization</a><br />
 <a href="/blog/two-website-customizations/" >Two Website Customizations</a><br /><br />
 </section>
@@ -275,6 +270,10 @@
 <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/nikini-full-moon-poya-day/">Nikini Full Moon Poya Day</a>
+      </li>
     
       <li class="post">
         <a href="/blog/php-gd-and-cart-using-paypal-rest-api/">PHP GD + PayPal REST API Integration</a>
@@ -330,10 +329,6 @@
     
       <li class="post">
         <a href="/blog/compiling-the-linux-kernel-from-source/">Compiling a Linux Kernel From Source Tarball</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/wordpress-performance-with-apc-via-fastcgi-php5/">WordPress Performance Benchmarking With APC via FastCGI PHP5-CGI</a>
       </li>
     
   </ul>

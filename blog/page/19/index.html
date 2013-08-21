@@ -9,7 +9,11 @@
   <meta name="author" content="Upeksha Wisidagama">
 
   
-  <meta name="description" content="Consider the following instance. You are debugging an app with Vim Vdebug. You have opened several other text buffers as well. Also note that we& &hellip;">
+  <meta name="description" content="Install GIMP via the otto-kesselgulasch/gimp ppa. &#8216;GIMP Installation&#8217; 1
+2
+3
+sudo add-apt-repository ppa:otto-kesselgulasch/gimp
+sudo apt- &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -85,7 +89,7 @@
       
   <header>
     
-      <h1 class="entry-title"><a href="/blog/insanely-faster-vim-buffer-switching/">Insanely Faster Buffer Switching</a></h1>
+      <h1 class="entry-title"><a href="/blog/gimp-gnu-image-manipulation-program/">GNU Image Manipulation Program - GIMP</a></h1>
     
     
       <p class="meta">
@@ -101,67 +105,122 @@
   
 
 
-<time datetime="2013-07-03T23:05:00+05:30" pubdate data-updated="true">Jul 3<span>rd</span>, 2013</time>
+<time datetime="2013-07-05T03:00:00+05:30" pubdate data-updated="true">Jul 5<span>th</span>, 2013</time>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content"><p>Consider the following instance. You are debugging an app with Vim Vdebug. You have opened several other text buffers as well. Also note that we&rsquo;ve a couple of tabs as well.</p>
+  <div class="entry-content"><p>Install GIMP via the otto-kesselgulasch/gimp ppa.</p>
 
-<p><img class='center' src="/images/blog/insanely-faster-buffer-switching.png" title="Insanely Faster Buffer Switching in Vim" alt="Insanely Faster Buffer Switching in Vim" /></p>
-
-<p><a href="/images/blog/insanely-faster-buffer-switching.png" target="blank" >Larger Preview</a></p>
-
-<h2>{ s-h | s-j | s-k | s-l }</h2>
-
-
-<p>Still using &lt;C-W> commands to switch buffers? It&rsquo;s probably time to practise a more efficient way.</p>
-
-<blockquote><p>I&#8217;ve put some text on my .vimrc which allows me to switch buffers 537ns before I think about switching buffers.<br/>* ns = nano seconds = 1x10^(-9)s</p></blockquote>
+<figure class='code'><figcaption><span>&#8216;GIMP Installation&#8217; </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>sudo add-apt-repository ppa:otto-kesselgulasch/gimp
+</span><span class='line'>sudo apt-get update
+</span><span class='line'>sudo apt-get install gimp
+</span></code></pre></td></tr></table></div></figure>
 
 
-<p>I strongly encourage you to put these in your .vimrc and experience <b>The Ultimate Speed of Buffer Switching</b>.</p>
+<p><img class='center' src="/images/gimp/wilber.png" title="Wilber" alt="Wilber" /></p>
 
-<figure class='code'><figcaption><span>&#8216;Insanely Faster Buffer Switching - .vimrc&#8217; </span></figcaption>
+<p>Further information about the Otto Meier and his GIMP repository can be found through the links in PPA introduction.</p>
+
+<figure class='code'><figcaption><span>&#8216;GIMP Otto Meier PPA Introduction&#8217; </span></figcaption>
  <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>nmap sh &lt;C-W&gt;h
-</span><span class='line'>nmap sj &lt;C-W&gt;j
-</span><span class='line'>nmap sk &lt;C-W&gt;k
-</span><span class='line'>nmap sl &lt;C-W&gt;l
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>uw@uw:/media/www/uw-freelancer<span class="nv">$ </span>sudo add-apt-repository ppa:otto-kesselgulasch/gimp
+</span><span class='line'><span class="o">[</span>sudo<span class="o">]</span> password <span class="k">for </span>uw:
+</span><span class='line'>You are about to add the following PPA to your system:
+</span><span class='line'> This PPA is <span class="k">for </span>Ubuntu &gt;<span class="o">=</span>12.04 and Linux Mint &gt;<span class="o">=</span>13
+</span><span class='line'>
+</span><span class='line'>Many thanks to David Tschumperlé <span class="k">for </span>his masterpiece called G<span class="err">&#39;</span>MIC.
+</span><span class='line'>http://gmic.sourceforge.net/index.shtml
+</span><span class='line'>Look <span class="k">for </span>the gmic packages!
+</span><span class='line'>
+</span><span class='line'>We should not forget the Gimp crew!
+</span><span class='line'>http://www.gimp.org/
+</span><span class='line'>
+</span><span class='line'>And many, many thanks to http://siduction.org. They helped me on my first steps making the Gimp packages.
+</span><span class='line'>
+</span><span class='line'>I promise as long as I live this PPA will never die and the most recent packages will <span class="k">for </span>ever be. ;-<span class="o">)</span>
+</span><span class='line'>
+</span><span class='line'>Regards
+</span><span class='line'>
+</span><span class='line'>Otto Meier
+</span><span class='line'>
+</span><span class='line'>If you had a really problem:
+</span><span class='line'>Skype: thorsten.stettin
+</span><span class='line'>G+: https://plus.google.com/u/0/117581776478455814502/posts
+</span><span class='line'>FB: https://www.facebook.com/otto06217
+</span><span class='line'>
+</span><span class='line'>Some stats:
+</span><span class='line'>
+</span><span class='line'>http://kesselgulasch.org/ppastats/gimp/
+</span><span class='line'>
+</span><span class='line'>More info: https://launchpad.net/~otto-kesselgulasch/+archive/gimp
 </span></code></pre></td></tr></table></div></figure>
 
 
 
 
-<h2>Lightning Speed Tab Switching</h2>
+<h2>Install GIMP Plugin Repository</h2>
 
 
-<p>I recommend the following settings for a faster and more intuitive tab swiching experience.</p>
+<p>GIMP plugin repository contains a large number of GIMP plugins to extend the native GIMP capabilities.</p>
 
-<figure class='code'><figcaption><span>&#8216;Lightning Fast Tab Switching - .vimrc&#8217; </span></figcaption>
- <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>nnoremap sn :tabp&lt;cr&gt;
-</span><span class='line'>nnoremap sm :tabn&lt;cr&gt;
-</span></code></pre></td></tr></table></div></figure>
+<p><code>sudo apt-get install gimp-plugin-registry</code></p>
 
+<p>URL: <a href="http://registry.gimp.org/">http://registry.gimp.org/</a></p>
+
+<h2>GREYC&#8217;s Magic For Image Computing</h2>
 
 
+<p><img class='center' src="/images/gimp/gmic.jpg" title="GMIC" alt="GMIC" /></p>
 
-<h2>Exercise</h2>
+<blockquote><p>G&#8217;MIC extends GIMP retouching software capabilities by offering a large number of pre-defined image filters and effects. Of course, the plug-in is highly customizable and it is possible to add your own custom G&#8217;MIC-written filters in it.</p></blockquote>
 
 
-<p>Don&rsquo;t look at the keyboard!
-Can you find the &rsquo;s&#8217; key without looking at the keyboard?</p>
+<p>A List of All Filters: <a href="http://gmic.sourceforge.net/gimp_filters.txt">http://gmic.sourceforge.net/gimp_filters.txt</a></p>
 
-<p>Yes: Share this post.<br />
-No: Like this post.<br />
-I looked at the keybord: Do nothing.<br /></p>
+<p>URL: <a href="http://gmic.sourceforge.net/gimp.shtml">http://gmic.sourceforge.net/gimp.shtml</a></p>
+
+<h2>GIMP User Manual</h2>
+
+
+<p>GIMP User Manual can be found under Help Menu. &lsquo;Basic Concepts&rsquo; section is a good starting point if you are new to GIMP.</p>
+
+<p><img class='center' src="/images/gimp/about-gimp.jpg" title="GIMP" alt="GIMP" /></p>
 </div>
   
   
@@ -217,6 +276,7 @@ I looked at the keybord: Do nothing.<br /></p>
 <section class="odd" >
 <h1>WordPress</h2><br />
 <img class='center uw-logo' src="/images/wordpress_logo.png" title="WordPress" alt="WordPress" /><br />
+<a href="http://bapml.com/ubuntu-localhost-gmail-and-sendmail/" title="View on BaPML.com" >WordPress to GMail</a><br />
 <a href="/blog/wordpress-toolbar-customization/" >WordPress Toolbar Customization</a><br />
 <a href="/blog/two-website-customizations/" >Two Website Customizations</a><br /><br />
 </section>
@@ -239,6 +299,10 @@ I looked at the keybord: Do nothing.<br /></p>
 <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/nikini-full-moon-poya-day/">Nikini Full Moon Poya Day</a>
+      </li>
     
       <li class="post">
         <a href="/blog/php-gd-and-cart-using-paypal-rest-api/">PHP GD + PayPal REST API Integration</a>
@@ -294,10 +358,6 @@ I looked at the keybord: Do nothing.<br /></p>
     
       <li class="post">
         <a href="/blog/compiling-the-linux-kernel-from-source/">Compiling a Linux Kernel From Source Tarball</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/wordpress-performance-with-apc-via-fastcgi-php5/">WordPress Performance Benchmarking With APC via FastCGI PHP5-CGI</a>
       </li>
     
   </ul>

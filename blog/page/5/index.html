@@ -9,7 +9,7 @@
   <meta name="author" content="Upeksha Wisidagama">
 
   
-  <meta name="description" content="Valgrind The &ldquo;Val&rdquo; as in the world &ldquo;value&rdquo;. The &ldquo;grind&rdquo; is pronounced with a short &lsquo;i&rsquo; &mdash; ie. & &hellip;">
+  <meta name="description" content="Procps-3.2.8 Tools procps is the package that has a bunch of small useful utilities that give information about processes using the /proc filesystem &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -85,7 +85,7 @@
       
   <header>
     
-      <h1 class="entry-title"><a href="/blog/valgrind-dynamic-analysis/">Dynamic Program Analysis With Valgrind</a></h1>
+      <h1 class="entry-title"><a href="/blog/ps-command/">Procps Procfs Tools</a></h1>
     
     
       <p class="meta">
@@ -101,54 +101,35 @@
   
 
 
-<time datetime="2013-07-26T12:00:00+05:30" pubdate data-updated="true">Jul 26<span>th</span>, 2013</time>
+<time datetime="2013-07-27T22:00:00+05:30" pubdate data-updated="true">Jul 27<span>th</span>, 2013</time>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content"><p><img class='center' src="/images/c/valgrind-logo.png" title="Valgrind" alt="Valgrind" /></p>
-
-<h2>Valgrind</h2>
+  <div class="entry-content"><h2>Procps-3.2.8 Tools</h2>
 
 
-<p>The &ldquo;Val&rdquo; as in the world &ldquo;value&rdquo;. The &ldquo;grind&rdquo; is pronounced with a short &lsquo;i&rsquo; &mdash; ie. &ldquo;grinned&rdquo; (rhymes with &ldquo;tinned&rdquo;) rather than &ldquo;grined&rdquo; (rhymes with &ldquo;find&rdquo;).</p>
+<p>procps is the package that has a bunch of small useful utilities that give information about processes using the /proc filesystem.</p>
 
-<p>Don&rsquo;t feel bad: almost everyone gets it wrong at first.</p>
+<p><img class='center' src="/images/system/procps-logo.png" title="procps logo" alt="procps logo" /></p>
 
-<p><img class='center' src="/images/c/valgrind-large.png" title="Valgrind" alt="Valgrind" /></p>
-
-<p>Where does the name &ldquo;Valgrind&rdquo; come from? From Nordic mythology. Originally (before release) the project was named Heimdall, after the watchman of the Nordic gods. He could &ldquo;see a hundred miles by day or night, hear the grass growing, see the wool growing on a sheep&rsquo;s back&rdquo;, etc. This would have been a great name, but it was already taken by a security package &ldquo;Heimdal&rdquo;.</p>
-
-<p>Keeping with the Nordic theme, Valgrind was chosen. Valgrind is the name of the main entrance to Valhalla (the Hall of the Chosen Slain in Asgard). Over this entrance there resides a wolf and over it there is the head of a boar and on it perches a huge eagle, whose eyes can see to the far regions of the nine worlds. Only those judged worthy by the guardians are allowed to pass through Valgrind. All others are refused entrance.</p>
-
-<p>Read More: <a href="http://en.wikipedia.org/wiki/Norse_mythology">http://en.wikipedia.org/wiki/Norse_mythology</a></p>
-
-<p><img class='center' src="/images/c/thors-fight-with-giants.jpg" title="Thor's fight with giants" alt="Thor's fight with giants" /></p>
-
-<blockquote><p>Valgrind: It&#8217;s not short for &#8220;value grinder&#8221;, although that&#8217;s not a bad guess.</p><p>- FAQ</p></blockquote>
+<blockquote><p>procps includes the programs ps, top, vmstat, w, kill, free, slabtop, and skill.</p></blockquote>
 
 
+<p>Browse Repository: <a href="http://procps.cvs.sourceforge.net/procps/procps/">http://procps.cvs.sourceforge.net/procps/procps/</a></p>
+
+<p>Home Page: <a href="http://procps.sourceforge.net/index.html">http://procps.sourceforge.net/index.html</a></p>
+
+<h2>Procps New Generation (procps-ng)</h2>
 
 
-<h2>Detecting Memory Errors in ls Program!</h2>
+<p>procps-ng is the Debian, Fedora and openSUSE fork of procps.</p>
 
+<p>From their NEWS page,</p>
 
-<p>Install Valgrind using <code>sudo apt-get install valgrind</code>.</p>
-
-<p>Run Valgrind on ls using <code>valgrind ls</code>.</p>
-
-<p><img class='center' src="/images/c/valgrind-ls.png" title="Valgrind ls" alt="Valgrind ls" /></p>
-
-<p>ERROR SUMMARY: 0 errors from 0 contexts  :&ndash;)</p>
-
-<h2>How Analyze your C program Dynamically</h2>
-
-
-<p>Create the following C file.</p>
-
-<figure class='code'><figcaption><span>&#8216;uw.c&#8217; </span></figcaption>
+<figure class='code'><figcaption><span>&#8216;From procps to procps-ng&#8217; </span></figcaption>
  <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
@@ -156,49 +137,59 @@
 <span class='line-number'>5</span>
 <span class='line-number'>6</span>
 <span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="cp">#include &lt;stdio.h&gt;</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>procps-3.2.8 --&gt; procps-ng-3.3.0
+</span><span class='line'>Debian, Fedora and openSUSE fork of procps.
+</span><span class='line'>https://gitorious.org/procps
+</span><span class='line'>...
+</span><span class='line'>...
 </span><span class='line'>
-</span><span class='line'><span class="kt">int</span> <span class="nf">main</span><span class="p">()</span>
-</span><span class='line'><span class="p">{</span>
-</span><span class='line'>  <span class="kt">char</span> <span class="o">*</span><span class="n">p</span><span class="p">;</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="n">p</span> <span class="o">=</span> <span class="p">(</span><span class="kt">char</span> <span class="o">*</span><span class="p">)</span> <span class="n">malloc</span><span class="p">(</span><span class="mi">10</span><span class="p">);</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="n">p</span> <span class="o">=</span> <span class="p">(</span><span class="kt">char</span> <span class="o">*</span><span class="p">)</span> <span class="n">malloc</span><span class="p">(</span><span class="mi">17</span><span class="p">);</span>
-</span><span class='line'>  <span class="n">free</span><span class="p">(</span><span class="n">p</span><span class="p">);</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="n">p</span> <span class="o">=</span> <span class="p">(</span><span class="kt">char</span> <span class="o">*</span><span class="p">)</span> <span class="n">malloc</span><span class="p">(</span><span class="mi">13</span><span class="p">);</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
-</span><span class='line'><span class="p">}</span>
+</span><span class='line'>procps-3.2.7 --&gt; procps-3.2.8
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>Compile using <code>gcc -o uw -g uw.c</code>. Run Valgrind with <code>valgrind ./uw</code>.</p>
+<p>Did you notice the change in their versioning? See below, Eric Bélanger is asking about switching to procps-ng.</p>
 
-<p><img class='center' src="/images/c/valgrind-output.png" title="Valgrind Output" alt="Valgrind Output" /></p>
+<p><img class='center' src="/images/system/moving-to-procps-ng.png" title="Switching to procps-ng?" alt="Switching to procps-ng?" /></p>
 
-<h3>HEAP SUMMARY</h3>
+<p>Site: <a href="https://gitorious.org/procps">https://gitorious.org/procps</a></p>
 
-
-<p>in use at exit: 23 bytes in 2 blocks. total heap usage: 3 allocs, 1 frees, 40 bytes allocated.</p>
-
-<h3>LEAK SUMMARY</h3>
+<h2>What happened to the Warning?</h2>
 
 
-<p>definitely lost: 23 bytes in 2 blocks.</p>
+<p>Did you remember bad syntax warning, when you type <code>ps -aux</code> in old ps program.</p>
 
-<p>In the above file, we didn&rsquo;t free the p memory allocation twice. Therefore total 10 + 13 = 23 bytes of memory was leaked in our program.</p>
+<p>Warning: bad ps syntax, perhaps a bogus &lsquo;&ndash;&rsquo;? See <a href="http://procps.sf.net/faq.html">http://procps.sf.net/faq.html</a></p>
 
-<p>Learn More: <a href="http://valgrind.org/docs/manual/quick-start.html">http://valgrind.org/docs/manual/quick-start.html</a></p>
+<blockquote><p>This behavior is intended to aid in transitioning old scripts and habits. It is fragile, subject to change, and thus should not be relied upon.</p><p>-man ps</p></blockquote>
+
+
+<p>Now this warning has been removed. You no longer get a warning.</p>
+
+<p><img class='center' src="/images/system/warning-removed.png" title="ps-aux warning removed" alt="ps-aux warning removed" /></p>
+
+<p>I built a <a href="/blog/building-a-linux-system-from-scratch/" >GNU Linux System from Scratch</a>, I used Procps-ng-3.3.6. I don&rsquo;t get this warning anymore. Did you still get this warning?</p>
+
+<h2>Proc File System</h2>
+
+
+
+
+<blockquote><p>The proc filesystem provides a method of communication between kernel space and user space.</p></blockquote>
+
+
+<p><img class='center' src="/images/system/user-kernel-bridge.jpg" title="User Space - Kernel Space Bridge" alt="User Space - Kernel Space Bridge" /></p>
+
+<p>User space(see left) and Kernel Space(see right) are bridged using proc file system. Proc file system belongs to Kernel Space.</p>
+
+<p>User space creatures can read the proc files. Sometime there are writable proc files that can be used to control the Kernel.</p>
+
+<p>cat /proc/sys/net/ipv4/ip_forward</p>
+
+<p>echo &ldquo;1&rdquo; > /proc/sys/net/ipv4/ip_forward</p>
+
+<p>Controls whether the kernel will allow tcp forwarding. The default value is 0 which means forwarding is OFF.You can set this to 1 if you with to enable it.</p>
+
+<p>Read More: <a href="http://en.wikipedia.org/wiki/Procfs">http://en.wikipedia.org/wiki/Procfs</a></p>
 </div>
   
   
@@ -254,6 +245,7 @@
 <section class="odd" >
 <h1>WordPress</h2><br />
 <img class='center uw-logo' src="/images/wordpress_logo.png" title="WordPress" alt="WordPress" /><br />
+<a href="http://bapml.com/ubuntu-localhost-gmail-and-sendmail/" title="View on BaPML.com" >WordPress to GMail</a><br />
 <a href="/blog/wordpress-toolbar-customization/" >WordPress Toolbar Customization</a><br />
 <a href="/blog/two-website-customizations/" >Two Website Customizations</a><br /><br />
 </section>
@@ -276,6 +268,10 @@
 <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/nikini-full-moon-poya-day/">Nikini Full Moon Poya Day</a>
+      </li>
     
       <li class="post">
         <a href="/blog/php-gd-and-cart-using-paypal-rest-api/">PHP GD + PayPal REST API Integration</a>
@@ -331,10 +327,6 @@
     
       <li class="post">
         <a href="/blog/compiling-the-linux-kernel-from-source/">Compiling a Linux Kernel From Source Tarball</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/wordpress-performance-with-apc-via-fastcgi-php5/">WordPress Performance Benchmarking With APC via FastCGI PHP5-CGI</a>
       </li>
     
   </ul>

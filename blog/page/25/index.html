@@ -9,7 +9,7 @@
   <meta name="author" content="Upeksha Wisidagama">
 
   
-  <meta name="description" content="We are going to build a Linux Kernel based System with GNU Components by configuring, compiling and installing source tarballs. Mount a new ext3 disk &hellip;">
+  <meta name="description" content="Two websites had to be customized when I was contacted for this project. I was contacted by Mr. Brant about this improvement. A freelancer.com &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -85,7 +85,7 @@
       
   <header>
     
-      <h1 class="entry-title"><a href="/blog/building-the-host-independant-toolchain/">Building the Host Independant Toolchain</a></h1>
+      <h1 class="entry-title"><a href="/blog/two-website-customizations/">Two Website Customizations</a></h1>
     
     
       <p class="meta">
@@ -101,168 +101,78 @@
   
 
 
-<time datetime="2013-06-14T12:00:00+05:30" pubdate data-updated="true">Jun 14<span>th</span>, 2013</time>
+<time datetime="2013-06-29T21:05:00+05:30" pubdate data-updated="true">Jun 29<span>th</span>, 2013</time>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content"><p>We are going to build a Linux Kernel based System with GNU Components by configuring, compiling and installing source tarballs. Mount a new ext3 disk on <code>/mnt/lfs</code> without partitioning. Create <code>sources</code> directory.</p>
+  <div class="entry-content"><p>Two websites had to be customized when I was contacted for this project. I was contacted by Mr. Brant about this improvement. A freelancer.com project was created to make payments and exchange feedback.</p>
 
-<p>Most of these steps are described in &lsquo;Linux From Scratch 7.3&rsquo; book. But I will describe you how I build this system on an Ubuntu host with further explanations where applicable.</p>
+<p><img class='center' src="/images/blog/website-customization-project-specification.jpg" title="Website Customization Project Description" alt="Website Customization Project Description" /></p>
 
-<h2>Finding the New Disk, Formatting and Mouting</h2>
+<p>First one of two projects was described on oDesk. A child theme (called &lsquo;Curb Appeal&rsquo;) based on popular Genesis Framework needed to be customized.</p>
 
+<p><img class='center' src="/images/blog/genesis-framework-customization.jpg" title="Genesis Framework Customization" alt="Genesis Framework Customization" /></p>
 
-<p>Run <code>sudo lshw</code>. Find your disk logical name. e.g. I found my disk at &lsquo;core&rsquo; > &lsquo;pci&rsquo; > &lsquo;storage&rsquo; > &lsquo;disk2&rsquo;.
-<code>logical name: /dev/sdc</code></p>
+<p>In &lsquo;Curb Appeal&rsquo; theme there was only one section in home top area.</p>
 
-<figure class='code'><figcaption><span>&#8216;Static IP Assignment for eth1 (/etc/network/interfaces)&#8217; </span></figcaption>
+<figure class='code'><figcaption><span>&#8216;Initial Code - functions.php&#8217; </span></figcaption>
  <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>sudo su
-</span><span class='line'>mke2fs -jv /dev/sdc
-</span><span class='line'>mount -v -t ext3 /dev/sdc /mnt/lfs
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='php'><span class='line'><span class="cp">&lt;?php</span>
+</span><span class='line'><span class="nx">genesis_register_sidebar</span><span class="p">(</span> <span class="k">array</span><span class="p">(</span>
+</span><span class='line'>    <span class="s1">&#39;id&#39;</span>          <span class="o">=&gt;</span> <span class="s1">&#39;home-top&#39;</span><span class="p">,</span>
+</span><span class='line'>    <span class="s1">&#39;name&#39;</span>            <span class="o">=&gt;</span> <span class="s1">&#39;Home Top&#39;</span><span class="p">,</span>
+</span><span class='line'>    <span class="s1">&#39;description&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;This is the Home Top section&#39;</span>
+</span><span class='line'><span class="p">)</span> <span class="p">);</span>
+</span><span class='line'><span class="cp">?&gt;</span><span class="x"></span>
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p><img class='center' src="/images/kernel/mounting-the-new-disk.png" title="Mounting the New Disk" alt="Mounting the New Disk" /></p>
+<p>I replaced it with two sidebars as follows.</p>
 
-<h2>GNU BinUtils 2.23.1 Installation</h2>
-
-
-<p>The GNU Binutils are a collection of binary tools. The main ones are:</p>
-
-<p>ld &ndash; the GNU linker.<br /><br />
-as &ndash; the GNU assembler.</p>
-
-<p><a href="http://www.gnu.org/software/binutils/">http://www.gnu.org/software/binutils/</a></p>
-
-<p>Download the &lsquo;GNU BinUtils&rsquo; (21.5MB) using <code>wget</code> into <code>/mnt/lfs/sources</code>.
-Untar using <code>tar -jxvf binutils-2.23.1.tar.bz2</code>. j option is for bzip2 archives. (154MB)</p>
-
-<p>run the <code>configure</code> command with the relevant arguments. Now <code>make</code>.</p>
-
-<p>The time to compile BinUtils is called 1SBU. For me 1SBU ~ 2.5min.</p>
-
-<p>&lsquo;binutils-build&rsquo; ~ 85MB.</p>
-
-<p>Time to install. <code>make install</code>. This will install the BinUtils in &lsquo;tools&rsquo; directory.</p>
-
-<h2>GNU Compiler Collection 4.7.2 Installation</h2>
-
-
-<p>The GNU Compiler Collection includes front ends for C, C++, Objective-C, Fortran, Java, Ada, and Go, as well as libraries for these languages (libstdc++, libgcj,&hellip;). GCC was originally written as the compiler for the GNU operating system.</p>
-
-<p><a href="http://gcc.gnu.org/">http://gcc.gnu.org/</a></p>
-
-<h3>The GNU Multi Precision Library (MPC) 5.1.1</h3>
+<figure class='code'><figcaption><span>&#8216;Code After Modification - functions.php&#8217; </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+</pre></td><td class='code'><pre><code class='php'><span class='line'><span class="cp">&lt;?php</span>
+</span><span class='line'><span class="nx">genesis_register_sidebar</span><span class="p">(</span> <span class="k">array</span><span class="p">(</span>
+</span><span class='line'>    <span class="s1">&#39;id&#39;</span>          <span class="o">=&gt;</span> <span class="s1">&#39;home-top-left&#39;</span><span class="p">,</span>
+</span><span class='line'>    <span class="s1">&#39;name&#39;</span>            <span class="o">=&gt;</span> <span class="s1">&#39;Home Top Left&#39;</span><span class="p">,</span>
+</span><span class='line'>    <span class="s1">&#39;description&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;This is the Home Top Left section&#39;</span>
+</span><span class='line'><span class="p">)</span> <span class="p">);</span>
+</span><span class='line'><span class="nx">genesis_register_sidebar</span><span class="p">(</span> <span class="k">array</span><span class="p">(</span>
+</span><span class='line'>    <span class="s1">&#39;id&#39;</span>          <span class="o">=&gt;</span> <span class="s1">&#39;home-top-right&#39;</span><span class="p">,</span>
+</span><span class='line'>    <span class="s1">&#39;name&#39;</span>            <span class="o">=&gt;</span> <span class="s1">&#39;Home Top Right&#39;</span><span class="p">,</span>
+</span><span class='line'>    <span class="s1">&#39;description&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;This is the Home Top Right section&#39;</span>
+</span><span class='line'><span class="p">)</span> <span class="p">);</span>
+</span><span class='line'><span class="cp">?&gt;</span><span class="x"></span>
+</span></code></pre></td></tr></table></div></figure>
 
 
-<p><a href="http://gmplib.org/">http://gmplib.org/</a></p>
+<p>Next project was about adding a &lsquo;Banner&rsquo; for category archive pages. The following is the category banner uploader I developed.</p>
 
-<p>Arithmetic without limitations &ndash; The GNU Multiple Precision Arithmetic Library</p>
+<p><img class='center' src="/images/blog/wordpress-category-banner.jpg" title="Category Banner Uploader" alt="Category Banner Uploader" /></p>
 
-<p>GMP is a free library for arbitrary precision arithmetic, operating on signed integers, rational numbers, and floating point numbers. There is no practical limit to the precision except the ones implied by the available memory in the machine GMP runs on. GMP has a rich set of functions, and the functions have a regular interface.</p>
+<p>I was able to successfully complete the project and earned $25USD (freelancer.com charges only 10% of the total amount. But the lowest possible is $5USD).</p>
 
-<p><a href="ftp://ftp.gmplib.org/pub/gmp-5.1.1/gmp-5.1.1.tar.xz">ftp://ftp.gmplib.org/pub/gmp-5.1.1/gmp-5.1.1.tar.xz</a></p>
-
-<h3>The GNU MPFR Library 3.1.1</h3>
-
-
-<p><a href="http://www.mpfr.org/">http://www.mpfr.org/</a></p>
-
-<p>MPFR is based on the GMP multiple-precision library (MPC).</p>
-
-<p>The MPFR library is a C library for multiple-precision floating-point computations with correct rounding. The main goal of MPFR is to provide a library for multiple-precision floating-point computation which is both efficient and has a well-defined semantics. It copies the good ideas from the ANSI/IEEE-754 standard for double-precision floating-point arithmetic (53-bit significand).</p>
-
-<p><a href="http://www.mpfr.org/mpfr-3.1.1/mpfr-3.1.1.tar.xz">http://www.mpfr.org/mpfr-3.1.1/mpfr-3.1.1.tar.xz</a></p>
-
-<h3>GNU MPC 1.0.1</h3>
-
-
-<p><a href="http://www.multiprecision.org/">http://www.multiprecision.org/</a></p>
-
-<p>Gnu Mpc is a C library for the arithmetic of complex numbers with arbitrarily high precision and correct rounding of the result. It extends the principles of the IEEE-754 standard for fixed precision real floating point numbers to complex numbers, providing well-defined semantics for every operation. At the same time, speed of operation at high precision is a major design goal.</p>
-
-<p><a href="http://www.multiprecision.org/mpc/download/mpc-1.0.1.tar.gz">http://www.multiprecision.org/mpc/download/mpc-1.0.1.tar.gz</a></p>
-
-<h3>IEEE 754</h3>
-
-
-<p>IEEE Standard for Floating-Point Arithmetic (IEEE 754).</p>
-
-<p><img class='center' src="/images/kernel/ieee-logo.png" title="IEEE 754" alt="IEEE 754" /></p>
-
-<p>The IEEE Standard for Floating-Point Arithmetic (IEEE 754) is a technical standard for floating-point computation established in 1985 by the Institute of Electrical and Electronics Engineers (IEEE). Many hardware floating point units use the IEEE 754 standard. The current version, IEEE 754-2008 published in August 2008, includes nearly all of the original IEEE 754-1985 standard and the IEEE Standard for Radix-Independent Floating-Point Arithmetic (IEEE 854-1987). The international standard ISO/IEC/IEEE 60559:2011 (with identical content to IEEE 754) has been approved for adoption through JTC1/SC 25 under the ISO/IEEE PSDO Agreement and published.</p>
-
-<p>GNU MPC and GNU MPFR are base on IEEE 754 Standard.</p>
-
-<p><a href="https://en.wikipedia.org/wiki/IEEE_floating_point">https://en.wikipedia.org/wiki/IEEE_floating_point</a></p>
-
-<h3>Linux Kernel 3.8.1</h3>
-
-
-<p><a href="https://www.kernel.org/">https://www.kernel.org/</a></p>
-
-<p>The Linux API Headers expose the kernel&rsquo;s API for use by Glibc.</p>
-
-<p><img class='center' src="/images/kernel/linux-logo.png" title="Linux Kernel" alt="Linux Kernel" /></p>
-
-<p>The Linux kernel needs to expose an Application Programming Interface (API) for the system&rsquo;s C library (Glibc in LFS) to use. This is done by way of sanitizing various C header files that are shipped in the Linux kernel source tarball.</p>
-
-<p><a href="http://www.kernel.org/pub/linux/kernel/v3.x/linux-3.8.1.tar.xz">http://www.kernel.org/pub/linux/kernel/v3.x/linux-3.8.1.tar.xz</a></p>
-
-<h3>The GNU C Library 2.17</h3>
-
-
-<p><a href="http://www.gnu.org/software/libc/">http://www.gnu.org/software/libc/</a></p>
-
-<p>Any Unix-like operating system needs a C library: the library which defines the &ldquo;system calls&rdquo; and other basic facilities such as open, malloc, printf, exit&hellip;</p>
-
-<p>The GNU C Library is used as the C library in the GNU systems and most systems with the Linux kernel.</p>
-
-<p>The GNU C Library is primarily designed to be a portable and high performance C library. It follows all relevant standards including ISO C11 and POSIX.1-2008. It is also internationalized and has one of the most complete internationalization interfaces known.</p>
-
-<p><a href="http://ftp.gnu.org/gnu/glibc/glibc-2.17.tar.xz">http://ftp.gnu.org/gnu/glibc/glibc-2.17.tar.xz</a></p>
-
-<h3>Second Pass - BinUtils and GCC</h3>
-
-
-<p>After installing above programs, BinUtils and GCC needs another pass. Recompile and Reinstall both.</p>
-
-<h3>Toolchain Remaining Tools</h3>
-
-
-<p>Install the rest of the tools required to actually build the System From Source Tarballs.</p>
-
-<p>Tcl 8.6.0<br />
-Expect 5.45<br />
-DejaGNU 1.5<br />
-Check 0.9.9<br />
-Ncurses 5.9<br />
-Bash 4.2<br />
-Bzip2 1.0.6<br />
-Coreutils 8.21<br />
-Diffutils 3.2<br />
-File 5.13<br />
-Findutils 4.4.2<br />
-Gawk 4.0.2<br />
-Gettext 0.18.2<br />
-Grep 2.14<br />
-Gzip 1.5<br />
-M4 1.4.16<br />
-Make 3.82<br />
-Patch 2.7.1<br />
-Perl 5.16.2<br />
-Sed 4.2.2<br />
-Tar 1.26<br />
-Texinfo 5.0<br />
-Xz 5.0.4<br /><br /></p>
-
-<p>Next Read the post about <a href="/blog/building-the-system-software-from-scratch/" >Building the System Software From Scratch</a>.<br /></p>
+<p><img class='center' src="/images/blog/website-customization-feedback.jpg" title="Website Customization Feedback" alt="Website Customization Feedback" /></p>
 </div>
   
   
@@ -318,6 +228,7 @@ Xz 5.0.4<br /><br /></p>
 <section class="odd" >
 <h1>WordPress</h2><br />
 <img class='center uw-logo' src="/images/wordpress_logo.png" title="WordPress" alt="WordPress" /><br />
+<a href="http://bapml.com/ubuntu-localhost-gmail-and-sendmail/" title="View on BaPML.com" >WordPress to GMail</a><br />
 <a href="/blog/wordpress-toolbar-customization/" >WordPress Toolbar Customization</a><br />
 <a href="/blog/two-website-customizations/" >Two Website Customizations</a><br /><br />
 </section>
@@ -340,6 +251,10 @@ Xz 5.0.4<br /><br /></p>
 <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/nikini-full-moon-poya-day/">Nikini Full Moon Poya Day</a>
+      </li>
     
       <li class="post">
         <a href="/blog/php-gd-and-cart-using-paypal-rest-api/">PHP GD + PayPal REST API Integration</a>
@@ -395,10 +310,6 @@ Xz 5.0.4<br /><br /></p>
     
       <li class="post">
         <a href="/blog/compiling-the-linux-kernel-from-source/">Compiling a Linux Kernel From Source Tarball</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/wordpress-performance-with-apc-via-fastcgi-php5/">WordPress Performance Benchmarking With APC via FastCGI PHP5-CGI</a>
       </li>
     
   </ul>

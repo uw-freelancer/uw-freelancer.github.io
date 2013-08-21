@@ -9,7 +9,7 @@
   <meta name="author" content="Upeksha Wisidagama">
 
   
-  <meta name="description" content="Some years ago I was struck by how many false things I had believed, and by how doubtful was the structure of beliefs that I had based on them. I &hellip;">
+  <meta name="description" content="Many device drivers and other kernel elements are compiled as modules. If a driver is compiled directly into the kernel, its code and static data &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -85,7 +85,7 @@
       
   <header>
     
-      <h1 class="entry-title"><a href="/blog/introduction-to-c/">UW 103: Introduction to C Programming</a></h1>
+      <h1 class="entry-title"><a href="/blog/uw-loadable-kernel-module/">UW Loadable Kernel Module</a></h1>
     
     
       <p class="meta">
@@ -101,105 +101,103 @@
   
 
 
-<time datetime="2013-07-28T06:00:00+05:30" pubdate data-updated="true">Jul 28<span>th</span>, 2013</time>
+<time datetime="2013-07-29T14:00:00+05:30" pubdate data-updated="true">Jul 29<span>th</span>, 2013</time>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content"><blockquote><p>Some years ago I was struck by how many false things I had believed, and by how doubtful was the structure of beliefs that I had based on them. I realized that if I wanted to establish anything in the sciences that was stable and likely to last, I needed – just once in my life – to demolish everything completely and start again from the foundations. It looked like an enormous task, and I decided to wait until I was old enough to be sure that there was nothing to be gained from putting it off any longer. I have now delayed it for so long that I have no excuse for going on planning to do it rather than getting to work. So today I have set all my worries aside and arranged for myself a clear stretch of free time. I am here quite alone, and at last I will devote myself, sincerely and without holding back, to demolishing my opinions.</p><p>—Rene Descartes, Meditations On First Philosophy</p><p>FIRST MEDITATION: On what can be called into doubt</p></blockquote>
+  <div class="entry-content"><p>Many device drivers and other kernel elements are compiled as modules. If a driver is compiled directly into the kernel, its code and static data occupy space even if they&rsquo;re not used. But if the driver is compiled as a module, it requires memory only if memory is needed and subsequently loaded, into the kernel.</p>
+
+<p>Interestingly, you won&rsquo;t notice a performance hit for LKMs, so they&rsquo;re a powerful means of creating a lean kernel that adapts to its environment based upon the available hardware and attached devices.</p>
+
+<h2>UW Linux Loadable Kernel Module</h2>
 
 
-<p>Read More: <a href="http://www.marxists.org/reference/archive/descartes/1639/meditations.htm">http://www.marxists.org/reference/archive/descartes/1639/meditations.htm</a></p>
+<p>Create the Linux Loadable Kernel Module C file.</p>
 
-<p>&lsquo;To demolish everything completely and start again from the foundations&rsquo;, you need to learn C.</p>
-
-<h2>C Liberates You from Stupidity</h2>
-
-
-<p>To many programmers, this makes C scary and evil. It is the Devil, Satan, the trickster Loki come to destroy your productivity with his seductive talk of pointers and direct access to the machine. Then, once this computational Lucifer has you hooked, he destroys your world with the evil &ldquo;segfault&rdquo; and laughs as he reveals the trickery in your bargain with him.</p>
-
-<p>&ldquo;The computer is some purely functional fantasy land with padded walls for little babies&rdquo;</p>
-
-<p>But, C is not to blame for this state of affairs. No my friends, your computer and the Operating System controlling it are the real tricksters. They conspire to hide their true inner workings from you so that you can never really know what is going on. The C programming language&rsquo;s only failing is giving you access to what is really there, and telling you the cold hard raw truth. C gives you the red pill. C pulls the curtain back to show you the wizard. C is truth.</p>
-
-<p>Why use C then if it&rsquo;s so dangerous? Because C gives you power over the false reality of abstraction and liberates you from stupidity.</p>
-
-<p>(The above sentences are quoted from c.learncodethehardway.org)</p>
-
-<h2>The C Programming Language</h2>
-
-
-<p>C is a general-purpose programming language initially developed by Dennis Ritchie between 1969 and 1973 at AT&amp;T Bell Labs. Like most imperative languages in the ALGOL tradition, C has facilities for structured programming and allows lexical variable scope and recursion, while a static type system prevents many unintended operations. Its design provides constructs that map efficiently to typical machine instructions, and therefore it has found lasting use in applications that had formerly been coded in assembly language, most notably system software like the Unix computer operating system.</p>
-
-<p>C is one of the most widely used programming languages of all time, and C compilers are available for the majority of available computer architectures and operating systems.</p>
-
-<p>Read More: <a href="http://en.wikipedia.org/wiki/C_">http://en.wikipedia.org/wiki/C_</a>(programming_language)</p>
-
-<p>Read More: <a href="http://en.wikipedia.org/wiki/ANSI_C">http://en.wikipedia.org/wiki/ANSI_C</a></p>
-
-<p><img class='center' src="/images/c/thompson-and-ritchie.jpg" title="Ken Thompson and Dennis Ritchie" alt="Ken Thompson and Dennis Ritchie" /></p>
-
-<p>Ken Thompson and Dennis Ritchie, from left to right. Dennis MacAlistair Ritchie was an American computer scientist who &ldquo;helped shape the digital era.&rdquo; He created the C programming language and, with long-time colleague Ken Thompson. Ritchie and Thompson received the Turing Award from the ACM in 1983, the Hamming Medal from the IEEE in 1990 and the National Medal of Technology from President Clinton in 1999.</p>
-
-<h2>GNU C Compiler</h2>
-
-
-<p><img class='center' src="/images/c/richard-stallman.jpg" title="Richard Stallman" alt="Richard Stallman" /></p>
-
-<blockquote><p>I then realized that the Pastel compiler functioned by parsing the entire input file into a syntax tree, converting the whole syntax tree into a chain of “instructions”, and then generating the whole output file, without ever freeing any storage.</p><p>At this point, I concluded I would have to write a new compiler from scratch.</p><p>That new compiler is now known as GCC</p><p>- Richard Stallman</p></blockquote>
-
-
-<p>Read More: <a href="http://www.gnu.org/gnu/thegnuproject.html">http://www.gnu.org/gnu/thegnuproject.html</a></p>
-
-<p>The GNU Compiler Collection (GCC) is a compiler system produced by the GNU Project supporting various programming languages. GCC is a key component of the GNU toolchain. The Free Software Foundation (FSF) distributes GCC under the GNU General Public License (GNU GPL). GCC has played an important role in the growth of free software, as both a tool and an example.</p>
-
-<p>Do you remember <a href="/blog/building-a-linux-system-from-scratch/" >building GNU Linux System from scratch</a>?  First Binutils-2.23.1 &ndash; Pass 1, Then, GCC-4.7.2 &ndash; Pass 1 and Linux-3.8.1 API Headers, finally, Glibc-2.17. Again Binutils-2.23.1 &ndash; Pass 2, etc.</p>
-
-<p>Originally named the GNU C Compiler, because it only handled the C programming language, GCC 1.0 was released in 1987 and the compiler was extended to compile C++ in December of that year.[1] Front ends were later developed for Objective-C, Objective-C++, Fortran, Java, Ada, and Go among others.</p>
-
-<p>Read More: <a href="https://en.wikipedia.org/wiki/GNU_Compiler_Collection">https://en.wikipedia.org/wiki/GNU_Compiler_Collection</a></p>
-
-<p>Compiler Collection Website: <a href="http://gcc.gnu.org/">http://gcc.gnu.org/</a></p>
-
-<p>The GNU C Reference Manual is a reference for the C programming language, as implemented by the GNU C Compiler. GNU-C Manual: <a href="http://www.gnu.org/software/gnu-c-manual/">http://www.gnu.org/software/gnu-c-manual/</a> View as HTML or Download as PDF.</p>
-
-<h2>The GNU C Library</h2>
-
-
-<p>Any Unix-like operating system needs a C library: the library which defines the &ldquo;system calls&rdquo; and other basic facilities such as open, malloc, printf, exit&hellip;</p>
-
-<p>The GNU C Library is used as the C library in the GNU systems and most systems with the Linux kernel.</p>
-
-<p>Website: <a href="https://www.gnu.org/software/libc/index.html">https://www.gnu.org/software/libc/index.html</a></p>
-
-<p>The GNU C Library Manual: <a href="https://www.gnu.org/software/libc/manual/">https://www.gnu.org/software/libc/manual/</a></p>
-
-<h2>Can You C This?</h2>
-
-
-<p>Create the uw.c file.</p>
-
-<figure class='code'><figcaption><span>&#8216;uw.c&#8217; </span></figcaption>
+<figure class='code'><figcaption><span>&#8216;uw-lkm.c&#8217; </span></figcaption>
  <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
 <span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>int main<span class="o">(</span>int argc, char *argv<span class="o">[])</span>
-</span><span class='line'><span class="o">{</span>
-</span><span class='line'>    puts<span class="o">(</span><span class="s2">&quot;Hello Upeksha!&quot;</span><span class="o">)</span>;
-</span><span class='line'>    <span class="k">return </span>0;
-</span><span class='line'><span class="o">}</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="cp">#include &lt;linux/module.h&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="cm">/**</span>
+</span><span class='line'><span class="cm"> * Defines the license for this LKM</span>
+</span><span class='line'><span class="cm"> */</span>
+</span><span class='line'><span class="n">MODULE_LICENSE</span><span class="p">(</span><span class="s">&quot;GPL&quot;</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'><span class="cm">/**</span>
+</span><span class='line'><span class="cm"> * Init function called on module entry</span>
+</span><span class='line'><span class="cm"> */</span>
+</span><span class='line'><span class="kt">int</span> <span class="nf">uw_module_init</span><span class="p">(</span> <span class="kt">void</span> <span class="p">)</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>    <span class="n">printk</span><span class="p">(</span><span class="n">KERN_INFO</span> <span class="s">&quot;uw_module_init called.  UW Module is now loaded.</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+</span><span class='line'>    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="cm">/**</span>
+</span><span class='line'><span class="cm"> * Cleanup function called on module exit</span>
+</span><span class='line'><span class="cm"> */</span>
+</span><span class='line'><span class="kt">void</span> <span class="nf">uw_module_cleanup</span><span class="p">(</span> <span class="kt">void</span> <span class="p">)</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>    <span class="n">printk</span><span class="p">(</span><span class="n">KERN_INFO</span> <span class="s">&quot;uw_module_cleanup called.  UW Module is now unloaded.</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+</span><span class='line'>    <span class="k">return</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="cm">/**</span>
+</span><span class='line'><span class="cm"> * Declare entry and exit functions</span>
+</span><span class='line'><span class="cm"> */</span>
+</span><span class='line'><span class="n">module_init</span><span class="p">(</span> <span class="n">uw_module_init</span> <span class="p">);</span>
+</span><span class='line'><span class="n">module_exit</span><span class="p">(</span> <span class="n">uw_module_cleanup</span> <span class="p">);</span>
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>Compile the C using GCC &ndash; <code>gcc uw.c</code>.</p>
+<p>Next Create the Makefile.</p>
 
-<p>Now execute it using <code>./a.out</code>.</p>
+<figure class='code'><figcaption><span>&#8216;Making of the UW Loadable Kernel Module&#8217; </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>obj-m +<span class="o">=</span> uw-lkm.o
+</span></code></pre></td></tr></table></div></figure>
 
-<p><img class='center' src="/images/c/simple-c-program.png" title="Simple C Program" alt="Simple C Program" /></p>
+
+<p>Compile the Loadable Kernel Module using <code>make -C /usr/src/linux-headers-`uname -r` SUBDIRS=$PWD modules</code>.</p>
+
+<p>Then insert the new module using <code>sudo insmod uw-lkm.ko</code>.</p>
+
+<p>Finally, check the Log to confirm the new module is loaded using <code>sudo dmesg | tail -1</code>.</p>
+
+<p><img class='center' src="/images/kernel/uw-lkm-compilation.png" title="UW Loadable Kernel Module" alt="UW Loadable Kernel Module" /></p>
 </div>
   
   
@@ -255,6 +253,7 @@
 <section class="odd" >
 <h1>WordPress</h2><br />
 <img class='center uw-logo' src="/images/wordpress_logo.png" title="WordPress" alt="WordPress" /><br />
+<a href="http://bapml.com/ubuntu-localhost-gmail-and-sendmail/" title="View on BaPML.com" >WordPress to GMail</a><br />
 <a href="/blog/wordpress-toolbar-customization/" >WordPress Toolbar Customization</a><br />
 <a href="/blog/two-website-customizations/" >Two Website Customizations</a><br /><br />
 </section>
@@ -277,6 +276,10 @@
 <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/nikini-full-moon-poya-day/">Nikini Full Moon Poya Day</a>
+      </li>
     
       <li class="post">
         <a href="/blog/php-gd-and-cart-using-paypal-rest-api/">PHP GD + PayPal REST API Integration</a>
@@ -332,10 +335,6 @@
     
       <li class="post">
         <a href="/blog/compiling-the-linux-kernel-from-source/">Compiling a Linux Kernel From Source Tarball</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/wordpress-performance-with-apc-via-fastcgi-php5/">WordPress Performance Benchmarking With APC via FastCGI PHP5-CGI</a>
       </li>
     
   </ul>

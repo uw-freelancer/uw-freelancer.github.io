@@ -9,7 +9,7 @@
   <meta name="author" content="Upeksha Wisidagama">
 
   
-  <meta name="description" content="Let&rsquo;s setup an Ubuntu Server. Download the server image from ubuntu website and burn it into a CD or DVD. Install it on your machine. You will &hellip;">
+  <meta name="description" content="This is an experiment of this earthly world rather than a heavenly or spiritual one. Apache is a popular web server eventhough it can&rsquo;t solve &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -85,7 +85,7 @@
       
   <header>
     
-      <h1 class="entry-title"><a href="/blog/setup-local-ubuntu-server/">Setting Up a Local Ubuntu Server</a></h1>
+      <h1 class="entry-title"><a href="/blog/mundane-experiments-with-apache-mpm_prefork-and-mod_php/">Mundane Experiments With Apache Prefork MPM and Mod_PHP</a></h1>
     
     
       <p class="meta">
@@ -101,36 +101,36 @@
   
 
 
-<time datetime="2012-02-02T22:00:00+05:30" pubdate data-updated="true">Feb 2<span>nd</span>, 2012</time>
+<time datetime="2012-04-12T06:15:00+05:30" pubdate data-updated="true">Apr 12<span>th</span>, 2012</time>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content"><p>Let&rsquo;s setup an Ubuntu Server. Download the server image from ubuntu website and burn it into a CD or DVD. Install it on your machine. You will be asked about basic configuration options. Choose defaults. Important: Select &lsquo;OpenSSH&rsquo; and &lsquo;LAMP&rsquo; in the server selection dialog.</p>
+  <div class="entry-content"><p>This is an experiment of this earthly world rather than a heavenly or spiritual one. Apache is a popular web server eventhough it can&rsquo;t solve the <a href="http://en.wikipedia.org/wiki/C10k_problem" >C10k Problem</a>.</p>
 
-<p><img class='center' src="/images/server/ubuntu-server-login.jpg" title="Ubuntu Server Login" alt="Ubuntu Server Login" /></p>
+<p>Prefork (Module Identifier:mpm_prefork_module) is the default Multi Processing Module for Apache Server in Ubuntu.</p>
 
-<p>Note the ip address of eth0. Next we plug in anther network card and setup an IP address for the new interface (probably be named as eth1).</p>
-
-<h2>Setting up the IP address</h2>
+<blockquote><p>This Multi-Processing Module (MPM) implements a non-threaded, pre-forking web server. Each server process may answer incoming requests, and a parent process manages the size of the server pool.</p></blockquote>
 
 
-<p>Shutdown the computer and plug in the new network card and boot the computer. Run <code>ifconfig</code> command. The new interface will not show up. You may guess the new ethernet interface. E.g. If you have eth0 listed, the new one wll be eth1. You can run &lsquo;ifconig -a&rsquo; and see yourself and verify.</p>
+<p>The other MPMs are Event and Worker (there are others of course: mpm_netware, mpm_os2, mpm_winnt). Visit <a href="http://httpd.apache.org/docs/current/mod/" >Apache Module Index</a> to find out more.</p>
 
-<blockquote><p>If a single  -a  argument  is  given,  it  displays the status of all interfaces, even those that are down.</p></blockquote>
+<p><img class='center' src="/images/server/apache-prefork-mpm-in-action-top.png" title="Apache Prefork MPM in Action in Top" alt="Apache Prefork MPM in Action in Top" /></p>
+
+<p>I&rsquo;ve written a <a href="/blog/setup-local-ubuntu-server/" >How to install a local Ubuntu Server</a> post explaining how I set up a testing server. Now, I am going to use that server for the following experiments.</p>
+
+<p>PHP is loaded as Module by default. Log into your fresh server (described in the above linked article), and run the <code>top</code> command.</p>
+
+<p>Next enable highlighting by pressing <code>z</code>. Then enable column highlighting by pressing <code>x</code>. You can change the sorting of the rows by columns. Just press <code>&lt;</code> and <code>&gt;</code> until you get the required column highlighted. The above figure shows the rows as ordered by &lsquo;Resident Memory (RE)&rsquo; they consume. The most Resident Memory consuming process is the <code>mysqld</code>. This is the MySQL daemon, accounting for 33Mbs out of total 1GB RAM.</p>
+
+<blockquote><p>PID: 1668 is the Apache2 parent process owned by root. It consumes 7Mbs of RAM. Each of the children of Apache2 parent process consumes ~ 4.4Mbs of RAM. But 1MB of RAM is being shared.</p></blockquote>
 
 
-<p>Another way is to run &lsquo;ifconfig eth1&rsquo; directly, assuming the new interface is eth1.</p>
+<p>How the server decided to spawn 9 children? Let&rsquo;s see the apache2 configuration files stored in &lsquo;/etc/apache2/&rsquo;.</p>
 
-<p><img class='center' src="/images/server/where-is-eth1-interface.jpg" title="Where is eth1 interface" alt="Where is eth1 interface" /></p>
-
-<p>Now, you are certain that the new network interface is &lsquo;eth1&rsquo;. Let&rsquo;s assign a new static IP to this interface. We&rsquo;ll be SSHing into this server through the new interface soon.</p>
-
-<p>Open &lsquo;/etc/network/interfaces&rsquo; and assign <code>192.168.1.8</code> for <code>eth1</code>. We are adding our new machine to the &lsquo;UW Network&rsquo; (192.168.1.0).</p>
-
-<figure class='code'><figcaption><span>&#8216;Static IP Assignment for eth1 (/etc/network/interfaces)&#8217; </span></figcaption>
+<figure class='code'><figcaption><span>&#8216;Apache Prefork MPM Configuration (/etc/apache2/apache2.conf)&#8217; </span></figcaption>
  <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
@@ -138,70 +138,62 @@
 <span class='line-number'>5</span>
 <span class='line-number'>6</span>
 <span class='line-number'>7</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="c"># The UW network interface</span>
-</span><span class='line'>auto eth1
-</span><span class='line'>iface eth1 inet static
-</span><span class='line'>address 192.168.1.8
-</span><span class='line'>netmask 255.255.255.0
-</span><span class='line'>network 192.168.1.0
-</span><span class='line'>broadcast 192.168.1.255
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="c"># prefork MPM</span>
+</span><span class='line'><span class="c"># StartServers: number of server processes to start</span>
+</span><span class='line'><span class="c"># MinSpareServers: minimum number of server processes which are kept spare</span>
+</span><span class='line'><span class="c"># MaxSpareServers: maximum number of server processes which are kept spare</span>
+</span><span class='line'><span class="c"># MaxClients: maximum number of server processes allowed to start</span>
+</span><span class='line'><span class="c"># MaxRequestsPerChild: maximum number of requests a server process serves</span>
+</span><span class='line'>&lt;IfModule mpm_prefork_module&gt;
+</span><span class='line'>    StartServers          5
+</span><span class='line'>    MinSpareServers       5
+</span><span class='line'>    MaxSpareServers      10
+</span><span class='line'>    MaxClients          150
+</span><span class='line'>    MaxRequestsPerChild   0
+</span><span class='line'>&lt;/IfModule&gt;
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>Restart the server to apply ip addresses.</p>
+<p>By default, apache2 starts only 5 child processes(StartServers). I simulated a high traffic scenario using Apache Benchmarking tool (ab). As a resulf of the high traffic, Apache2 increased the number of processes to 9. Next, I restarted the server using <code>sudo service apache2 restart</code>. Then the number of child processes shown was 5. You can change the parameters under <code>mpm_prefork_module</code> to match your client needs and wants.</p>
 
-<p><img class='center' src="/images/server/new-network-interface-configured.jpg" title="New Network Interface Configured" alt="New Network Interface Configured" /></p>
+<p>Next I changed &lsquo;Start&rsquo;, &lsquo;Min&rsquo; and &lsquo;Max&rsquo; servers to 1. I even chaged &lsquo;MaxClients&rsquo; to 1. I need to run only one apache2 child. See the <code>top</code> output for one apache2 child process (PID: 4227).</p>
 
-<h2>Remote Login to the Server and Set up the HostName</h2>
+<p><img class='center' src="/images/server/prefork-with-only-one-server.png" title="Prefork with only one server" alt="Prefork with only one server" /></p>
+
+<h2>Benchmarking Apache Performance with Varing number of Child Processes</h2>
 
 
-<p>Are you getting the &lsquo;apache2: Could not reliably determine the server&rsquo;s fully qualified domain name, using 127.0.1.1 for ServerName&rsquo; message every time you start, stop or restart the server?</p>
+<p>Let&rsquo;s benchmark the performance of Apache with One Child and Five Children with <code>mod_php</code> enabled. We serve a simple html file.</p>
 
-<figure class='code'><figcaption><span>&#8216;apache2 warning&#8217; </span></figcaption>
+<figure class='code'><figcaption><span>&#8216;index.html&#8217; </span></figcaption>
  <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>upeksha@uwlab:~<span class="nv">$ </span>sudo service apache2 start
-</span><span class='line'><span class="o">[</span>sudo<span class="o">]</span> password <span class="k">for </span>upeksha:
-</span><span class='line'> * Starting web server apache2
-</span><span class='line'> apache2: Could not reliably determine the server<span class="err">&#39;</span>s fully qualified domain name, using 127.0.1.1 <span class="k">for </span>ServerName
+</pre></td><td class='code'><pre><code class='html'><span class='line'><span class="nt">&lt;html&gt;&lt;body&gt;&lt;h1&gt;</span>It works!<span class="nt">&lt;/h1&gt;</span>
+</span><span class='line'><span class="nt">&lt;p&gt;</span>This is the default web page for this server.<span class="nt">&lt;/p&gt;</span>
+</span><span class='line'><span class="nt">&lt;p&gt;</span>The web server software is running but no content has been added, yet.<span class="nt">&lt;/p&gt;</span>
+</span><span class='line'><span class="nt">&lt;/body&gt;&lt;/html&gt;</span>
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>To fix the warning, login to the remote server by SSHing to 192.168.1.8.</p>
+<p>First, change the Prefork configuration to run only one child as described above.</p>
 
-<p><img class='center' src="/images/server/remote-login-to-server-change-servername.jpg" title="Change Server Name" alt="Change Server Name" /></p>
+<p>Run <code>ab -n 1000 -c 10 -g one-child.dat http://192.168.1.8/</code></p>
 
-<p>To specify a server name for our new server, open &lsquo;/etc/apache2/apache2.conf&rsquo; and enter <code>ServerName uwlab</code> at the bottom.</p>
+<p>Then change Apache Prefork to span five children.</p>
 
-<figure class='code'><figcaption><span>&#8216;Server name assignment (/etc/apache2/apache2.conf)&#8217; </span></figcaption>
- <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>ServerName uwlab
-</span></code></pre></td></tr></table></div></figure>
+<p>Run <code>ab -n 1000 -c 10 -g five-children.dat http://192.168.1.8/</code></p>
 
+<p>Then plot the graph. We&rsquo;ll be using Gnuplot for plotting. Create the Prefork.p</p>
 
-<p>Restart the server again using <code>sudo service apache2 restart</code>. Now, there is no warning.</p>
-
-<h2>Using a Name instead of IP for SSH</h2>
-
-
-<p>In the previous section we sshed into the remote server using <code>ssh 192.168.1.8</code>. We can also configure our machine to use a name instead an ip address. Open &lsquo;/etc/hosts&rsquo; and enter the following.</p>
-
-<figure class='code'><figcaption><span>&#8216;SSH hostname (/etc/hosts)&#8217; </span></figcaption>
- <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>192.168.1.8     uwlab
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Now you can simply use <code>ssh uwlab</code> to SSH into the new server.</p>
-
-<h2>Auto Login to the Remote Server with SSH</h2>
-
-
-<p>Tired of typing the password everytime login to the server? Use ssh-copy-id to copy our identity onto the server. First, generate the key pair.</p>
-
-<figure class='code'><figcaption><span>&#8216;Generating Public and Private Keys&#8217; </span></figcaption>
+<figure class='code'><figcaption><span>&#8216;Prefork.p&#8217; </span></figcaption>
  <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
@@ -209,27 +201,71 @@
 <span class='line-number'>5</span>
 <span class='line-number'>6</span>
 <span class='line-number'>7</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>ssh-keygen -t rsa
-</span><span class='line'>Generating public/private rsa key pair.
-</span><span class='line'>Enter file in which to save the key <span class="o">(</span>/home/upeksha/.ssh/id_rsa<span class="o">)</span>:
-</span><span class='line'>Enter passphrase <span class="o">(</span>empty <span class="k">for </span>no passphrase<span class="o">)</span>:
-</span><span class='line'>Enter same passphrase again:
-</span><span class='line'>Your identification has been saved in /home/upeksha/.ssh/id_rsa
-</span><span class='line'>Your public key has been saved in /home/upeksha/.ssh/id_rsa.pub
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="c"># output as png image</span>
+</span><span class='line'><span class="nb">set </span>terminal png
+</span><span class='line'>
+</span><span class='line'><span class="c"># save file to &quot;prefork-benchmarking.png&quot;</span>
+</span><span class='line'><span class="nb">set </span>output <span class="s2">&quot;prefork-benchmarking.png&quot;</span>
+</span><span class='line'>
+</span><span class='line'><span class="c"># graph title</span>
+</span><span class='line'><span class="nb">set </span>title <span class="s2">&quot;Apache2 Benchmarking with Prefork MPM&quot;</span>
+</span><span class='line'>
+</span><span class='line'><span class="c"># nicer aspect ratio for image size</span>
+</span><span class='line'><span class="nb">set </span>size 1,0.7
+</span><span class='line'>
+</span><span class='line'><span class="c"># y-axis grid</span>
+</span><span class='line'><span class="nb">set </span>grid y
+</span><span class='line'>
+</span><span class='line'><span class="c"># x-axis label</span>
+</span><span class='line'><span class="nb">set </span>xlabel <span class="s2">&quot;request&quot;</span>
+</span><span class='line'>
+</span><span class='line'><span class="c"># y-axis label</span>
+</span><span class='line'><span class="nb">set </span>ylabel <span class="s2">&quot;response time (ms)&quot;</span>
+</span><span class='line'>
+</span><span class='line'><span class="c">#plot data from data files</span>
+</span><span class='line'>plot <span class="s2">&quot;one-child.dat&quot;</span> using 9 smooth sbezier with lines title <span class="s2">&quot;One Child&quot;</span>, <span class="se">\</span>
+</span><span class='line'><span class="s2">&quot;five-children.dat&quot;</span> using 9 smooth sbezier with lines title <span class="s2">&quot;Five Children&quot;</span>
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>Next copy the public key to the server using <code>ssh-copy-id</code>.</p>
+<p>Now plot the data using <code>gnuplot Prefork.p</code>.</p>
 
-<figure class='code'><figcaption><span>&#8216;Setting up auto-login for ssh&#8217; </span></figcaption>
- <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>ssh-copy-id uwlab
-</span></code></pre></td></tr></table></div></figure>
+<p><img class='center' src="/images/server/apache2-prefork-benchmarking-with-low-concurrency.png" title="Apache2 Prefork Benchmarking with Low Concurrency" alt="Apache2 Prefork Benchmarking with Low Concurrency" /></p>
+
+<p>The following is the plot when the concurrecy level is set to 100 (use -c 100 instead -c 10 in ab tool).</p>
+
+<p><img class='center' src="/images/server/apache2-prefork-benchmarking-with-high-concurrency.png" title="Apache2 Prefork Benchmarking with High Concurrency" alt="Apache2 Prefork Benchmarking with High Concurrency" /></p>
+
+<p>Now you have the basic building blocks of Apache2 benchmarking. You can tweak various parameters, collect data and plot. Observe the plot. Contemplate or even meditate on the data and the visualization of the data. Gnuplot can plot more than two datasets. Infact, it is capable of plotting in 3D. It is also used as a plotting engine by third-party applications like Octave.</p>
+
+<blockquote><p>Gnuplot was originally created to allow scientists and students to visualize mathematical functions and data interactively, but has grown to support many non-interactive uses such as web scripting.</p></blockquote>
 
 
-<p>Now you can just type <code>ssh uwlab</code> at the command prompt and you are in the server.</p>
 
-<p>Be sure to use a simple PassPhrase. It is important to use a Very Strong Password and relatively weak and easy to type PassPhrase. This reduces the likelyhood of someone succeed in bruteforcing into the server. Of cource you can hide the SSH for even more security.</p>
+
+<h2>Relaxation of &#8216;one-per-second&#8217; Rule - Apache2 Process Creation</h2>
+
+
+<p>As of Apache 1.3, the code will relax the one-per-second rule. It will spawn one, wait a second, then spawn two, wait a second, then spawn four, and it will continue exponentially until it is spawning 32 children per second. It will stop whenever it satisfies the MinSpareServers setting. Read more about <a href="http://httpd.apache.org/docs/current/misc/perf-tuning.html" >Apache2 Performance Tuning</a>.</p>
+
+<p>Happy Apache2 Prefork Benchmarking with or without <code>mod_php</code>!</p>
 </div>
   
   
@@ -238,6 +274,8 @@
     </article>
   
   <div class="pagination">
+    
+      <a class="prev" href="/blog/page/37/">&larr; Older</a>
     
     <a href="/blog/archives">Blog Archives</a>
     
@@ -283,6 +321,7 @@
 <section class="odd" >
 <h1>WordPress</h2><br />
 <img class='center uw-logo' src="/images/wordpress_logo.png" title="WordPress" alt="WordPress" /><br />
+<a href="http://bapml.com/ubuntu-localhost-gmail-and-sendmail/" title="View on BaPML.com" >WordPress to GMail</a><br />
 <a href="/blog/wordpress-toolbar-customization/" >WordPress Toolbar Customization</a><br />
 <a href="/blog/two-website-customizations/" >Two Website Customizations</a><br /><br />
 </section>
@@ -305,6 +344,10 @@
 <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/nikini-full-moon-poya-day/">Nikini Full Moon Poya Day</a>
+      </li>
     
       <li class="post">
         <a href="/blog/php-gd-and-cart-using-paypal-rest-api/">PHP GD + PayPal REST API Integration</a>
@@ -360,10 +403,6 @@
     
       <li class="post">
         <a href="/blog/compiling-the-linux-kernel-from-source/">Compiling a Linux Kernel From Source Tarball</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/wordpress-performance-with-apc-via-fastcgi-php5/">WordPress Performance Benchmarking With APC via FastCGI PHP5-CGI</a>
       </li>
     
   </ul>

@@ -9,7 +9,27 @@
   <meta name="author" content="Upeksha Wisidagama">
 
   
-  <meta name="description" content="If you’re reading this tutorial, you probably have some interest in writing an extension for the PHP language. If not… well perhaps when we’re done &hellip;">
+  <meta name="description" content="62 Tarballs were downloaded. Then compiled one-by-one. &#8216;Source Tarballs (/sources)&#8217; 1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -85,7 +105,7 @@
       
   <header>
     
-      <h1 class="entry-title"><a href="/blog/writing-php-extensions/">Writing PHP Extensions</a></h1>
+      <h1 class="entry-title"><a href="/blog/building-a-linux-system-from-scratch/">Building a Linux System From Scratch</a></h1>
     
     
       <p class="meta">
@@ -101,80 +121,16 @@
   
 
 
-<time datetime="2013-07-13T23:00:00+05:30" pubdate data-updated="true">Jul 13<span>th</span>, 2013</time>
+<time datetime="2013-07-14T18:00:00+05:30" pubdate data-updated="true">Jul 14<span>th</span>, 2013</time>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content"><blockquote><p>If you’re reading this tutorial, you probably have some interest in writing an extension for the PHP language. If not… well perhaps when we’re done you’ll have discovered an interest you didn’t know existed! - devzone.zend.com</p></blockquote>
+  <div class="entry-content"><p>62 Tarballs were downloaded. Then compiled one-by-one.</p>
 
-
-<p>If you have your PHP installed in a custom location, you need to add the <code>bin</code> directory to your <code>PATH</code> environment variable to avoid typing the full path. e.g. I have the bleeding edge PHP (PHP version 5.5.0) installed in <code>/usr/local/php5/</code>. To add the binaries to the $PATH,</p>
-
-<p><code>export PATH=$PATH:/usr/local/php5/bin/</code></p>
-
-<h3>Preparing to Build the PHP Extension</h3>
-
-
-<p>Create a new directory for the new extension under <code>source/ext</code>. You need to create the following three files for a simple extension.</p>
-
-<p>Create the <code>config.m4</code> file.</p>
-
-<figure class='code'><figcaption><span>&#8216;config.m4&#8217; </span></figcaption>
- <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="n">PHP_ARG_ENABLE</span><span class="p">(</span><span class="n">upeksha_extension</span><span class="p">,</span> <span class="n">whether</span> <span class="n">to</span> <span class="n">enable</span> <span class="n">upeksha</span> <span class="n">extension</span><span class="p">,</span>
-</span><span class='line'><span class="p">[</span> <span class="o">--</span><span class="n">enable</span><span class="o">-</span><span class="n">upeksha</span><span class="o">-</span><span class="n">extension</span>   <span class="n">Enable</span> <span class="n">Upeksha</span> <span class="n">extension</span><span class="p">])</span>
-</span><span class='line'>
-</span><span class='line'><span class="k">if</span> <span class="n">test</span> <span class="s">&quot;$PHP_UPEKSHA_EXTENSION&quot;</span> <span class="o">=</span> <span class="s">&quot;yes&quot;</span><span class="p">;</span> <span class="n">then</span>
-</span><span class='line'>  <span class="n">AC_DEFINE</span><span class="p">(</span><span class="n">HAVE_UPEKSHA_EXTENSION</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="p">[</span><span class="n">Whether</span> <span class="n">you</span> <span class="n">have</span> <span class="n">Upeksha</span> <span class="n">extension</span><span class="p">])</span>
-</span><span class='line'>  <span class="n">PHP_NEW_EXTENSION</span><span class="p">(</span><span class="n">upeksha_extension</span><span class="p">,</span> <span class="n">upeksha_extension</span><span class="p">.</span><span class="n">c</span><span class="p">,</span> <span class="err">$</span><span class="n">ext_shared</span><span class="p">)</span>
-</span><span class='line'><span class="n">fi</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Create the <code>upeksha.h</code> file.</p>
-
-<figure class='code'><figcaption><span>&#8216;upeksha.h&#8217; </span></figcaption>
- <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="cp">#ifndef PHP_UPEKSHA_H</span>
-</span><span class='line'>
-</span><span class='line'><span class="cp">#define PHP_UPEKSHA_H 1</span>
-</span><span class='line'>
-</span><span class='line'><span class="cp">#define PHP_UPEKSHA_VERSION &quot;0.1&quot;</span>
-</span><span class='line'><span class="cp">#define PHP_UPEKSHA_EXTNAME &quot;upeksha_extension&quot;</span>
-</span><span class='line'>
-</span><span class='line'><span class="n">PHP_FUNCTION</span><span class="p">(</span><span class="n">say_name</span><span class="p">);</span>
-</span><span class='line'>
-</span><span class='line'><span class="k">extern</span> <span class="n">zend_module_entry</span> <span class="n">upeksha_module_entry</span><span class="p">;</span>
-</span><span class='line'><span class="cp">#define phpext_upeksha_ptr &amp;upeksha_module_entry</span>
-</span><span class='line'>
-</span><span class='line'><span class="cp">#endif</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Create the <code>upeksha_extension.c</code> file.</p>
-
-<figure class='code'><figcaption><span>&#8216;upeksha_extension&#8217; </span></figcaption>
+<figure class='code'><figcaption><span>&#8216;Source Tarballs (/sources)&#8217; </span></figcaption>
  <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
@@ -210,76 +166,236 @@
 <span class='line-number'>33</span>
 <span class='line-number'>34</span>
 <span class='line-number'>35</span>
-</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="cp">#ifdef HAVE_CONFIG_H</span>
-</span><span class='line'><span class="cp">#include &quot;config.h&quot;</span>
-</span><span class='line'><span class="cp">#endif</span>
-</span><span class='line'>
-</span><span class='line'><span class="cp">#include &quot;php.h&quot;</span>
-</span><span class='line'><span class="cp">#include &quot;upeksha.h&quot;</span>
-</span><span class='line'>
-</span><span class='line'><span class="c1">// list of custom PHP functions provided by this extension</span>
-</span><span class='line'><span class="c1">// set {NULL, NULL, NULL} as the last record to mark the end of list</span>
-</span><span class='line'><span class="k">static</span> <span class="n">zend_function_entry</span> <span class="n">upeksha_functions</span><span class="p">[]</span> <span class="o">=</span> <span class="p">{</span>
-</span><span class='line'>    <span class="n">PHP_FE</span><span class="p">(</span><span class="n">say_name</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">)</span>
-</span><span class='line'>    <span class="p">{</span><span class="nb">NULL</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">}</span>
-</span><span class='line'><span class="p">};</span>
-</span><span class='line'>
-</span><span class='line'><span class="c1">// the following code creates an entry for the module and registers it with Zend.</span>
-</span><span class='line'><span class="n">zend_module_entry</span> <span class="n">upeksha_extension_module_entry</span> <span class="o">=</span> <span class="p">{</span>
-</span><span class='line'>    <span class="n">STANDARD_MODULE_HEADER</span><span class="p">,</span>
-</span><span class='line'>    <span class="n">PHP_UPEKSHA_EXTNAME</span><span class="p">,</span>
-</span><span class='line'>    <span class="n">upeksha_functions</span><span class="p">,</span>
-</span><span class='line'>    <span class="nb">NULL</span><span class="p">,</span> <span class="c1">// name of the MINIT function or NULL if not applicable</span>
-</span><span class='line'>    <span class="nb">NULL</span><span class="p">,</span> <span class="c1">// name of the MSHUTDOWN function or NULL if not applicable</span>
-</span><span class='line'>    <span class="nb">NULL</span><span class="p">,</span> <span class="c1">// name of the RINIT function or NULL if not applicable</span>
-</span><span class='line'>    <span class="nb">NULL</span><span class="p">,</span> <span class="c1">// name of the RSHUTDOWN function or NULL if not applicable</span>
-</span><span class='line'>    <span class="nb">NULL</span><span class="p">,</span> <span class="c1">// name of the MINFO function or NULL if not applicable</span>
-</span><span class='line'>    <span class="n">PHP_UPEKSHA_VERSION</span><span class="p">,</span>
-</span><span class='line'>    <span class="n">STANDARD_MODULE_PROPERTIES</span>
-</span><span class='line'><span class="p">};</span>
-</span><span class='line'>
-</span><span class='line'><span class="n">ZEND_GET_MODULE</span><span class="p">(</span><span class="n">upeksha_extension</span><span class="p">)</span>
-</span><span class='line'>
-</span><span class='line'><span class="c1">// implementation of a custom say_name()</span>
-</span><span class='line'><span class="n">PHP_FUNCTION</span><span class="p">(</span><span class="n">say_name</span><span class="p">)</span>
-</span><span class='line'><span class="p">{</span>
-</span><span class='line'>    <span class="n">RETURN_STRING</span><span class="p">(</span><span class="s">&quot;Upeksha Wisidagama&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">);</span>
-</span><span class='line'><span class="p">}</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+<span class='line-number'>52</span>
+<span class='line-number'>53</span>
+<span class='line-number'>54</span>
+<span class='line-number'>55</span>
+<span class='line-number'>56</span>
+<span class='line-number'>57</span>
+<span class='line-number'>58</span>
+<span class='line-number'>59</span>
+<span class='line-number'>60</span>
+<span class='line-number'>61</span>
+<span class='line-number'>62</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>-rw-r--r--  1 uw   uw    1214744 Apr 25  2012 autoconf-2.69.tar.xz
+</span><span class='line'>-rw-r--r--  1 uw   uw    1425080 Jan  1  2013 automake-1.13.1.tar.xz
+</span><span class='line'>-rw-r--r--  1 uw   uw    7009201 Feb 14  2011 bash-4.2.tar.gz
+</span><span class='line'>-rw-r--r--  1 uw   uw   21455321 Nov 13  2012 binutils-2.23.1.tar.bz2
+</span><span class='line'>-rw-r--r--  1 uw   uw    1776640 Dec 12  2012 bison-2.7.tar.xz
+</span><span class='line'>-rw-r--r--  1 uw   uw     782025 Sep 20  2010 bzip2-1.0.6.tar.gz
+</span><span class='line'>-rw-r--r--  1 uw   uw     602679 Oct 22  2012 check-0.9.9.tar.gz
+</span><span class='line'>-rw-r--r--  1 uw   uw    5357988 Feb 14 22:36 coreutils-8.21.tar.xz
+</span><span class='line'>-rw-r--r--  1 uw   uw     576269 Mar 11  2011 dejagnu-1.5.tar.gz
+</span><span class='line'>-rw-r--r--  1 uw   uw    2023539 Sep  2  2011 diffutils-3.2.tar.gz
+</span><span class='line'>-rw-r--r--  1 uw   uw    5981006 Jan 22 09:09 e2fsprogs-1.42.7.tar.gz
+</span><span class='line'>-rw-r--r--  1 uw   uw     628808 Nov 10  2010 expect5.45.tar.gz
+</span><span class='line'>-rw-r--r--  1 uw   uw     641632 Jul 11 10:50 file-5.13.tar.gz
+</span><span class='line'>-rw-r--r--  1 uw   uw    2149838 Jun  6  2009 findutils-4.4.2.tar.gz
+</span><span class='line'>-rw-r--r--  1 uw   uw    1303313 Aug  4  2012 flex-2.5.37.tar.bz2
+</span><span class='line'>-rw-r--r--  1 uw   uw    1626808 Dec 27  2012 gawk-4.0.2.tar.xz
+</span><span class='line'>-rw-r--r--  1 uw   uw   82884636 Sep 20  2012 gcc-4.7.2.tar.bz2
+</span><span class='line'>-rw-r--r--  1 uw   uw     655599 Nov 13  2011 gdbm-1.10.tar.gz
+</span><span class='line'>-rw-r--r--  1 uw   uw   15697875 Dec 25  2012 gettext-0.18.2.tar.gz
+</span><span class='line'>-rw-r--r--  1 uw   uw   10981956 Dec 26  2012 glibc-2.17.tar.xz
+</span><span class='line'>-rw-r--r--  1 uw   uw    1812988 Jul 11 20:52 gmp-5.1.1.tar.xz
+</span><span class='line'>-rw-r--r--  1 uw   uw    1195640 Aug 20  2012 grep-2.14.tar.xz
+</span><span class='line'>-rw-r--r--  1 uw   uw    4019913 Feb  7 17:50 groff-1.22.2.tar.gz
+</span><span class='line'>-rw-r--r--  1 uw   uw    5136412 Jun 28  2012 grub-2.00.tar.xz
+</span><span class='line'>-rw-r--r--  1 uw   uw     720956 Jun 18  2012 gzip-1.5.tar.xz
+</span><span class='line'>-rw-r--r--  1 uw   uw     205618 Mar  5  2008 iana-etc-2.30.tar.bz2
+</span><span class='line'>-rw-r--r--  1 uw   uw    1987928 Jan  6  2012 inetutils-1.9.1.tar.gz
+</span><span class='line'>-rw-r--r--  1 uw   uw     407608 Feb 21 22:14 iproute2-3.8.0.tar.xz
+</span><span class='line'>-rw-r--r--  1 uw   uw    1730719 Dec  6  2012 kbd-1.15.5.tar.gz
+</span><span class='line'>-rw-r--r--  1 uw   uw    1275028 Dec  5  2012 kmod-12.tar.xz
+</span><span class='line'>-rw-r--r--  1 uw   uw     310144 Jul 22  2012 less-451.tar.gz
+</span><span class='line'>-rw-r--r--  1 uw   uw      33692 Mar  4 21:17 lfs-bootscripts-20130123.tar.bz2
+</span><span class='line'>-rw-r--r--  1 uw   uw     750489 Sep 18  2012 libpipeline-1.2.2.tar.gz
+</span><span class='line'>-rw-r--r--  1 uw   uw    2632347 Oct 18  2011 libtool-2.4.2.tar.gz
+</span><span class='line'>-rw-r--r--  1 uw   uw   70981756 Feb 28 19:27 linux-3.8.1.tar.xz
+</span><span class='line'>-rw-r--r--  1 uw   uw    1258362 Mar  2  2011 m4-1.4.16.tar.bz2
+</span><span class='line'>-rw-r--r--  1 uw   uw    1242186 Jul 28  2010 make-3.82.tar.bz2
+</span><span class='line'>-rw-r--r--  1 uw   uw    1388944 Sep 18  2012 man-db-2.6.3.tar.xz
+</span><span class='line'>-rw-r--r--  1 uw   uw    1134180 Feb 12 09:26 man-pages-3.47.tar.xz
+</span><span class='line'>-rw-r--r--  1 uw   uw     624125 Sep  6  2012 mpc-1.0.1.tar.gz
+</span><span class='line'>-rw-r--r--  1 uw   uw    1071688 Jul  4  2012 mpfr-3.1.1.tar.xz
+</span><span class='line'>-rw-r--r--  1 uw   uw    2826473 Jul 11 11:11 ncurses-5.9.tar.gz
+</span><span class='line'>-rw-r--r--  1 uw   uw     675896 Sep 28  2012 patch-2.7.1.tar.xz
+</span><span class='line'>-rw-r--r--  1 uw   uw   13725101 Nov  1  2012 perl-5.16.2.tar.bz2
+</span><span class='line'>-rw-r--r--  1 uw   uw    1931203 Jan 24 19:17 pkg-config-0.28.tar.gz
+</span><span class='line'>-rw-r--r--  1 uw   uw     535796 Jan  8  2013 procps-ng-3.3.6.tar.xz
+</span><span class='line'>-rw-r--r--  1 uw   uw     432501 Sep 20  2012 psmisc-22.20.tar.gz
+</span><span class='line'>-rw-r--r--  1 uw   uw    2277926 Feb 14  2011 readline-6.2.tar.gz
+</span><span class='line'>-rw-r--r--  1 uw   uw    1059414 Dec 22  2012 sed-4.2.2.tar.bz2
+</span><span class='line'>-rw-r--r--  1 uw   uw    2193325 May 26  2012 shadow-4.1.5.1.tar.bz2
+</span><span class='line'>-rw-r--r--  1 uw   uw      86557 Jul 29  2007 sysklogd-1.5.tar.gz
+</span><span class='line'>-rw-r--r--  1 uw   uw    2054644 Jan  8  2013 systemd-197.tar.xz
+</span><span class='line'>-rw-r--r--  1 uw   uw     105551 Apr 14  2010 sysvinit-2.88dsf.tar.bz2
+</span><span class='line'>-rw-r--r--  1 uw   uw    2339773 Mar 12  2011 tar-1.26.tar.bz2
+</span><span class='line'>-rw-r--r--  1 uw   uw    8636908 Dec 20  2012 tcl8.6.0-src.tar.gz
+</span><span class='line'>-rw-r--r--  1 uw   uw    3782636 Feb 17 07:54 texinfo-5.0.tar.xz
+</span><span class='line'>-rw-r--r--  1 uw   uw     214075 Jan  5  2013 tzdata2012j.tar.gz
+</span><span class='line'>-rw-r--r--  1 uw   uw      17129 Jan 12 00:40 udev-lfs-197-2.tar.bz2
+</span><span class='line'>-rw-r--r--  1 uw   uw    3100832 Dec 13  2012 util-linux-2.22.2.tar.xz
+</span><span class='line'>-rw-r--r--  1 uw   uw    9080692 Jul 11 11:18 vim-7.3.tar.bz2
+</span><span class='line'>-rw-r--r--  1 uw   uw     915048 Jun 22  2012 xz-5.0.4.tar.xz
+</span><span class='line'>-rw-r--r--  1 uw   uw     505085 Jul 11 19:55 zlib-1.2.7.tar.bz2
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>Next run <code>phpize</code> in the same directory.</p>
-
-<p><img class='center' src="/images/php-extension/configuring-the-php-extension.png" title="Configuring the PHP Extension" alt="Configuring the PHP Extension" /></p>
-
-<h3>Making and Installing the Upeksha PHP Extension</h3>
 
 
-<p>run <code>make</code>. You&rsquo;ll get a message, &lsquo;Libraries have been installed in: /home/uw/Downloads/php-5.5.0/ext/uw/modules&rsquo;.</p>
-
-<p>Load the extension by adding the following line to the <code>php.ini</code> file.</p>
-
-<p><code>extension=/home/uw/Downloads/php-5.5.0/ext/uw/modules/upeksha_extension.so</code></p>
-
-<p>Restart the Web Server.</p>
-
-<p>Now, create the following php file with the function from the new extension.</p>
-
-<figure class='code'><figcaption><span>&#8216;hello.php&#8217; </span></figcaption>
- <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class='php'><span class='line'><span class="cp">&lt;?php</span>
-</span><span class='line'><span class="k">echo</span> <span class="nx">say_name</span><span class="p">();</span>
-</span><span class='line'><span class="cp">?&gt;</span><span class="x"></span>
-</span></code></pre></td></tr></table></div></figure>
+<h2>Building the ToolChain, Building the System Software and Compiling the Linux Kernel</h2>
 
 
-<p><img class='center' src="/images/php-extension/upeksha-php-extension.png" title="Upeksha PHP Extension" alt="Upeksha PHP Extension" /></p>
+<p><a href="/blog/building-the-host-independant-toolchain/" >Building the ToolChain</a><br />
+<a href="/blog/building-the-system-software-from-scratch/" >Building the System Software</a><br />
+<a href="/blog/compiling-the-linux-kernel-from-source/" >Compiling the Linux Kernel</a><br /></p>
 
-<p>See the new extension listed in <code>phpinfo()</code>.</p>
+<p>The above posts describe the steps needed to build a basic Linux system from source tarballs. This article is about booting and logging into the new system.</p>
 
-<p><img class='center' src="/images/php-extension/upeksha-extension-in-phpinfo.png" title="Upeksha PHP Extension in phpinfo()" alt="Upeksha PHP Extension in phpinfo()" /></p>
+<h2>Booting the New Linux System</h2>
+
+
+<p>Remove the host hard disk. Boot with the hard disk with new system. Or you can change the hard drive order to allow booting from our new disk.</p>
+
+<p><img class='center' src="/images/lfs/lfs-grub-menu.png" title="Linux System Grub Menu" alt="Linux System Grub Menu" /></p>
+
+<p><img class='center' src="/images/lfs/login-to-lfs.png" title="Linux System Login" alt="Linux System Login" /></p>
+
+<h2>Linux System Hard Disk Usage</h2>
+
+
+<p>The entire disk is 10GB. The system files use only 552MB. &lsquo;usr&rsquo; alone uses 508MB. The Rest of the system uses 44MB.</p>
+
+<table>
+<thead>
+<tr>
+<th></th>
+<th> Directory     </th>
+<th> Size/KB      </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td></td>
+<td> tmp         </td>
+<td> 20</td>
+</tr>
+<tr>
+<td></td>
+<td> srv         </td>
+<td> 4</td>
+</tr>
+<tr>
+<td></td>
+<td> lib         </td>
+<td> 15360</td>
+</tr>
+<tr>
+<td></td>
+<td> media       </td>
+<td> 12</td>
+</tr>
+<tr>
+<td></td>
+<td> boot        </td>
+<td> 12288</td>
+</tr>
+<tr>
+<td></td>
+<td> opt  </td>
+<td> 4</td>
+</tr>
+<tr>
+<td></td>
+<td> home </td>
+<td> 12</td>
+</tr>
+<tr>
+<td></td>
+<td> run  </td>
+<td> 224</td>
+</tr>
+<tr>
+<td></td>
+<td> mnt  </td>
+<td> 4</td>
+</tr>
+<tr>
+<td></td>
+<td> etc  </td>
+<td> 6.5</td>
+</tr>
+<tr>
+<td></td>
+<td> var  </td>
+<td> 920</td>
+</tr>
+<tr>
+<td></td>
+<td> root </td>
+<td> 32</td>
+</tr>
+<tr>
+<td></td>
+<td> sbin </td>
+<td> 4812</td>
+</tr>
+<tr>
+<td></td>
+<td> bin  </td>
+<td> 4915</td>
+</tr>
+<tr>
+<td></td>
+<td> usr  </td>
+<td> 508M</td>
+</tr>
+</tbody>
+</table>
+
+
+<br />See the output of the &#8220;du&#8220; command.<br /><br />
+
+
+<p><img class='center' src="/images/lfs/lfs-disk-usage.png" title="Linux System Disk Usage" alt="Linux System Disk Usage" /></p>
+
+<h2>Linux System Random Access Memory Usage</h2>
+
+
+<p>The system has 1GB RAM. But only 31.5MB is used.</p>
+
+<p><img class='center' src="/images/lfs/lfs-resource-usage.png" title="Linux System Resource Usage" alt="Linux System Resource Usage" /></p>
+
+<p>Many wonder why they should go through the hassle of building a Linux system from scratch when they could just download an existing Linux distribution. However, there are several benefits of building Linux from sources.</p>
+
+<blockquote><p>Building LFS teaches you about all that makes Linux tick, how things work together and depend on each other. And most importantly, how to customize it to your own tastes and needs.</p></blockquote>
+
+
+<p>If you are wondering why you would want a highly secured system, just read any number of articles dealing with hackers and script kiddies breaking into systems and destroying them or stealing from them. Now, you can know the security hole, inspect the patches and fix it yourself immediately.</p>
+
+<blockquote><p>You don&#8217;t have to wait for someone else to provide a new binary package that (hopefully) fixes a security hole. Often, you never truly know whether a security hole is fixed or not unless you do it yourself.</p></blockquote>
+
+
+<p>Thank you, Project Leader: Gerard Beekmans, Project Co-leader: Matthew Burgess and Project Co-leader: Bruce Dubbs of &lsquo;Linux From Scratch&rsquo;.</p>
+
+<p>Visit &lsquo;Linux From Scratch&rsquo; today and experience the freedom and power. Don&rsquo;t forget to run the gcc tests using <code>make -k check</code> &ndash; <b>Approximate build time: 53.5 SBU !</b></p>
 </div>
   
   
@@ -335,6 +451,7 @@
 <section class="odd" >
 <h1>WordPress</h2><br />
 <img class='center uw-logo' src="/images/wordpress_logo.png" title="WordPress" alt="WordPress" /><br />
+<a href="http://bapml.com/ubuntu-localhost-gmail-and-sendmail/" title="View on BaPML.com" >WordPress to GMail</a><br />
 <a href="/blog/wordpress-toolbar-customization/" >WordPress Toolbar Customization</a><br />
 <a href="/blog/two-website-customizations/" >Two Website Customizations</a><br /><br />
 </section>
@@ -357,6 +474,10 @@
 <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/nikini-full-moon-poya-day/">Nikini Full Moon Poya Day</a>
+      </li>
     
       <li class="post">
         <a href="/blog/php-gd-and-cart-using-paypal-rest-api/">PHP GD + PayPal REST API Integration</a>
@@ -412,10 +533,6 @@
     
       <li class="post">
         <a href="/blog/compiling-the-linux-kernel-from-source/">Compiling a Linux Kernel From Source Tarball</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/wordpress-performance-with-apc-via-fastcgi-php5/">WordPress Performance Benchmarking With APC via FastCGI PHP5-CGI</a>
       </li>
     
   </ul>

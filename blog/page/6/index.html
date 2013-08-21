@@ -9,8 +9,7 @@
   <meta name="author" content="Upeksha Wisidagama">
 
   
-  <meta name="description" content="I received my Freelancer.com Payoneer Mastercard by post. Credit Card Number First Digit (1 digit) - Industry ID 1, 2 Airline
-3 Travel and &hellip;">
+  <meta name="description" content="Valgrind The &ldquo;Val&rdquo; as in the world &ldquo;value&rdquo;. The &ldquo;grind&rdquo; is pronounced with a short &lsquo;i&rsquo; &mdash; ie. & &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -86,7 +85,7 @@
       
   <header>
     
-      <h1 class="entry-title"><a href="/blog/freelancer-com-payoneer-prepaid-mastercard/">Freelancer.com Payoneer Prepaid MasterCard</a></h1>
+      <h1 class="entry-title"><a href="/blog/valgrind-dynamic-analysis/">Dynamic Program Analysis With Valgrind</a></h1>
     
     
       <p class="meta">
@@ -102,80 +101,104 @@
   
 
 
-<time datetime="2013-07-24T18:00:00+05:30" pubdate data-updated="true">Jul 24<span>th</span>, 2013</time>
+<time datetime="2013-07-26T12:00:00+05:30" pubdate data-updated="true">Jul 26<span>th</span>, 2013</time>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content"><p>I received my Freelancer.com Payoneer Mastercard by post.</p>
+  <div class="entry-content"><p><img class='center' src="/images/c/valgrind-logo.png" title="Valgrind" alt="Valgrind" /></p>
 
-<p><img class='center uw-logo' src="/images/freelancer-payoneer-card.png" title="Freelancer Payoneer Card" alt="Freelancer Payoneer Card" /><br /></p>
-
-<h2>Credit Card Number</h2>
+<h2>Valgrind</h2>
 
 
+<p>The &ldquo;Val&rdquo; as in the world &ldquo;value&rdquo;. The &ldquo;grind&rdquo; is pronounced with a short &lsquo;i&rsquo; &mdash; ie. &ldquo;grinned&rdquo; (rhymes with &ldquo;tinned&rdquo;) rather than &ldquo;grined&rdquo; (rhymes with &ldquo;find&rdquo;).</p>
 
+<p>Don&rsquo;t feel bad: almost everyone gets it wrong at first.</p>
 
-<h3>First Digit (1 digit) - Industry ID</h3>
+<p><img class='center' src="/images/c/valgrind-large.png" title="Valgrind" alt="Valgrind" /></p>
 
+<p>Where does the name &ldquo;Valgrind&rdquo; come from? From Nordic mythology. Originally (before release) the project was named Heimdall, after the watchman of the Nordic gods. He could &ldquo;see a hundred miles by day or night, hear the grass growing, see the wool growing on a sheep&rsquo;s back&rdquo;, etc. This would have been a great name, but it was already taken by a security package &ldquo;Heimdal&rdquo;.</p>
 
-<p>1, 2 Airline<br />
-3 Travel and Entertainment (3Amex)<br />
-4, 5 Banking and Financial (4 Visa, 5 Mastercard)<br />
-6 Merchandising and Banking (6 Discover, Diners Club)<br />
-7 Petrolium<br />
-8 Telecom<br />
-9 Misc.<br /></p>
+<p>Keeping with the Nordic theme, Valgrind was chosen. Valgrind is the name of the main entrance to Valhalla (the Hall of the Chosen Slain in Asgard). Over this entrance there resides a wolf and over it there is the head of a boar and on it perches a huge eagle, whose eyes can see to the far regions of the nine worlds. Only those judged worthy by the guardians are allowed to pass through Valgrind. All others are refused entrance.</p>
 
-<h3>2 - 6 Digits (5 digits) Issuer ID</h3>
+<p>Read More: <a href="http://en.wikipedia.org/wiki/Norse_mythology">http://en.wikipedia.org/wiki/Norse_mythology</a></p>
 
+<p><img class='center' src="/images/c/thors-fight-with-giants.jpg" title="Thor's fight with giants" alt="Thor's fight with giants" /></p>
 
-
-
-<h3>7 - 15 Digits (9 digits) Account ID</h3>
+<blockquote><p>Valgrind: It&#8217;s not short for &#8220;value grinder&#8221;, although that&#8217;s not a bad guess.</p><p>- FAQ</p></blockquote>
 
 
 
 
-<h3>16th Or Last Digit (1 digit) Checksum</h3>
+<h2>Detecting Memory Errors in ls Program!</h2>
 
 
+<p>Install Valgrind using <code>sudo apt-get install valgrind</code>.</p>
+
+<p>Run Valgrind on ls using <code>valgrind ls</code>.</p>
+
+<p><img class='center' src="/images/c/valgrind-ls.png" title="Valgrind ls" alt="Valgrind ls" /></p>
+
+<p>ERROR SUMMARY: 0 errors from 0 contexts  :&ndash;)</p>
+
+<h2>How Analyze your C program Dynamically</h2>
 
 
-<h2>Why they ask for the Card</h2>
+<p>Create the following C file.</p>
+
+<figure class='code'><figcaption><span>&#8216;uw.c&#8217; </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="cp">#include &lt;stdio.h&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="kt">int</span> <span class="nf">main</span><span class="p">()</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>  <span class="kt">char</span> <span class="o">*</span><span class="n">p</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="n">p</span> <span class="o">=</span> <span class="p">(</span><span class="kt">char</span> <span class="o">*</span><span class="p">)</span> <span class="n">malloc</span><span class="p">(</span><span class="mi">10</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="n">p</span> <span class="o">=</span> <span class="p">(</span><span class="kt">char</span> <span class="o">*</span><span class="p">)</span> <span class="n">malloc</span><span class="p">(</span><span class="mi">17</span><span class="p">);</span>
+</span><span class='line'>  <span class="n">free</span><span class="p">(</span><span class="n">p</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="n">p</span> <span class="o">=</span> <span class="p">(</span><span class="kt">char</span> <span class="o">*</span><span class="p">)</span> <span class="n">malloc</span><span class="p">(</span><span class="mi">13</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
 
 
-<p>Some retail stores will ask to see your card so they can manually type in the last four digits on the card. This verifies that the number embossed in the card is the same number that is programmed to the magnet stripe on the back; this is one way retailers can catch the <b>reprogrammed cards</b> before the goods leave the store.</p>
+<p>Compile using <code>gcc -o uw -g uw.c</code>. Run Valgrind with <code>valgrind ./uw</code>.</p>
 
-<p>Read More: <a href="http://en.wikipedia.org/wiki/Credit_card">http://en.wikipedia.org/wiki/Credit_card</a></p>
+<p><img class='center' src="/images/c/valgrind-output.png" title="Valgrind Output" alt="Valgrind Output" /></p>
 
-<p>Read more about numbers: <a href="http://en.wikipedia.org/wiki/Credit_card_number">http://en.wikipedia.org/wiki/Credit_card_number</a></p>
-
-<p><img class='center uw-logo' src="/images/freelancer-payoneer-card-back.png" title="Freelancer Payoneer Card Back" alt="Freelancer Payoneer Card Back" /><br /></p>
-
-<h2>Luhn Algorithm</h2>
+<h3>HEAP SUMMARY</h3>
 
 
+<p>in use at exit: 23 bytes in 2 blocks. total heap usage: 3 allocs, 1 frees, 40 bytes allocated.</p>
+
+<h3>LEAK SUMMARY</h3>
 
 
-<blockquote><p>With the Luhn Algorithm, there is a process to deciphering validity of a credit card. The end result is a number that is divisible by ten, although arriving at the end result is complex. <b>Anyone</b> could follow this process and come up with a valid credit card number to make purchases, especially on the Internet.</p><p>- Anonymous</p></blockquote>
+<p>definitely lost: 23 bytes in 2 blocks.</p>
 
+<p>In the above file, we didn&rsquo;t free the p memory allocation twice. Therefore total 10 + 13 = 23 bytes of memory was leaked in our program.</p>
 
-<p>Read More: <a href="http://en.wikipedia.org/wiki/Luhn_algorithm">http://en.wikipedia.org/wiki/Luhn_algorithm</a></p>
-
-<h2>CVC</h2>
-
-
-<p>The Card Security Code, also called a Card Verification Code, is a three-digit number code that is on the back of the credit card. It is the number that ultimately validates use of the card. There is not set system, technique, or algorithm used to arrive at this number. Each issuing institution has its own way of coming up with a correct CVC number, and that system is known only by that institution.</p>
-
-<blockquote><p>Although it may be still be possible to come up with a valid credit card number using the Luhn Algorithm, it is impossible to decipher the number and come up with an expiration date and CVC. Attempting to do so could net you some <b>federal fraud charges</b>.</p></blockquote>
-
-
-<p>My Freelancer.com prepaid MasterCard is issued by Payoneer.</p>
-
-<p><img class='center uw-logo' src="/images/payoneer-logo.jpg" title="Payoneer Logo" alt="Payoneer Logo" /><br /></p>
+<p>Learn More: <a href="http://valgrind.org/docs/manual/quick-start.html">http://valgrind.org/docs/manual/quick-start.html</a></p>
 </div>
   
   
@@ -231,6 +254,7 @@
 <section class="odd" >
 <h1>WordPress</h2><br />
 <img class='center uw-logo' src="/images/wordpress_logo.png" title="WordPress" alt="WordPress" /><br />
+<a href="http://bapml.com/ubuntu-localhost-gmail-and-sendmail/" title="View on BaPML.com" >WordPress to GMail</a><br />
 <a href="/blog/wordpress-toolbar-customization/" >WordPress Toolbar Customization</a><br />
 <a href="/blog/two-website-customizations/" >Two Website Customizations</a><br /><br />
 </section>
@@ -253,6 +277,10 @@
 <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/nikini-full-moon-poya-day/">Nikini Full Moon Poya Day</a>
+      </li>
     
       <li class="post">
         <a href="/blog/php-gd-and-cart-using-paypal-rest-api/">PHP GD + PayPal REST API Integration</a>
@@ -308,10 +336,6 @@
     
       <li class="post">
         <a href="/blog/compiling-the-linux-kernel-from-source/">Compiling a Linux Kernel From Source Tarball</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/wordpress-performance-with-apc-via-fastcgi-php5/">WordPress Performance Benchmarking With APC via FastCGI PHP5-CGI</a>
       </li>
     
   </ul>
